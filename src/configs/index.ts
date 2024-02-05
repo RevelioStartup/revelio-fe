@@ -1,2 +1,2 @@
-export * from "./metadata"
-export * from "./viewport"
+export * from './metadata'
+export * from './viewport'

@@ -1,3 +1,3 @@
 export const VIEWPORT = {
-    themeColor: '#ffffff',
+  themeColor: '#ffffff',
 }

@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-types": "tsc --pretty --noEmit",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "format": "prettier --write .",
+    "test-all": "yarn format && yarn check-format && yarn check-lint && yarn check-types",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -25,6 +31,8 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "husky": "^9.0.10",
+    "prettier": "^3.2.5",
     "typescript": "^5"
   }
 }
