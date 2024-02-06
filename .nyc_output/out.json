@@ -1,1 +1,26 @@
-{}
+{
+  "D:\\revelio-fe\\src\\styles\\theme.ts": {
+    "path": "D:\\revelio-fe\\src\\styles\\theme.ts",
+    "statementMap": {
+      "0": {
+        "start": {
+          "line": 4,
+          "column": 14
+        },
+        "end": {
+          "line": 8,
+          "column": 2
+        }
+      }
+    },
+    "fnMap": {},
+    "branchMap": {},
+    "s": {
+      "0": 1
+    },
+    "f": {},
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "1e0db9f9ab06841f9be0f10b726a60ece8c0780b"
+  }
+}
