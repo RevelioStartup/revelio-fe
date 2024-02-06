@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import theme from '@/styles/theme'
 import '../styles/globals.css'
 import { Navbar } from '@/components/elements'
+import { Footer } from '@/components/elements/Footer'
 
 export const metadata: Metadata = { ...METADATA, ...VIEWPORT }
 
@@ -18,6 +19,7 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <Navbar />
             <main>{children}</main>
+            <Footer />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

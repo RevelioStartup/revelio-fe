@@ -1,10 +1,25 @@
+'use client'
 import { Box } from '@mui/material'
 import Image from 'next/image'
 import { MENU } from './constant'
 import Link from 'next/link'
-import React from 'react'
+import { twMerge } from 'tailwind-merge'
+import React, { useEffect, useState } from 'react'
 
 export const Navbar: React.FC = () => {
+  const [atTop, setAtTop] = useState<boolean>(true)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setAtTop(window.scrollY <= 40)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
   return (
     <Box
       height={'80px'}
@@ -16,6 +31,10 @@ export const Navbar: React.FC = () => {
         alignItems: 'center',
       }}
       padding={'0em 2em'}
+      className={twMerge(
+        'fixed top-0 inset-x-0 z-50',
+        atTop ? '' : 'backdrop-blur-md'
+      )}
     >
       <Image
         src="/assets/images/Logo.svg"
