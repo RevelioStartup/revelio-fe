@@ -11,6 +11,7 @@ stages:
   - sonarcloud
 
 install:
+  stage: install
   runs-on: ubuntu-latest
   steps:
     - name: Checkout
@@ -26,6 +27,7 @@ install:
         wait-on: 'http://localhost:3000'
 
 sonarcloud:
+  stage: sonarcloud
   name: SonarCloud
   runs-on: ubuntu-latest
   steps:
