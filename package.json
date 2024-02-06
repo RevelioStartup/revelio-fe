@@ -13,6 +13,8 @@
     "format": "prettier --write .",
     "test-all": "yarn format && yarn check-format && yarn check-lint && yarn check-types",
     "prepare": "husky",
+    "test": "cypress",
+    "coverage": "nyc npm run test",
     "cypress:open": "cypress open"
   },
   "dependencies": {
@@ -28,13 +30,16 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.12.20",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "babel-plugin-istanbul": "^6.1.1",
     "cypress": "^13.6.4",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
     "husky": "^9.0.10",
+    "nyc": "^15.1.0",
     "prettier": "^3.2.5",
     "typescript": "^5"
   }
