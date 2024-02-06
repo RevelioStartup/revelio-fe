@@ -9,7 +9,7 @@ export const Hero = () => {
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         background:
-          'linear-gradient(180deg, #FFF 0%, #FFF 42.41%, #CEFBF7 100%)',
+          'linear-gradient(90deg, #CEFBF7 0%, #FFF 42.41%, #FFF 100%)',
         minHeight: 'calc(100vh - 80px)',
         width: '100%',
       }}
@@ -17,7 +17,7 @@ export const Hero = () => {
       alignItems={'center'}
       justifyContent={'center'}
       gap={'2em'}
-      padding={'2em'}
+      padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
       <Box
         display={'flex'}
