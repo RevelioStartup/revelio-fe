@@ -12,7 +12,8 @@
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "format": "prettier --write .",
     "test-all": "yarn format && yarn check-format && yarn check-lint && yarn check-types",
-    "prepare": "husky"
+    "prepare": "husky",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -30,6 +31,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.6.4",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
     "husky": "^9.0.10",
