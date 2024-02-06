@@ -1,13 +1,26 @@
-name: Build
+name: Build and Test
 on:
   push:
     branches:
       - main
       - staging
-  pull_request:
-    types: [opened, synchronize, reopened]
 
 jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v3
+        with:
+          project: ./
+          browser: chrome
+          build: yarn build
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
