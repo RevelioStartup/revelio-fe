@@ -6,6 +6,10 @@ on:
       - staging
       - feat/*
 
+stages:
+  - install
+  - sonarcloud
+
 jobs:
   install:
     runs-on: ubuntu-latest
