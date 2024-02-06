@@ -1,4 +1,5 @@
 name: Build and Test
+
 on:
   push:
     branches:
@@ -10,32 +11,33 @@ stages:
   - install
   - sonarcloud
 
-install:
-  stage: install
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+jobs:
+  install:
+    stage: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Cypress run
-      uses: cypress-io/github-action@v3
-      with:
-        project: ./
-        browser: chrome
-        build: yarn build
-        start: yarn start
-        wait-on: 'http://localhost:3000'
+      - name: Cypress run
+        uses: cypress-io/github-action@v3
+        with:
+          project: ./
+          browser: chrome
+          build: yarn build
+          start: yarn start
+          wait-on: 'http://localhost:3000'
 
-sonarcloud:
-  stage: sonarcloud
-  name: SonarCloud
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  sonarcloud:
+    stage: sonarcloud
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
