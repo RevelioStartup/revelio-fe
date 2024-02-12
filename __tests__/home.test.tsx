@@ -6,7 +6,9 @@ describe('Home', () => {
   it('renders h3 text', () => {
     render(<Home />)
 
-    const test = screen.getByRole('heading', { name: /ease. enhance. commemorate./i });
+    const test = screen.getByRole('heading', {
+      name: /ease. enhance. commemorate./i,
+    })
 
     expect(test).toBeInTheDocument()
   })
