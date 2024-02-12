@@ -32,6 +32,8 @@ jobs:
         run: npm install
       - name: Test and coverage
         run: yarn jest --coverage
+      - name: Check coverage output
+        run: cat coverage/lcov.info
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
