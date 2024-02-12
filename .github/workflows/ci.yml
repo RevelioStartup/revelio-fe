@@ -8,20 +8,16 @@ on:
       - feat/*
 
 jobs:
-  install:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v3
+      - uses: actions/checkout@v3
         with:
-          project: ./
-          browser: chrome
-          build: yarn build
-          start: yarn start
-          wait-on: 'http://localhost:3000'
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm install
+      - name: Test and coverage
+        run: npm run test --coverage
 
   sonarcloud:
     name: SonarCloud
