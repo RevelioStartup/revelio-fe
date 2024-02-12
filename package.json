@@ -13,9 +13,7 @@
     "format": "prettier --write .",
     "test-all": "yarn format && yarn check-format && yarn check-lint && yarn check-types",
     "prepare": "husky",
-    "test": "cypress",
-    "coverage": "nyc npm run test",
-    "cypress:open": "cypress open"
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -35,27 +33,30 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.12.20",
     "@egoist/tailwindcss-icons": "^1.7.4",
     "@iconify-json/bi": "^1.1.23",
     "@iconify-json/fa6-regular": "^1.1.18",
     "@iconify-json/logos": "^1.1.42",
     "@iconify-json/ph": "^1.1.10",
     "@iconify/react": "4.1.1",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "babel-plugin-istanbul": "^6.1.1",
-    "cypress": "^13.6.4",
     "@types/tailwindcss": "^3.1.0",
     "autoprefixer": "^10.4.17",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
     "husky": "^9.0.10",
-    "nyc": "^15.1.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.34",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "tw-colors": "3.3.1",
     "typescript": "^5"
   }
