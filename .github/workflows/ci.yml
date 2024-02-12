@@ -8,25 +8,30 @@ on:
       - feat/*
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Install dependencies
-        run: npm install
-      - name: Test and coverage
-        run: npm run test --coverage
+  # test:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Install dependencies
+  #       run: npm install
+  #     - name: Test and coverage
+  #       run: npm run test --coverage
 
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
-    needs: test
+    # needs: test
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install dependencies
+        run: npm install
+      - name: Test and coverage
+        run: yarn jest --coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
