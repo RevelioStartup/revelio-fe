@@ -11,7 +11,7 @@ export const MainLayout = ({ children }: MainLayout) => {
     <Providers>
       <main>
         <Navbar />
-        {children}
+        <div className="mt-20 min-h-[90vh]">{children}</div>
         <Footer />
       </main>
     </Providers>
