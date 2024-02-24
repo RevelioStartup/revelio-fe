@@ -22,14 +22,15 @@ export const InputVariants = cva(
   }
 )
 
-export const SelectVariants = cva('', {
+export const SelectVariants = cva('py-2 px-3 bg-slate-100 text-slate-800', {
   variants: {
     variant: {
-      selected: '',
+      normal: '',
+      rounded: 'rounded-full px-4',
     },
   },
   defaultVariants: {
-    variant: 'selected',
+    variant: 'normal',
   },
 })
 export const CheckBoxVariants = cva(

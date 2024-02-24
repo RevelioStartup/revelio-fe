@@ -11,7 +11,7 @@ import {
   UseFormWatch,
   SetFieldValue,
 } from 'react-hook-form'
-import { InputCVAProps } from './style'
+import { InputCVAProps, SelectCVAProps } from './style'
 
 export type InputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -130,11 +130,12 @@ export type FileInputType = ControllerType &
 
 export type SelectType = ControllerType &
   BaseInputType &
+  SelectCVAProps &
   Pick<
     InputProps,
     'required' | 'disabled' | 'placeholder' | 'defaultValue' | 'value'
   > & {
-    choices: optionType[]
+    options: optionType[]
     creatable?: boolean
   } & {
     onChange?: any

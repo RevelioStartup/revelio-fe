@@ -1,6 +1,7 @@
 'use client'
 import { Checkbox } from '@/components/elements/Forms/checkbox'
 import { Input } from '@/components/elements/Forms/input'
+import { Select } from '@/components/elements/Forms/select'
 import { TextArea } from '@/components/elements/Forms/textarea'
 import { Box } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -10,6 +11,7 @@ type TestFormType = {
   age: number
   description: string
   fruits: string[]
+  color: string
 }
 export default function Test() {
   const defaultValues: TestFormType = {
@@ -17,6 +19,7 @@ export default function Test() {
     age: 1,
     description: '',
     fruits: [],
+    color: '',
   }
 
   const methods = useForm<TestFormType>({ defaultValues: defaultValues })
@@ -29,7 +32,7 @@ export default function Test() {
     <Box>
       <form className="flex flex-col gap-3">
         {/* name in here means the field name used in the form type */}
-        <Input control={control} name="name" rules={{  }}/>
+        <Input control={control} name="name" rules={{}} />
         <Input control={control} name="age" />
         <TextArea control={control} name="description" rows={5} />
         <Checkbox
@@ -43,6 +46,18 @@ export default function Test() {
             { label: 'Grapes', value: 'grapes' },
           ]}
           setValue={setValue}
+          required
+        />
+        <Select
+          label="Select your favorite color"
+          name="color"
+          options={[
+            { label: 'Red', value: 'red' },
+            { label: 'Blue', value: 'blue' },
+            { label: 'Green', value: 'green' },
+          ]}
+          placeholder="Choose one"
+          control={control}
           required
         />
         <button onClick={handleSubmit(onSubmit)}>Submit</button>
