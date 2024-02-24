@@ -1,4 +1,4 @@
-import Iconify from '@/components/elements/Iconify'
+'@/components/elements/Iconify'
 import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
@@ -19,10 +19,7 @@ export const WithoutRevelio = () => {
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
       <Box className="flex flex-row items-center bg-teal-50 gap-3 text-teal-600 px-3 py-1 rounded-2xl ">
-        <Iconify
-          icon="fa6-regular:eye"
-          className="rounded-full size-5 text-6xl"
-        />
+        <i className="i-fa6-regular-eye rounded-full size-5 text-6xl" />
         <p>Without Revelio</p>
       </Box>
       <Typography variant={'h3'} textAlign={'center'}>
@@ -54,7 +51,7 @@ export const WithoutRevelio = () => {
           textAlign={'center'}
           className="rounded-3xl"
         >
-          <Iconify icon="ph:alarm-bold" className="text-black size-20" />
+          <i className="i-ph-alarm-bold text-black size-20" />
 
           <p className="font-bold">Time Consuming</p>
           <p>
@@ -77,7 +74,7 @@ export const WithoutRevelio = () => {
           textAlign={'center'}
           className="rounded-3xl"
         >
-          <Iconify icon="bi:tools" className="text-black size-20" />
+          <i className="i-bi-tools text-black size-20" />
           <p className="font-bold">Inefficient Decision-Making</p>
           <p>
             Without an organized structure or intelligent (AI) suggestions,
