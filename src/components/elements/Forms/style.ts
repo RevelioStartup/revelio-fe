@@ -5,10 +5,10 @@ export const InputVariants = cva(
   {
     variants: {
       variant: {
-        active: 'border-none font-600 ',
+        active: 'border-none',
       },
       color: {
-        white: 'bg-slate-100 text-slate-600 placeholder:text-slate-400',
+        white: 'bg-slate-100 text-slate-800 placeholder:text-slate-400',
         teal: 'bg-teal-400 text-white placeholder:text-teal-200',
       },
       border: {
@@ -32,6 +32,16 @@ export const SelectVariants = cva('', {
     variant: 'selected',
   },
 })
-
+export const CheckBoxVariants = cva(
+  'w-5 h-5 rounded-full border border-gray-light accent-teal-300 focus:outline-none focus:ring-0 active:outline-none active:ring-0',
+  {
+    variants: {
+      intent: {
+        active: 'cursor-pointer text-accent',
+        disabled: 'cursor-not-allowed text-secondary-light-active',
+      },
+    },
+  }
+)
 export type InputCVAProps = VariantProps<typeof InputVariants>
 export type SelectCVAProps = VariantProps<typeof SelectVariants>

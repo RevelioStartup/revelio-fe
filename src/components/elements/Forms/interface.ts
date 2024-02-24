@@ -9,6 +9,7 @@ import {
   Control,
   FieldValue,
   UseFormWatch,
+  SetFieldValue,
 } from 'react-hook-form'
 import { InputCVAProps } from './style'
 
@@ -71,18 +72,18 @@ export type CheckBoxType = ControllerType &
     label?: string
     id?: string
     name: string
-    value: any
+    setValue: SetFieldValue<any>
     selectedValue?: any[]
     options: optionType[]
   }
 
-export type CheckBoxProps = Pick<InputProps, 'required'> & {
+export type CheckBoxOptionProps = Pick<InputProps, 'required'> & {
   id?: string
   name: string
-  setValue: (value: any) => void
+  label?: string
   value: any
   selectedValue?: any[]
-  options: optionType[]
+  onChange: () => void
 }
 
 export type TextAreaType = ControllerType &

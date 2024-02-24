@@ -1,11 +1,11 @@
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useRef } from 'react'
 import { Controller } from 'react-hook-form'
-import { CustomInputProps } from './interface'
+import { TextAreaType } from './interface'
 import { twMerge } from 'tailwind-merge'
 
 import { InputVariants } from './style'
 
-export const Input: FC<CustomInputProps> = ({
+export const TextArea: FC<TextAreaType> = ({
   id,
   name,
   required = false,
@@ -14,28 +14,24 @@ export const Input: FC<CustomInputProps> = ({
   control,
   disabled,
   rules,
-  type = 'text',
-  className,
-  watchValidation,
   variant,
   color,
   border,
+  className,
+  watchValidation,
   ...props
 }) => {
-  const [openPassword, setOpenPassword] = useState<boolean>(false)
-
-  const inputRef = useRef<HTMLInputElement>(null) // Create a ref for the input
-
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
   return (
     <Controller
       control={control}
       name={name}
-      rules={{ ...rules, required: required }}
+      rules={{ ...rules, required }}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
           <div>
             {label && (
-              <p className="text-lg text-slate-900 mb-3 flex flex-col">
+              <p className="text-xl text-slate-900 mb-3 flex flex-col">
                 <span>{label}</span>
                 {caption && (
                   <span className="text-slate-800 text-base">{caption}</span>
@@ -44,37 +40,18 @@ export const Input: FC<CustomInputProps> = ({
             )}
 
             <div className="relative">
-              <input
-                ref={inputRef}
+              <textarea
                 className={twMerge(
                   InputVariants({ variant, color, border }),
                   className
                 )}
                 id={id ?? name}
-                type={
-                  type != 'password' ? type : openPassword ? 'text' : 'password'
-                }
                 value={value}
                 disabled={disabled}
-                onChange={(e) => {
-                  onChange(e)
-                }}
+                onChange={onChange}
+                ref={textAreaRef}
                 {...props}
               />
-              {type == 'password' && (
-                <div
-                  className="absolute top-3.5 right-3"
-                  onClick={() => {
-                    setOpenPassword(!openPassword)
-                  }}
-                >
-                  {openPassword ? (
-                    <i className="i-ph-eye text-slate-800 size-6" />
-                  ) : (
-                    <i className="i-ph-eye-closed text-slate-800 size-6" />
-                  )}
-                </div>
-              )}
             </div>
             {!!error && (
               <p
