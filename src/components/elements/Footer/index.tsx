@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
-import Iconify from '../Iconify'
 
 export const Footer = () => {
   return (
@@ -53,18 +52,8 @@ export const Footer = () => {
           padding={'2em'}
           textAlign={'center'}
         >
-          <Iconify
-            icon="ph:facebook-logo-bold"
-            className="text-teal-500 size-8"
-          />
-          <Iconify
-            icon="ph:twitter-logo-fill"
-            className="text-teal-500 size-8"
-          />
-          <Iconify
-            icon="ph:instagram-logo-bold"
-            className="text-teal-500 size-8"
-          />
+          <i className="i-ph-twitter-logo-fill text-teal-500 size-8" />
+          <i className="i-ph-instagram-logo-bold text-teal-500 size-8" />
         </Box>
       </Box>
     </Box>

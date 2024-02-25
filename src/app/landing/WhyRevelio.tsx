@@ -1,4 +1,4 @@
-import Iconify from '@/components/elements/Iconify'
+'@/components/elements/Iconify'
 import { Box, Icon, Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
@@ -17,10 +17,7 @@ export const WhyRevelio = () => {
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
       <Box className="flex flex-row items-center bg-teal-50 gap-3 text-teal-600 px-3 py-1 rounded-2xl ">
-        <Iconify
-          icon="fa6-regular:eye"
-          className="rounded-full size-5 text-6xl"
-        />
+        <i className="i-fa6-regular-eye rounded-full size-5 text-6xl" />
         <p>Why Revelio</p>
       </Box>
       <Typography variant={'h3'} textAlign={'center'}>
@@ -56,10 +53,9 @@ export const WhyRevelio = () => {
           padding={'2em'}
           textAlign={'center'}
         >
-          <Iconify
-            icon="ph:pencil-simple-fill"
-            className="rounded-full bg-blue-50 text-blue-500 size-10 p-2"
-          />
+          <div className="rounded-full bg-blue-50 text-blue-500 p-2 size-10">
+            <i className="i-ph-pencil-simple-fill size-6" />
+          </div>
           <p className="font-bold">Event creation</p>
           <p>
             Create your events with details such as name, date, time, and
