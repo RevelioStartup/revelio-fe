@@ -6,6 +6,7 @@ import React from 'react'
 export const WhyRevelio = () => {
   return (
     <Box
+      data-testid="why-revelio"
       sx={{
         display: 'flex',
         flexDirection: 'column',

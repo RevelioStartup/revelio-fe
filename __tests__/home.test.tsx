@@ -1,15 +1,23 @@
 import Home from '@/app/page'
-import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 
-describe('Home', () => {
-  it('renders h3 text', () => {
+describe('Home Page', () => {
+  it('renders the hero section', () => {
     render(<Home />)
+    const heroElement = screen.getByTestId('hero-landing')
+    expect(heroElement).toBeInTheDocument()
+  })
 
-    const test = screen.getByRole('heading', {
-      name: /ease. enhance. commemorate./i,
-    })
+  it('renders the "Why Revelio" section', () => {
+    render(<Home />)
+    const whyRevelioElement = screen.getByTestId('why-revelio')
+    expect(whyRevelioElement).toBeInTheDocument()
+  })
 
-    expect(test).toBeInTheDocument()
+  it('renders the "Without Revelio" section', () => {
+    render(<Home />)
+    const withoutRevelioElement = screen.getByTestId('without-revelio')
+    expect(withoutRevelioElement).toBeInTheDocument()
   })
 })

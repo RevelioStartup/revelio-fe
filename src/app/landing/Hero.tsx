@@ -5,6 +5,7 @@ import React from 'react'
 export const Hero = () => {
   return (
     <Box
+      data-testid="hero-landing"
       sx={{
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
