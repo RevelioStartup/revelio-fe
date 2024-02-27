@@ -6,6 +6,7 @@ import React from 'react'
 export const WithoutRevelio = () => {
   return (
     <Box
+      data-testid="without-revelio"
       sx={{
         display: 'flex',
         flexDirection: 'column',
