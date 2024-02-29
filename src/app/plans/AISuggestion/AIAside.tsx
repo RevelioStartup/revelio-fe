@@ -1,9 +1,10 @@
 'use client'
 import React from 'react'
-import { AISuggestionFormType } from './model'
+
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Input } from '@/components/elements/Forms/input'
 import { Button } from '@/components/elements/Button'
+import { AISuggestionFormType } from '@/types/aiSuggestion'
 
 export const AIAside = () => {
   const defaultValues: AISuggestionFormType = {
