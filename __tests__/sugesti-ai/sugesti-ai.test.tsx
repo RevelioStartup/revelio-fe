@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { AIAside } from '../../src/app/plans/AISuggestion/AIAside'
 import '@testing-library/jest-dom'
 
@@ -37,5 +37,40 @@ describe('Sugesti AI Component', () => {
     fireEvent.click(promptExampleButton)
     const aiInput = screen.getByTestId('ai-input') as HTMLInputElement
     expect(aiInput.value).toBe('Best venue for a cocktail party')
+  })
+
+  it('submits the form with the correct prompt data', async () => {
+    const consoleSpy = jest.spyOn(console, 'log')
+
+    render(<AIAside />)
+
+    const aiInput = screen.getByTestId('ai-input')
+    const aiButton = screen.getByTestId('ai-button')
+
+    fireEvent.change(aiInput, {
+      target: { value: 'Best venue for a tech conference' },
+    })
+
+    fireEvent.click(aiButton)
+
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith({
+        event_id: 0,
+        prompt: 'Best venue for a tech conference',
+      })
+    })
+
+    consoleSpy.mockRestore()
+  })
+
+  it('validates required input fields', async () => {
+    render(<AIAside />)
+
+    const aiButton = screen.getByTestId('ai-button')
+
+    fireEvent.click(aiButton)
+
+    const errorMessage = await screen.findByText(/prompt is required/i)
+    expect(errorMessage).toBeInTheDocument()
   })
 })
