@@ -70,7 +70,7 @@ describe('Sugesti AI Component', () => {
 
     fireEvent.click(aiButton)
 
-    const errorMessage = await screen.findByText(/prompt is required/i)
+    const errorMessage = await screen.findByText(/Please complete this field/i)
     expect(errorMessage).toBeInTheDocument()
   })
 })
