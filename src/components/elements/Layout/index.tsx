@@ -4,7 +4,6 @@ import { Footer } from '../Footer'
 import Providers from './providers'
 import { Navbar } from '../Navbar'
 
-
 interface MainLayout {
   children: ReactNode
 }

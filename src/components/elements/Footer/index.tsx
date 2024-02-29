@@ -4,6 +4,7 @@ import Image from 'next/image'
 export const Footer = () => {
   return (
     <Box
+      data-testid="footer"
       sx={{
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
@@ -52,8 +53,10 @@ export const Footer = () => {
           padding={'2em'}
           textAlign={'center'}
         >
-          <i className="i-ph-twitter-logo-fill text-teal-500 size-8" />
-          <i className="i-ph-instagram-logo-bold text-teal-500 size-8" />
+          <i
+            className="i-ph-instagram-logo-bold text-teal-500 size-8"
+            data-testid="i-ph-instagram-logo-bold"
+          />
         </Box>
       </Box>
     </Box>
