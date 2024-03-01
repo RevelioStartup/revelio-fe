@@ -61,4 +61,27 @@ describe('Test for recover account page', () => {
     await waitFor(() => expect(getByText(errorMessage)).toBeInTheDocument())
     fireEvent.click(getByTestId('button-error'))
   })
+
+  it('shows unkown error message when recover account fails due to unkown reason', async () => {
+    const errorMessage = 'Unknown Error!'
+    const mockChangePassword = jest
+      .fn()
+      .mockResolvedValue({ error: { } })
+    ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
+      mockChangePassword,
+    ])
+    const { getByTestId, getByText } = render(<RecoverAccount />)
+    fireEvent.change(getByTestId('email-input'), {
+      target: { value: 'email@email.com' },
+    })
+    fireEvent.change(getByTestId('password-input'), {
+      target: { value: 'password' },
+    })
+    fireEvent.change(getByTestId('token-input'), {
+      target: { value: 'token' },
+    })
+    fireEvent.submit(getByTestId('recover-form'))
+    await waitFor(() => expect(getByText(errorMessage)).toBeInTheDocument())
+    fireEvent.click(getByTestId('button-error'))
+  })
 })
