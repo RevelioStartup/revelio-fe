@@ -7,7 +7,7 @@ jest.mock('@/redux/api/authApi', () => ({
   useSendChangePasswordMutation: jest.fn(),
 }))
 
-describe('Test for login page', () => {
+describe('Test for recover account page', () => {
   beforeEach(() => {
     const mockChangePassword = jest.fn().mockResolvedValue({ data: {} })
     ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
@@ -15,7 +15,7 @@ describe('Test for login page', () => {
     ])
   })
 
-  it('renders login form', () => {
+  it('renders recover account form', () => {
     const { getByTestId } = render(<RecoverAccount />)
     expect(getByTestId('recover-form')).toBeInTheDocument()
   })
@@ -61,56 +61,4 @@ describe('Test for login page', () => {
     await waitFor(() => expect(getByText(errorMessage)).toBeInTheDocument())
     fireEvent.click(getByTestId('button-error'))
   })
-
-  //   it('opens recovery dialog when "Recover Account" is clicked', () => {
-  //     const { getByText, getByTestId } = render(<RecoverAccount />)
-  //     fireEvent.click(getByText('Recover Account'))
-  //     expect(getByTestId('login-dialog-recover')).toBeInTheDocument()
-  //     fireEvent.click(getByTestId('close-acc-rec-form'))
-  //   })
-
-  //   it('submits recovery form successfully', async () => {
-  //     const mockSendEmail = jest.fn().mockResolvedValue({ data: {} })
-  //     ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
-  //       mockSendEmail,
-  //     ])
-  //     const { getByTestId } = render(<RecoverAccount />)
-  //     fireEvent.click(getByTestId('recover-account-link'))
-  //     fireEvent.change(getByTestId('email-input'), {
-  //       target: { value: 'test@example.com' },
-  //     })
-  //     fireEvent.submit(getByTestId('recover-account-form'))
-  //     await waitFor(() => expect(mockSendEmail).toHaveBeenCalledTimes(1))
-  //   })
-
-  //   it('shows error message when recovery email fails', async () => {
-  //     const errorMessage = 'User with that email doesnt exist!'
-  //     const mockSendEmail = jest
-  //       .fn()
-  //       .mockResolvedValue({ error: { data: { msg: errorMessage } } })
-  //     ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
-  //       mockSendEmail,
-  //     ])
-  //     const { getByTestId, getByText } = render(<RecoverAccount />)
-  //     fireEvent.click(getByTestId('recover-account-link'))
-  //     fireEvent.change(getByTestId('email-input'), {
-  //       target: { value: 'invalid@email.com' },
-  //     })
-  //     fireEvent.submit(getByTestId('recover-account-form'))
-  //     await waitFor(() => expect(getByText(errorMessage)).toBeInTheDocument())
-  //   })
-
-  //   it('dont submits recovery form when email format is wrong', async () => {
-  //     const mockSendEmail = jest.fn().mockResolvedValue({ data: {} })
-  //     ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
-  //       mockSendEmail,
-  //     ])
-  //     const { getByTestId } = render(<RecoverAccount />)
-  //     fireEvent.click(getByTestId('recover-account-link'))
-  //     fireEvent.change(getByTestId('email-input'), {
-  //       target: { value: 'test_wrong_email_format' },
-  //     })
-  //     fireEvent.submit(getByTestId('recover-account-form'))
-  //     await waitFor(() => expect(mockSendEmail).toHaveBeenCalledTimes(0))
-  //   })
 })
