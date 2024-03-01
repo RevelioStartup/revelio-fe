@@ -2,29 +2,35 @@
 import { useState } from 'react'
 import {
   Box,
+  Typography,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
 } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useSendChangePasswordMutation } from '@/redux/api/authApi'
-import { Typography } from '@mui/material'
-import { Input } from '@/components/elements/Forms/input'
+import {
+  useRegisterMutation,
+  useLazySendEmailVerficationQuery,
+} from '@/redux/api/authApi'
 import Link from 'next/link'
+import { Input } from '@/components/elements/Forms/input'
 
-type ChangePassFormType = {
-  token: string
-  new_password: string
+type RegisterFormType = {
+  username: string
+  password: string
   email: string
 }
 
-export default function RecoverAccount() {
-  const defaultValues: ChangePassFormType = {
-    token: '',
-    new_password: '',
+export default function Register() {
+  const defaultValues: RegisterFormType = {
+    username: '',
+    password: '',
     email: '',
   }
+
+  const [register] = useRegisterMutation()
+  const [sendEmail] = useLazySendEmailVerficationQuery()
 
   const [openPrompt, setOpenPromt] = useState(false)
   const [message, setMessage] = useState('')
@@ -32,18 +38,17 @@ export default function RecoverAccount() {
   const [errorMessage, setErrorMessage] = useState('')
   const [dialogTitle, setDialogTitle] = useState('')
 
-  const [changePass] = useSendChangePasswordMutation()
-
-  const methods = useForm<ChangePassFormType>({ defaultValues: defaultValues })
+  const methods = useForm<RegisterFormType>({ defaultValues: defaultValues })
   const { control, handleSubmit } = methods
 
-  const onSubmit: SubmitHandler<ChangePassFormType> = async (data) => {
-    await changePass({ ...data }).then((res) => {
+  const onSubmit: SubmitHandler<RegisterFormType> = async (data) => {
+    await register({ ...data }).then((res) => {
       if (res) {
         if ('data' in res) {
+          setMessage('An email has been sent to your email account.')
           setOpenPromt(true)
-          setMessage('Success! Please Log In with your new password.')
-          setDialogTitle('Account Recovery')
+          setDialogTitle('Email Verification')
+          sendEmail()
         } else {
           if ('data' in res.error) {
             const errorData = res.error.data as { msg: string }
@@ -66,7 +71,7 @@ export default function RecoverAccount() {
 
   return (
     <Box
-      data-testid="recover"
+      data-testid="register"
       sx={{
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
@@ -78,61 +83,66 @@ export default function RecoverAccount() {
       justifyContent={'center'}
       padding={{ xs: '4em 4em', lg: '4em 4em' }}
     >
+      <Box sx={{ flex: 1, textAlign: 'left' }}>
+        <Typography variant="h3" fontWeight={'bold'}>
+          Register to Plan Your Event
+        </Typography>
+        <Typography fontWeight={'bold'}>
+          If you already have an account, you can{' '}
+          <Link style={{ color: 'teal' }} href="/login">
+            Log In Here
+          </Link>
+        </Typography>
+      </Box>
+
       <form
         className="flex flex-col gap-3"
         onSubmit={handleSubmit(onSubmit)}
         style={{ flex: 1 }}
-        data-testid="recover-form"
+        data-testid="register-form"
       >
-        <Typography fontWeight={'bold'} variant="h3" align="center">
-          Account Recovery
-        </Typography>
-        <Typography fontWeight={'bold'} align="center">
-          Please Enter Your Email, Token Sent to Your Email, and Your New
-          Password
-        </Typography>
+        <Input
+          control={control}
+          name="username"
+          placeholder="Enter username"
+          required
+          data-testid="username-input"
+        />
         <Input
           control={control}
           name="email"
-          placeholder="Enter Email"
+          placeholder="Enter email"
           required
           rules={{ pattern: /^\S+@\S+\.\S+$/ }}
           data-testid="email-input"
         />
         <Input
-          control={control}
-          name="token"
-          placeholder="Enter token"
-          required
-          data-testid="token-input"
-        />
-        <Input
           type="password"
           control={control}
-          name="new_password"
-          placeholder="Enter new password"
+          name="password"
+          placeholder="Enter password"
           required
           data-testid="password-input"
         />
         <button type="submit" className="bg-teal-50">
-          Recover Account
+          Register
         </button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="recover-login-redirect-msg">
+      <Dialog open={openPrompt} data-testid="register-verify-email-msg">
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
           <p>{message}</p>
         </DialogContent>
         <DialogActions>
-          <Link href={'/login'}>Continue</Link>
+          <Link href={'/register/verify'}>Continue</Link>
         </DialogActions>
       </Dialog>
 
       <Dialog
         open={openPopup}
         onClose={handleClosePopUP}
-        data-testid="recover-dialog-error-msg"
+        data-testid="register-dialog-error-msg"
       >
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>

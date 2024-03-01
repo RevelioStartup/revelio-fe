@@ -68,6 +68,10 @@ export default function LoginPage() {
             setErrorMessage(errorData.msg)
             setOpenPopup(true)
             setTitle('Error')
+          } else {
+            setErrorMessage('Unknown Error!')
+            setOpenPopup(true)
+            setTitle('Error')
           }
         }
       }
@@ -86,6 +90,10 @@ export default function LoginPage() {
           if ('data' in res.error) {
             const errorData = res.error.data as { msg: string }
             setErrorMessage(errorData.msg)
+            setOpenPopup(true)
+            setTitle('Error')
+          } else {
+            setErrorMessage('Unknown Error!')
             setOpenPopup(true)
             setTitle('Error')
           }
@@ -225,22 +233,21 @@ export default function LoginPage() {
         </DialogActions>
       </Dialog>
 
-
       <Dialog
-      open={openPopup}
-      onClose={handleClosePopup}
-      data-testid="recover-dialog-error-msg"
-    >
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        <p>{errorMessage}</p>
-      </DialogContent>
-      <DialogActions>
-        <button data-testid="button-error" onClick={handleClosePopup}>
-          Close
-        </button>
-      </DialogActions>
-    </Dialog>
+        open={openPopup}
+        onClose={handleClosePopup}
+        data-testid="recover-dialog-error-msg"
+      >
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+          <p>{errorMessage}</p>
+        </DialogContent>
+        <DialogActions>
+          <button data-testid="button-error" onClick={handleClosePopup}>
+            Close
+          </button>
+        </DialogActions>
+      </Dialog>
     </Box>
   )
 }
