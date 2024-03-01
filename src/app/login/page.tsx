@@ -15,7 +15,6 @@ import {
   useSendRecoverPasswordEmailMutation,
 } from '@/redux/api/authApi'
 import Link from 'next/link'
-import { MessageDialog } from '@/app/auth/dialog'
 
 type LoginFormType = {
   username: string
@@ -226,13 +225,22 @@ export default function LoginPage() {
         </DialogActions>
       </Dialog>
 
-      <MessageDialog
-        data-testid="login-dialog-err"
-        message={errorMessage}
-        openPopup={openPopup}
-        onClose={handleClosePopup}
-        title={title}
-      />
+
+      <Dialog
+      open={openPopup}
+      onClose={handleClosePopup}
+      data-testid="recover-dialog-error-msg"
+    >
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent>
+        <p>{errorMessage}</p>
+      </DialogContent>
+      <DialogActions>
+        <button data-testid="button-error" onClick={handleClosePopup}>
+          Close
+        </button>
+      </DialogActions>
+    </Dialog>
     </Box>
   )
 }
