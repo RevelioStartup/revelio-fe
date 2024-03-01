@@ -4,7 +4,7 @@ import { MessageDialog } from '@/app/auth/dialog';
 import '@testing-library/jest-dom'
 
 describe('MessageDialog Component for Membuat Akun (Authentication)', () => {
-  const message = 'test message';
+  const message = 'Test message';
   const title = 'Test';
   const openPopup = true;
   const onCloseMock = jest.fn();
