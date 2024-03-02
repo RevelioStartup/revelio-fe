@@ -4,8 +4,8 @@ export type LoginRequest = {
 }
 
 export type LoginResponse = {
-  refresh_token: string
-  access_token: string
+  refresh: string
+  access: string
 }
 
 export type RegisterRequest = {
