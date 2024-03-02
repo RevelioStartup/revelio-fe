@@ -2,7 +2,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Input } from '@/components/elements/Forms/input'
 import { Button } from '@/components/elements/Button'
 import { AISuggestionFormType } from '@/types/aiSuggestion'
 import { TextArea } from '@/components/elements/Forms/textarea'
@@ -37,14 +36,17 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
     >
       <div className="w-full bg-emerald-500 px-4 py-3 text-white font-bold relative">
         <p>Ask AI for suggestions.</p>
-        <span
+        <div
           onClick={() => {
+            setIsOpen(false)
+          }}
+          onKeyDown={() => {
             setIsOpen(false)
           }}
           className="cursor-pointer"
         >
           <i className="i-ph-x-bold size-5 absolute top-1 translate-y-1/2 text-white right-4" />
-        </span>
+        </div>
       </div>
       <div className="px-4 py-3 flex flex-col gap-3 h-full">
         <div className="flex flex-wrap gap-2">
