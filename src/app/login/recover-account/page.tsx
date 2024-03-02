@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import {
   Box,
+  Typography,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -9,7 +10,6 @@ import {
 } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useSendChangePasswordMutation } from '@/redux/api/authApi'
-import { Typography } from '@mui/material'
 import { Input } from '@/components/elements/Forms/input'
 import Link from 'next/link'
 
@@ -45,16 +45,15 @@ export default function RecoverAccount() {
           setMessage('Success! Please Log In with your new password.')
           setDialogTitle('Account Recovery')
         } else if ('data' in res.error) {
-            const errorData = res.error.data as { msg: string }
-            setErrorMessage(errorData.msg)
-            setOpenPopup(true)
-            setDialogTitle('Error')
+          const errorData = res.error.data as { msg: string }
+          setErrorMessage(errorData.msg)
+          setOpenPopup(true)
+          setDialogTitle('Error')
         } else {
-            setErrorMessage('Unknown Error!')
-            setOpenPopup(true)
-            setDialogTitle('Error')
+          setErrorMessage('Unknown Error!')
+          setOpenPopup(true)
+          setDialogTitle('Error')
         }
-        
       }
     })
   }
@@ -95,7 +94,6 @@ export default function RecoverAccount() {
           name="email"
           placeholder="Enter Email"
           required
-          rules={{ pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/  }}
           data-testid="email-input"
         />
         <Input

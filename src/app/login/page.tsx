@@ -36,7 +36,7 @@ export default function LoginPage() {
   }
 
   const [open, setOpen] = useState(false)
-  const [openPrompt, setOpenPromt] = useState(false)
+  const [openPrompt, setOpenPrompt] = useState(false)
   const [openPromptLogin, setOpenPromptLogin] = useState(false)
   const [openPopup, setOpenPopup] = useState(false)
   const [message, setMessage] = useState('')
@@ -63,14 +63,14 @@ export default function LoginPage() {
           setOpenPromptLogin(true)
           setTitle('Login')
         } else if ('data' in res.error) {
-            const errorData = res.error.data as { msg: string }
-            setErrorMessage(errorData.msg)
-            setOpenPopup(true)
-            setTitle('Error')
+          const errorData = res.error.data as { msg: string }
+          setErrorMessage(errorData.msg)
+          setOpenPopup(true)
+          setTitle('Error')
         } else {
-            setErrorMessage('Unknown Error!')
-            setOpenPopup(true)
-            setTitle('Error')
+          setErrorMessage('Unknown Error!')
+          setOpenPopup(true)
+          setTitle('Error')
         }
       }
     })
@@ -78,21 +78,20 @@ export default function LoginPage() {
 
   const onSubmitRecPass: SubmitHandler<RecPassFormType> = async (data) => {
     await sendEmail({ ...data }).then((res) => {
-      console.log(res)
       if (res) {
         if ('data' in res) {
           setMessage('An email has been sent to your email account.')
-          setOpenPromt(true)
+          setOpenPrompt(true)
           setTitle('Account Recovery')
         } else if ('data' in res.error) {
-            const errorData = res.error.data as { msg: string }
-            setErrorMessage(errorData.msg)
-            setOpenPopup(true)
-            setTitle('Error')
+          const errorData = res.error.data as { msg: string }
+          setErrorMessage(errorData.msg)
+          setOpenPopup(true)
+          setTitle('Error')
         } else {
-            setErrorMessage('Unknown Error!')
-            setOpenPopup(true)
-            setTitle('Error')
+          setErrorMessage('Unknown Error!')
+          setOpenPopup(true)
+          setTitle('Error')
         }
       }
     })
@@ -187,7 +186,6 @@ export default function LoginPage() {
               <Input
                 control={controlRecPass}
                 name="email"
-                rules={{ pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/  }}
                 required
                 placeholder="Enter email"
                 data-testid="email-input"

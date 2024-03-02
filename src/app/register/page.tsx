@@ -50,14 +50,14 @@ export default function Register() {
           setDialogTitle('Email Verification')
           sendEmail()
         } else if ('data' in res.error) {
-            const errorData = res.error.data as { msg: string }
-            setErrorMessage(errorData.msg)
-            setOpenPopup(true)
-            setDialogTitle('Error')
+          const errorData = res.error.data as { msg: string }
+          setErrorMessage(errorData.msg)
+          setOpenPopup(true)
+          setDialogTitle('Error')
         } else {
-            setErrorMessage('Unknown Error!')
-            setOpenPopup(true)
-            setDialogTitle('Error')
+          setErrorMessage('Unknown Error!')
+          setOpenPopup(true)
+          setDialogTitle('Error')
         }
       }
     })
@@ -111,7 +111,6 @@ export default function Register() {
           name="email"
           placeholder="Enter email"
           required
-          rules={{ pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/  }}
           data-testid="email-input"
         />
         <Input
