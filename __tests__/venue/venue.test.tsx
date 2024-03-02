@@ -59,37 +59,54 @@ describe('VenueCreateForm', () => {
 
   it('updates input values on change', () => {
     const { getByTestId } = render(<VenueCreateForm />)
-    fireEvent.change(getByTestId('input-venue-name'), { target: { value: 'Test Venue' } })
-    fireEvent.change(getByTestId('input-address'), { target: { value: 'Test Address' } })
+    fireEvent.change(getByTestId('input-venue-name'), {
+      target: { value: 'Test Venue' },
+    })
+    fireEvent.change(getByTestId('input-address'), {
+      target: { value: 'Test Address' },
+    })
     fireEvent.change(getByTestId('input-price'), { target: { value: '100' } })
-    fireEvent.change(getByTestId('input-contact-name'), { target: { value: 'Test Name' } })
-    fireEvent.change(getByTestId('input-contact-phone-number'), { target: { value: '1234567890' } })
+    fireEvent.change(getByTestId('input-contact-name'), {
+      target: { value: 'Test Name' },
+    })
+    fireEvent.change(getByTestId('input-contact-phone-number'), {
+      target: { value: '1234567890' },
+    })
 
-    expect((getByTestId('input-venue-name') as HTMLInputElement).value).toBe('Test Venue')
-    expect((getByTestId('input-address') as HTMLInputElement).value).toBe('Test Address')
+    expect((getByTestId('input-venue-name') as HTMLInputElement).value).toBe(
+      'Test Venue'
+    )
+    expect((getByTestId('input-address') as HTMLInputElement).value).toBe(
+      'Test Address'
+    )
     expect((getByTestId('input-price') as HTMLInputElement).value).toBe('100')
-    expect((getByTestId('input-contact-name') as HTMLInputElement).value).toBe('Test Name')
-    expect((getByTestId('input-contact-phone-number') as HTMLInputElement).value).toBe('1234567890')
+    expect((getByTestId('input-contact-name') as HTMLInputElement).value).toBe(
+      'Test Name'
+    )
+    expect(
+      (getByTestId('input-contact-phone-number') as HTMLInputElement).value
+    ).toBe('1234567890')
   })
-  
 })
 
 describe('GalleryPage', () => {
   it('renders the gallery and its images', () => {
-    const { getByText, getAllByRole } = render(<GalleryPage />);
+    const { getByText, getAllByRole } = render(<GalleryPage />)
 
-    expect(getByText('Gallery')).toBeInTheDocument();
-    const images = getAllByRole('img');
-    expect(images).toHaveLength(10);
-  });
+    expect(getByText('Gallery')).toBeInTheDocument()
+    const images = getAllByRole('img')
+    expect(images).toHaveLength(10)
+  })
 
   it('renders images with correct src', () => {
-    const { getAllByRole } = render(<GalleryPage />);
-    const images = getAllByRole('img');
+    const { getAllByRole } = render(<GalleryPage />)
+    const images = getAllByRole('img')
 
     images.forEach((image, index) => {
-      expect(image).toHaveAttribute('src', `/assets/images/Landingpage-Image.svg`);
-    });
-  });
-
-});
+      expect(image).toHaveAttribute(
+        'src',
+        `/assets/images/Landingpage-Image.svg`
+      )
+    })
+  })
+})
