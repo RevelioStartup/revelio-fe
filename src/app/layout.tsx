@@ -4,8 +4,6 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '@/styles/theme'
 import '../styles/globals.css'
-import { Navbar } from '@/components/elements'
-import { Footer } from '@/components/elements/Footer'
 import { MainLayout } from '@/components/elements/Layout'
 
 export const metadata: Metadata = { ...METADATA, ...VIEWPORT }
