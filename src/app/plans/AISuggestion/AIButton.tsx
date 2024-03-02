@@ -7,7 +7,16 @@ export const AIButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   return (
     <div>
-     
+      <AIAside isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Button
+        onClick={() => {
+          setIsOpen(true)
+        }}
+      >
+        <p className="whitespace-nowrap w-full" data-testid="ai-button">
+          Ask AI
+        </p>
+      </Button>
     </div>
   )
 }

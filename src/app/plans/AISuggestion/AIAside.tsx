@@ -1,12 +1,18 @@
 'use client'
 import React from 'react'
-
+import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Input } from '@/components/elements/Forms/input'
 import { Button } from '@/components/elements/Button'
 import { AISuggestionFormType } from '@/types/aiSuggestion'
+import { TextArea } from '@/components/elements/Forms/textarea'
 
-export const AIAside = () => {
+interface AIAsideProps {
+  isOpen: boolean
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  theme?: string
+}
+export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
   const defaultValues: AISuggestionFormType = {
     event_id: 0,
     prompt: '',
@@ -21,34 +27,68 @@ export const AIAside = () => {
     console.log(data)
   }
   return (
-    <aside data-testid="ai-aside" className="flex flex-col px-4 py-3">
-      <div>
-        <button
-          data-testid="prompt-example"
-          className="bg-slate-400 rounded-full"
+    <motion.aside
+      data-testid="ai-aside"
+      initial={{ x: '100%' }}
+      animate={{ x: isOpen ? 0 : '100%' }}
+      exit={{ x: '100%' }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      className="fixed top-0 right-0 h-full bg-white z-50 shadow-lg flex flex-col gap-3 w-full lg:w-96"
+    >
+      <div className="w-full bg-emerald-500 px-4 py-3 text-white font-bold relative">
+        <p>Ask AI for suggestions.</p>
+        <span
           onClick={() => {
-            setValue('prompt', 'Best venue for a cocktail party')
+            setIsOpen(false)
           }}
+          className="cursor-pointer"
         >
-          Best venue for a cocktail party
-        </button>
+          <i className="i-ph-x-bold size-5 absolute top-1 translate-y-1/2 text-white right-4" />
+        </span>
       </div>
-      <div className="flex flex-row gap-2 self-end">
-        <Input
-          data-testid="ai-input"
-          control={control}
-          name="prompt"
-          placeholder="Ask AI to help planning your event"
-          required
-        />
-        <Button
-          data-testid="ai-button"
-          width={'auto'}
-          onClick={handleSubmit(onSubmit)}
-        >
-          Ask AI
-        </Button>
+      <div className="px-4 py-3 flex flex-col gap-3 h-full">
+        <div className="flex flex-wrap gap-2">
+          <button
+            data-testid="prompt-example-venue"
+            className="bg-slate-200 rounded-full px-2 py-1 text-sm"
+            onClick={() => {
+              setValue('prompt', 'Best venue for')
+            }}
+          >
+            Best venue for ...
+          </button>
+          <button
+            data-testid="prompt-example-vendor"
+            className="bg-slate-200 rounded-full px-2 py-1 text-sm"
+            onClick={() => {
+              setValue('prompt', 'Vendors for')
+            }}
+          >
+            Vendors for ...
+          </button>
+        </div>
+        <div data-testid="content" className="grow">
+          <div></div>
+        </div>
+        <div className="flex flex-row items-end gap-2 w-full">
+          <TextArea
+            data-testid="ai-input"
+            className="w-full"
+            control={control}
+            name="prompt"
+            placeholder="Ask AI to help planning your event"
+            required
+          />
+          <Button
+            data-testid="ai-aside-button"
+            width={'auto'}
+            onClick={handleSubmit(onSubmit)}
+            className="whitespace-nowrap"
+          >
+            Ask AI
+          </Button>
+        </div>
       </div>
-    </aside>
+    </motion.aside>
   )
 }
