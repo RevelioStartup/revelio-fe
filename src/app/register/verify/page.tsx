@@ -24,7 +24,7 @@ export default function VerifyEmail() {
 
   const [verify] = useVerifyEmailMutation()
 
-  const [openPrompt, setOpenPromt] = useState(false)
+  const [openPrompt, setOpenPrompt] = useState(false)
   const [message, setMessage] = useState('')
   const [openPopup, setOpenPopup] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -38,20 +38,19 @@ export default function VerifyEmail() {
       if (res) {
         if ('data' in res) {
           setMessage('Success! Your email is now verified.')
-          setOpenPromt(true)
+          setOpenPrompt(true)
           setDialogTitle('Email Verification')
-        } else {
-          if ('data' in res.error) {
+        } else if ('data' in res.error) {
             const errorData = res.error.data as { msg: string }
             setErrorMessage(errorData.msg)
             setOpenPopup(true)
             setDialogTitle('Error')
-          } else {
+        } else {
             setErrorMessage('Unknown Error!')
             setOpenPopup(true)
             setDialogTitle('Error')
-          }
         }
+        
       }
     })
   }

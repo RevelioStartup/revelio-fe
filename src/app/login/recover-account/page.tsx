@@ -26,7 +26,7 @@ export default function RecoverAccount() {
     email: '',
   }
 
-  const [openPrompt, setOpenPromt] = useState(false)
+  const [openPrompt, setOpenPrompt] = useState(false)
   const [message, setMessage] = useState('')
   const [openPopup, setOpenPopup] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -41,21 +41,20 @@ export default function RecoverAccount() {
     await changePass({ ...data }).then((res) => {
       if (res) {
         if ('data' in res) {
-          setOpenPromt(true)
+          setOpenPrompt(true)
           setMessage('Success! Please Log In with your new password.')
           setDialogTitle('Account Recovery')
-        } else {
-          if ('data' in res.error) {
+        } else if ('data' in res.error) {
             const errorData = res.error.data as { msg: string }
             setErrorMessage(errorData.msg)
             setOpenPopup(true)
             setDialogTitle('Error')
-          } else {
+        } else {
             setErrorMessage('Unknown Error!')
             setOpenPopup(true)
             setDialogTitle('Error')
-          }
         }
+        
       }
     })
   }
@@ -96,7 +95,7 @@ export default function RecoverAccount() {
           name="email"
           placeholder="Enter Email"
           required
-          rules={{ pattern: /^\S+@\S+\.\S+$/ }}
+          rules={{ pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/  }}
           data-testid="email-input"
         />
         <Input

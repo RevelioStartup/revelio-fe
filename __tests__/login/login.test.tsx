@@ -61,9 +61,7 @@ describe('Test for login page', () => {
 
   it('shows unkown error message when login fails due to unkown reason', async () => {
     const errorMessage = 'Unknown Error!'
-    const mockLogin = jest
-      .fn()
-      .mockResolvedValue({ error: { } })
+    const mockLogin = jest.fn().mockResolvedValue({ error: {} })
     ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin])
     const { getByTestId, getByText } = render(<LoginPage />)
     fireEvent.change(getByTestId('username-input'), {
@@ -117,9 +115,7 @@ describe('Test for login page', () => {
 
   it('shows unknown error message when recovery email fails due to unknown reason', async () => {
     const errorMessage = 'Unknown Error!'
-    const mockSendEmail = jest
-      .fn()
-      .mockResolvedValue({ error: { } })
+    const mockSendEmail = jest.fn().mockResolvedValue({ error: {} })
     ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
       mockSendEmail,
     ])

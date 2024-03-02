@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   const [open, setOpen] = useState(false)
   const [openPrompt, setOpenPromt] = useState(false)
-  const [openPromptLogin, setOpenPromtLogin] = useState(false)
+  const [openPromptLogin, setOpenPromptLogin] = useState(false)
   const [openPopup, setOpenPopup] = useState(false)
   const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -60,19 +60,17 @@ export default function LoginPage() {
       if (res) {
         if ('data' in res) {
           setMessage('Login success!')
-          setOpenPromtLogin(true)
+          setOpenPromptLogin(true)
           setTitle('Login')
-        } else {
-          if ('data' in res.error) {
+        } else if ('data' in res.error) {
             const errorData = res.error.data as { msg: string }
             setErrorMessage(errorData.msg)
             setOpenPopup(true)
             setTitle('Error')
-          } else {
+        } else {
             setErrorMessage('Unknown Error!')
             setOpenPopup(true)
             setTitle('Error')
-          }
         }
       }
     })
@@ -86,17 +84,15 @@ export default function LoginPage() {
           setMessage('An email has been sent to your email account.')
           setOpenPromt(true)
           setTitle('Account Recovery')
-        } else {
-          if ('data' in res.error) {
+        } else if ('data' in res.error) {
             const errorData = res.error.data as { msg: string }
             setErrorMessage(errorData.msg)
             setOpenPopup(true)
             setTitle('Error')
-          } else {
+        } else {
             setErrorMessage('Unknown Error!')
             setOpenPopup(true)
             setTitle('Error')
-          }
         }
       }
     })
@@ -191,7 +187,7 @@ export default function LoginPage() {
               <Input
                 control={controlRecPass}
                 name="email"
-                rules={{ pattern: /^\S+@\S+\.\S+$/ }}
+                rules={{ pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/  }}
                 required
                 placeholder="Enter email"
                 data-testid="email-input"

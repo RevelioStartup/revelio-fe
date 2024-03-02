@@ -10,9 +10,7 @@ jest.mock('@/redux/api/authApi', () => ({
 describe('Test for verify email page', () => {
   beforeEach(() => {
     const mockVerifyEmail = jest.fn().mockResolvedValue({ data: {} })
-    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([
-      mockVerifyEmail,
-    ])
+    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([mockVerifyEmail])
   })
 
   it('renders verify email form', () => {
@@ -22,9 +20,7 @@ describe('Test for verify email page', () => {
 
   it('submits recover form successfully', async () => {
     const mockVerifyEmail = jest.fn().mockResolvedValue({ data: {} })
-    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([
-      mockVerifyEmail,
-    ])
+    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([mockVerifyEmail])
     const { getByTestId } = render(<VerifyEmail />)
     fireEvent.change(getByTestId('token-input'), {
       target: { value: 'token' },
@@ -38,9 +34,7 @@ describe('Test for verify email page', () => {
     const mockVerifyEmail = jest
       .fn()
       .mockResolvedValue({ error: { data: { msg: errorMessage } } })
-    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([
-      mockVerifyEmail,
-    ])
+    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([mockVerifyEmail])
     const { getByTestId, getByText } = render(<VerifyEmail />)
     fireEvent.change(getByTestId('token-input'), {
       target: { value: 'token' },
@@ -53,9 +47,7 @@ describe('Test for verify email page', () => {
   it('shows unkown error message when verify email fails due to unkown reason', async () => {
     const errorMessage = 'Unknown Error!'
     const mockVerifyEmail = jest.fn().mockResolvedValue({ error: {} })
-    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([
-      mockVerifyEmail,
-    ])
+    ;(useVerifyEmailMutation as jest.Mock).mockReturnValue([mockVerifyEmail])
     const { getByTestId, getByText } = render(<VerifyEmail />)
     fireEvent.change(getByTestId('token-input'), {
       target: { value: 'token' },

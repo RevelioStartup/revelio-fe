@@ -64,9 +64,7 @@ describe('Test for recover account page', () => {
 
   it('shows unkown error message when recover account fails due to unkown reason', async () => {
     const errorMessage = 'Unknown Error!'
-    const mockChangePassword = jest
-      .fn()
-      .mockResolvedValue({ error: { } })
+    const mockChangePassword = jest.fn().mockResolvedValue({ error: {} })
     ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
       mockChangePassword,
     ])

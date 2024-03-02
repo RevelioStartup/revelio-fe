@@ -32,7 +32,7 @@ export default function Register() {
   const [register] = useRegisterMutation()
   const [sendEmail] = useLazySendEmailVerficationQuery()
 
-  const [openPrompt, setOpenPromt] = useState(false)
+  const [openPrompt, setOpenPrompt] = useState(false)
   const [message, setMessage] = useState('')
   const [openPopup, setOpenPopup] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -46,20 +46,18 @@ export default function Register() {
       if (res) {
         if ('data' in res) {
           setMessage('An email has been sent to your email account.')
-          setOpenPromt(true)
+          setOpenPrompt(true)
           setDialogTitle('Email Verification')
           sendEmail()
-        } else {
-          if ('data' in res.error) {
+        } else if ('data' in res.error) {
             const errorData = res.error.data as { msg: string }
             setErrorMessage(errorData.msg)
             setOpenPopup(true)
             setDialogTitle('Error')
-          } else {
+        } else {
             setErrorMessage('Unknown Error!')
             setOpenPopup(true)
             setDialogTitle('Error')
-          }
         }
       }
     })
@@ -113,7 +111,7 @@ export default function Register() {
           name="email"
           placeholder="Enter email"
           required
-          rules={{ pattern: /^\S+@\S+\.\S+$/ }}
+          rules={{ pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/  }}
           data-testid="email-input"
         />
         <Input
