@@ -22,6 +22,7 @@ export const Navbar: React.FC = () => {
   }, [])
   return (
     <Box
+      data-testid="navbar"
       height={'80px'}
       width={'100%'}
       bgcolor={'transparent'}
@@ -37,11 +38,11 @@ export const Navbar: React.FC = () => {
       )}
     >
       <Image
+        data-testid="nav-logo"
         src="/assets/images/Logo.svg"
         alt="logo"
         width={75}
         height={75}
-        priority
       />
       <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={'40px'}>
         {MENU.map(({ href, label }, index) => (
