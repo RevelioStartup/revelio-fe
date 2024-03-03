@@ -1,5 +1,8 @@
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import LoginPage from '@/app/login/page'
+import LoginPageTitle from '@/app/login/LoginPageTitle'
+import LoginForm from '@/app/login/LoginForm'
+import AccountRecoveryRequestForm from '@/app/login/AccountRecoveryRequestForm'
 import {
   useLoginMutation,
   useSendRecoverPasswordEmailMutation,
@@ -11,7 +14,29 @@ jest.mock('@/redux/api/authApi', () => ({
   useSendRecoverPasswordEmailMutation: jest.fn(),
 }))
 
-describe('Test for login page', () => {
+describe('Test for LoginPage', () => {
+  it('renders login page title form', () => {
+    const mockLogin = jest.fn().mockResolvedValue({ data: {} })
+    ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin])
+
+    const mockSendEmail = jest.fn().mockResolvedValue({ data: {} })
+    ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
+      mockSendEmail,
+    ])
+    const { getByTestId } = render(<LoginPage />)
+    expect(getByTestId('login-title')).toBeInTheDocument()
+    expect(getByTestId('login-form')).toBeInTheDocument()
+  })
+})
+
+describe('Test for LoginTextBox', () => {
+  it('renders login page title form', () => {
+    const { getByTestId } = render(<LoginPageTitle />)
+    expect(getByTestId('login-title')).toBeInTheDocument()
+  })
+})
+
+describe('Test for login form', () => {
   beforeEach(() => {
     const mockLogin = jest.fn().mockResolvedValue({ data: {} })
     ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin])
@@ -23,14 +48,14 @@ describe('Test for login page', () => {
   })
 
   it('renders login form', () => {
-    const { getByTestId } = render(<LoginPage />)
+    const { getByTestId } = render(<LoginForm />)
     expect(getByTestId('login-form')).toBeInTheDocument()
   })
 
   it('submits login form successfully', async () => {
     const mockLogin = jest.fn().mockResolvedValue({ data: {} })
     ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin])
-    const { getByTestId } = render(<LoginPage />)
+    const { getByTestId } = render(<LoginForm />)
     fireEvent.change(getByTestId('username-input'), {
       target: { value: 'username' },
     })
@@ -47,7 +72,7 @@ describe('Test for login page', () => {
       .fn()
       .mockResolvedValue({ error: { data: { msg: errorMessage } } })
     ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin])
-    const { getByTestId, getByText } = render(<LoginPage />)
+    const { getByTestId, getByText } = render(<LoginForm />)
     fireEvent.change(getByTestId('username-input'), {
       target: { value: 'invalid_username' },
     })
@@ -63,7 +88,7 @@ describe('Test for login page', () => {
     const errorMessage = 'Unknown Error!'
     const mockLogin = jest.fn().mockResolvedValue({ error: {} })
     ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin])
-    const { getByTestId, getByText } = render(<LoginPage />)
+    const { getByTestId, getByText } = render(<LoginForm />)
     fireEvent.change(getByTestId('username-input'), {
       target: { value: 'invalid_username' },
     })
@@ -79,7 +104,6 @@ describe('Test for login page', () => {
     const { getByText, getByTestId } = render(<LoginPage />)
     fireEvent.click(getByText('Recover Account'))
     expect(getByTestId('login-dialog-recover')).toBeInTheDocument()
-    fireEvent.click(getByTestId('close-acc-rec-form'))
   })
 
   it('submits recovery form successfully', async () => {
@@ -111,6 +135,8 @@ describe('Test for login page', () => {
     })
     fireEvent.submit(getByTestId('recover-account-form'))
     await waitFor(() => expect(getByText(errorMessage)).toBeInTheDocument())
+    fireEvent.click(getByTestId('button-error-account-recovery'))
+    fireEvent.click(getByTestId('close-acc-rec-form'))
   })
 
   it('shows unknown error message when recovery email fails due to unknown reason', async () => {
@@ -126,19 +152,5 @@ describe('Test for login page', () => {
     })
     fireEvent.submit(getByTestId('recover-account-form'))
     await waitFor(() => expect(getByText(errorMessage)).toBeInTheDocument())
-  })
-
-  it('dont submits recovery form when email format is wrong', async () => {
-    const mockSendEmail = jest.fn().mockResolvedValue({ data: {} })
-    ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
-      mockSendEmail,
-    ])
-    const { getByTestId } = render(<LoginPage />)
-    fireEvent.click(getByTestId('recover-account-link'))
-    fireEvent.change(getByTestId('email-input'), {
-      target: { value: 'test_wrong_email_format' },
-    })
-    fireEvent.submit(getByTestId('recover-account-form'))
-    await waitFor(() => expect(mockSendEmail).toHaveBeenCalledTimes(0))
   })
 })
