@@ -16,11 +16,15 @@ type RecPassFormType = {
   email: string
 }
 
+interface Props {
+  readonly openForm: boolean;
+}
+
 export default function AccountRecoveryRequestForm({
-  openForm,
-}: {
-  openForm: boolean
-}) {
+  openForm
+}: 
+  Props
+) {
   const defaultValuesRecPass: RecPassFormType = {
     email: '',
   }
