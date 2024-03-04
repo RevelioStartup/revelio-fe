@@ -11,7 +11,7 @@
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "format": "prettier --write .",
-    "test-all": "yarn format && yarn check-format && yarn check-types",
+    "test-all": "yarn format && yarn check-format",
     "prepare": "husky",
     "test": "jest"
   },

@@ -6,16 +6,17 @@ type EventPageProps = {
   setEventPage: (page: EventPageProps['page']) => void
 }
 
-const EventContext = createContext({} as EventPageProps)
+export const EventContext = createContext({} as EventPageProps)
 
 export const useEventContext = () => useContext(EventContext)
 
-const EventContextProvider = ({
+export const EventContextProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
   const [page, setPage] = useState<EventPageProps['page']>('name')
 
   const setEventPage = (page: EventPageProps['page']) => {
+    console.log("masuk") 
     setPage(page)
   }
 

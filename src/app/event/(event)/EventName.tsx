@@ -20,6 +20,7 @@ export const EventName: React.FC = () => {
   const { control, handleSubmit } = methods
 
   const onSubmit = (data: { name: string }) => {
+    console.log("msk")
     dispatch(setEventName(data.name))
     setEventPage('date')
   }

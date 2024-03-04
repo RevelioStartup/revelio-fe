@@ -33,6 +33,8 @@ export const EventDate = () => {
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            name='date'
+            data-testid="date"
             label="Event Date"
             value={value}
             onChange={(newValue) => setValue(newValue)}
