@@ -50,7 +50,7 @@ describe('Test for event page', () => {
   })
 
   it('submits event date form successfully', async () => {
-    const { getByPlaceholderText, getByTestId } = render(<EventDate />, )
+    const { getByPlaceholderText, getByTestId } = render(<EventDate />)
 
     const inputElement = getByPlaceholderText('MM/DD/YYYY')
 

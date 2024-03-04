@@ -3,7 +3,7 @@ import { useEventContext } from '../layout'
 import { setEventDate } from '@/redux/features/eventSlice'
 import { Button } from '@/components/elements/Button'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs, { Dayjs } from 'dayjs'
@@ -12,12 +12,20 @@ export const EventDate = () => {
   const dispatch = useAppDispatch()
 
   const { setEventPage } = useEventContext()
-  const [value, setValue] = useState<Dayjs | null>(dayjs(null))
+  const [value, setValue] = useState<Dayjs | null>(null)
+  const error = useMemo(() => {
+    if (!value) return "Please select the date of your event."
+    if (value.isBefore(dayjs(), 'day')) return "Please select a future date."
+    return ""
+  }, [value])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("masuk kesini")
+    console.log("beneran masuk?")
+
     e.preventDefault()
-    if (!value) return
+    if (!!error) {
+      return
+    }
     dispatch(setEventDate(dayjs(value).toDate().toString()))
     setEventPage('budget')
   }
@@ -33,18 +41,17 @@ export const EventDate = () => {
         onSubmit={handleSubmit}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <div className="flex flex-col gap-4">
           <DatePicker
             name="date"
             data-testid="date"
             label="Event Date"
             value={value}
             onChange={(newValue) => setValue(newValue)}
-            slotProps={{
-              textField: {
-                required: true,
-              },
-            }}
+            slotProps={{ textField: { required: true }}}
           />
+          {!!error && <p className = "text-red-500"> {error} </p>}
+          </div>
         </LocalizationProvider>
         <Button
           type="submit"
