@@ -2,18 +2,25 @@
 import { Button } from '@/components/elements/Button'
 import { setEventName } from '@/redux/features/eventSlice'
 import { useAppDispatch } from '@/redux/store'
-import { TextField } from '@mui/material'
 import { useEventContext } from '../layout'
+import { useForm } from 'react-hook-form'
+import { Input } from '@/components/elements/Forms/input'
 
 export const EventName: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const { setEventPage } = useEventContext()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const name = (e.currentTarget[0] as HTMLInputElement).value
-    dispatch(setEventName(name))
+  const methods = useForm({
+    defaultValues: {
+      name: '',
+    },
+  })
+
+  const { control, handleSubmit } = methods
+
+  const onSubmit = (data: { name: string }) => {
+    dispatch(setEventName(data.name))
     setEventPage('date')
   }
 
@@ -25,17 +32,15 @@ export const EventName: React.FC = () => {
       <form
         className="flex flex-col gap-8"
         data-testid="name-form"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField
+        <Input
+          control={control}
+          name="name"
           data-testid="name"
-          sx={{
-            '& fieldset': { border: 'none' },
-            borderRadius: '10px',
-          }}
           placeholder="Enter Event Name"
           required
-          className="bg-slate-100 placeholder:text-slate-800 placeholder:font-bold !border-none placeholder:text-center flex justify-center"
+          className="bg-slate-100 placeholder:text-slate-800 placeholder:font-bold !border-none placeholder:text-center flex justify-center rounded-[10px]"
         />
         <Button
           type="submit"
