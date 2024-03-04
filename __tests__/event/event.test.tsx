@@ -2,6 +2,10 @@ import EventPage from '@/app/event/page'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
+jest.mock('@/redux/store', () => ({
+  useAppDispatch: jest.fn(),
+}))
+
 describe('Test for event page', () => {
   it('renders login form', () => {
     const { getByTestId } = render(<EventPage />)
@@ -18,6 +22,6 @@ describe('Test for event page', () => {
   it('renders submit button', () => {
     const { getByText } = render(<EventPage />)
 
-    expect(getByText('Submit')).toBeInTheDocument()
+    expect(getByText('Next')).toBeInTheDocument()
   })
 })
