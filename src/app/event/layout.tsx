@@ -16,7 +16,7 @@ export const EventContextProvider = ({
   const [page, setPage] = useState<EventPageProps['page']>('name')
 
   const setEventPage = (page: EventPageProps['page']) => {
-    console.log("masuk") 
+    console.log('masuk')
     setPage(page)
   }
 

@@ -15,9 +15,10 @@ export const EventDate = () => {
   const [value, setValue] = useState<Dayjs | null>(dayjs(null))
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("masuk kesini")
     e.preventDefault()
     if (!value) return
-    dispatch(setEventDate(value as unknown as Date))
+    dispatch(setEventDate(dayjs(value).toDate().toString()))
     setEventPage('budget')
   }
 
@@ -33,11 +34,16 @@ export const EventDate = () => {
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
-            name='date'
+            name="date"
             data-testid="date"
             label="Event Date"
             value={value}
             onChange={(newValue) => setValue(newValue)}
+            slotProps={{
+              textField: {
+                required: true,
+              },
+            }}
           />
         </LocalizationProvider>
         <Button

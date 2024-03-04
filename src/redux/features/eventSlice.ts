@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 interface IEvent {
   name: string
   budget: number
-  date: Date
+  date: string
   objective: string
   attendees: number
   theme: string
@@ -13,7 +13,7 @@ interface IEvent {
 const initialState: IEvent = {
   name: '',
   budget: 0,
-  date: new Date(),
+  date: "",
   objective: '',
   attendees: 0,
   theme: '',
@@ -25,9 +25,11 @@ const eventSlice = createSlice({
   initialState,
   reducers: {
     setEventName: (state, action: PayloadAction<string>) => {
+      console.log("name", action.payload)
       state.name = action.payload
     },
-    setEventDate: (state, action: PayloadAction<Date>) => {
+    setEventDate: (state, action: PayloadAction<string>) => {
+      console.log("masuk kesini")
       state.date = action.payload
     },
     setEventBudget: (state, action: PayloadAction<number>) => {
