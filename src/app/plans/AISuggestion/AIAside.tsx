@@ -5,6 +5,10 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { Button } from '@/components/elements/Button'
 import { AISuggestionFormType } from '@/types/aiSuggestion'
 import { TextArea } from '@/components/elements/Forms/textarea'
+import {
+  useAiSuggestionHistoryListQuery,
+  useAskSuggestionMutation,
+} from '@/redux/api/aiSuggestionApi'
 
 interface AIAsideProps {
   isOpen: boolean
@@ -12,6 +16,8 @@ interface AIAsideProps {
   theme?: string
 }
 export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
+  const [askAI, { data: aiAnswer }] = useAskSuggestionMutation()
+  const { data: aiHistory } = useAiSuggestionHistoryListQuery()
   const defaultValues: AISuggestionFormType = {
     event_id: 0,
     prompt: '',
@@ -23,7 +29,7 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
   const { control, handleSubmit, setValue } = methods
 
   const onSubmit: SubmitHandler<AISuggestionFormType> = async (data) => {
-    console.log(data)
+    askAI(data)
   }
   return (
     <motion.aside
@@ -70,7 +76,17 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
           </button>
         </div>
         <div data-testid="content" className="grow">
-          <div></div>
+          <div>
+            {aiHistory?.map(({ id, date, prompt, output }) => {
+              return (
+                <div key={id}>
+                  <div>{prompt}</div>
+                  <div>{output}</div>
+                </div>
+              )
+            })}
+          </div>
+          <div>{aiAnswer?.msg}</div>
         </div>
         <div className="flex flex-row items-end gap-2 w-full">
           <TextArea
