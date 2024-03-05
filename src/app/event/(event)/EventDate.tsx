@@ -1,5 +1,4 @@
 import { useAppDispatch } from '@/redux/store'
-import { useEventContext } from '../layout'
 import { setEventDate } from '@/redux/features/eventSlice'
 import { Button } from '@/components/elements/Button'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -7,6 +6,7 @@ import { useMemo, useState } from 'react'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs, { Dayjs } from 'dayjs'
+import { useEventContext } from '@/components/contexts/EventContext'
 
 export const EventDate = () => {
   const dispatch = useAppDispatch()

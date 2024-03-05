@@ -1,6 +1,6 @@
 'use client'
 
-import { EventContextProvider } from "@/components/contexts/EventContext"
+import { EventContextProvider } from '@/components/contexts/EventContext'
 
 export default function Layout({
   children,

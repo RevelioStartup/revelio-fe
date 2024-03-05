@@ -2,9 +2,9 @@
 import { Button } from '@/components/elements/Button'
 import { setEventName } from '@/redux/features/eventSlice'
 import { useAppDispatch } from '@/redux/store'
-import { useEventContext } from '../layout'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/elements/Forms/input'
+import { useEventContext } from '@/components/contexts/EventContext'
 
 export const EventName: React.FC = () => {
   const dispatch = useAppDispatch()

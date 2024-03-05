@@ -2,7 +2,7 @@
 
 import { EventName } from './(event)/EventName'
 import { EventDate } from './(event)/EventDate'
-import { useEventContext } from './layout'
+import { useEventContext } from '@/components/contexts/EventContext'
 
 export default function EventPage() {
   const { page } = useEventContext()
