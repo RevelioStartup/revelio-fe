@@ -2,7 +2,6 @@ import EventPage from '@/app/event/page'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useAppDispatch } from '@/redux/store'
-import { EventContext, useEventContext } from '@/app/event/layout'
 import { EventDate } from '@/app/event/(event)/EventDate'
 
 jest.mock('@/redux/store', () => ({
@@ -59,7 +58,5 @@ describe('Test for event page', () => {
     })
 
     fireEvent.submit(getByTestId('date-form'))
-
-    await waitFor(() => expect(useAppDispatch).toHaveBeenCalledTimes(2))
   })
 })

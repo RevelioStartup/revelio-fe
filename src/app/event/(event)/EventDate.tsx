@@ -14,13 +14,13 @@ export const EventDate = () => {
   const { setEventPage } = useEventContext()
   const [value, setValue] = useState<Dayjs | null>(null)
   const error = useMemo(() => {
-    if (!value) return "Please select the date of your event."
-    if (value.isBefore(dayjs(), 'day')) return "Please select a future date."
-    return ""
+    if (!value) return 'Please select the date of your event.'
+    if (value.isBefore(dayjs(), 'day')) return 'Please select a future date.'
+    return ''
   }, [value])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("beneran masuk?")
+    console.log('beneran masuk?')
 
     e.preventDefault()
     if (!!error) {
@@ -42,15 +42,15 @@ export const EventDate = () => {
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div className="flex flex-col gap-4">
-          <DatePicker
-            name="date"
-            data-testid="date"
-            label="Event Date"
-            value={value}
-            onChange={(newValue) => setValue(newValue)}
-            slotProps={{ textField: { required: true }}}
-          />
-          {!!error && <p className = "text-red-500"> {error} </p>}
+            <DatePicker
+              name="date"
+              data-testid="date"
+              label="Event Date"
+              value={value}
+              onChange={(newValue) => setValue(newValue)}
+              slotProps={{ textField: { required: true } }}
+            />
+            {!!error && <p className="text-red-500"> {error} </p>}
           </div>
         </LocalizationProvider>
         <Button
