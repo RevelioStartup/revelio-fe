@@ -23,9 +23,7 @@ export const EventDate = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(error)
-    if (!!error) {
-      return
-    }
+    if (error) return
     dispatch(setEventDate(dayjs(value).toDate().toString()))
     setEventPage('budget')
   }

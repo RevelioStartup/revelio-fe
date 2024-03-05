@@ -5,7 +5,6 @@ import { useAppDispatch } from '@/redux/store'
 import {
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
   SelectChangeEvent,
 } from '@mui/material'
