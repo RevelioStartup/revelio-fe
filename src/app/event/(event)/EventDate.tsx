@@ -13,6 +13,7 @@ export const EventDate = () => {
 
   const { setEventPage } = useEventContext()
   const [value, setValue] = React.useState<Dayjs | null>(null)
+  
   const error = React.useMemo(() => {
     if (!value) return 'Please select the date of your event.'
     if (value.isBefore(dayjs(), 'day')) return 'Please select a future date.'
