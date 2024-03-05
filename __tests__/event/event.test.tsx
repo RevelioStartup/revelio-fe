@@ -169,4 +169,169 @@ describe('Test for event page', () => {
 
     fireEvent.submit(getByTestId('date-form'))
   })
+
+  it("test error message when budget is less than 0", async () => {
+    const myInitialState = "Please enter a valid budget."
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({ page: 'budget' })
+
+    const { getByTestId, getByText } = render(<EventPage />)
+
+    const inputElement = getByTestId('budget')
+
+    fireEvent.change(inputElement, {
+      target: { value: '-123' },
+    })
+
+    fireEvent.submit(getByTestId('budget-form'))
+
+    await waitFor(() =>
+      expect(
+        getByText('Please enter a valid budget.')
+      ).toBeInTheDocument()
+    )
+  })
+
+  it('no error if budget is correct', async () => {
+    const myInitialState = ''
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({
+      page: 'budget',
+      setEventPage: jest.fn(),
+    })
+
+    const { getByTestId } = render(<EventPage />)
+
+    const inputElement = getByTestId('budget')
+
+    fireEvent.change(inputElement, {
+      target: { value: '123000' },
+    })
+
+    fireEvent.submit(getByTestId('budget-form'))
+  })
+
+  it('test error message when purpose is not selected', async () => {
+
+    const myInitialState: string[] = []
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({ page: 'purpose' })
+
+    const { getByTestId, getByText } = render(<EventPage />)
+
+    fireEvent.submit(getByTestId('purpose-form'))
+
+    await waitFor(() =>
+      expect(
+        getByText('Please select at least one service.')
+      ).toBeInTheDocument()
+    )
+  })
+
+  it('no error if purpose is correct', async () => {
+    const myInitialState = ['Catering']
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({
+      page: 'purpose',
+      setEventPage: jest.fn(),
+    })
+
+    const { getByTestId } = render(<EventPage />)
+
+    const inputElement = getByTestId('objective')
+
+    fireEvent.change(inputElement, {
+      target: { value: 'To Onboard Team' },
+    })
+
+    const attendees = getByTestId('attendees')
+
+    fireEvent.change(attendees, {
+      target: { value: 10 },
+    })
+
+    const theme = getByTestId('theme')
+
+    fireEvent.change(theme, {
+      target: { value: 'Modern' },
+    })
+
+    const services = getByTestId('services')
+
+    const button = within(services).getByRole('combobox');
+
+    fireEvent.mouseDown(button);
+
+    const listbox = within(screen.getByRole('presentation')).getByRole(
+      'listbox'
+    );
+
+    const options = within(listbox).getAllByRole('option');
+
+    fireEvent.click(options[1]);
+
+    fireEvent.submit(getByTestId('purpose-form'))
+  })
+
+  it('stop if no services submitted', async () => {
+    const myInitialState: string[] = []
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({
+      page: 'purpose',
+      setEventPage: jest.fn(),
+    })
+
+    const { getByTestId } = render(<EventPage />)
+
+    const inputElement = getByTestId('objective')
+
+    fireEvent.change(inputElement, {
+      target: { value: 'To Onboard Team' },
+    })
+
+    const attendees = getByTestId('attendees')
+
+    fireEvent.change(attendees, {
+      target: { value: 10 },
+    })
+
+    const theme = getByTestId('theme')
+
+    fireEvent.change(theme, {
+      target: { value: 'Modern' },
+    })
+
+    const services = getByTestId('services')
+
+    const button = within(services).getByRole('combobox');
+
+    fireEvent.mouseDown(button);
+
+    const listbox = within(screen.getByRole('presentation')).getByRole(
+      'listbox'
+    );
+
+    const options = within(listbox).getAllByRole('option');
+
+    fireEvent.click(options[1]);
+    fireEvent.click(options[2]);
+    
+    fireEvent.submit(getByTestId('purpose-form'))
+  })
+
 })
