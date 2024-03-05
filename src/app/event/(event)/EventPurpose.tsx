@@ -27,7 +27,7 @@ export const EventPurpose: React.FC = () => {
   const [services, setServices] = React.useState<string[]>([])
 
   const error = React.useMemo(() => {
-    if (services.length == 0) return "Please select at least one service."
+    if (services.length == 0) return 'Please select at least one service.'
     return ''
   }, [services])
 
@@ -47,9 +47,7 @@ export const EventPurpose: React.FC = () => {
     const {
       target: { value },
     } = event
-    setServices(
-      value as string[]
-    )
+    setServices(value as string[])
   }
 
   const onSubmit = (data: {
@@ -58,7 +56,7 @@ export const EventPurpose: React.FC = () => {
     theme: string
   }) => {
     if (services.length === 0) {
-        return
+      return
     }
     dispatch(
       setEventPurpose({
@@ -69,7 +67,6 @@ export const EventPurpose: React.FC = () => {
       })
     )
   }
-
 
   return (
     <form

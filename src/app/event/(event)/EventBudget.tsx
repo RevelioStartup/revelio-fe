@@ -10,7 +10,7 @@ export const EventBudget: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const { setEventPage } = useEventContext()
-  const [ error, setError ] = React.useState('')
+  const [error, setError] = React.useState('')
 
   const methods = useForm({
     defaultValues: {
@@ -21,7 +21,10 @@ export const EventBudget: React.FC = () => {
   const { control, handleSubmit } = methods
 
   const onSubmit = (data: { budget: number }) => {
-    if(data.budget < 0) { setError('Please enter a valid budget.'); return }
+    if (data.budget < 0) {
+      setError('Please enter a valid budget.')
+      return
+    }
 
     dispatch(setEventBudget(data.budget))
     setEventPage('purpose')

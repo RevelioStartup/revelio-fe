@@ -170,8 +170,8 @@ describe('Test for event page', () => {
     fireEvent.submit(getByTestId('date-form'))
   })
 
-  it("test error message when budget is less than 0", async () => {
-    const myInitialState = "Please enter a valid budget."
+  it('test error message when budget is less than 0', async () => {
+    const myInitialState = 'Please enter a valid budget.'
 
     React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
 
@@ -189,9 +189,7 @@ describe('Test for event page', () => {
     fireEvent.submit(getByTestId('budget-form'))
 
     await waitFor(() =>
-      expect(
-        getByText('Please enter a valid budget.')
-      ).toBeInTheDocument()
+      expect(getByText('Please enter a valid budget.')).toBeInTheDocument()
     )
   })
 
@@ -218,7 +216,6 @@ describe('Test for event page', () => {
   })
 
   it('test error message when purpose is not selected', async () => {
-
     const myInitialState: string[] = []
 
     React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
@@ -270,17 +267,17 @@ describe('Test for event page', () => {
 
     const services = getByTestId('services')
 
-    const button = within(services).getByRole('combobox');
+    const button = within(services).getByRole('combobox')
 
-    fireEvent.mouseDown(button);
+    fireEvent.mouseDown(button)
 
     const listbox = within(screen.getByRole('presentation')).getByRole(
       'listbox'
-    );
+    )
 
-    const options = within(listbox).getAllByRole('option');
+    const options = within(listbox).getAllByRole('option')
 
-    fireEvent.click(options[1]);
+    fireEvent.click(options[1])
 
     fireEvent.submit(getByTestId('purpose-form'))
   })
@@ -318,20 +315,19 @@ describe('Test for event page', () => {
 
     const services = getByTestId('services')
 
-    const button = within(services).getByRole('combobox');
+    const button = within(services).getByRole('combobox')
 
-    fireEvent.mouseDown(button);
+    fireEvent.mouseDown(button)
 
     const listbox = within(screen.getByRole('presentation')).getByRole(
       'listbox'
-    );
+    )
 
-    const options = within(listbox).getAllByRole('option');
+    const options = within(listbox).getAllByRole('option')
 
-    fireEvent.click(options[1]);
-    fireEvent.click(options[2]);
-    
+    fireEvent.click(options[1])
+    fireEvent.click(options[2])
+
     fireEvent.submit(getByTestId('purpose-form'))
   })
-
 })
