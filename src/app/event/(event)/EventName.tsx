@@ -27,7 +27,7 @@ export const EventName: React.FC = () => {
   return (
     <div className="w-full flex flex-col max-w-7xl items-center gap-8 justify-center">
       <h1 className="lg:text-5xl md:text-4xl text-3xl font-bold">
-        What do you want to plan today ?
+        What do you want to plan today?
       </h1>
       <form
         className="flex flex-col gap-8"

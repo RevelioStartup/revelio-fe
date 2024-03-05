@@ -1,11 +1,17 @@
 import EventPage from '@/app/event/page'
-import { render, fireEvent, waitFor, screen, within } from '@testing-library/react'
+import {
+  render,
+  fireEvent,
+  waitFor,
+  screen,
+  within,
+} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useAppDispatch } from '@/redux/store'
 import { EventDate } from '@/app/event/(event)/EventDate'
 import { useEventContext } from '@/components/contexts/EventContext'
 import React from 'react'
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 
 jest.mock('@/redux/store', () => ({
   useAppDispatch: jest.fn(),
@@ -108,7 +114,7 @@ describe('Test for event page', () => {
     )
   })
 
-  it("test error message when date is in the past", async () => {
+  it('test error message when date is in the past', async () => {
     const myInitialState = dayjs('2022-12-12')
 
     React.useState = jest.fn().mockReturnValue([myInitialState, {}])
@@ -117,12 +123,12 @@ describe('Test for event page', () => {
     mockUseEventContext.mockReturnValue({ page: 'date' })
 
     jest.mock('dayjs', () => {
-      const originalDayjs = jest.requireActual('dayjs');
+      const originalDayjs = jest.requireActual('dayjs')
       return {
         ...originalDayjs,
         isBefore: jest.fn().mockReturnValue(true),
-      };
-    });
+      }
+    })
 
     render(<EventPage />)
 
@@ -130,25 +136,28 @@ describe('Test for event page', () => {
     expect(getByText('Please select a future date.')).toBeInTheDocument()
   })
 
-  it("no error if date is correct", async () => {
-    let tomorrow = new Date(); 
-    
-    tomorrow.setDate(tomorrow.getDate() + 1);
+  it('no error if date is correct', async () => {
+    let tomorrow = new Date()
+
+    tomorrow.setDate(tomorrow.getDate() + 1)
 
     const myInitialState = dayjs(tomorrow.toString())
 
     React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
 
     const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'date', setEventPage: jest.fn() })
+    mockUseEventContext.mockReturnValue({
+      page: 'date',
+      setEventPage: jest.fn(),
+    })
 
     jest.mock('dayjs', () => {
-      const originalDayjs = jest.requireActual('dayjs');
+      const originalDayjs = jest.requireActual('dayjs')
       return {
         ...originalDayjs,
         isBefore: jest.fn().mockReturnValue(true),
-      };
-    });
+      }
+    })
 
     const { getByTestId, getByPlaceholderText } = render(<EventPage />)
 

@@ -39,11 +39,13 @@ const eventSlice = createSlice({
         objective: string
         attendees: number
         theme: string
+        services: string[]
       }>
     ) => {
       state.objective = action.payload.objective
       state.attendees = action.payload.attendees
       state.theme = action.payload.theme
+      state.services = action.payload.services
     },
     resetEvent: (state) => {
       state = initialState
