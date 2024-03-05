@@ -1,11 +1,38 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { AIAside } from '../../src/app/plans/AISuggestion/AIAside'
 import '@testing-library/jest-dom'
-import { useState } from 'react'
+import {
+  useAskSuggestionMutation,
+  useAiSuggestionHistoryListQuery,
+} from '@/redux/api/aiSuggestionApi'
 
-// Mock the close button with a test id
+// Mock the hooks
+jest.mock('@/redux/api/aiSuggestionApi', () => ({
+  useAskSuggestionMutation: jest.fn(),
+  useAiSuggestionHistoryListQuery: jest.fn(),
+}))
 
 describe('Sugesti AI Component', () => {
+  beforeEach(() => {
+    const mockAskAI = jest
+      .fn()
+      .mockResolvedValue({ data: { msg: 'Mocked AI Response' } })
+    ;(useAskSuggestionMutation as jest.Mock).mockReturnValue([mockAskAI, {}])
+
+    const mockAiHistory = {
+      data: [{ id: 1, prompt: 'Mocked Prompt 1', output: 'Mocked Output 1' }],
+      isLoading: false,
+      isError: false,
+    }
+    ;(useAiSuggestionHistoryListQuery as jest.Mock).mockReturnValue(
+      mockAiHistory
+    )
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('renders the aside element', () => {
     const setIsOpen = jest.fn()
     render(<AIAside isOpen={false} setIsOpen={setIsOpen} />)
@@ -49,29 +76,28 @@ describe('Sugesti AI Component', () => {
     expect(aiInput.value).toBe('Best venue for')
   })
 
+  // Example: Test for submitting the form with the correct prompt data
   it('submits the form with the correct prompt data', async () => {
-    const consoleSpy = jest.spyOn(console, 'log')
+    const mockAskAI = jest
+      .fn()
+      .mockResolvedValue({ data: { msg: 'Mocked AI Response' } })
+    ;(useAskSuggestionMutation as jest.Mock).mockReturnValue([mockAskAI, {}])
 
-    const setIsOpen = jest.fn()
-    render(<AIAside isOpen={false} setIsOpen={setIsOpen} />)
+    const { getByTestId } = render(
+      <AIAside isOpen={true} setIsOpen={() => {}} />
+    )
 
-    const aiInput = screen.getByTestId('ai-input')
-    const aiButton = screen.getByTestId('ai-aside-button')
-
-    fireEvent.change(aiInput, {
-      target: { value: 'Best venue for a tech conference' },
+    fireEvent.change(getByTestId('ai-input'), {
+      target: { value: 'Test Prompt' },
     })
-
-    fireEvent.click(aiButton)
+    fireEvent.click(getByTestId('ai-aside-button'))
 
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith({
+      expect(mockAskAI).toHaveBeenCalledWith({
+        prompt: 'Test Prompt',
         event_id: 0,
-        prompt: 'Best venue for a tech conference',
       })
     })
-
-    consoleSpy.mockRestore()
   })
 
   it('validates required input fields', async () => {
