@@ -39,6 +39,7 @@ const config: Config = {
     '!**/elements/Forms/**',
     '!**/app/test/**',
     '!**/app/layout.tsx',
+    '!**/app/contexts/**',
   ],
 
   // The directory where Jest should output its coverage files

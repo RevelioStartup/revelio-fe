@@ -8,7 +8,7 @@ jest.mock('@/redux/store', () => ({
   useAppDispatch: jest.fn(),
 }))
 
-jest.mock('@/app/event/layout', () => ({
+jest.mock('@/components/contexts/EventContext', () => ({
   useEventContext: jest.fn().mockReturnValue({ setEventPage: jest.fn() }),
 }))
 
