@@ -2,7 +2,7 @@ import { useAppDispatch } from '@/redux/store'
 import { setEventDate } from '@/redux/features/eventSlice'
 import { Button } from '@/components/elements/Button'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { useMemo, useState } from 'react'
+import React from 'react'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs, { Dayjs } from 'dayjs'
@@ -12,17 +12,16 @@ export const EventDate = () => {
   const dispatch = useAppDispatch()
 
   const { setEventPage } = useEventContext()
-  const [value, setValue] = useState<Dayjs | null>(null)
-  const error = useMemo(() => {
+  const [value, setValue] = React.useState<Dayjs | null>(null)
+  const error = React.useMemo(() => {
     if (!value) return 'Please select the date of your event.'
     if (value.isBefore(dayjs(), 'day')) return 'Please select a future date.'
     return ''
   }, [value])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('beneran masuk?')
-
     e.preventDefault()
+    console.log(error)
     if (!!error) {
       return
     }
