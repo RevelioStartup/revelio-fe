@@ -1,10 +1,12 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { AIAside } from '../../src/app/plans/AISuggestion/AIAside'
+import { Provider as ReduxProvider } from 'react-redux'
 import '@testing-library/jest-dom'
 import {
   useAskSuggestionMutation,
   useAiSuggestionHistoryListQuery,
 } from '@/redux/api/aiSuggestionApi'
+import { store } from '@/redux/store'
 
 // Mock the hooks
 jest.mock('@/redux/api/aiSuggestionApi', () => ({
@@ -76,7 +78,6 @@ describe('Sugesti AI Component', () => {
     expect(aiInput.value).toBe('Best venue for')
   })
 
-  // Example: Test for submitting the form with the correct prompt data
   it('submits the form with the correct prompt data', async () => {
     const mockAskAI = jest
       .fn()
@@ -84,7 +85,9 @@ describe('Sugesti AI Component', () => {
     ;(useAskSuggestionMutation as jest.Mock).mockReturnValue([mockAskAI, {}])
 
     const { getByTestId } = render(
-      <AIAside isOpen={true} setIsOpen={() => {}} />
+      <ReduxProvider store={store}>
+        <AIAside isOpen={true} setIsOpen={() => {}} />
+      </ReduxProvider>
     )
 
     fireEvent.change(getByTestId('ai-input'), {
