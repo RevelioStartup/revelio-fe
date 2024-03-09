@@ -10,7 +10,7 @@ export const aiSuggestionApi = baseApi.injectEndpoints({
     askSuggestion: builder.mutation<AISuggestionResponse, AISuggestionFormType>(
       {
         query: (body) => ({
-          url: '/ai/assistant',
+          url: '/ai/assistant/',
           method: 'POST',
           body,
         }),
@@ -19,7 +19,7 @@ export const aiSuggestionApi = baseApi.injectEndpoints({
     ),
     aiSuggestionHistoryList: builder.query<AISugesstionHistory[], void>({
       query: () => ({
-        url: '/ai/history',
+        url: '/ai/history/',
         method: 'GET',
       }),
       providesTags: ['AI'],

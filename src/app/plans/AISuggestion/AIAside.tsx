@@ -16,7 +16,7 @@ interface AIAsideProps {
   theme?: string
 }
 export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
-  const [askAI, { data: aiAnswer }] = useAskSuggestionMutation()
+  const [askAI] = useAskSuggestionMutation()
   const { data: aiHistory } = useAiSuggestionHistoryListQuery()
   const defaultValues: AISuggestionFormType = {
     event_id: 0,
@@ -26,10 +26,14 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
   const methods = useForm<AISuggestionFormType>({
     defaultValues: defaultValues,
   })
-  const { control, handleSubmit, setValue } = methods
+  const { control, handleSubmit, setValue, reset } = methods
 
   const onSubmit: SubmitHandler<AISuggestionFormType> = async (data) => {
-    askAI(data)
+    askAI(data).then((res) => {
+      if ('data' in res) {
+        reset()
+      }
+    })
   }
   return (
     <motion.aside
@@ -75,20 +79,31 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
             Vendors for ...
           </button>
         </div>
-        <div data-testid="content" className="grow">
-          <div>
-            {aiHistory?.map(({ id, date, prompt, output }) => {
-              return (
-                <div key={id}>
-                  <div>{prompt}</div>
-                  <div>{output}</div>
+        <div
+          data-testid="content"
+          className="h-full overflow-y-scroll flex flex-col gap-4 pt-4 pb-10"
+        >
+          {aiHistory?.map(({ id, prompt, output }, idx) => {
+            return (
+              <div
+                key={id}
+                id={idx == aiHistory.length - 1 ? 'last' : id}
+                className="flex flex-col gap-2"
+              >
+                <div className="border border-emerald-400 rounded-2xl p-2">
+                  {prompt}
                 </div>
-              )
-            })}
-          </div>
-          <div>{aiAnswer?.msg}</div>
+                <div
+                  className="bg-emerald-100 p-2 rounded-2xl"
+                  dangerouslySetInnerHTML={{
+                    __html: output.replace(/\n/g, '<br>') ?? '',
+                  }}
+                />
+              </div>
+            )
+          })}
         </div>
-        <div className="flex flex-row items-end gap-2 w-full">
+        <div className="flex flex-row items-end gap-2 w-full sticky bottom-0 bg-white p-2">
           <TextArea
             data-testid="ai-input"
             className="w-full"
