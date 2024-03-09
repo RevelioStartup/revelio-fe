@@ -1,56 +1,53 @@
 'use client'
-import React from 'react'
-import { Box } from '@mui/material'
-import {
-  useAddPhotoMutation,
-  useCreateVenueMutation,
-} from '@/redux/api/venueApi'
-import { CreateVenueRequest } from '@/types/venue'
-import { useForm, SubmitHandler } from 'react-hook-form'
+'@/components/elements/Iconify'
+
 import { Input } from '@/components/elements/Forms/input'
 import { Select } from '@/components/elements/Forms/select'
+import {
+  useAddPhotoMutation,
+  useUpdateVenueMutation,
+} from '@/redux/api/venueApi'
+import { UpdateVenueRequest, Venue } from '@/types/venue'
+import { Box } from '@mui/material'
 
-type VenueCreateFormProps = {}
+import React from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
 
-export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
-  const [createVenue] = useCreateVenueMutation()
+interface VenueCardProps {
+  venue: Venue
+}
+export const VenueCard = ({ venue }: VenueCardProps) => {
+  const [updateVenue] = useUpdateVenueMutation()
+
   const [addPhoto] = useAddPhotoMutation()
 
   const [images, setImages] = React.useState<File[]>([])
 
-  const defaultValues: CreateVenueRequest = {
-    status: '',
-    address: '',
-    name: '',
-    venue: 0,
-    price: 0,
-    photos: [],
-    contact_name: '',
-    contact_phone_number: '',
+  const defaultValues: UpdateVenueRequest = {
+    ...venue,
   }
 
-  const methods = useForm<CreateVenueRequest>({ defaultValues: defaultValues })
+  const methods = useForm<UpdateVenueRequest>({ defaultValues: defaultValues })
   const { control, handleSubmit, reset } = methods
 
-  const onSubmit: SubmitHandler<CreateVenueRequest> = async (data) => {
-    const response = await createVenue(data).unwrap()
-    if (response && response.id) {
-      const venueId = response.id
+  const onSubmit: SubmitHandler<UpdateVenueRequest> = async (data) => {
+    await updateVenue(data).unwrap()
 
-      images.forEach(async (image) => {
-        await addPhoto({ id: venueId, image })
-      })
+    const venueId = data.id
 
-      reset()
-      setImages([])
-    }
+    images.forEach(async (image) => {
+      await addPhoto({ id: venueId, image })
+    })
+
+    reset()
+    setImages([])
   }
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setImages(Array.from(event.target.files))
     }
   }
-
   return (
     <Box
       data-testid="venue-create-form"
@@ -138,5 +135,3 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
     </Box>
   )
 }
-
-export default VenueCreateForm
