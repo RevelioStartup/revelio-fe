@@ -19,7 +19,11 @@ describe('Sugesti AI Component', () => {
     const mockAskAI = jest
       .fn()
       .mockResolvedValue({ data: { msg: 'Mocked AI Response' } })
-    ;(useAskSuggestionMutation as jest.Mock).mockReturnValue([mockAskAI, {}])
+    const mockIsLoading = false
+    ;(useAskSuggestionMutation as jest.Mock).mockReturnValue([
+      mockAskAI,
+      { isLoading: mockIsLoading },
+    ])
 
     const mockAiHistory = {
       data: [{ id: 1, prompt: 'Mocked Prompt 1', output: 'Mocked Output 1' }],
@@ -113,5 +117,64 @@ describe('Sugesti AI Component', () => {
 
     const errorMessage = await screen.findByText(/Please complete this field/i)
     expect(errorMessage).toBeInTheDocument()
+  })
+
+  it('closes the aside when the close icon is clicked', () => {
+    const setIsOpen = jest.fn()
+    render(<AIAside isOpen={true} setIsOpen={setIsOpen} />)
+    const closeButton = screen.getByTestId('close-ai-aside-button')
+    fireEvent.click(closeButton)
+    expect(setIsOpen).toHaveBeenCalledWith(false)
+  })
+  it('clears the input on successful submission', async () => {
+    render(
+      <ReduxProvider store={store}>
+        <AIAside isOpen={true} setIsOpen={() => {}} />
+      </ReduxProvider>
+    )
+
+    fireEvent.change(screen.getByTestId('ai-input'), {
+      target: { value: 'Test Prompt' },
+    })
+    fireEvent.click(screen.getByTestId('ai-aside-button'))
+
+    await waitFor(() => {
+      expect(
+        (screen.getByTestId('ai-input') as HTMLTextAreaElement).value
+      ).toBe('')
+    })
+  })
+
+  it('shows an error message on failed submission', async () => {
+    const mockAskAIFail = jest
+      .fn()
+      .mockRejectedValue(new Error('Submission Failed'))
+    ;(useAskSuggestionMutation as jest.Mock).mockReturnValue([
+      mockAskAIFail,
+      {},
+    ])
+
+    render(
+      <ReduxProvider store={store}>
+        <AIAside isOpen={true} setIsOpen={() => {}} />
+      </ReduxProvider>
+    )
+
+    fireEvent.click(screen.getByTestId('ai-aside-button'))
+
+    const errorMessage = await screen.findByText(/Please complete this field/i)
+    expect(errorMessage).toBeInTheDocument()
+  })
+  it('displays a loading message when the AI is generating an answer', () => {
+    // Set isLoading to true for this test case
+    ;(useAskSuggestionMutation as jest.Mock).mockReturnValue([
+      jest.fn(),
+      { isLoading: true },
+    ])
+
+    render(<AIAside isOpen={true} setIsOpen={() => {}} />)
+
+    const loadingMessage = screen.getByText(/AI is generating answer.../i)
+    expect(loadingMessage).toBeInTheDocument()
   })
 })
