@@ -13,10 +13,9 @@ import {
 interface AIAsideProps {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  theme?: string
 }
-export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
-  const [askAI] = useAskSuggestionMutation()
+export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
+  const [askAI, { isLoading }] = useAskSuggestionMutation()
   const { data: aiHistory } = useAiSuggestionHistoryListQuery()
   const defaultValues: AISuggestionFormType = {
     event_id: 0,
@@ -35,6 +34,7 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
       }
     })
   }
+
   return (
     <motion.aside
       data-testid="ai-aside"
@@ -53,6 +53,7 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
           onKeyDown={() => {
             setIsOpen(false)
           }}
+          data-testid="close-ai-aside-button"
           className="cursor-pointer"
         >
           <i className="i-ph-x-bold size-5 absolute top-1 translate-y-1/2 text-white right-4" />
@@ -103,23 +104,29 @@ export const AIAside = ({ isOpen, setIsOpen, theme }: AIAsideProps) => {
             )
           })}
         </div>
-        <div className="flex flex-row items-end gap-2 w-full sticky bottom-0 bg-white p-2">
-          <TextArea
-            data-testid="ai-input"
-            className="w-full"
-            control={control}
-            name="prompt"
-            placeholder="Ask AI to help planning your event"
-            required
-          />
-          <Button
-            data-testid="ai-aside-button"
-            width={'auto'}
-            onClick={handleSubmit(onSubmit)}
-            className="whitespace-nowrap"
-          >
-            Ask AI
-          </Button>
+        <div className="flex flex-col gap-2 w-full sticky bottom-0 bg-white p-2">
+          {isLoading && (
+            <div className="text-gray-200">AI is generating answer...</div>
+          )}
+          <div className="flex flex-row items-end gap-2">
+            <TextArea
+              data-testid="ai-input"
+              className="w-full"
+              control={control}
+              name="prompt"
+              placeholder="Ask AI to help planning your event"
+              required
+            />
+            <Button
+              data-testid="ai-aside-button"
+              width={'auto'}
+              onClick={handleSubmit(onSubmit)}
+              className="whitespace-nowrap"
+              loading={isLoading}
+            >
+              Ask AI
+            </Button>
+          </div>
         </div>
       </div>
     </motion.aside>
