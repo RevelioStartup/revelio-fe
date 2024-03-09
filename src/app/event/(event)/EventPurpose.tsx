@@ -1,7 +1,7 @@
-import { Button } from '@/components/elements/Button'
 import { Input } from '@/components/elements/Forms/input'
 import { useCreateEventMutation } from '@/redux/api/eventApi'
 import { useAppSelector } from '@/redux/store'
+import { LoadingButton } from '@mui/lab'
 import { Alert, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
@@ -27,7 +27,7 @@ export const EventPurpose: React.FC = () => {
     return ''
   }, [services])
 
-  const [ createEvent, { data: createEventData, error: createEventError, isLoading } ] = useCreateEventMutation()
+  const [ createEvent, { data: createEventData, isLoading } ] = useCreateEventMutation()
 
   const methods = useForm({
     defaultValues: {
@@ -155,13 +155,14 @@ export const EventPurpose: React.FC = () => {
           width={50}
           className="w-full"
         />
-        <Button
+        <LoadingButton
           type="submit"
-          className="!text-center font-bold rounded-lg flex justify-center w-fit m-auto"
-          
+          className="!text-center !font-bold rounded-lg flex justify-center !w-full m-auto !bg-teal-400"
+          loading = {isLoading}
+          loadingIndicator = {"Creating..."}
         >
           Plan{' '}
-        </Button>
+        </LoadingButton>
       </div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{
         horizontal: 'center',
