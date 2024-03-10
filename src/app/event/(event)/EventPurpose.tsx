@@ -1,8 +1,16 @@
+import { useEventContext } from '@/components/contexts/EventContext'
 import { Input } from '@/components/elements/Forms/input'
 import { useCreateEventMutation } from '@/redux/api/eventApi'
 import { useAppSelector } from '@/redux/store'
 import { LoadingButton } from '@mui/lab'
-import { Alert, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar } from '@mui/material'
+import {
+  Alert,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Snackbar,
+} from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -20,14 +28,15 @@ const listOfServices = [
 export const EventPurpose: React.FC = () => {
   const [services, setServices] = React.useState<string[]>([])
 
-  const [open, setOpen] = React.useState(false);
+  const { handleClose, open, setOpen } = useEventContext()
 
   const error = React.useMemo(() => {
     if (services.length == 0) return 'Please select at least one service.'
     return ''
   }, [services])
 
-  const [ createEvent, { data: createEventData, isLoading } ] = useCreateEventMutation()
+  const [createEvent, { data: createEventData, isLoading }] =
+    useCreateEventMutation()
 
   const methods = useForm({
     defaultValues: {
@@ -58,31 +67,17 @@ export const EventPurpose: React.FC = () => {
     }
     const cleanedDate = new Date(date).toISOString().split('T')[0]
 
-    try {
-      const res = await createEvent({
-        objective: data.objective,
-        attendees: data.attendees,
-        theme: data.theme,
-        services: services.toString(),
-        name: name,
-        date: cleanedDate,
-        budget: budget, 
-      }).unwrap()
+    await createEvent({
+      objective: data.objective,
+      attendees: data.attendees,
+      theme: data.theme,
+      services: services.toString(),
+      name: name,
+      date: cleanedDate,
+      budget: budget,})?.unwrap()
 
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setOpen(true)
-    }
+    setOpen(true)
   }
-
-  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   return (
     <form
@@ -158,23 +153,31 @@ export const EventPurpose: React.FC = () => {
         <LoadingButton
           type="submit"
           className="!text-center !font-bold rounded-lg flex justify-center !w-full m-auto !bg-teal-400"
-          loading = {isLoading}
-          loadingIndicator = {"Creating..."}
+          loading={isLoading}
+          loadingIndicator={'Creating...'}
         >
           Plan{' '}
         </LoadingButton>
       </div>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{
-        horizontal: 'center',
-        vertical: 'top'
-      }}>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{
+          horizontal: 'center',
+          vertical: 'top',
+        }}
+        data-testid="snackbar"
+      >
         <Alert
           onClose={handleClose}
           severity={createEventData ? 'success' : 'error'}
           variant="filled"
           sx={{ width: '100%' }}
         >
-          {createEventData ? 'Event created successfully' : 'Error creating event'}
+          {createEventData
+            ? 'Event created successfully'
+            : 'Error creating event'}
         </Alert>
       </Snackbar>
     </form>
