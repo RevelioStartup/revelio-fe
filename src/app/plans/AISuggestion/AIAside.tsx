@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Button } from '@/components/elements/Button'
@@ -9,17 +9,26 @@ import {
   useAiSuggestionHistoryListQuery,
   useAskSuggestionMutation,
 } from '@/redux/api/aiSuggestionApi'
+import Toggle from '@/components/elements/Toggle'
+import { AIType } from './constants'
 
 interface AIAsideProps {
   isOpen: boolean
+  event?: any
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
   const [askAI, { isLoading }] = useAskSuggestionMutation()
   const { data: aiHistory } = useAiSuggestionHistoryListQuery()
+  const [selectedType, setSelectedType] = useState(0)
   const defaultValues: AISuggestionFormType = {
     event_id: 0,
     prompt: '',
+    event: {
+      name: '',
+      theme: '',
+    },
+    type: AIType[selectedType].value,
   }
 
   const methods = useForm<AISuggestionFormType>({
@@ -28,6 +37,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
   const { control, handleSubmit, setValue, reset } = methods
 
   const onSubmit: SubmitHandler<AISuggestionFormType> = async (data) => {
+    data.type = AIType[selectedType].value
     askAI(data).then((res) => {
       if ('data' in res) {
         reset()
@@ -44,8 +54,9 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       className="fixed top-0 right-0 h-full bg-white z-50 shadow-lg flex flex-col gap-3 w-full lg:w-96"
     >
-      <div className="w-full bg-emerald-500 px-4 py-3 text-white font-bold relative">
+      <div className="w-full bg-teal-500 px-4 py-3 text-white font-bold relative">
         <p>Ask AI for suggestions.</p>
+
         <div
           onClick={() => {
             setIsOpen(false)
@@ -108,6 +119,13 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
           {isLoading && (
             <div className="text-gray-200">AI is generating answer...</div>
           )}
+          <div>
+            <Toggle
+              options={AIType}
+              selectedOption={selectedType}
+              setSelectedOption={setSelectedType}
+            />
+          </div>
           <div className="flex flex-row items-end gap-2">
             <TextArea
               data-testid="ai-input"
