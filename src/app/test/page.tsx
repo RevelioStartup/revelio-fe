@@ -5,6 +5,7 @@ import { Select } from '@/components/elements/Forms/select'
 import { TextArea } from '@/components/elements/Forms/textarea'
 import { Box } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { AIButton } from '../plans/AISuggestion/AIButton'
 
 type TestFormType = {
   name: string
@@ -62,6 +63,7 @@ export default function Test() {
         />
         <button onClick={handleSubmit(onSubmit)}>Submit</button>
       </form>
+      <AIButton />
     </Box>
   )
 }
