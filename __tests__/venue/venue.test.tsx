@@ -7,7 +7,6 @@ import {
   useCreateVenueMutation,
   useAddPhotoMutation,
 } from '@/redux/api/venueApi'
-import { useAppDispatch, useAppSelector } from '@/redux/store'
 
 jest.mock('@/redux/api/venueApi', () => ({
   useCreateVenueMutation: jest.fn(),
@@ -16,60 +15,35 @@ jest.mock('@/redux/api/venueApi', () => ({
 
 describe('Test for VenueCreateForm', () => {
   beforeEach(() => {
+    const mockCreateVenue = jest
+      .fn()
+      .mockResolvedValue({ data: {}, unwrap: jest.fn() })
+    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([mockCreateVenue])
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
     ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto])
   })
 
   it('renders VenueCreateForm', () => {
-    const mockCreateVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([mockCreateVenue])
+    const createVenue = jest.fn().mockResolvedValue({ data: {} })
+    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([createVenue])
 
     const { getByTestId } = render(<VenueCreateForm />)
     expect(getByTestId('venue-create-form')).toBeInTheDocument()
   })
 
   it('submits form and adds venue with photos', async () => {
-    const mockCreateVenue = jest.fn()
-    mockCreateVenue.mockResolvedValue({
-      unwrap: jest.fn().mockResolvedValue({
+    const mockCreateVenue = jest.fn().mockResolvedValue({
+      data: {
         id: 1,
-        photos: [],
-        name: 'Event 1',
-        address: 'Orchard Road',
-        price: 50000,
-        status: 'PENDING',
-        contact_name: 'John',
-        contact_phone_number: '088888888888',
-        event: '7b3c2baa-b2ad-442e-9814-82ad3c346701',
-      }),
+      },
     })
-
-    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([mockCreateVenue])
-
-    const mockCreateVenueMutation = useCreateVenueMutation as jest.Mock
-
-    const mockData = {
-      id: 1,
-      photos: [],
-      name: 'Event 1',
-      address: 'Orchard Road',
-      price: 50000,
-      status: 'PENDING',
-      contact_name: 'John',
-      contact_phone_number: '088888888888',
-      event: '7b3c2baa-b2ad-442e-9814-82ad3c346701',
-    }
-    const mockIsLoading = false
-
-    const unwrapMock = jest.fn(() => mockData)
-    const resolvedValue = { result: 'success', unwrap: unwrapMock }
-    mockCreateVenue.mockResolvedValue(Promise.resolve(resolvedValue))
-
-    mockCreateVenueMutation.mockReturnValue([
+    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([
       mockCreateVenue,
-      { isLoading: mockIsLoading, data: mockData },
+      {},
     ])
 
+    const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
+    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto])
     const { getByTestId } = render(<VenueCreateForm />)
 
     fireEvent.change(getByTestId('input-venue-name'), {
@@ -78,7 +52,10 @@ describe('Test for VenueCreateForm', () => {
     fireEvent.change(getByTestId('input-address'), {
       target: { value: 'Test Address' },
     })
-    fireEvent.change(getByTestId('input-price'), { target: { value: '100' } })
+    fireEvent.change(getByTestId('input-price'), { target: { value: 100 } })
+    fireEvent.change(getByTestId('input-status'), {
+      target: { value: 'PENDING' },
+    })
     fireEvent.change(getByTestId('input-contact-name'), {
       target: { value: 'Test Name' },
     })
@@ -103,8 +80,18 @@ describe('Test for VenueCreateForm', () => {
     fireEvent.submit(getByTestId('venue-create-form'))
 
     await waitFor(() => {
+      expect(mockCreateVenue).toHaveBeenCalledWith({
+        name: 'Test Venue',
+        address: 'Test Address',
+        price: '100',
+        contact_name: 'Test Name',
+        contact_phone_number: '1234567890',
+        event: 'cfa26386-c1ed-465e-a035-36478db57d4b',
+        photos: [],
+        status: 'PENDING',
+      })
       expect(mockCreateVenue).toHaveBeenCalled()
-      // expect(mockAddPhoto).toHaveBeenCalled();
+      expect(mockAddPhoto).toHaveBeenCalledTimes(1)
     })
   })
 })

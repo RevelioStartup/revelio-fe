@@ -33,19 +33,23 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
   const { control, handleSubmit, reset } = methods
 
   const onSubmit: SubmitHandler<CreateVenueRequest> = async (data) => {
-    const response = await createVenue(data).unwrap()
-    console.log('woop woop 1')
-    if (response && response.id) {
-      const venueId = response.id
-      console.log('woop woop 2')
-      for (const image of images) {
-        await addPhoto({ venue: venueId, image }).unwrap()
-        console.log('woop woop image')
-      }
+    console.log('woop woop 3')
+    await createVenue(data).then(async (response) => {
+      if ('data' in response) {
+        console.log('woop woop 1')
+        if (response.data && response.data.id) {
+          const venueId = response.data.id
+          console.log('woop woop 2')
+          for (const image of images) {
+            await addPhoto({ venue: venueId, image })
+            console.log('woop woop image')
+          }
 
-      reset()
-      setImages([])
-    }
+          reset()
+          setImages([])
+        }
+      }
+    })
   }
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
