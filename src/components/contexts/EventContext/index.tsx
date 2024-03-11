@@ -5,11 +5,7 @@ type EventPageProps = {
   setOpen: (open: boolean) => void
   page: 'name' | 'date' | 'budget' | 'purpose'
   setEventPage: (page: EventPageProps['page']) => void
-  handleClose: (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => void
-  
+  handleClose: (event?: React.SyntheticEvent | Event, reason?: string) => void
 }
 
 export const EventContext = createContext({} as EventPageProps)
@@ -28,7 +24,7 @@ export const EventContextProvider = ({
   const [open, setOpen] = React.useState(false)
   const handleClose = (
     event?: React.SyntheticEvent | Event,
-    reason?: string,
+    reason?: string
   ) => {
     if (reason === 'clickaway') {
       return
@@ -36,7 +32,6 @@ export const EventContextProvider = ({
 
     setOpen(false)
   }
-
 
   const contextValue = {
     open,
