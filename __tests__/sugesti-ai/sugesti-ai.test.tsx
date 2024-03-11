@@ -64,24 +64,6 @@ describe('Sugesti AI Component', () => {
     expect(aiButton).toBeInTheDocument()
   })
 
-  it('renders examples for prompt to give user ideas', () => {
-    const setIsOpen = jest.fn()
-    render(<AIAside isOpen={false} setIsOpen={setIsOpen} />)
-    const promptExampleVenue = screen.getByTestId('prompt-example-venue')
-    const promptExampleVendor = screen.getByTestId('prompt-example-vendor')
-    expect(promptExampleVenue).toBeInTheDocument()
-    expect(promptExampleVendor).toBeInTheDocument()
-  })
-
-  it('sets the prompt value when the prompt example button is clicked', () => {
-    const setIsOpen = jest.fn()
-    render(<AIAside isOpen={false} setIsOpen={setIsOpen} />)
-    const promptExampleButton = screen.getByTestId('prompt-example-venue')
-    fireEvent.click(promptExampleButton)
-    const aiInput = screen.getByTestId('ai-input') as HTMLTextAreaElement
-    expect(aiInput.value).toBe('Best venue for')
-  })
-
   it('submits the form with the correct prompt data', async () => {
     const mockAskAI = jest
       .fn()
@@ -102,7 +84,11 @@ describe('Sugesti AI Component', () => {
     await waitFor(() => {
       expect(mockAskAI).toHaveBeenCalledWith({
         prompt: 'Test Prompt',
-        event_id: 0,
+        type: 'specific',
+        event: {
+          name: '',
+          theme: '',
+        },
       })
     })
   })
@@ -176,5 +162,92 @@ describe('Sugesti AI Component', () => {
 
     const loadingMessage = screen.getByText(/AI is generating answer.../i)
     expect(loadingMessage).toBeInTheDocument()
+  })
+
+  it('renders suggestions with list and keywords when aiHistory contains data', () => {
+    const setIsOpen = jest.fn()
+    const mockAiHistoryWithData = {
+      data: [
+        {
+          id: 1,
+          prompt: 'Mocked Prompt 2',
+          output: 'Mocked Output 2',
+          list: ['Item 1', 'Item 2'],
+          keyword: ['Keyword 1', 'Keyword 2'],
+        },
+      ],
+      isLoading: false,
+      isError: false,
+    }
+    ;(useAiSuggestionHistoryListQuery as jest.Mock).mockReturnValue(
+      mockAiHistoryWithData
+    )
+
+    render(<AIAside isOpen={true} setIsOpen={setIsOpen} />)
+
+    expect(screen.getByText('Mocked Output 2')).toBeInTheDocument()
+    expect(screen.getByText('Item 1')).toBeInTheDocument()
+    expect(screen.getByText('Item 2')).toBeInTheDocument()
+    expect(screen.getByText('Keyword 1')).toBeInTheDocument()
+    expect(screen.getByText('Keyword 2')).toBeInTheDocument()
+  })
+
+  it('sets the prompt value when a keyword is clicked', () => {
+    const setIsOpen = jest.fn()
+    const mockAiHistoryWithKeywords = {
+      data: [
+        {
+          id: 1,
+          prompt: 'Mocked Prompt 2',
+          output: 'Mocked Output 2',
+          list: [],
+          keyword: ['Keyword 1', 'Keyword 2'],
+        },
+      ],
+      isLoading: false,
+      isError: false,
+    }
+    ;(useAiSuggestionHistoryListQuery as jest.Mock).mockReturnValue(
+      mockAiHistoryWithKeywords
+    )
+
+    render(<AIAside isOpen={true} setIsOpen={setIsOpen} />)
+
+    const keywordButton = screen.getByText('Keyword 1')
+    fireEvent.click(keywordButton)
+
+    const aiInput = screen.getByTestId('ai-input') as HTMLTextAreaElement
+    expect(aiInput.value).toBe('Keyword 1')
+  })
+
+  it('only renders prompt examples when aiHistory is empty', () => {
+    const setIsOpen = jest.fn()
+    const mockEmptyAiHistory = { data: [], isLoading: false, isError: false }
+    ;(useAiSuggestionHistoryListQuery as jest.Mock).mockReturnValue(
+      mockEmptyAiHistory
+    )
+
+    render(<AIAside isOpen={true} setIsOpen={setIsOpen} />)
+
+    expect(screen.getByTestId('prompt-example-venue')).toBeInTheDocument()
+    expect(screen.getByTestId('prompt-example-vendor')).toBeInTheDocument()
+    expect(screen.queryByText('Mocked Output 1')).not.toBeInTheDocument()
+  })
+  it('sets the prompt value when a prompt example is clicked', () => {
+    const setIsOpen = jest.fn()
+    const mockEmptyAiHistory = { data: [], isLoading: false, isError: false }
+    ;(useAiSuggestionHistoryListQuery as jest.Mock).mockReturnValue(
+      mockEmptyAiHistory
+    )
+
+    render(<AIAside isOpen={true} setIsOpen={setIsOpen} />)
+
+    expect(screen.getByTestId('prompt-example-venue')).toBeInTheDocument()
+    expect(screen.getByTestId('prompt-example-vendor')).toBeInTheDocument()
+
+    const promptExampleButton = screen.getByTestId('prompt-example-venue')
+    fireEvent.click(promptExampleButton)
+    const aiInput = screen.getByTestId('ai-input') as HTMLTextAreaElement
+    expect(aiInput.value).toBe('Best venue for')
   })
 })
