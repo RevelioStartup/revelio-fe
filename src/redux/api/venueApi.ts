@@ -31,7 +31,7 @@ export const venueApi = baseApi.injectEndpoints({
       invalidatesTags: ['Venue'],
     }),
     getVenueList: builder.query<VenueListResponse, VenueListRequest>({
-      query: ( event ) => ({
+      query: (event) => ({
         url: `/venues/event/${event}/`,
         method: 'GET',
       }),

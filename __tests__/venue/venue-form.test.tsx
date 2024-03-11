@@ -100,34 +100,33 @@ describe('Test for VenueCreateForm', () => {
       data: {
         id: 1,
       },
-    });
+    })
     ;(useCreateVenueMutation as jest.Mock).mockReturnValue([
       mockCreateVenue,
       {},
-    ]);
-  
-    const { getByTestId, findByText } = render(<VenueCreateForm />);
-  
+    ])
+
+    const { getByTestId, findByText } = render(<VenueCreateForm />)
+
     // Leave 'input-venue-name' empty
     fireEvent.change(getByTestId('input-address'), {
       target: { value: 'Test Address' },
-    });
-    fireEvent.change(getByTestId('input-price'), { target: { value: 100 } });
+    })
+    fireEvent.change(getByTestId('input-price'), { target: { value: 100 } })
     fireEvent.change(getByTestId('input-status'), {
       target: { value: 'PENDING' },
-    });
+    })
     fireEvent.change(getByTestId('input-contact-name'), {
       target: { value: 'Test Name' },
-    });
+    })
     fireEvent.change(getByTestId('input-contact-phone-number'), {
       target: { value: '1234567890' },
-    });
-  
-    fireEvent.submit(getByTestId('venue-create-form'));
-  
+    })
+
+    fireEvent.submit(getByTestId('venue-create-form'))
+
     // Check if the warning message appears
-    const warningMessage = await findByText('Please complete this field');
-    expect(warningMessage).toBeInTheDocument();
-  });
-  
+    const warningMessage = await findByText('Please complete this field')
+    expect(warningMessage).toBeInTheDocument()
+  })
 })

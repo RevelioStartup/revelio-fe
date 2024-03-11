@@ -62,8 +62,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
   const { control, handleSubmit, reset } = methods
 
   const onSubmit: SubmitHandler<UpdateVenueRequest> = async (data) => {
-
-    await updateVenue(data).then(async (response) => {} )
+    await updateVenue(data).then(async (response) => {})
 
     const venueId = data.id
 
@@ -123,7 +122,11 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
         </div>
       </Box>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full" data-testid="venue-card-form">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full"
+        data-testid="venue-card-form"
+      >
         <Box className="flex sm:flex-row flex-col">
           <Box className="">
             <Box className="my-2 flex items-center">

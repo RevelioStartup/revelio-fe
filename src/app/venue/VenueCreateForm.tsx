@@ -33,7 +33,6 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
   const { control, handleSubmit, reset } = methods
 
   const onSubmit: SubmitHandler<CreateVenueRequest> = async (data) => {
-    
     await createVenue(data).then(async (response) => {
       if ('data' in response) {
         if (response.data && response.data.id) {
