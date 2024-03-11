@@ -25,6 +25,7 @@ const Toggle = ({
           key={index}
           className="relative m-1 flex h-10 w-full cursor-pointer items-center justify-center rounded-full p-1 text-center"
           onClick={() => handleClick(index)}
+          onKeyDown={() => {}}
         >
           <div
             className={twMerge(
