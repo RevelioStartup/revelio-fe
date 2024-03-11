@@ -186,8 +186,8 @@ describe('Sugesti AI Component', () => {
     render(<AIAside isOpen={true} setIsOpen={setIsOpen} />)
 
     expect(screen.getByText('Mocked Output 2')).toBeInTheDocument()
-    expect(screen.getByText('Item 1')).toBeInTheDocument()
-    expect(screen.getByText('Item 2')).toBeInTheDocument()
+    expect(screen.getByText('1. Item 1')).toBeInTheDocument()
+    expect(screen.getByText('2. Item 2')).toBeInTheDocument()
     expect(screen.getByText('Keyword 1')).toBeInTheDocument()
     expect(screen.getByText('Keyword 2')).toBeInTheDocument()
   })
