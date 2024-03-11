@@ -1,4 +1,4 @@
-import EventPage from '@/app/event/page'
+import EventPage from '@/app/event/(event)/page'
 import {
   render,
   fireEvent,
@@ -7,14 +7,20 @@ import {
   within,
 } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { useAppDispatch } from '@/redux/store'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { EventDate } from '@/app/event/(event)/EventDate'
 import { useEventContext } from '@/components/contexts/EventContext'
 import React from 'react'
 import dayjs from 'dayjs'
+import { useCreateEventMutation } from '@/redux/api/eventApi'
+
+jest.mock('@/redux/api/eventApi', () => ({
+  useCreateEventMutation: jest.fn(),
+}))
 
 jest.mock('@/redux/store', () => ({
   useAppDispatch: jest.fn(),
+  useAppSelector: jest.fn(),
 }))
 
 jest.mock('@/components/contexts/EventContext', () => ({
@@ -25,6 +31,8 @@ describe('Test for event page', () => {
   beforeEach(() => {
     const mockDispatch = jest.fn()
     ;(useAppDispatch as jest.Mock).mockReturnValue(mockDispatch)
+    const mockCreateEvent = jest.fn().mockResolvedValue({ data: {} })
+    ;(useCreateEventMutation as jest.Mock).mockReturnValue([mockCreateEvent])
   })
 
   it('renders name form', () => {
@@ -216,12 +224,36 @@ describe('Test for event page', () => {
   })
 
   it('test error message when purpose is not selected', async () => {
+    const mockUseCreateEventMutation = useCreateEventMutation as jest.Mock
+
+    const mockCreateEvent = jest.fn()
+    const mockData = {}
+    const mockIsLoading = false
+
+    mockUseCreateEventMutation.mockReturnValue([
+      mockCreateEvent,
+      { isLoading: mockIsLoading, data: mockData },
+    ])
+
+    const mockUseAppSelector = useAppSelector as jest.Mock
+    mockUseAppSelector.mockReturnValue({
+      name: 'Event Name',
+      date: '2025-12-12',
+      budget: 123000,
+    })
+
     const myInitialState: string[] = []
 
     React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
 
     const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'purpose' })
+    mockUseEventContext.mockReturnValue({
+      page: 'purpose',
+      open: false,
+      setOpen: jest.fn(),
+      handleClose: jest.fn(),
+      setEventPage: jest.fn(),
+    })
 
     const { getByTestId, getByText } = render(<EventPage />)
 
@@ -235,6 +267,17 @@ describe('Test for event page', () => {
   })
 
   it('no error if purpose is correct', async () => {
+    const mockUseCreateEventMutation = useCreateEventMutation as jest.Mock
+
+    const mockCreateEvent = jest.fn()
+    const mockData = {}
+    const mockIsLoading = false
+
+    mockUseCreateEventMutation.mockReturnValue([
+      mockCreateEvent,
+      { isLoading: mockIsLoading, data: mockData },
+    ])
+
     const myInitialState = ['Catering']
 
     React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
@@ -243,6 +286,9 @@ describe('Test for event page', () => {
     mockUseEventContext.mockReturnValue({
       page: 'purpose',
       setEventPage: jest.fn(),
+      open: false,
+      setOpen: jest.fn(),
+      handleClose: jest.fn(),
     })
 
     const { getByTestId } = render(<EventPage />)
@@ -283,6 +329,17 @@ describe('Test for event page', () => {
   })
 
   it('stop if no services submitted', async () => {
+    const mockUseCreateEventMutation = useCreateEventMutation as jest.Mock
+
+    const mockCreateEvent = jest.fn()
+    const mockData = {}
+    const mockIsLoading = false
+
+    mockUseCreateEventMutation.mockReturnValue([
+      mockCreateEvent,
+      { isLoading: mockIsLoading, data: mockData },
+    ])
+
     const myInitialState: string[] = []
 
     React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
@@ -291,6 +348,9 @@ describe('Test for event page', () => {
     mockUseEventContext.mockReturnValue({
       page: 'purpose',
       setEventPage: jest.fn(),
+      open: false,
+      setOpen: jest.fn(),
+      handleClose: jest.fn(),
     })
 
     const { getByTestId } = render(<EventPage />)
@@ -327,6 +387,47 @@ describe('Test for event page', () => {
 
     fireEvent.click(options[1])
     fireEvent.click(options[2])
+
+    fireEvent.submit(getByTestId('purpose-form'))
+  })
+
+  it('test if createEvetData is undefined', async () => {
+    const mockUseCreateEventMutation = useCreateEventMutation as jest.Mock
+
+    const mockCreateEvent = jest.fn()
+    const mockData = null
+    const mockIsLoading = false
+
+    const unwrapMock = jest.fn()
+    const resolvedValue = { result: 'success', unwrap: unwrapMock }
+    mockCreateEvent.mockResolvedValue(resolvedValue)
+
+    mockUseCreateEventMutation.mockReturnValue([
+      mockCreateEvent,
+      { isLoading: mockIsLoading, data: mockData },
+    ])
+
+    const mockUseAppSelector = useAppSelector as jest.Mock
+    mockUseAppSelector.mockReturnValue({
+      name: 'Event Name',
+      date: '2025-12-12',
+      budget: 123000,
+    })
+
+    const myInitialState: string[] = []
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({
+      page: 'purpose',
+      open: false,
+      setOpen: jest.fn(),
+      handleClose: jest.fn(),
+      setEventPage: jest.fn(),
+    })
+
+    const { getByTestId } = render(<EventPage />)
 
     fireEvent.submit(getByTestId('purpose-form'))
   })

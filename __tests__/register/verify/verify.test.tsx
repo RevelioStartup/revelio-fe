@@ -17,7 +17,6 @@ describe('Test for verify email page', () => {
   })
 })
 
-
 describe('Test for verify email form', () => {
   beforeEach(() => {
     const mockVerifyEmail = jest.fn().mockResolvedValue({ data: {} })
