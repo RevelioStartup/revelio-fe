@@ -198,3 +198,31 @@
   font-style: italic;
   font-display: swap;
 }
+
+.skeleton {
+  position: relative;
+  z-index: -10;
+  overflow: hidden;
+}
+
+.skeleton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  animation: slide-right;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.3)
+  );
+}
+
+@keyframes slide-right {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

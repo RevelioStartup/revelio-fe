@@ -1,3 +1,4 @@
+import { getIconCollections, iconsPlugin } from '@egoist/tailwindcss-icons'
 import type { Config } from 'tailwindcss'
 import colors from 'tailwindcss/colors'
 import defaultTheme from 'tailwindcss/defaultTheme'
@@ -170,6 +171,9 @@ const config: Config = {
         'content-200': colors.gray[700],
         'content-300': colors.gray[500],
       },
+    }),
+    iconsPlugin({
+      collections: getIconCollections(['bi', 'logos', 'ph', 'fa6-regular']),
     }),
   ],
 }
