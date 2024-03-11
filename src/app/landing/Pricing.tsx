@@ -20,8 +20,8 @@ export const Pricing = () => {
       gap={'2em'}
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
-      <Typography variant={'h4'} fontWeight={'bold'} textAlign="center" mt={1}>
-        Choose What Works for You
+      <Typography variant={'h4'}  textAlign="center" mt={1}>
+        Choose What Works for <i>You</i>
       </Typography>
       <Box
         sx={{
