@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import { Hero } from './landing/Hero'
 import { WhyRevelio } from './landing/WhyRevelio'
 import { WithoutRevelio } from './landing/WithoutRevelio'
+import { FAQ } from './landing/Faq'
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
       <Hero />
       <WithoutRevelio />
       <WhyRevelio />
-      
+      <FAQ />
     </Box>
   )
 }

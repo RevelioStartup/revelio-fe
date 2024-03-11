@@ -26,7 +26,7 @@ export const Hero = () => {
             },
         }}
       >
-        <Typography variant={'h3'} fontWeight={'bold'} textAlign="center" mb={3}>
+        <Typography variant={'h4'} fontWeight={'bold'} textAlign="center" mb={3}>
         Ease.<Box component="span" color={'#2DD4BF'}>{' '}Enhance.{' '}</Box>Commemorate.
       </Typography>
       </Box>
