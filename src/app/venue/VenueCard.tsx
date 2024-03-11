@@ -76,7 +76,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
 
   return (
     <Box
-    className="mb-8"
+      className="mb-8"
       data-testid="venue-card"
       sx={{
         display: 'flex',

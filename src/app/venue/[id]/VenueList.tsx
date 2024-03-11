@@ -9,7 +9,7 @@ interface VenueListProps {
 }
 
 export const VenueList = ({ eventId }: VenueListProps) => {
-  const { data: venues = [] } = useGetVenueListQuery(eventId);
+  const { data: venues = [] } = useGetVenueListQuery(eventId)
   return (
     <Box>
       {venues.map((venue) => (
@@ -19,4 +19,4 @@ export const VenueList = ({ eventId }: VenueListProps) => {
   )
 }
 
-export default VenueList;
+export default VenueList
