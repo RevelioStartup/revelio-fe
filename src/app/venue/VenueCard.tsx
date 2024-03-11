@@ -62,7 +62,8 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
   const { control, handleSubmit, reset } = methods
 
   const onSubmit: SubmitHandler<UpdateVenueRequest> = async (data) => {
-    await updateVenue(data).unwrap()
+
+    await updateVenue(data).then(async (response) => {} )
 
     const venueId = data.id
 
@@ -103,6 +104,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
         <h1 className="text-2xl font-bold mb-2">{name}</h1>
         <div className="flex justify-end">
           <button
+            data-testid="edit-button"
             onClick={() => {
               handleEditToggle()
             }}
@@ -111,6 +113,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
             <i className="i-ph-pencil-bold text-blue-500 size-5" />
           </button>
           <button
+            data-testid="delete-button"
             onClick={() => {
               deleteVenue({ id })
             }}
@@ -120,13 +123,14 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
         </div>
       </Box>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full" data-testid="venue-card-form">
         <Box className="flex sm:flex-row flex-col">
           <Box className="">
             <Box className="my-2 flex items-center">
               <i className="i-ph-address-book-bold text-black size-5" />
               {isEditing ? (
                 <Input
+                  required
                   name="address"
                   data-testid="input-address"
                   className="text-sm bg-gray-200 text-gray-500 rounded-2xl w-3/4 ml-2"
@@ -141,6 +145,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
               <i className="i-ph-currency-dollar-bold text-black size-5" />
               {isEditing ? (
                 <Input
+                  required
                   name="price"
                   data-testid="input-price"
                   className="text-sm bg-gray-200 text-gray-500 rounded-2xl w-3/4 ml-2"
@@ -181,6 +186,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
               <i className="i-ph-user-bold text-black size-5" />
               {isEditing ? (
                 <Input
+                  required
                   name="contact_name"
                   data-testid="input-contact-name"
                   className="text-sm bg-gray-200 text-gray-500 rounded-2xl w-3/4 ml-2"
@@ -195,6 +201,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
               <i className="i-ph-phone-bold text-black size-5" />
               {isEditing ? (
                 <Input
+                  required
                   name="contact_phone_number"
                   data-testid="input-contact-phone-number"
                   className="text-sm bg-gray-200 text-gray-500 rounded-2xl w-3/4 ml-2"

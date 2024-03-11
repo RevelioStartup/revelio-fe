@@ -7,6 +7,7 @@ import {
   VenueDetailRequest,
   VenueDetailResponse,
   VenueListResponse,
+  VenueListRequest,
   VenuePhoto,
 } from '@/types/venue'
 import { baseApi } from './baseApi'
@@ -29,9 +30,9 @@ export const venueApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Venue'],
     }),
-    getVenueList: builder.query<VenueListResponse, void>({
-      query: () => ({
-        url: '/venues/cfa26386-c1ed-465e-a035-36478db57d4b',
+    getVenueList: builder.query<VenueListResponse, VenueListRequest>({
+      query: ( event ) => ({
+        url: `/venues/event/${event}/`,
         method: 'GET',
       }),
       providesTags: (result) =>

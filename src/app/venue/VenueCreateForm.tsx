@@ -33,13 +33,11 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
   const { control, handleSubmit, reset } = methods
 
   const onSubmit: SubmitHandler<CreateVenueRequest> = async (data) => {
-    console.log('woop woop 3')
+    
     await createVenue(data).then(async (response) => {
       if ('data' in response) {
-        console.log('woop woop 1')
         if (response.data && response.data.id) {
           const venueId = response.data.id
-          console.log('woop woop 2')
           for (const image of images) {
             await addPhoto({ venue: venueId, image })
             console.log('woop woop image')
@@ -64,6 +62,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
           <Box>
             <h1 className="text-xl font-bold m-2">Venue Details</h1>
             <Input
+              required
               name="name"
               data-testid="input-venue-name"
               className="text-sm bg-white text-gray-500 rounded-2xl my-2 p-3 w-full"
@@ -71,6 +70,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
               placeholder="Venue Name"
             />
             <Input
+              required
               name="address"
               data-testid="input-address"
               className="text-sm bg-white text-gray-500 rounded-2xl my-2 p-3 w-full"
@@ -78,6 +78,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
               placeholder="Address"
             />
             <Input
+              required
               name="price"
               data-testid="input-price"
               className="text-sm bg-white text-gray-500 rounded-2xl mt-2 mb-5 p-3 w-full"
@@ -98,6 +99,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
           <Box className="">
             <h1 className="text-xl font-bold m-2">Contact Information</h1>
             <Input
+              required
               name="contact_name"
               data-testid="input-contact-name"
               className="text-sm bg-white text-gray-500 rounded-2xl my-2 p-3 w-full"
@@ -105,6 +107,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
               placeholder="Contact Name"
             />
             <Input
+              required
               name="contact_phone_number"
               data-testid="input-contact-phone-number"
               className="text-sm bg-white text-gray-500 rounded-2xl mt-2 mb-20 p-3 w-full"

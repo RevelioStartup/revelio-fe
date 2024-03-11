@@ -17,6 +17,7 @@ export type Venue = {
 }
 
 export type VenueListResponse = Venue[]
+export type VenueListRequest = string
 export type CreateVenueRequest = Omit<Venue, 'id'>
 export type CreateVenueResponse = Venue
 export type UpdateVenueRequest = Venue

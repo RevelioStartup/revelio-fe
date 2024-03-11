@@ -3,7 +3,6 @@ import { Box } from '@mui/material'
 import { VenueCard } from '../VenueCard'
 import { VenueCreateForm } from '../VenueCreateForm'
 import { GalleryPage } from '../GalleryPage'
-// import { EditVenueCard } from '../EditVenueCard'
 import { useGetVenueDetailQuery } from '@/redux/api/venueApi'
 
 interface VenueDetailModuleProps {
@@ -23,7 +22,6 @@ export const VenueDetailModule = ({ id }: VenueDetailModuleProps) => {
         !!data && (
           <>
             <VenueCard venue={data} />
-            {/* <EditVenueCard venue={data} /> */}
             <VenueCreateForm />
             <GalleryPage photos={data.photos} />
           </>
