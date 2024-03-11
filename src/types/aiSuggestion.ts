@@ -10,7 +10,7 @@ export type AISuggestionFormType = {
 export type AISuggestionResponse = {
   output: string
   list: string[]
-  keyword: []
+  keyword: string[]
 }
 
 export type AISugesstionHistory = {

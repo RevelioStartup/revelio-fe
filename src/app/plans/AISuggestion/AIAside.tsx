@@ -96,51 +96,57 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
           data-testid="content"
           className="h-full overflow-y-scroll flex flex-col gap-4 pt-4 pb-10"
         >
-          {aiHistory?.map(({ id, prompt, output, list, keyword }, idx) => {
-            return (
-              <div
-                key={id}
-                id={idx == aiHistory.length - 1 ? 'last' : id}
-                className="flex flex-col gap-2"
-              >
-                <div className="border border-emerald-400 rounded-2xl p-2">
-                  {prompt}
-                </div>
-                <div className="bg-emerald-100 p-2 rounded-2xl">
-                  {!!output && (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: output.replace(/\n/g, '<br>') ?? '',
-                      }}
-                    />
-                  )}
-                  {list?.length > 0 &&
-                    list.map((msg, idx) => {
-                      return <div key={idx}>{msg}</div>
-                    })}
-                </div>
-                {keyword?.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    <p>Keywords: </p>
-
-                    {keyword.map((item, idx) => {
-                      return (
-                        <button
-                          onClick={() => {
-                            setValue('prompt', item)
-                          }}
-                          key={idx}
-                          className="underline"
-                        >
-                          {item}
-                        </button>
-                      )
-                    })}
+          {aiHistory?.map(
+            ({ id, prompt, output, list: ansList, keyword }, idx) => {
+              return (
+                <div
+                  key={id}
+                  id={idx == aiHistory.length - 1 ? 'last' : id}
+                  className="flex flex-col gap-2"
+                >
+                  <div className="border border-emerald-400 rounded-2xl p-2">
+                    {prompt}
                   </div>
-                )}
-              </div>
-            )
-          })}
+                  <div className="bg-emerald-100 p-2 rounded-2xl">
+                    {!!output && (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: output.replace(/\n/g, '<br>') ?? '',
+                        }}
+                      />
+                    )}
+                    {ansList?.length > 0 &&
+                      ansList.map((msg, idx) => {
+                        return (
+                          <div key={idx}>
+                            {idx + 1}. {msg}
+                          </div>
+                        )
+                      })}
+                  </div>
+                  {keyword?.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      <p>Related: </p>
+
+                      {keyword.map((item, idx) => {
+                        return (
+                          <button
+                            onClick={() => {
+                              setValue('prompt', item)
+                            }}
+                            key={idx}
+                            className="underline hover:text-teal-600"
+                          >
+                            {item}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            }
+          )}
         </div>
         <div className="flex flex-col gap-2 w-full sticky bottom-0 bg-white p-2">
           {isLoading && (
