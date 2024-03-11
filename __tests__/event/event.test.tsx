@@ -35,6 +35,14 @@ describe('Test for event page', () => {
     ;(useCreateEventMutation as jest.Mock).mockReturnValue([mockCreateEvent])
   })
 
+  let assignMock = jest.fn();
+  
+  window.location = ({ assign: assignMock as any }) as Location;
+
+  afterEach(() => {
+    assignMock.mockClear();
+  });
+
   it('renders name form', () => {
     const mockUseEventContext = useEventContext as jest.Mock
     mockUseEventContext.mockReturnValue({ page: 'name' })
