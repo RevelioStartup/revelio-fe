@@ -22,7 +22,6 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
   const { data: aiHistory } = useAiSuggestionHistoryListQuery()
   const [selectedType, setSelectedType] = useState(0)
   const defaultValues: AISuggestionFormType = {
-    event_id: 0,
     prompt: '',
     event: {
       name: '',
@@ -71,31 +70,33 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
         </div>
       </div>
       <div className="px-4 py-3 flex flex-col gap-3 h-full">
-        <div className="flex flex-wrap gap-2">
-          <button
-            data-testid="prompt-example-venue"
-            className="bg-slate-200 rounded-full px-2 py-1 text-sm"
-            onClick={() => {
-              setValue('prompt', 'Best venue for')
-            }}
-          >
-            Best venue for ...
-          </button>
-          <button
-            data-testid="prompt-example-vendor"
-            className="bg-slate-200 rounded-full px-2 py-1 text-sm"
-            onClick={() => {
-              setValue('prompt', 'Vendors for')
-            }}
-          >
-            Vendors for ...
-          </button>
-        </div>
+        {aiHistory?.length == 0 && (
+          <div className="flex flex-wrap gap-2">
+            <button
+              data-testid="prompt-example-venue"
+              className="bg-slate-200 rounded-full px-2 py-1 text-sm"
+              onClick={() => {
+                setValue('prompt', 'Best venue for')
+              }}
+            >
+              Best venue for ...
+            </button>
+            <button
+              data-testid="prompt-example-vendor"
+              className="bg-slate-200 rounded-full px-2 py-1 text-sm"
+              onClick={() => {
+                setValue('prompt', 'Vendors for')
+              }}
+            >
+              Vendors for ...
+            </button>
+          </div>
+        )}
         <div
           data-testid="content"
           className="h-full overflow-y-scroll flex flex-col gap-4 pt-4 pb-10"
         >
-          {aiHistory?.map(({ id, prompt, output }, idx) => {
+          {aiHistory?.map(({ id, prompt, output, list, keyword }, idx) => {
             return (
               <div
                 key={id}
@@ -105,12 +106,38 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
                 <div className="border border-emerald-400 rounded-2xl p-2">
                   {prompt}
                 </div>
-                <div
-                  className="bg-emerald-100 p-2 rounded-2xl"
-                  dangerouslySetInnerHTML={{
-                    __html: output.replace(/\n/g, '<br>') ?? '',
-                  }}
-                />
+                <div className="bg-emerald-100 p-2 rounded-2xl">
+                  {!!output && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: output.replace(/\n/g, '<br>') ?? '',
+                      }}
+                    />
+                  )}
+                  {list?.length > 0 &&
+                    list.map((msg, idx) => {
+                      return <div key={idx}>{msg}</div>
+                    })}
+                </div>
+                {keyword?.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    <p>Keywords: </p>
+
+                    {keyword.map((item, idx) => {
+                      return (
+                        <button
+                          onClick={() => {
+                            setValue('prompt', item)
+                          }}
+                          key={idx}
+                          className="underline"
+                        >
+                          {item}
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             )
           })}
