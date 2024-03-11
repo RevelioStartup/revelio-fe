@@ -67,7 +67,8 @@ export const EventPurpose: React.FC = () => {
     }
     const cleanedDate = new Date(date).toISOString().split('T')[0]
 
-    await createEvent({
+    try {
+    const res = await createEvent({
       objective: data.objective,
       attendees: data.attendees,
       theme: data.theme,
@@ -75,8 +76,11 @@ export const EventPurpose: React.FC = () => {
       name: name,
       date: cleanedDate,
       budget: budget,})?.unwrap()
-
-    setOpen(true)
+      setOpen(true)
+      window.location.href = `/event/${res?.id}`
+    } catch (error) {
+      setOpen(true)
+    }
   }
 
   return (

@@ -1,4 +1,4 @@
-import EventPage from '@/app/event/page'
+import EventPage from '@/app/event/(event)/page'
 import {
   render,
   fireEvent,

@@ -1,10 +1,10 @@
 'use client'
 
-import { EventName } from './(event)/EventName'
-import { EventDate } from './(event)/EventDate'
+import { EventName } from './EventName'
+import { EventDate } from './EventDate'
 import { useEventContext } from '@/components/contexts/EventContext'
-import { EventBudget } from './(event)/EventBudget'
-import { EventPurpose } from './(event)/EventPurpose'
+import { EventBudget } from './EventBudget'
+import { EventPurpose } from './EventPurpose'
 
 export default function EventPage() {
   const { page } = useEventContext()
