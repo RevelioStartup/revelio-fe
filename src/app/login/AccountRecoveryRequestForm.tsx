@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Input } from '@/components/elements/Forms/input'
 import {
   Box,
@@ -18,18 +18,17 @@ type RecPassFormType = {
 
 interface Props {
   readonly openForm: boolean
+  readonly onClose: () => void
 }
 
-export default function AccountRecoveryRequestForm({ openForm }: Props) {
+export default function AccountRecoveryRequestForm({
+  openForm,
+  onClose,
+}: Props) {
   const defaultValuesRecPass: RecPassFormType = {
     email: '',
   }
 
-  useEffect(() => {
-    setOpen(openForm)
-  }, [openForm])
-
-  const [open, setOpen] = useState(false)
   const [openPrompt, setOpenPrompt] = useState(false)
   const [openPopup, setOpenPopup] = useState(false)
   const [message, setMessage] = useState('')
@@ -69,15 +68,11 @@ export default function AccountRecoveryRequestForm({ openForm }: Props) {
     setOpenPopup(false)
   }
 
-  const handleCloseAccRecovery = () => {
-    setOpen(false)
-  }
-
   return (
     <Box>
       <Dialog
-        open={open}
-        onClose={handleCloseAccRecovery}
+        open={openForm}
+        onClose={onClose}
         data-testid="login-dialog-recover"
       >
         <DialogTitle>Account Recovery</DialogTitle>
@@ -99,10 +94,7 @@ export default function AccountRecoveryRequestForm({ openForm }: Props) {
                 Send Recovery Email
               </button>
             </form>
-            <button
-              data-testid="close-acc-rec-form"
-              onClick={handleCloseAccRecovery}
-            >
+            <button data-testid="close-acc-rec-form" onClick={onClose}>
               Close
             </button>
           </div>

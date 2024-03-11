@@ -1,8 +1,16 @@
-import { Button } from '@/components/elements/Button'
+import { useEventContext } from '@/components/contexts/EventContext'
 import { Input } from '@/components/elements/Forms/input'
-import { setEventPurpose } from '@/redux/features/eventSlice'
-import { useAppDispatch } from '@/redux/store'
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { useCreateEventMutation } from '@/redux/api/eventApi'
+import { useAppSelector } from '@/redux/store'
+import { LoadingButton } from '@mui/lab'
+import {
+  Alert,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Snackbar,
+} from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -20,12 +28,15 @@ const listOfServices = [
 export const EventPurpose: React.FC = () => {
   const [services, setServices] = React.useState<string[]>([])
 
+  const { handleClose, open, setOpen } = useEventContext()
+
   const error = React.useMemo(() => {
     if (services.length == 0) return 'Please select at least one service.'
     return ''
   }, [services])
 
-  const dispatch = useAppDispatch()
+  const [createEvent, { data: createEventData, isLoading }] =
+    useCreateEventMutation()
 
   const methods = useForm({
     defaultValues: {
@@ -44,7 +55,9 @@ export const EventPurpose: React.FC = () => {
     setServices(value as string[])
   }
 
-  const onSubmit = (data: {
+  const { name, date, budget } = useAppSelector((state) => state.event)
+
+  const onSubmit = async (data: {
     objective: string
     attendees: number
     theme: string
@@ -52,14 +65,23 @@ export const EventPurpose: React.FC = () => {
     if (services.length === 0) {
       return
     }
-    dispatch(
-      setEventPurpose({
-        attendees: data.attendees,
+    const cleanedDate = new Date(date).toISOString().split('T')[0]
+
+    try {
+      const res = await createEvent({
         objective: data.objective,
-        services: services,
+        attendees: data.attendees,
         theme: data.theme,
-      })
-    )
+        services: services.toString(),
+        name: name,
+        date: cleanedDate,
+        budget: budget,
+      })?.unwrap()
+      setOpen(true)
+      window.location.href = `/event/${res?.id}`
+    } catch (error) {
+      setOpen(true)
+    }
   }
 
   return (
@@ -133,13 +155,36 @@ export const EventPurpose: React.FC = () => {
           width={50}
           className="w-full"
         />
-        <Button
+        <LoadingButton
           type="submit"
-          className="!text-center font-bold rounded-lg flex justify-center w-fit m-auto"
+          className="!text-center !font-bold rounded-lg flex justify-center !w-full m-auto !bg-teal-400"
+          loading={isLoading}
+          loadingIndicator={'Creating...'}
         >
           Plan{' '}
-        </Button>
+        </LoadingButton>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{
+          horizontal: 'center',
+          vertical: 'top',
+        }}
+        data-testid="snackbar"
+      >
+        <Alert
+          onClose={handleClose}
+          severity={createEventData ? 'success' : 'error'}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {createEventData
+            ? 'Event created successfully'
+            : 'Error creating event'}
+        </Alert>
+      </Snackbar>
     </form>
   )
 }

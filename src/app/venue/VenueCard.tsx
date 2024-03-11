@@ -7,14 +7,12 @@ import {
   useAddPhotoMutation,
 } from '@/redux/api/venueApi'
 import { UpdateVenueRequest, Venue } from '@/types/venue'
-import { Box, TextField, MenuItem, useMediaQuery } from '@mui/material'
-import Image from 'next/image'
+import { Box } from '@mui/material'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Input } from '@/components/elements/Forms/input'
 import { Select } from '@/components/elements/Forms/select'
-import { TextArea } from '@/components/elements/Forms/textarea'
 import GalleryPage from './GalleryPage'
 import GalleryPageDelete from './GalleryPageDelete'
 
@@ -78,13 +76,13 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
 
   return (
     <Box
+    className="mb-8"
       data-testid="venue-card"
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         padding: '2em',
-        margin: '2em',
         border: '1px solid #64748B',
         borderRadius: '20px',
         alignItems: 'flex-start',
@@ -128,7 +126,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
         data-testid="venue-card-form"
       >
         <Box className="flex sm:flex-row flex-col">
-          <Box className="">
+          <Box className="mr-8">
             <Box className="my-2 flex items-center">
               <i className="i-ph-address-book-bold text-black size-5" />
               {isEditing ? (

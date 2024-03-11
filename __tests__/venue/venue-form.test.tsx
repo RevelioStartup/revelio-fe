@@ -27,7 +27,7 @@ describe('Test for VenueCreateForm', () => {
     const createVenue = jest.fn().mockResolvedValue({ data: {} })
     ;(useCreateVenueMutation as jest.Mock).mockReturnValue([createVenue])
 
-    const { getByTestId } = render(<VenueCreateForm />)
+    const { getByTestId } = render(<VenueCreateForm eventId={ "cfa26386-c1ed-465e-a035-36478db57d4b" } />)
     expect(getByTestId('venue-create-form')).toBeInTheDocument()
   })
 
@@ -44,7 +44,7 @@ describe('Test for VenueCreateForm', () => {
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
     ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto])
-    const { getByTestId } = render(<VenueCreateForm />)
+    const { getByTestId } = render(<VenueCreateForm eventId={ "cfa26386-c1ed-465e-a035-36478db57d4b" } />)
 
     fireEvent.change(getByTestId('input-venue-name'), {
       target: { value: 'Test Venue' },
@@ -106,7 +106,7 @@ describe('Test for VenueCreateForm', () => {
       {},
     ])
 
-    const { getByTestId, findByText } = render(<VenueCreateForm />)
+    const { getByTestId, findByText } = render(<VenueCreateForm eventId={ "cfa26386-c1ed-465e-a035-36478db57d4b" } />)
 
     // Leave 'input-venue-name' empty
     fireEvent.change(getByTestId('input-address'), {

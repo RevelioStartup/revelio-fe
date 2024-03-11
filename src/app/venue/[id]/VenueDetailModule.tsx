@@ -22,7 +22,7 @@ export const VenueDetailModule = ({ id }: VenueDetailModuleProps) => {
         !!data && (
           <>
             <VenueCard venue={data} />
-            <VenueCreateForm />
+            {/* <VenueCreateForm /> */}
             <GalleryPage photos={data.photos} />
           </>
         )

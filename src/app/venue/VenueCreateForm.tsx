@@ -10,9 +10,11 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { Input } from '@/components/elements/Forms/input'
 import { Select } from '@/components/elements/Forms/select'
 
-type VenueCreateFormProps = {}
+interface VenueCreateFormProps {
+  eventId: string
+}
 
-export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
+export const VenueCreateForm = ({ eventId }: VenueCreateFormProps) => {
   const [createVenue] = useCreateVenueMutation()
   const [addPhoto] = useAddPhotoMutation()
 
@@ -22,7 +24,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
     status: '',
     address: '',
     name: '',
-    event: 'cfa26386-c1ed-465e-a035-36478db57d4b',
+    event: eventId,
     price: 0,
     photos: [],
     contact_name: '',
@@ -55,7 +57,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
   }
 
   return (
-    <Box className="bg-teal-50 m-6 p-6 rounded-2xl">
+    <Box className="bg-teal-50 my-4 p-6 rounded-2xl">
       <form data-testid="venue-create-form" onSubmit={handleSubmit(onSubmit)}>
         <Box className="grid grid-cols-2 gap-8">
           <Box>
