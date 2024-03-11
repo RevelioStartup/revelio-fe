@@ -44,7 +44,7 @@ function Questions() {
                     <div key={item.id} className='flex flex-col gap-4 mt-5'>
                         <div 
                             className='flex items-center justify-between hover:text-[#14b8a6] hover:text-bold'
-                            style={{ transition: '0.15s ease' }}
+                            style={{ transition: '0.2s ease' }}
                             onClick={() => handleToggle(item.id)}
                         >
                             <button className='text-start font-bold leading-5'>

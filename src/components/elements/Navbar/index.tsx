@@ -53,7 +53,7 @@ export const Navbar: React.FC = () => {
       <Button variant="contained" 
               sx={{ 
                 bgcolor: '#2DD4BF', 
-                borderRadius: 75, 
+                borderRadius: 2, 
                 textTransform: 'none',
                 px: 2, 
                 py: 0.5, 

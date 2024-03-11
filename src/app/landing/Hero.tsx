@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
@@ -45,22 +45,35 @@ export const Hero = () => {
         <Box
           display={'flex'}
           flexDirection={'column'}
-          alignItems={'center'}
+          alignItems={'baseline'} // Change 'center' to 'flex-start' or 'baseline'
           justifyContent={'center'}
           gap={'24px'}
           width={'50%'}
-        >
-        <Typography variant={'h6'} sx={{ opacity: 0.7, textAlign: "left" }}>
-          {' '}
-          <Box component="span" color={'#1ec2ae'}  fontWeight="800">Revelio </Box>
-          is designed to simplify and enhance the entire 
-          <Box component="span" fontWeight="600"> event planning </Box>
-          experience, providing you with powerful tools to structure, track, and manage every aspect of 
-          your event seamlessly, 
-          <Box component="span" fontWeight="600"> all from one central platform. </Box>
-         
-        </Typography>
-        </Box>
+      >
+          <Typography variant={'h6'} sx={{ opacity: 0.7, textAlign: "left" }}>
+              {' '}
+              <Box component="span" color={'#1ec2ae'}  fontWeight="800">Revelio </Box>
+              is designed to simplify and enhance the entire 
+              <Box component="span" fontWeight="600"> event planning </Box>
+              experience, providing you with powerful tools to structure, track, and manage every aspect of 
+              your event seamlessly, 
+              <Box component="span" fontWeight="600"> all from one central platform. </Box>
+            
+          </Typography>
+          <Button variant="contained" 
+              sx={{ 
+                  bgcolor: '#2DD4BF', 
+                  borderRadius: 2, 
+                  textTransform: 'none',
+                  alignItems: 'left',
+                  py: 0.5, 
+                  fontSize: '16px', 
+                  ':hover': { bgcolor: '#2DD4BF' } 
+              }} 
+              href="/register">
+            Get Started
+          </Button>
+      </Box>
         <Image
             src="/assets/images/Landingpage-Image.svg"
             alt="landing"
