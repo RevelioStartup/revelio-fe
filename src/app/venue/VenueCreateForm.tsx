@@ -22,7 +22,7 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
     status: '',
     address: '',
     name: '',
-    venue: 0,
+    event: 'cfa26386-c1ed-465e-a035-36478db57d4b',
     price: 0,
     photos: [],
     contact_name: '',
@@ -34,12 +34,14 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
 
   const onSubmit: SubmitHandler<CreateVenueRequest> = async (data) => {
     const response = await createVenue(data).unwrap()
+    console.log('woop woop 1')
     if (response && response.id) {
       const venueId = response.id
-
-      images.forEach(async (image) => {
-        await addPhoto({ id: venueId, image })
-      })
+      console.log('woop woop 2')
+      for (const image of images) {
+        await addPhoto({ venue: venueId, image }).unwrap()
+        console.log('woop woop image')
+      }
 
       reset()
       setImages([])
@@ -52,32 +54,29 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
   }
 
   return (
-    <Box
-      data-testid="venue-create-form"
-      className="bg-teal-50 m-6 p-6 rounded-2xl"
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box className="grid grid-cols-2 gap-8 mb-4">
+    <Box className="bg-teal-50 m-6 p-6 rounded-2xl">
+      <form data-testid="venue-create-form" onSubmit={handleSubmit(onSubmit)}>
+        <Box className="grid grid-cols-2 gap-8">
           <Box>
             <h1 className="text-xl font-bold m-2">Venue Details</h1>
             <Input
               name="name"
               data-testid="input-venue-name"
-              className="text-sm bg-white text-gray-500 rounded-2xl m-2 p-3 w-full"
+              className="text-sm bg-white text-gray-500 rounded-2xl my-2 p-3 w-full"
               control={control}
               placeholder="Venue Name"
             />
             <Input
               name="address"
               data-testid="input-address"
-              className="text-sm bg-white text-gray-500 rounded-2xl m-2 p-3 w-full"
+              className="text-sm bg-white text-gray-500 rounded-2xl my-2 p-3 w-full"
               control={control}
               placeholder="Address"
             />
             <Input
               name="price"
               data-testid="input-price"
-              className="text-sm bg-white text-gray-500 rounded-2xl mx-2 mt-2 mb-5 p-3 w-full"
+              className="text-sm bg-white text-gray-500 rounded-2xl mt-2 mb-5 p-3 w-full"
               control={control}
               placeholder="Price"
               type="number"
@@ -85,26 +84,26 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
             <h1 className="text-xl font-bold m-2">Images</h1>
             <input
               data-testid="input-images"
-              className="text-sm bg-white text-gray-500 rounded-2xl m-2 p-3 w-full"
+              className="text-sm bg-white text-gray-500 rounded-2xl my-2 p-3 w-full"
               type="file"
               name="files[]"
               multiple
               onChange={handleImageChange}
             />
           </Box>
-          <Box>
+          <Box className="">
             <h1 className="text-xl font-bold m-2">Contact Information</h1>
             <Input
               name="contact_name"
               data-testid="input-contact-name"
-              className="text-sm bg-white text-gray-500 rounded-2xl m-2 p-3 w-full"
+              className="text-sm bg-white text-gray-500 rounded-2xl my-2 p-3 w-full"
               control={control}
               placeholder="Contact Name"
             />
             <Input
               name="contact_phone_number"
               data-testid="input-contact-phone-number"
-              className="text-sm bg-white text-gray-500 rounded-2xl mx-2 mt-2 mb-20 p-3 w-full"
+              className="text-sm bg-white text-gray-500 rounded-2xl mt-2 mb-20 p-3 w-full"
               control={control}
               placeholder="Contact Phone Number"
               type="tel"
@@ -113,21 +112,21 @@ export const VenueCreateForm: React.FC<VenueCreateFormProps> = () => {
             <Select
               name="status"
               data-testid="input-status"
-              className="text-sm bg-white text-gray-900 rounded-2xl m-2 p-3.5 w-full"
+              className="text-sm bg-white text-gray-900 rounded-2xl my-2 p-3.5 w-full"
               control={control}
               options={[
-                { label: 'None', value: 'none' },
-                { label: 'Pending', value: 'pending' },
-                { label: 'Waitlist', value: 'waitlist' },
-                { label: 'Confirmed', value: 'confirmed' },
-                { label: 'Cancelled', value: 'cancelled' },
+                { label: 'None', value: 'NONE' },
+                { label: 'Pending', value: 'PENDING' },
+                { label: 'Waitlist', value: 'WAITLIST' },
+                { label: 'Confirmed', value: 'CONFIRMED' },
+                { label: 'Cancelled', value: 'CANCELLED' },
               ]}
               placeholder="Status"
             />
             <Box className="flex justify-end w-full">
               <button
                 type="submit"
-                className="text-sm bg-teal-200 text-gray-900 rounded-2xl m-4 p-3 w-1/6"
+                className="text-sm bg-teal-200 text-gray-900 rounded-2xl mt-8 p-3"
               >
                 Add Venue
               </button>

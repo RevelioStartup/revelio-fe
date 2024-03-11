@@ -1,12 +1,13 @@
+import { useDeletePhotoMutation } from '@/redux/api/venueApi'
 import { VenuePhoto } from '@/types/venue'
-import Image from 'next/image'
 import React from 'react'
+import Image from 'next/image'
 
-interface GalleryPageProps {
+interface GalleryPageDeleteProps {
   photos: VenuePhoto[]
 }
 
-export const GalleryPage = ({ photos }: GalleryPageProps) => {
+export const GalleryPageDelete = ({ photos }: GalleryPageDeleteProps) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
 
   const nextSlide = () => {
@@ -17,6 +18,8 @@ export const GalleryPage = ({ photos }: GalleryPageProps) => {
     setCurrentSlide((currentSlide - 1 + photos.length) % photos.length)
   }
 
+  const [deletePhoto] = useDeletePhotoMutation()
+
   return (
     <div className="relative w-full overflow-hidden">
       <div
@@ -24,7 +27,7 @@ export const GalleryPage = ({ photos }: GalleryPageProps) => {
         style={{ transform: `translateX(-${currentSlide * 33.33}%)` }}
       >
         {photos.map((photo, index) => (
-          <div key={index} className="flex-shrink-0 w-1/3 p-2">
+          <div key={index} className="relative group flex-shrink-0 w-1/3 p-2">
             <Image
               src={photo.image}
               alt={`Photo ${index + 1}`}
@@ -32,6 +35,17 @@ export const GalleryPage = ({ photos }: GalleryPageProps) => {
               width={300}
               height={300}
             />
+            <div className="m-2 rounded-lg absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
+              <button
+                type="button"
+                className="text-red-500 cursor-pointer"
+                onClick={() => {
+                  deletePhoto({ photo })
+                }}
+              >
+                🗑️
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -54,4 +68,4 @@ export const GalleryPage = ({ photos }: GalleryPageProps) => {
   )
 }
 
-export default GalleryPage
+export default GalleryPageDelete

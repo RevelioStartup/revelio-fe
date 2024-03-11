@@ -13,7 +13,7 @@ export type Venue = {
   contact_name: string
   contact_phone_number: string
   photos: VenuePhoto[]
-  venue: number
+  event: string
 }
 
 export type VenueListResponse = Venue[]
@@ -25,6 +25,11 @@ export type VenueDetailRequest = {
 }
 export type VenueDetailResponse = Venue
 
-export type AddPhotoRequest = VenueDetailRequest & {
+export type AddPhotoRequest = {
+  venue: number
   image: File
+}
+
+export type DeletePhotoRequest = {
+  photo: VenuePhoto
 }

@@ -10,9 +10,9 @@ jest.mock('@/redux/api/authApi', () => ({
 
 describe('Test for recover account page', () => {
   const mockChangePassword = jest.fn().mockResolvedValue({ data: {} })
-    ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
-      mockChangePassword,
-    ])
+  ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
+    mockChangePassword,
+  ])
   it('renders recover account form', () => {
     const { getByTestId } = render(<RecoverAccount />)
     expect(getByTestId('recover-form')).toBeInTheDocument()

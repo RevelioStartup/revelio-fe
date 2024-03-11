@@ -2,12 +2,7 @@ import { Button } from '@/components/elements/Button'
 import { Input } from '@/components/elements/Forms/input'
 import { setEventPurpose } from '@/redux/features/eventSlice'
 import { useAppDispatch } from '@/redux/store'
-import {
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material'
+import { InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 import { useForm } from 'react-hook-form'
