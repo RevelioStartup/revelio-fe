@@ -31,6 +31,7 @@ export const Navbar: React.FC = () => {
         alignItems: 'center',
       }}
       padding={'0em 2em'}
+      paddingX={'6em'}
       className={twMerge(
         'fixed top-0 inset-x-0 z-50',
         atTop ? '' : 'backdrop-blur-md'

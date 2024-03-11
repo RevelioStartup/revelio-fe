@@ -64,9 +64,8 @@ export const Hero = () => {
         <Image
             src="/assets/images/Landingpage-Image.svg"
             alt="landing"
-            width={360}
-            height={360}
-            // style={{ width: 'auto' }}
+            width={320}
+            height={320}
             priority
           />
       </Box>
