@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Input } from '@/components/elements/Forms/input'
 import {
   Box,
@@ -17,20 +17,18 @@ type RecPassFormType = {
 }
 
 interface Props {
-  readonly openForm: boolean;
-  onClose: () => void;
+  readonly openForm: boolean
+  readonly onClose: () => void
 }
 
 export default function AccountRecoveryRequestForm({
-  openForm, onClose
-}: 
-  Props
-) {
+  openForm,
+  onClose,
+}: Props) {
   const defaultValuesRecPass: RecPassFormType = {
     email: '',
   }
 
-  const [open, setOpen] = useState(false)
   const [openPrompt, setOpenPrompt] = useState(false)
   const [openPopup, setOpenPopup] = useState(false)
   const [message, setMessage] = useState('')
@@ -96,10 +94,7 @@ export default function AccountRecoveryRequestForm({
                 Send Recovery Email
               </button>
             </form>
-            <button
-              data-testid="close-acc-rec-form"
-              onClick={onClose}
-            >
+            <button data-testid="close-acc-rec-form" onClick={onClose}>
               Close
             </button>
           </div>
