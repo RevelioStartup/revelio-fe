@@ -10,13 +10,14 @@ export const WithoutRevelio = () => {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        background:
-          'linear-gradient(180deg, #FFF 0%, #FFF 42.41%, #CEFBF7 100%)',
+        // background:
+        //   'linear-gradient(180deg, #FFF 0%, #CEFBF7 5%, #CEFBF7 85%, #FFF 100%)',
       }}
       alignItems={'center'}
       justifyContent={'center'}
       gap={'2em'}
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
+      className = 'bg-teal-50'
     >
       <Box className="flex flex-row items-center bg-teal-50 gap-3 text-teal-600 px-3 py-1 rounded-2xl ">
         <i className="i-fa6-regular-eye rounded-full size-5 text-6xl" />

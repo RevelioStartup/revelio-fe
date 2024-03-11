@@ -1,8 +1,6 @@
 'use client'
-import { Box } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material'
 import Image from 'next/image'
-import { MENU } from './constant'
-import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import React, { useEffect, useState } from 'react'
 
@@ -20,12 +18,13 @@ export const Navbar: React.FC = () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
   return (
     <Box
       data-testid="navbar"
       height={'80px'}
       width={'100%'}
-      bgcolor={'transparent'}
+      bgcolor={'white'}
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -37,30 +36,33 @@ export const Navbar: React.FC = () => {
         atTop ? '' : 'backdrop-blur-md'
       )}
     >
-      <Image
-        data-testid="nav-logo"
-        src="/assets/images/Logo.svg"
-        alt="logo"
-        width={75}
-        height={75}
-      />
-      <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={'40px'}>
-        {MENU.map(({ href, label }, index) => (
-          <Link
-            key={index}
-            href={href}
-            style={{
-              cursor: 'pointer',
-              color: '#000',
-              fontSize: '14px',
-              fontWeight: 500,
-              textDecoration: 'none',
-            }}
-          >
-            {label}
-          </Link>
-        ))}
+      <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
+        <Image
+          data-testid="nav-logo"
+          src="/assets/images/Logo.svg"
+          alt="logo"
+          width={35}
+          height={35}
+        />
+        <Typography variant="h6" component="div" sx={{ marginLeft: '10px' }}>
+          Revelio
+        </Typography>
       </Box>
+      <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={'40px'}>
+      <Button variant="contained" 
+              sx={{ 
+                bgcolor: '#2DD4BF', 
+                borderRadius: 75, 
+                textTransform: 'none',
+                px: 2, 
+                py: 0.5, 
+                fontSize: '16px', 
+                ':hover': { bgcolor: '#2DD4BF' } 
+              }} 
+              href="/login">
+        Login
+      </Button>
+</Box>
     </Box>
   )
 }
