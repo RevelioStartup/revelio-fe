@@ -18,20 +18,17 @@ type RecPassFormType = {
 
 interface Props {
   readonly openForm: boolean;
+  onClose: () => void;
 }
 
 export default function AccountRecoveryRequestForm({
-  openForm
+  openForm, onClose
 }: 
   Props
 ) {
   const defaultValuesRecPass: RecPassFormType = {
     email: '',
   }
-
-  useEffect(() => {
-    setOpen(openForm)
-  }, [openForm])
 
   const [open, setOpen] = useState(false)
   const [openPrompt, setOpenPrompt] = useState(false)
@@ -73,15 +70,11 @@ export default function AccountRecoveryRequestForm({
     setOpenPopup(false)
   }
 
-  const handleCloseAccRecovery = () => {
-    setOpen(false)
-  }
-
   return (
     <Box>
       <Dialog
-        open={open}
-        onClose={handleCloseAccRecovery}
+        open={openForm}
+        onClose={onClose}
         data-testid="login-dialog-recover"
       >
         <DialogTitle>Account Recovery</DialogTitle>
@@ -105,7 +98,7 @@ export default function AccountRecoveryRequestForm({
             </form>
             <button
               data-testid="close-acc-rec-form"
-              onClick={handleCloseAccRecovery}
+              onClick={onClose}
             >
               Close
             </button>
