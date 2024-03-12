@@ -1,9 +1,6 @@
 import { AIButton } from '@/app/plans/AISuggestion/AIButton'
-import { VenueCard } from '@/app/venue/VenueCard'
-import { useGetVenueListQuery } from '@/redux/api/venueApi'
 import VenueCreateForm from '@/app/venue/VenueCreateForm'
 import VenueList from '@/app/venue/VenueList'
-import { Venue } from '@/types/venue'
 import CheckIcon from '@mui/icons-material/Check'
 import {
   Box,
