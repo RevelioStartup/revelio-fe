@@ -21,8 +21,10 @@ jest.mock('next/image', () => ({
 }))
 
 jest.mock('@/redux/store', () => ({
+  ...jest.requireActual('@/redux/store'),
   useAppSelector: jest.fn(),
 }))
+
 
 describe('Navbar Component', () => {
   beforeEach(() => {
@@ -46,6 +48,7 @@ describe('Navbar Component', () => {
     })
   })
   it('renders the navbar with logo', async () => {
+
     render(<Navbar />)
 
     const logo = screen.getByAltText('logo')
