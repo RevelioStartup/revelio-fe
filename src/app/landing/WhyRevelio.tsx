@@ -1,4 +1,4 @@
-import { Box, Icon, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
@@ -21,14 +21,12 @@ export const WhyRevelio = () => {
         <p>Why Revelio</p>
       </Box>
       <Typography variant={'h3'} textAlign={'center'}>
-        We are committed to solving these problems and revolutionizing event
-        planning.
+        We are committed to revolutionizing and solving problems in event
+        planning
       </Typography>
       <Typography variant={'h6'} sx={{ opacity: 0.5 }} textAlign={'center'}>
-        Our app is designed to simplify and enhance the entire event planning
-        experience, providing you with powerful tools to structure, track, and
-        manage every aspect of your event seamlessly, all from one central
-        platform.
+        Revelio is meant to make your event planning <u>seamless</u> and{' '}
+        <u>enjoyable</u>
       </Typography>
       <Box
         sx={{
@@ -46,6 +44,10 @@ export const WhyRevelio = () => {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
+            transition: 'all 0.4s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
           }}
           alignItems={'center'}
           justifyContent={'between'}
@@ -67,6 +69,10 @@ export const WhyRevelio = () => {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
+            transition: 'all 0.4s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
           }}
           alignItems={'center'}
           justifyContent={'between'}
@@ -92,6 +98,10 @@ export const WhyRevelio = () => {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
+            transition: 'all 0.4s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
           }}
           alignItems={'center'}
           justifyContent={'between'}

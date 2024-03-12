@@ -21,11 +21,10 @@ const Toggle = ({
   return (
     <div style={{ display: 'flex', gap: '10px' }}>
       {options.map(({ label }, index) => (
-        <li
-          key={index}
+        <button
+          key={index + (label ?? '')}
           className="relative m-1 flex h-10 w-full cursor-pointer items-center justify-center rounded-full p-1 text-center"
           onClick={() => handleClick(index)}
-          onKeyDown={() => {}}
         >
           <div
             className={twMerge(
@@ -41,7 +40,7 @@ const Toggle = ({
               className="bg-teal-400 w-full h-full rounded-full absolute"
             />
           )}
-        </li>
+        </button>
       ))}
     </div>
   )

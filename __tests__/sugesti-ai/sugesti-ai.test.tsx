@@ -8,7 +8,6 @@ import {
 } from '@/redux/api/aiSuggestionApi'
 import { store } from '@/redux/store'
 
-// Mock the hooks
 jest.mock('@/redux/api/aiSuggestionApi', () => ({
   useAskSuggestionMutation: jest.fn(),
   useAiSuggestionHistoryListQuery: jest.fn(),

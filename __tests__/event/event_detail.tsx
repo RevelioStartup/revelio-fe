@@ -3,7 +3,12 @@ import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import EventDetail from '@/app/event/[eventId]/(eventId)/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store'
 
+jest.mock('@/app/plans/AISuggestion/AIButton', () => ({
+  AIButton: jest.fn().mockReturnValue(<div>Mock AIButton</div>),
+}))
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
 }))
@@ -35,11 +40,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId, getByText } = render(
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+      <Provider store={store}>
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
+      </Provider>
     )
 
     const myPlan = getByText('My Plan')
@@ -113,11 +120,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+      <Provider store={store}>
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
+      </Provider>
     )
 
     const myPlan = getByTestId('myplan')

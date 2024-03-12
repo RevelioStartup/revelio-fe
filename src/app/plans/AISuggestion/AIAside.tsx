@@ -14,9 +14,9 @@ import { AIType } from './constants'
 
 interface AIAsideProps {
   isOpen: boolean
-  event?: any
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
+
 export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
   const [askAI, { isLoading }] = useAskSuggestionMutation()
   const { data: aiHistory } = useAiSuggestionHistoryListQuery()
@@ -43,6 +43,9 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
       }
     })
   }
+  const handleClose = () => {
+    setIsOpen(false)
+  }
 
   return (
     <motion.aside
@@ -59,18 +62,13 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
       <div className="w-full bg-teal-500 px-4 py-3 text-white font-bold relative">
         <p>Ask AI for suggestions.</p>
 
-        <div
-          onClick={() => {
-            setIsOpen(false)
-          }}
-          onKeyDown={() => {
-            setIsOpen(false)
-          }}
+        <button
+          onClick={handleClose}
           data-testid="close-ai-aside-button"
           className="cursor-pointer"
         >
           <i className="i-ph-x-bold size-5 absolute top-1 translate-y-1/2 text-white right-4" />
-        </div>
+        </button>
       </div>
       <div className="px-4 py-3 flex flex-col gap-3 h-full">
         {aiHistory?.length == 0 && (
@@ -121,7 +119,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
                     {ansList?.length > 0 &&
                       ansList.map((msg, idx) => {
                         return (
-                          <div key={idx}>
+                          <div key={msg.toString() + idx}>
                             {idx + 1}. {msg}
                           </div>
                         )
@@ -137,7 +135,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
                             onClick={() => {
                               setValue('prompt', item)
                             }}
-                            key={idx}
+                            key={item.toString() + idx}
                             className="underline hover:text-teal-600"
                           >
                             {item}
