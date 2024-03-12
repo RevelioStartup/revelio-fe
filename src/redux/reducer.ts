@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage'
 import { baseApi } from './api/baseApi'
 import userReducer from './features/userSlice'
 import eventReducer from './features/eventSlice'
+import profileReducer from './features/profileSlice'
 
 const persistConfig = {
   key: 'root',
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
   api: baseApi.reducer,
   user: persistReducer(persistConfig, userReducer),
   event: eventReducer,
+  profile: profileReducer,
 })

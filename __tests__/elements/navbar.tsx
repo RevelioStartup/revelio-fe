@@ -24,11 +24,6 @@ jest.mock('@/redux/store', () => ({
   useAppSelector: () => null,
 }))
 
-jest.mock('@/redux/store', () => ({
-  ...jest.requireActual('@/redux/store'),
-  useAppSelector: () => null,
-}))
-
 describe('Navbar Component', () => {
   beforeEach(() => {
     global.window.scrollY = 0
