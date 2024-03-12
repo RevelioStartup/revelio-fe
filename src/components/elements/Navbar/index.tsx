@@ -10,8 +10,6 @@ import { RootState, useAppSelector } from '@/redux/store'
 export const Navbar: React.FC = () => {
   const [atTop, setAtTop] = useState<boolean>(true)
 
-  const { token } = useAppSelector((state: RootState) => state.user)
-
   useEffect(() => {
     const handleScroll = () => {
       setAtTop(window.scrollY <= 40)
