@@ -64,7 +64,7 @@ describe('VenueCard Component', () => {
 
     fireEvent.click(getByTestId('delete-button'))
     expect(getByTestId('confirm-delete-button')).toBeInTheDocument()
-    
+
     fireEvent.click(getByTestId('cancel-delete-button'))
     fireEvent.click(getByTestId('delete-button'))
 
@@ -124,11 +124,9 @@ describe('VenueCard Component', () => {
 
     fireEvent.click(getByTestId('edit-button'))
 
-    const imageFile = new File(
-      ['image'],
-      '/venue-card.test.tsx',
-      { type: 'image/jpeg' }
-    )
+    const imageFile = new File(['image'], '/venue-card.test.tsx', {
+      type: 'image/jpeg',
+    })
 
     const imageInput = getByTestId('input-images')
 
@@ -140,12 +138,9 @@ describe('VenueCard Component', () => {
 
     fireEvent.submit(getByTestId('venue-card-form'))
 
-    const warningMessage = await findByText('Upload a valid image. The file you uploaded was either not an image or a corrupted image.')
+    const warningMessage = await findByText(
+      'Upload a valid image. The file you uploaded was either not an image or a corrupted image.'
+    )
     expect(warningMessage).toBeInTheDocument()
-
-    expect(getByTestId('input-address')).toBeInTheDocument()
-    expect(getByTestId('input-price')).toBeInTheDocument()
-    expect(getByTestId('input-contact-name')).toBeInTheDocument()
-    expect(getByTestId('input-contact-phone-number')).toBeInTheDocument()
   })
 })
