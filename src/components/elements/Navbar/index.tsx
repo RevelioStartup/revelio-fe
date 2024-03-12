@@ -45,19 +45,23 @@ export const Navbar: React.FC = () => {
       >
         <a href="/">
           <Box className="flex gap-2 justify-center items-center flex-row">
-              <Image
-                data-testid="nav-logo"
-                src="/assets/images/Logo.svg"
-                alt="logo"
-                width={45}
-                height={45}
-              />
-              <Typography variant="h5" component="div" sx={{ marginLeft: '10px' }}>
-                Revelio
-              </Typography>
+            <Image
+              data-testid="nav-logo"
+              src="/assets/images/Logo.svg"
+              alt="logo"
+              width={45}
+              height={45}
+            />
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ marginLeft: '10px' }}
+            >
+              Revelio
+            </Typography>
           </Box>
         </a>
-          
+
         <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={'40px'}>
           {MENU_LOGGED_IN.map(({ href, label }) => (
             <Link
