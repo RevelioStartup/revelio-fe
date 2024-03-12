@@ -43,7 +43,7 @@ describe('Navbar Component', () => {
         name: 'name',
         email: 'email',
         avatar: 'avatar',
-      }
+      },
     })
   })
   it('renders the navbar with logo', async () => {

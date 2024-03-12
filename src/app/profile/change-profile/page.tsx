@@ -24,8 +24,7 @@ const ChangeProfile = () => {
 
   const profilePictureRef = useRef<HTMLInputElement>(null)
   // const [profilePicPreview, setProfilePicPreview] = useState('')
-    const [error, setError] = useState(''); 
-
+  const [error, setError] = useState('')
 
   useEffect(() => {
     // Set bio value if profile data is available
@@ -75,11 +74,11 @@ const ChangeProfile = () => {
             },
           })
         )
-        reset();
-        window.location.href = '/profile';
+        reset()
+        window.location.href = '/profile'
       }
     } catch (error) {
-      setError('Failed to update profile. Please try again.');
+      setError('Failed to update profile. Please try again.')
     }
   }
 
