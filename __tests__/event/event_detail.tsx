@@ -5,8 +5,8 @@ import EventDetail from '@/app/event/[eventId]/(eventId)/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
 
 jest.mock('@/redux/api/eventApi', () => ({
-    useGetEventQuery: jest.fn(),
-  }))
+  useGetEventQuery: jest.fn(),
+}))
 
 describe('Event Detail', () => {
   it('renders the myplan', () => {
@@ -17,28 +17,31 @@ describe('Event Detail', () => {
     const eventId = '1'
 
     const mockEventData = {
-        id: "1",
-        name: "asd",
-        budget: "asd",
-        date: "2023-20-05",
-        objective: "adfsf",
-        attendees: "number",
-        theme: "string",
-        services: "string",
-      };
-    
-    const mockGetEventQuery = useGetEventQuery as jest.Mock;
+      id: '1',
+      name: 'asd',
+      budget: 'asd',
+      date: '2023-20-05',
+      objective: 'adfsf',
+      attendees: 'number',
+      theme: 'string',
+      services: 'string',
+    }
 
-    
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+
     mockGetEventQuery.mockReturnValue({
-        data: mockEventData,
-        isLoading: false,
-    });
+      data: mockEventData,
+      isLoading: false,
+    })
 
-    const { getByTestId, getByText } = render(<EventDetail params={{
-        eventId: eventId
-    }}/>)
-    
+    const { getByTestId, getByText } = render(
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
+    )
+
     const myPlan = getByText('My Plan')
 
     expect(myPlan).toBeInTheDocument()
@@ -52,28 +55,31 @@ describe('Event Detail', () => {
     const eventId = '1'
 
     const mockEventData = {
-        id: "1",
-        name: "asd",
-        budget: "asd",
-        date: "2023-20-05",
-        objective: "adfsf",
-        attendees: "number",
-        theme: "string",
-        services: "string",
-      };
-    
-    const mockGetEventQuery = useGetEventQuery as jest.Mock;
+      id: '1',
+      name: 'asd',
+      budget: 'asd',
+      date: '2023-20-05',
+      objective: 'adfsf',
+      attendees: 'number',
+      theme: 'string',
+      services: 'string',
+    }
 
-    
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+
     mockGetEventQuery.mockReturnValue({
-        data: mockEventData,
-        isLoading: true,
-    });
+      data: mockEventData,
+      isLoading: true,
+    })
 
-    const { getByTestId } = render(<EventDetail params={{
-        eventId: eventId
-    }}/>)
-    
+    const { getByTestId } = render(
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
+    )
+
     const loader = getByTestId('loader')
 
     expect(loader).toBeInTheDocument()
@@ -89,28 +95,31 @@ describe('Event Detail', () => {
     const eventId = '1'
 
     const mockEventData = {
-        id: "1",
-        name: "asd",
-        budget: "asd",
-        date: "2023-20-05",
-        objective: "adfsf",
-        attendees: "number",
-        theme: "string",
-        services: "string",
-      };
-    
-    const mockGetEventQuery = useGetEventQuery as jest.Mock;
+      id: '1',
+      name: 'asd',
+      budget: 'asd',
+      date: '2023-20-05',
+      objective: 'adfsf',
+      attendees: 'number',
+      theme: 'string',
+      services: 'string',
+    }
 
-    
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+
     mockGetEventQuery.mockReturnValue({
-        data: mockEventData,
-        isLoading: false,
-    });
+      data: mockEventData,
+      isLoading: false,
+    })
 
-    const { getByTestId } = render(<EventDetail params={{
-        eventId: eventId
-    }}/>)
-    
+    const { getByTestId } = render(
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
+    )
+
     const myPlan = getByTestId('myplan')
 
     myPlan.click()
@@ -118,81 +127,87 @@ describe('Event Detail', () => {
     expect(setChipType).toHaveBeenCalledWith('plan')
   })
 
-    it('clicks the timeline', () => {
-        const myInitialState = 'timeline'
-    
-        const setChipType = jest.fn()
-    
-        React.useState = jest.fn().mockReturnValue([myInitialState, setChipType])
-    
-        const eventId = '1'
-    
-        const mockEventData = {
-            id: "1",
-            name: "asd",
-            budget: "asd",
-            date: "2023-20-05",
-            objective: "adfsf",
-            attendees: "number",
-            theme: "string",
-            services: "string",
-        };
-        
-        const mockGetEventQuery = useGetEventQuery as jest.Mock;
-    
-        
-        mockGetEventQuery.mockReturnValue({
-            data: mockEventData,
-            isLoading: false,
-        });
-    
-        const { getByTestId } = render(<EventDetail params={{
-            eventId: eventId
-        }}/>)
-        
-        const timeline = getByTestId('timeline')
-    
-        timeline.click()
-    
-        expect(setChipType).toHaveBeenCalledWith('timeline')
+  it('clicks the timeline', () => {
+    const myInitialState = 'timeline'
+
+    const setChipType = jest.fn()
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, setChipType])
+
+    const eventId = '1'
+
+    const mockEventData = {
+      id: '1',
+      name: 'asd',
+      budget: 'asd',
+      date: '2023-20-05',
+      objective: 'adfsf',
+      attendees: 'number',
+      theme: 'string',
+      services: 'string',
+    }
+
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+
+    mockGetEventQuery.mockReturnValue({
+      data: mockEventData,
+      isLoading: false,
     })
 
-    it('clicks the tracker', () => {
-        const myInitialState = 'tracker'
-    
-        const setChipType = jest.fn()
-    
-        React.useState = jest.fn().mockReturnValue([myInitialState, setChipType])
-    
-        const eventId = '1'
-    
-        const mockEventData = {
-            id: "1",
-            name: "asd",
-            budget: "asd",
-            date: "2023-20-05",
-            objective: "adfsf",
-            attendees: "number",
-            theme: "string",
-            services: "string",
-        };
-        
-        const mockGetEventQuery = useGetEventQuery as jest.Mock;
-    
-        
-        mockGetEventQuery.mockReturnValue({
-            data: mockEventData,
-            isLoading: false,
-        });
-    
-        const { getByTestId } = render(<EventDetail params={{
-            eventId: eventId
-        }}/>)
-        
-        const tracker = getByTestId('tracker')
-    
-        tracker.click()
-    
-        expect(setChipType).toHaveBeenCalledWith('tracker')
+    const { getByTestId } = render(
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
+    )
+
+    const timeline = getByTestId('timeline')
+
+    timeline.click()
+
+    expect(setChipType).toHaveBeenCalledWith('timeline')
+  })
+
+  it('clicks the tracker', () => {
+    const myInitialState = 'tracker'
+
+    const setChipType = jest.fn()
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, setChipType])
+
+    const eventId = '1'
+
+    const mockEventData = {
+      id: '1',
+      name: 'asd',
+      budget: 'asd',
+      date: '2023-20-05',
+      objective: 'adfsf',
+      attendees: 'number',
+      theme: 'string',
+      services: 'string',
+    }
+
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+
+    mockGetEventQuery.mockReturnValue({
+      data: mockEventData,
+      isLoading: false,
     })
+
+    const { getByTestId } = render(
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
+    )
+
+    const tracker = getByTestId('tracker')
+
+    tracker.click()
+
+    expect(setChipType).toHaveBeenCalledWith('tracker')
+  })
 })

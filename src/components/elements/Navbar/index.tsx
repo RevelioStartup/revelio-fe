@@ -5,9 +5,12 @@ import { MENU } from './constant'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import React, { useEffect, useState } from 'react'
+import { RootState, useAppSelector } from "@/redux/store";
 
 export const Navbar: React.FC = () => {
   const [atTop, setAtTop] = useState<boolean>(true)
+
+  const { token } = useAppSelector((state: RootState) => state.user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +23,7 @@ export const Navbar: React.FC = () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
   return (
     <Box
       data-testid="navbar"
@@ -60,6 +64,33 @@ export const Navbar: React.FC = () => {
             {label}
           </Link>
         ))}
+        {!token ? (
+          <Link
+            href={"/login"}
+            style={{
+              cursor: 'pointer',
+              color: '#000',
+              fontSize: '14px',
+              fontWeight: 500,
+              textDecoration: 'none',
+            }}
+          >
+            Login
+          </Link>
+        ) : (
+          <Link
+            href = {"/event"}
+            style={{
+              cursor: 'pointer',
+              color: '#000',
+              fontSize: '14px',
+              fontWeight: 500,
+              textDecoration: 'none',
+            }} 
+          >
+            Create New Event
+          </Link>
+        )}
       </Box>
     </Box>
   )

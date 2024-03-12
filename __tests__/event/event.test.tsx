@@ -33,15 +33,23 @@ describe('Test for event page', () => {
     ;(useAppDispatch as jest.Mock).mockReturnValue(mockDispatch)
     const mockCreateEvent = jest.fn().mockResolvedValue({ data: {} })
     ;(useCreateEventMutation as jest.Mock).mockReturnValue([mockCreateEvent])
+
+    const mockUseAppSelector = useAppSelector as jest.Mock
+    mockUseAppSelector.mockReturnValue({
+      name: 'Event Name',
+      date: '2025-12-12',
+      budget: 123000,
+      token: 'token',
+    })
   })
 
-  let assignMock = jest.fn();
-  
-  window.location = ({ assign: assignMock as any }) as Location;
+  let assignMock = jest.fn()
+
+  window.location = { assign: assignMock as any } as Location
 
   afterEach(() => {
-    assignMock.mockClear();
-  });
+    assignMock.mockClear()
+  })
 
   it('renders name form', () => {
     const mockUseEventContext = useEventContext as jest.Mock
