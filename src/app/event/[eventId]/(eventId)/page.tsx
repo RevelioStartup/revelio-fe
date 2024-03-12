@@ -1,7 +1,6 @@
 'use client'
 
 import { useGetEventQuery } from '@/redux/api/eventApi'
-import { IEvent } from '@/types/event'
 import { AppRegistration, EditCalendar, PlaylistAdd } from '@mui/icons-material'
 import { Chip } from '@mui/material'
 import React from 'react'
@@ -44,7 +43,7 @@ export default function EventDetail({
     </div>
   ) : (
     <div className="flex flex-col gap-y-4">
-      <h1 className="font-bold text-3xl"> {(data as IEvent)?.name} </h1>
+      <h1 className="font-bold text-3xl"> {data?.name} </h1>
       <span className="border-t-2 border-slate-500"> </span>
       <div className="flex gap-x-4 flex-wrap">
         <Chip

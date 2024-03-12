@@ -14,9 +14,9 @@ import { AIType } from './constants'
 
 interface AIAsideProps {
   isOpen: boolean
-  event?: any
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
+
 export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
   const [askAI, { isLoading }] = useAskSuggestionMutation()
   const { data: aiHistory } = useAiSuggestionHistoryListQuery()
@@ -121,7 +121,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
                     {ansList?.length > 0 &&
                       ansList.map((msg, idx) => {
                         return (
-                          <div key={idx}>
+                          <div key={msg.toString() + idx}>
                             {idx + 1}. {msg}
                           </div>
                         )
@@ -137,7 +137,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
                             onClick={() => {
                               setValue('prompt', item)
                             }}
-                            key={idx}
+                            key={item.toString() + idx}
                             className="underline hover:text-teal-600"
                           >
                             {item}
