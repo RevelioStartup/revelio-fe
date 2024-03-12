@@ -1,3 +1,4 @@
+import { AIButton } from '@/app/plans/AISuggestion/AIButton'
 import { IEvent } from '@/types/event'
 import CheckIcon from '@mui/icons-material/Check'
 import {
@@ -70,6 +71,9 @@ export const EventPlan: React.FC<{
             </div>
           ))}
         </div>
+      </div>
+      <div className="sticky bottom-10 right-10">
+        <AIButton />
       </div>
     </div>
   )
