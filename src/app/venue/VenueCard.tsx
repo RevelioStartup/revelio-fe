@@ -38,7 +38,6 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
   const [isEditing, setIsEditing] = React.useState(false)
 
   const handleEditToggle = () => {
-    setMessage('')
     setIsEditing((prev) => !prev)
   }
 
