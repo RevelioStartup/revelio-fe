@@ -28,7 +28,10 @@ export const vendorApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Vendor'],
+      invalidatesTags: (result) => [
+        { type: 'Vendor', id: result?.id },
+        'Vendor',
+      ],
     }),
     getVendorList: builder.query<VendorListResponse, VendorListRequest>({
       query: (event) => ({

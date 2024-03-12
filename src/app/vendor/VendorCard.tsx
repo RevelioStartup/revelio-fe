@@ -9,7 +9,7 @@ import { Input } from '@/components/elements/Forms/input'
 import { Select } from '@/components/elements/Forms/select'
 import GalleryPage from './GalleryPage'
 import GalleryPageDelete from './GalleryPageDelete'
-import { UpdateVendorRequest } from '@/types/vendor'
+import { UpdateVendorRequest, Vendor } from '@/types/vendor'
 import {
   useAddPhotoVendorMutation,
   useDeleteVendorMutation,
@@ -17,7 +17,7 @@ import {
 } from '@/redux/api/vendorApi'
 
 interface VendorCardProps {
-  vendor: any
+  vendor: Vendor
   isDetail?: boolean
 }
 export const VendorCard = ({ vendor, isDetail }: VendorCardProps) => {

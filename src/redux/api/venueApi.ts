@@ -28,7 +28,7 @@ export const venueApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Venue'],
+      invalidatesTags: (result) => [{ type: 'Venue', id: result?.id }, 'Venue'],
     }),
     getVenueList: builder.query<VenueListResponse, VenueListRequest>({
       query: (event) => ({
