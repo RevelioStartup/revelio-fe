@@ -23,22 +23,22 @@ export const EventPlan: React.FC<{
   const servicesList = services.split(',')
   return (
     <div className="flex flex-col gap-y-4">
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className='!shadow-none !border-2 !border-teal-400 lg:!w-fit w-full overflow-auto'>
         <Table sx={{ minWidth: 500 }} aria-label="event table">
           <TableBody className="!border-teal-500 ">
             <TableRow key={'Date'} className="!border-teal-500">
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" className = "!border-b-2 !border-b-teal-400">
                 Date
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row"   className = "!border-b-2 !border-b-teal-400 !border-l-2 !border-l-teal-400">
                 {date}
               </TableCell>
             </TableRow>
             <TableRow key={'Budget'}>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row"  className = "!border-b-2 !border-b-teal-400">
                 Budget
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row"  className = "!border-b-2 !border-b-teal-400 !border-l-2 !border-l-teal-400">
                 {budget}
               </TableCell>
             </TableRow>
@@ -46,7 +46,7 @@ export const EventPlan: React.FC<{
               <TableCell component="th" scope="row">
                 Attendees
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" className = "!border-l-2 !border-l-teal-400">
                 {attendees}
               </TableCell>
             </TableRow>
