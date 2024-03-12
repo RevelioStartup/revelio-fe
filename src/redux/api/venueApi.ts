@@ -44,11 +44,11 @@ export const venueApi = baseApi.injectEndpoints({
           : ['Venue'],
     }),
     getVenueDetail: builder.query<VenueDetailResponse, VenueDetailRequest>({
-      query: ({ id }) => ({
+    query: ({ id }) => ({
         url: `/venues/${id}/`,
         method: 'GET',
       }),
-      providesTags: (result) => [{ type: 'Venue', id: result?.id }],
+      providesTags: (result) => [{ type: 'Venue', id: result?.id }, 'Venue'],
     }),
     deleteVenue: builder.mutation<{ pk: number }, VenueDetailRequest>({
       query: ({ id }) => ({

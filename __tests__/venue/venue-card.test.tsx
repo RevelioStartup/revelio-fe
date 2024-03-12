@@ -1,13 +1,12 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
-import { VenueCard } from '@/app/venue/VenueCard'
 import {
   useDeleteVenueMutation,
   useUpdateVenueMutation,
   useAddPhotoMutation,
 } from '@/redux/api/venueApi'
+import { VenueCard } from '@/app/venue/VenueCard'
 
 const mockVenue = {
   id: 1,

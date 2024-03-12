@@ -1,6 +1,5 @@
 import VenueCreateForm from '@/app/venue/VenueCreateForm'
 import VenueList from '@/app/venue/[id]/VenueList'
-import { IEvent } from '@/types/event'
 import CheckIcon from '@mui/icons-material/Check'
 import {
   Box,
@@ -12,6 +11,8 @@ import {
   TableRow,
 } from '@mui/material'
 import React from 'react'
+import VendorList from '../../../vendor/VendorList'
+import VendorCreateForm from '../../../vendor/VendorCreateForm'
 
 export const EventPlan: React.FC<{
   id: string
@@ -24,9 +25,15 @@ export const EventPlan: React.FC<{
   services: string
 }> = ({ id, name, budget, date, objective, attendees, theme, services }) => {
   const servicesList = services.split(',')
-  const [showForm, setShowForm] = React.useState(false)
-  const handleToggle = () => {
-    setShowForm((showForm) => !showForm)
+  const [showForm, setShowForm] = React.useState<{
+    venue: boolean
+    vendor: boolean
+  }>({ venue: false, vendor: false })
+  const handleToggle = (type: 'vendor' | 'venue') => {
+    setShowForm((showForm) => ({
+      vendor: type == 'vendor' && !showForm.vendor,
+      venue: type == 'venue' && !showForm.venue,
+    }))
   }
 
   return (
@@ -81,9 +88,6 @@ export const EventPlan: React.FC<{
         </div>
       </div>
 
-      <Box className="font-bold text-gray-900">
-        <h2> Venue Candidates List </h2>
-      </Box>
       <Box
         className={`flex justify-center items-start ${
           showForm
@@ -91,13 +95,41 @@ export const EventPlan: React.FC<{
             : 'bg-teal-300 text-gray-500 hover:text-gray-800'
         } rounded-md p-1 w-36`}
       >
-        <button onClick={handleToggle} className="mr-1 p-1 items-center">
-          {showForm ? 'Hide Form' : 'Add Venue'}
+        <button
+          onClick={() => handleToggle('venue')}
+          className="mr-1 p-1 items-center"
+        >
+          {showForm.venue ? 'Hide Form' : 'Add Venue'}
         </button>
       </Box>
 
-      {showForm && <VenueCreateForm eventId={id} />}
+      <Box className="font-bold text-gray-900">
+        <h2> Venue Candidates List </h2>
+      </Box>
+      {showForm.venue && <VenueCreateForm eventId={id} />}
       <VenueList eventId={id} />
+
+      <div className="w-full h-0.5 bg-gray-200" />
+      <Box
+        className={`flex justify-center items-start ${
+          showForm
+            ? 'border border-teal-200 text-teal-300 hover:border-teal-400 hover:bg-gray-50 hover:text-teal-400'
+            : 'bg-teal-300 text-gray-500 hover:text-gray-800'
+        } rounded-md p-1 w-36`}
+      >
+        <button
+          onClick={() => handleToggle('vendor')}
+          className="mr-1 p-1 items-center"
+        >
+          {showForm.vendor ? 'Hide Form' : 'Add Vendor'}
+        </button>
+      </Box>
+      <Box className="font-bold text-gray-900">
+        <h2> Vendor Candidates List </h2>
+      </Box>
+
+      {showForm.vendor && <VendorCreateForm eventId={id} />}
+      <VendorList eventId={id} />
     </div>
   )
 }
