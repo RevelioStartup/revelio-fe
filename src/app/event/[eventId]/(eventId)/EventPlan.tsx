@@ -72,7 +72,7 @@ export const EventPlan: React.FC<{
           ))}
         </div>
       </div>
-      <div className="sticky bottom-10 right-10">
+      <div className="sticky bottom-10 right-10 w-full">
         <AIButton />
       </div>
     </div>

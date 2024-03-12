@@ -52,9 +52,9 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
       exit={{ x: '100%' }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       style={{
-        zIndex: 100,
+        zIndex: 105,
       }}
-      className="fixed top-0 right-0 h-full bg-white shadow-lg flex flex-col gap-3 w-full lg:w-96"
+      className="fixed bottom-0 right-0 h-[90vh] bg-white shadow-lg flex flex-col gap-3 w-full lg:w-96"
     >
       <div className="w-full bg-teal-500 px-4 py-3 text-white font-bold relative">
         <p>Ask AI for suggestions.</p>

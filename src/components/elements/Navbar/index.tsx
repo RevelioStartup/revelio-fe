@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
       }}
       padding={'0em 2em'}
       className={twMerge(
-        'fixed top-0 inset-x-0 z-50',
+        'fixed top-0 inset-x-0 z-[50]',
         atTop ? '' : 'backdrop-blur-md'
       )}
     >
