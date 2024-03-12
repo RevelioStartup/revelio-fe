@@ -120,7 +120,10 @@ export default function LoginForm() {
         </button>
       </form>
 
-      <AccountRecoveryRequestForm openForm={openForm} onClose={handleCloseForm} />
+      <AccountRecoveryRequestForm
+        openForm={openForm}
+        onClose={handleCloseForm}
+      />
 
       <Dialog
         open={openPromptLogin}
