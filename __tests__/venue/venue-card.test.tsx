@@ -62,7 +62,12 @@ describe('VenueCard Component', () => {
     const { getByText, getByTestId } = render(<VenueCard venue={mockVenue} />)
 
     fireEvent.click(getByTestId('delete-button'))
+    expect(getByTestId('confirm-delete-button')).toBeInTheDocument()
 
+    fireEvent.click(getByTestId('cancel-delete-button'))
+    fireEvent.click(getByTestId('delete-button'))
+
+    fireEvent.click(getByTestId('confirm-delete-button'))
     expect(useDeleteVenueMutation).toHaveBeenCalledWith()
   })
 
@@ -110,6 +115,31 @@ describe('VenueCard Component', () => {
     fireEvent.submit(getByTestId('venue-card-form'))
 
     const warningMessage = await findByText('Please complete this field')
+    expect(warningMessage).toBeInTheDocument()
+  })
+
+  it('shows a warning when a file uploaded is not an image', async () => {
+    const { getByTestId, findByText } = render(<VenueCard venue={mockVenue} />)
+
+    fireEvent.click(getByTestId('edit-button'))
+
+    const imageFile = new File(['image'], '/venue-card.test.tsx', {
+      type: 'image/jpeg',
+    })
+
+    const imageInput = getByTestId('input-images')
+
+    fireEvent.change(imageInput, {
+      target: {
+        files: [imageFile],
+      },
+    })
+
+    fireEvent.submit(getByTestId('venue-card-form'))
+
+    const warningMessage = await findByText(
+      'Upload a valid image. The file you uploaded was either not an image or a corrupted image.'
+    )
     expect(warningMessage).toBeInTheDocument()
   })
 })

@@ -7,7 +7,14 @@ import {
   useAddPhotoMutation,
 } from '@/redux/api/venueApi'
 import { UpdateVenueRequest, Venue } from '@/types/venue'
-import { Box } from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -21,9 +28,17 @@ interface VenueCardProps {
   isDetail?: boolean
 }
 export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleDeleteClick = (id: any) => {
+    deleteVenue({ id })
+    setOpen(false)
+  }
+
   const [isEditing, setIsEditing] = React.useState(false)
 
   const handleEditToggle = () => {
+    setMessage('')
     setIsEditing((prev) => !prev)
   }
 
@@ -46,6 +61,8 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
 
   const [images, setImages] = React.useState<File[]>([])
 
+  const [message, setMessage] = React.useState('')
+
   const defaultValues: UpdateVenueRequest = {
     ...venue,
   }
@@ -60,18 +77,25 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
   const { control, handleSubmit, reset } = methods
 
   const onSubmit: SubmitHandler<UpdateVenueRequest> = async (data) => {
-    await updateVenue(data).then(async (response) => {})
+    setMessage('')
+    await updateVenue(data).then((res) => {})
 
     const venueId = data.id
 
     images.forEach(async (image) => {
-      await addPhoto({ venue: venueId, image })
+      await addPhoto({ venue: venueId, image }).then((res) => {
+        if (!('bucket-revelio-1' in res)) {
+          setMessage(
+            'Upload a valid image. The file you uploaded was either not an image or a corrupted image.'
+          )
+        }
+      })
     })
 
     reset()
     setImages([])
 
-    setIsEditing(false)
+    setIsEditing(!isEditing)
   }
 
   return (
@@ -105,18 +129,41 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
             onClick={() => {
               handleEditToggle()
             }}
-            className="mr-1 p-1"
+            className="mr-1 bg-white hover:bg-blue-100 py-1 px-2 rounded-lg"
           >
             <i className="i-ph-pencil-bold text-blue-500 size-5" />
           </button>
           <button
             data-testid="delete-button"
             onClick={() => {
-              deleteVenue({ id })
+              setOpen(true)
             }}
+            className="bg-white hover:bg-blue-100 py-1 px-2 rounded-lg"
           >
             <i className="i-ph-trash-simple-bold text-red-500 size-5" />
           </button>
+
+          <Dialog open={open}>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogContent>
+              Are you sure you want to delete this item?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                data-testid="cancel-delete-button"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                data-testid="confirm-delete-button"
+                color="primary"
+                onClick={() => handleDeleteClick(id)}
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </Box>
 
@@ -228,6 +275,12 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
           </>
         )}
 
+        {!isEditing && message != '' ? (
+            <p className="text-red-400">{message}</p>
+          ) : (
+            <Box></Box>
+          )
+          }
         {isEditing && (
           <Box>
             <Box className="my-2 flex sm:flex-row flex-col items-start">

@@ -12,8 +12,8 @@ export const VenueList = ({ eventId }: VenueListProps) => {
   const { data: venues = [] } = useGetVenueListQuery(eventId)
   return (
     <Box>
-      {venues.map((venue) => (
-        <VenueCard key={venue.id} venue={venue} />
+      {venues.map((venue, index) => (
+        <VenueCard key={index} venue={venue} />
       ))}
     </Box>
   )
