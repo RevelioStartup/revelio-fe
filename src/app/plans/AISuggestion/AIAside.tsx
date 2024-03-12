@@ -43,6 +43,9 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
       }
     })
   }
+  const handleClose = () => {
+    setIsOpen(false)
+  }
 
   return (
     <motion.aside
@@ -60,12 +63,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
         <p>Ask AI for suggestions.</p>
 
         <div
-          onClick={() => {
-            setIsOpen(false)
-          }}
-          onKeyDown={() => {
-            setIsOpen(false)
-          }}
+          onClick={handleClose}
           data-testid="close-ai-aside-button"
           className="cursor-pointer"
         >
