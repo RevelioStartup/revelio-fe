@@ -102,10 +102,10 @@ export const EventPlan: React.FC<{
 
       {showForm && <VenueCreateForm eventId={id} />}
       <Box>
-      {venues.map((venue, index) => (
-        <VenueCard key={index} venue={venue} />
-      ))}
-    </Box>
+        {venues.map((venue, index) => (
+          <VenueCard key={index} venue={venue} />
+        ))}
+      </Box>
     </div>
   )
 }
