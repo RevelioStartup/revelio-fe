@@ -49,9 +49,9 @@ export const Navbar: React.FC = () => {
           height={75}
         />
         <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={'40px'}>
-          {MENU_LOGGED_IN.map(({ href, label }, index) => (
+          {MENU_LOGGED_IN.map(({ href, label }) => (
             <Link
-              key={index}
+              key={label}
               href={href}
               style={{
                 cursor: 'pointer',
