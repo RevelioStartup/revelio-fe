@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Button } from '@/components/elements/Button'
@@ -9,17 +9,25 @@ import {
   useAiSuggestionHistoryListQuery,
   useAskSuggestionMutation,
 } from '@/redux/api/aiSuggestionApi'
+import Toggle from '@/components/elements/Toggle'
+import { AIType } from './constants'
 
 interface AIAsideProps {
   isOpen: boolean
+  event?: any
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
   const [askAI, { isLoading }] = useAskSuggestionMutation()
   const { data: aiHistory } = useAiSuggestionHistoryListQuery()
+  const [selectedType, setSelectedType] = useState(0)
   const defaultValues: AISuggestionFormType = {
-    event_id: 0,
     prompt: '',
+    event: {
+      name: '',
+      theme: '',
+    },
+    type: AIType[selectedType].value,
   }
 
   const methods = useForm<AISuggestionFormType>({
@@ -28,6 +36,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
   const { control, handleSubmit, setValue, reset } = methods
 
   const onSubmit: SubmitHandler<AISuggestionFormType> = async (data) => {
+    data.type = AIType[selectedType].value
     askAI(data).then((res) => {
       if ('data' in res) {
         reset()
@@ -42,10 +51,14 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
       animate={{ x: isOpen ? 0 : '100%' }}
       exit={{ x: '100%' }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed top-0 right-0 h-full bg-white z-50 shadow-lg flex flex-col gap-3 w-full lg:w-96"
+      style={{
+        zIndex: 105,
+      }}
+      className="fixed bottom-0 right-0 h-[90vh] bg-white shadow-lg flex flex-col gap-3 w-full lg:w-96"
     >
-      <div className="w-full bg-emerald-500 px-4 py-3 text-white font-bold relative">
+      <div className="w-full bg-teal-500 px-4 py-3 text-white font-bold relative">
         <p>Ask AI for suggestions.</p>
+
         <div
           onClick={() => {
             setIsOpen(false)
@@ -60,54 +73,95 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
         </div>
       </div>
       <div className="px-4 py-3 flex flex-col gap-3 h-full">
-        <div className="flex flex-wrap gap-2">
-          <button
-            data-testid="prompt-example-venue"
-            className="bg-slate-200 rounded-full px-2 py-1 text-sm"
-            onClick={() => {
-              setValue('prompt', 'Best venue for')
-            }}
-          >
-            Best venue for ...
-          </button>
-          <button
-            data-testid="prompt-example-vendor"
-            className="bg-slate-200 rounded-full px-2 py-1 text-sm"
-            onClick={() => {
-              setValue('prompt', 'Vendors for')
-            }}
-          >
-            Vendors for ...
-          </button>
-        </div>
+        {aiHistory?.length == 0 && (
+          <div className="flex flex-wrap gap-2">
+            <button
+              data-testid="prompt-example-venue"
+              className="bg-slate-200 rounded-full px-2 py-1 text-sm"
+              onClick={() => {
+                setValue('prompt', 'Best venue for')
+              }}
+            >
+              Best venue for ...
+            </button>
+            <button
+              data-testid="prompt-example-vendor"
+              className="bg-slate-200 rounded-full px-2 py-1 text-sm"
+              onClick={() => {
+                setValue('prompt', 'Vendors for')
+              }}
+            >
+              Vendors for ...
+            </button>
+          </div>
+        )}
         <div
           data-testid="content"
           className="h-full overflow-y-scroll flex flex-col gap-4 pt-4 pb-10"
         >
-          {aiHistory?.map(({ id, prompt, output }, idx) => {
-            return (
-              <div
-                key={id}
-                id={idx == aiHistory.length - 1 ? 'last' : id}
-                className="flex flex-col gap-2"
-              >
-                <div className="border border-emerald-400 rounded-2xl p-2">
-                  {prompt}
-                </div>
+          {aiHistory?.map(
+            ({ id, prompt, output, list: ansList, keyword }, idx) => {
+              return (
                 <div
-                  className="bg-emerald-100 p-2 rounded-2xl"
-                  dangerouslySetInnerHTML={{
-                    __html: output.replace(/\n/g, '<br>') ?? '',
-                  }}
-                />
-              </div>
-            )
-          })}
+                  key={id}
+                  id={idx == aiHistory.length - 1 ? 'last' : id}
+                  className="flex flex-col gap-2"
+                >
+                  <div className="border border-emerald-400 rounded-2xl p-2">
+                    {prompt}
+                  </div>
+                  <div className="bg-emerald-100 p-2 rounded-2xl">
+                    {!!output && (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: output.replace(/\n/g, '<br>') ?? '',
+                        }}
+                      />
+                    )}
+                    {ansList?.length > 0 &&
+                      ansList.map((msg, idx) => {
+                        return (
+                          <div key={idx}>
+                            {idx + 1}. {msg}
+                          </div>
+                        )
+                      })}
+                  </div>
+                  {keyword?.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      <p>Related: </p>
+
+                      {keyword.map((item, idx) => {
+                        return (
+                          <button
+                            onClick={() => {
+                              setValue('prompt', item)
+                            }}
+                            key={idx}
+                            className="underline hover:text-teal-600"
+                          >
+                            {item}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            }
+          )}
         </div>
         <div className="flex flex-col gap-2 w-full sticky bottom-0 bg-white p-2">
           {isLoading && (
             <div className="text-gray-200">AI is generating answer...</div>
           )}
+          <div>
+            <Toggle
+              options={AIType}
+              selectedOption={selectedType}
+              setSelectedOption={setSelectedType}
+            />
+          </div>
           <div className="flex flex-row items-end gap-2">
             <TextArea
               data-testid="ai-input"

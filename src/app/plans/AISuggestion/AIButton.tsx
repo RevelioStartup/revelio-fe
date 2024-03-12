@@ -6,8 +6,9 @@ import { Button } from '@/components/elements/Button'
 export const AIButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   return (
-    <div>
+    <div className="w-screen">
       <AIAside isOpen={isOpen} setIsOpen={setIsOpen} />
+
       <Button
         onClick={() => {
           setIsOpen(true)
