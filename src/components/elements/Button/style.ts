@@ -22,7 +22,7 @@ export const ButtonVariants = cva(
     defaultVariants: {
       variant: 'primary',
       intent: 'active',
-      width: 'full',
+      width: 'auto',
     },
   }
 )

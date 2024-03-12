@@ -33,7 +33,7 @@ export const Input: FC<CustomInputProps> = ({
       rules={{ ...rules, required: required }}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
-          <div>
+          <div className="w-full">
             {label && (
               <p className="text-lg text-slate-900 mb-3 flex flex-col">
                 <span>{label}</span>

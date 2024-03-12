@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 import { ButtonCVAProps, ButtonVariants } from './style'
 import { twMerge } from 'tailwind-merge'
 
-interface ButtonProps
+export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     ButtonCVAProps {
   rightIcon?: ReactNode

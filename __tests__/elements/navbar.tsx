@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import React from 'react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Navbar } from '@/components/elements/Navbar'
 import { MENU } from '@/components/elements/Navbar/constant'
+import { useAppSelector } from '@/redux/store'
 
 jest.mock('next/link', () => {
   const MockedLink = ({ children, href }: any) => <a href={href}>{children}</a>
@@ -19,6 +20,11 @@ jest.mock('next/image', () => ({
   },
 }))
 
+jest.mock('@/redux/store', () => ({
+  ...jest.requireActual('@/redux/store'),
+  useAppSelector: jest.fn(),
+}))
+
 describe('Navbar Component', () => {
   beforeEach(() => {
     global.window.scrollY = 0
@@ -28,6 +34,17 @@ describe('Navbar Component', () => {
       }
     })
     global.window.removeEventListener = jest.fn()
+
+    const mockUseAppSelector = useAppSelector as jest.Mock
+    mockUseAppSelector.mockReturnValue({
+      token: 'token',
+      profile: {
+        id: 'id',
+        name: 'name',
+        email: 'email',
+        avatar: 'avatar',
+      },
+    })
   })
   it('renders the navbar with logo', async () => {
     render(<Navbar />)

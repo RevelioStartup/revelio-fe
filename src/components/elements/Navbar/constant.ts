@@ -11,8 +11,27 @@ export const MENU = [
     label: 'Contact Us',
     href: '/contact',
   },
+]
+
+export const MENU_LOGGED_IN = [
   {
-    label: 'Login',
-    href: '/login',
+    label: 'Dashboard',
+    href: '/profile',
+  },
+  {
+    label: 'About',
+    href: '/about',
+  },
+  {
+    label: 'Features',
+    href: '/features',
+  },
+  {
+    label: 'Contact Us',
+    href: '/contact',
+  },
+  {
+    label: 'Start Planning',
+    href: '/event',
   },
 ]
