@@ -3,10 +3,12 @@ import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import EventDetail from '@/app/event/[eventId]/(eventId)/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
-
-import { Provider as ReduxProvider } from 'react-redux'
+import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 
+jest.mock('@/app/plans/AISuggestion/AIButton', () => ({
+  AIButton: jest.fn().mockReturnValue(<div>Mock AIButton</div>),
+}))
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
 }))
@@ -38,13 +40,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId, getByText } = render(
-      <ReduxProvider store={store}>
+      <Provider store={store}>
         <EventDetail
           params={{
             eventId: eventId,
           }}
         />
-      </ReduxProvider>
+      </Provider>
     )
 
     const myPlan = getByText('My Plan')
@@ -78,13 +80,11 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
-      <ReduxProvider store={store}>
-        <EventDetail
-          params={{
-            eventId: eventId,
-          }}
-        />
-      </ReduxProvider>
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
     )
 
     const loader = getByTestId('loader')
@@ -120,13 +120,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
-      <ReduxProvider store={store}>
+      <Provider store={store}>
         <EventDetail
           params={{
             eventId: eventId,
           }}
         />
-      </ReduxProvider>
+      </Provider>
     )
 
     const myPlan = getByTestId('myplan')
@@ -164,13 +164,11 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
-      <ReduxProvider store={store}>
-        <EventDetail
-          params={{
-            eventId: eventId,
-          }}
-        />
-      </ReduxProvider>
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
     )
 
     const timeline = getByTestId('timeline')
@@ -208,13 +206,11 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
-      <ReduxProvider store={store}>
-        <EventDetail
-          params={{
-            eventId: eventId,
-          }}
-        />
-      </ReduxProvider>
+      <EventDetail
+        params={{
+          eventId: eventId,
+        }}
+      />
     )
 
     const tracker = getByTestId('tracker')
