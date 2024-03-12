@@ -1,11 +1,11 @@
-import Iconify from '@/components/elements/Iconify'
-import { Box, Icon, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
 export const WhyRevelio = () => {
   return (
     <Box
+      data-testid="why-revelio"
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -17,21 +17,16 @@ export const WhyRevelio = () => {
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
       <Box className="flex flex-row items-center bg-teal-50 gap-3 text-teal-600 px-3 py-1 rounded-2xl ">
-        <Iconify
-          icon="fa6-regular:eye"
-          className="rounded-full size-5 text-6xl"
-        />
+        <i className="i-fa6-regular-eye rounded-full size-5 text-6xl" />
         <p>Why Revelio</p>
       </Box>
       <Typography variant={'h3'} textAlign={'center'}>
-        We are committed to solving these problems and revolutionizing event
-        planning.
+        We are committed to revolutionizing and solving problems in event
+        planning
       </Typography>
       <Typography variant={'h6'} sx={{ opacity: 0.5 }} textAlign={'center'}>
-        Our app is designed to simplify and enhance the entire event planning
-        experience, providing you with powerful tools to structure, track, and
-        manage every aspect of your event seamlessly, all from one central
-        platform.
+        Revelio is meant to make your event planning <u>seamless</u> and{' '}
+        <u>enjoyable</u>
       </Typography>
       <Box
         sx={{
@@ -49,6 +44,10 @@ export const WhyRevelio = () => {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
+            transition: 'all 0.4s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
           }}
           alignItems={'center'}
           justifyContent={'between'}
@@ -56,10 +55,9 @@ export const WhyRevelio = () => {
           padding={'2em'}
           textAlign={'center'}
         >
-          <Iconify
-            icon="ph:pencil-simple-fill"
-            className="rounded-full bg-blue-50 text-blue-500 size-10 p-2"
-          />
+          <div className="rounded-full bg-blue-50 text-blue-500 p-2 size-10">
+            <i className="i-ph-pencil-simple-fill size-6" />
+          </div>
           <p className="font-bold">Event creation</p>
           <p>
             Create your events with details such as name, date, time, and
@@ -71,6 +69,10 @@ export const WhyRevelio = () => {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
+            transition: 'all 0.4s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
           }}
           alignItems={'center'}
           justifyContent={'between'}
@@ -96,6 +98,10 @@ export const WhyRevelio = () => {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
+            transition: 'all 0.4s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
           }}
           alignItems={'center'}
           justifyContent={'between'}
