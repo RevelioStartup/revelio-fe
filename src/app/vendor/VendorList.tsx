@@ -12,7 +12,7 @@ interface VendorListProps {
 export const VendorList = ({ eventId }: VendorListProps) => {
   const { data: vendors } = useGetVendorListQuery(eventId)
   return (
-    <Box>
+    <Box data-testid="vendor-list-box">
       {vendors?.map((vendor) => <VendorCard key={vendor.id} vendor={vendor} />)}
     </Box>
   )
