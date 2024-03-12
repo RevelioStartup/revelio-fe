@@ -1,23 +1,25 @@
 import React from 'react'
-import { render, fireEvent, waitFor } from '@testing-library/react'
-import { useDeletePhotoVendorMutation } from '@/redux/api/vendorApi'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { GalleryPage } from '@/app/venue/GalleryPage'
+import { GalleryPageDelete } from '@/app/venue/GalleryPageDelete'
+import { useDeletePhotoMutation } from '@/redux/api/venueApi'
 import '@testing-library/jest-dom'
-import GalleryPage from '@/app/vendor/GalleryPage'
-import GalleryPageDelete from '@/app/vendor/GalleryPageDelete'
 
-jest.mock('@/redux/api/vendorApi', () => ({
-  useDeletePhotoVendorMutation: jest.fn(),
+jest.mock('@/redux/api/venueApi', () => ({
+  useDeletePhotoMutation: jest.fn(),
 }))
 
 describe('GalleryPage Component', () => {
   const photos = [
-    { id: '1', vendor: 1, image: '/../../public/assets/images/empathymap.jpg' },
-    { id: '2', vendor: 1, image: '/../../public/assets/images/empathymap.jpg' },
-    { id: '3', vendor: 1, image: '/../../public/assets/images/empathymap.jpg' },
+    { id: '1', venue: 1, image: '/../../public/assets/images/empathymap.jpg' },
+    { id: '2', venue: 1, image: '/../../public/assets/images/empathymap.jpg' },
+    { id: '3', venue: 1, image: '/../../public/assets/images/empathymap.jpg' },
   ]
 
   it('renders the GalleryPage with initial state', () => {
-    const { getByAltText, getByText } = render(<GalleryPage photos={photos} />)
+    const { getByTestId, getByAltText, getByText } = render(
+      <GalleryPage photos={photos} />
+    )
 
     const firstPhoto = getByAltText('Photo 1')
     expect(firstPhoto).toBeInTheDocument()
@@ -27,7 +29,9 @@ describe('GalleryPage Component', () => {
   })
 
   it('navigates to the next slide', () => {
-    const { getByAltText, getByText } = render(<GalleryPage photos={photos} />)
+    const { getByTestId, getByAltText, getByText } = render(
+      <GalleryPage photos={photos} />
+    )
 
     const nextButton = getByText('Next')
     fireEvent.click(nextButton)
@@ -37,7 +41,9 @@ describe('GalleryPage Component', () => {
   })
 
   it('navigates to the previous slide', () => {
-    const { getByAltText, getByText } = render(<GalleryPage photos={photos} />)
+    const { getByTestId, getByAltText, getByText } = render(
+      <GalleryPage photos={photos} />
+    )
 
     const nextButton = getByText('Next')
     fireEvent.click(nextButton)
@@ -50,14 +56,18 @@ describe('GalleryPage Component', () => {
   })
 
   it('disables "Previous" button on first slide', () => {
-    const { getByAltText, getByText } = render(<GalleryPage photos={photos} />)
+    const { getByTestId, getByAltText, getByText } = render(
+      <GalleryPage photos={photos} />
+    )
 
     const nextButton = getByText('Next')
     expect(nextButton).toBeEnabled()
   })
 
   it('disables "Next" button on last slide', () => {
-    const { getByAltText, getByText } = render(<GalleryPage photos={photos} />)
+    const { getByTestId, getByAltText, getByText } = render(
+      <GalleryPage photos={photos} />
+    )
 
     const nextButton = getByText('Next')
     fireEvent.click(nextButton)
@@ -73,15 +83,13 @@ describe('GalleryPageDelete Component', () => {
 
   beforeEach(() => {
     mockDeletePhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useDeletePhotoVendorMutation as jest.Mock).mockReturnValue([
-      mockDeletePhoto,
-    ])
+    ;(useDeletePhotoMutation as jest.Mock).mockReturnValue([mockDeletePhoto])
   })
 
   const photos = [
-    { id: '1', vendor: 1, image: '/../../public/assets/images/empathymap.jpg' },
-    { id: '2', vendor: 1, image: '/../../public/assets/images/empathymap.jpg' },
-    { id: '3', vendor: 1, image: '/../../public/assets/images/empathymap.jpg' },
+    { id: '1', venue: 1, image: '/../../public/assets/images/empathymap.jpg' },
+    { id: '2', venue: 1, image: '/../../public/assets/images/empathymap.jpg' },
+    { id: '3', venue: 1, image: '/../../public/assets/images/empathymap.jpg' },
   ]
 
   it('renders the GalleryPageDelete with initial state', () => {

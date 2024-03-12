@@ -1,15 +1,15 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
-
-import {
-  useDeleteVenueMutation,
-  useUpdateVenueMutation,
-  useAddPhotoMutation,
-} from '@/redux/api/venueApi'
 import { VenueCard } from '@/app/venue/VenueCard'
+import {
+  useDeleteVendorMutation,
+  useUpdateVendorMutation,
+  useAddPhotoVendorMutation,
+} from '@/redux/api/vendorApi'
+import { VendorCard } from '@/app/vendor/VendorCard'
 
-const mockVenue = {
+const mockVendor = {
   id: 1,
   name: 'Test Venue',
   address: 'Test Address',
@@ -21,26 +21,26 @@ const mockVenue = {
   status: 'PENDING',
 }
 
-jest.mock('@/redux/api/venueApi', () => ({
-  useDeleteVenueMutation: jest.fn(),
-  useUpdateVenueMutation: jest.fn(),
-  useAddPhotoMutation: jest.fn(),
+jest.mock('@/redux/api/vendorApi', () => ({
+  useDeleteVendorMutation: jest.fn(),
+  useUpdateVendorMutation: jest.fn(),
+  useAddPhotoVendorMutation: jest.fn(),
 }))
 
-describe('VenueCard Component', () => {
+describe('VendorCard Component', () => {
   beforeEach(() => {
     const mockDeleteVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useDeleteVenueMutation as jest.Mock).mockReturnValue([mockDeleteVenue])
+    ;(useDeleteVendorMutation as jest.Mock).mockReturnValue([mockDeleteVenue])
 
     const mockUpdateVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useUpdateVenueMutation as jest.Mock).mockReturnValue([mockUpdateVenue])
+    ;(useUpdateVendorMutation as jest.Mock).mockReturnValue([mockUpdateVenue])
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto])
+    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([mockAddPhoto])
   })
 
   it('renders venue details', () => {
-    const { getByText } = render(<VenueCard venue={mockVenue} />)
+    const { getByText } = render(<VendorCard vendor={mockVendor} />)
 
     expect(getByText('Test Venue')).toBeInTheDocument()
     expect(getByText('Test Address')).toBeInTheDocument()
@@ -49,7 +49,7 @@ describe('VenueCard Component', () => {
   })
 
   it('toggles edit mode when edit button is clicked', () => {
-    const { getByText, getByTestId } = render(<VenueCard venue={mockVenue} />)
+    const { getByTestId } = render(<VendorCard vendor={mockVendor} />)
 
     fireEvent.click(getByTestId('edit-button'))
 
@@ -60,15 +60,15 @@ describe('VenueCard Component', () => {
   })
 
   it('calls deleteVenue when delete button is clicked', () => {
-    const { getByText, getByTestId } = render(<VenueCard venue={mockVenue} />)
+    const { getByTestId } = render(<VendorCard vendor={mockVendor} />)
 
     fireEvent.click(getByTestId('delete-button'))
 
-    expect(useDeleteVenueMutation).toHaveBeenCalledWith()
+    expect(useDeleteVendorMutation).toHaveBeenCalledWith()
   })
 
   it('calls updateVenue and addPhoto when form is submitted', async () => {
-    const { getByText, getByTestId } = render(<VenueCard venue={mockVenue} />)
+    const { getByTestId } = render(<VendorCard vendor={mockVendor} />)
 
     fireEvent.click(getByTestId('edit-button'))
 
@@ -94,13 +94,15 @@ describe('VenueCard Component', () => {
     fireEvent.submit(getByTestId('venue-card-form'))
 
     await waitFor(() => {
-      expect(useUpdateVenueMutation).toHaveBeenCalled()
-      expect(useAddPhotoMutation).toHaveBeenCalled()
+      expect(useUpdateVendorMutation).toHaveBeenCalled()
+      expect(useAddPhotoVendorMutation).toHaveBeenCalled()
     })
   })
 
   it('shows a warning when a field is empty', async () => {
-    const { getByTestId, findByText } = render(<VenueCard venue={mockVenue} />)
+    const { getByTestId, findByText } = render(
+      <VendorCard vendor={mockVendor} />
+    )
 
     fireEvent.click(getByTestId('edit-button'))
 
