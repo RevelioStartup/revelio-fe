@@ -61,8 +61,6 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
 
   const [images, setImages] = React.useState<File[]>([])
 
-  const [message, setMessage] = React.useState('')
-
   const defaultValues: UpdateVenueRequest = {
     ...venue,
   }

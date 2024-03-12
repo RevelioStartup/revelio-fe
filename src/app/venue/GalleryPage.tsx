@@ -24,7 +24,7 @@ export const GalleryPage = ({ photos }: GalleryPageProps) => {
         style={{ transform: `translateX(-${currentSlide * 33.33}%)` }}
       >
         {photos.map((photo, index) => (
-          <div key={index} className="flex-shrink-0 w-1/3 p-2">
+          <div key={photo.id} className="flex-shrink-0 w-1/3 p-2">
             <Image
               src={photo.image}
               alt={`Photo ${index + 1}`}

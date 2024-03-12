@@ -13,7 +13,7 @@ export const VenueList = ({ eventId }: VenueListProps) => {
   return (
     <Box>
       {venues.map((venue, index) => (
-        <VenueCard key={index} venue={venue} data-testid="venue-card" />
+        <VenueCard key={venue.id} venue={venue} data-testid="venue-card" />
       ))}
     </Box>
   )
