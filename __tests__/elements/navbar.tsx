@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import React from 'react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Navbar } from '@/components/elements/Navbar'
 import { MENU } from '@/components/elements/Navbar/constant'
