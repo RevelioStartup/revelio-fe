@@ -47,7 +47,6 @@ function Questions() {
             className="flex items-center justify-between hover:text-[#14b8a6] hover:text-bold"
             style={{ transition: '0.2s ease' }}
             onClick={() => handleToggle(item.id)}
-            
           >
             <button className="text-start font-bold leading-5">
               <Typography variant={'h6'} mb={1}>
