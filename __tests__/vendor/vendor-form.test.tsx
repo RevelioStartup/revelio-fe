@@ -34,10 +34,10 @@ describe('Test for VendorCreateForm', () => {
         <VendorCreateForm eventId={'cfa26386-c1ed-465e-a035-36478db57d4b'} />
       </Provider>
     )
-    expect(getByTestId('venue-create-form')).toBeInTheDocument()
+    expect(getByTestId('vendor-create-form')).toBeInTheDocument()
   })
 
-  it('submits form and adds venue with photos', async () => {
+  it('submits form and adds vendor with photos', async () => {
     const mockCreateVendor = jest.fn().mockResolvedValue({
       data: {
         id: 1,
@@ -56,8 +56,8 @@ describe('Test for VendorCreateForm', () => {
       </Provider>
     )
 
-    fireEvent.change(getByTestId('input-venue-name'), {
-      target: { value: 'Test Venue' },
+    fireEvent.change(getByTestId('input-vendor-name'), {
+      target: { value: 'Test Vendor' },
     })
     fireEvent.change(getByTestId('input-address'), {
       target: { value: 'Test Address' },
@@ -87,11 +87,11 @@ describe('Test for VendorCreateForm', () => {
       },
     })
 
-    fireEvent.submit(getByTestId('venue-create-form'))
+    fireEvent.submit(getByTestId('vendor-create-form'))
 
     await waitFor(() => {
       expect(mockCreateVendor).toHaveBeenCalledWith({
-        name: 'Test Venue',
+        name: 'Test Vendor',
         address: 'Test Address',
         price: '100',
         contact_name: 'Test Name',
@@ -122,7 +122,6 @@ describe('Test for VendorCreateForm', () => {
       </Provider>
     )
 
-    // Leave 'input-venue-name' empty
     fireEvent.change(getByTestId('input-address'), {
       target: { value: 'Test Address' },
     })
@@ -137,7 +136,7 @@ describe('Test for VendorCreateForm', () => {
       target: { value: '1234567890' },
     })
 
-    fireEvent.submit(getByTestId('venue-create-form'))
+    fireEvent.submit(getByTestId('vendor-create-form'))
 
     // Check if the warning message appears
     const warningMessage = await findByText('Please complete this field')

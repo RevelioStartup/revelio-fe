@@ -1,6 +1,5 @@
 import VenueCreateForm from '@/app/venue/VenueCreateForm'
 import VenueList from '@/app/venue/[id]/VenueList'
-import { IEvent } from '@/types/event'
 import CheckIcon from '@mui/icons-material/Check'
 import {
   Box,
@@ -12,6 +11,8 @@ import {
   TableRow,
 } from '@mui/material'
 import React from 'react'
+import VendorList from '../../../vendor/VendorList'
+import VendorCreateForm from '../../../vendor/VendorCreateForm'
 
 export const EventPlan: React.FC<{
   id: string
@@ -98,6 +99,8 @@ export const EventPlan: React.FC<{
 
       {showForm && <VenueCreateForm eventId={id} />}
       <VenueList eventId={id} />
+      {showForm && <VendorCreateForm eventId={id} />}
+      <VendorList eventId={id} />
     </div>
   )
 }

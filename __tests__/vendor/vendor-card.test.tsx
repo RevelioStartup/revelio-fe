@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
-import { VenueCard } from '@/app/venue/VenueCard'
 import {
   useDeleteVendorMutation,
   useUpdateVendorMutation,
@@ -11,7 +10,7 @@ import { VendorCard } from '@/app/vendor/VendorCard'
 
 const mockVendor = {
   id: 1,
-  name: 'Test Venue',
+  name: 'Test Vendor',
   address: 'Test Address',
   price: 1000000,
   contact_name: 'Test Name',
@@ -29,20 +28,20 @@ jest.mock('@/redux/api/vendorApi', () => ({
 
 describe('VendorCard Component', () => {
   beforeEach(() => {
-    const mockDeleteVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useDeleteVendorMutation as jest.Mock).mockReturnValue([mockDeleteVenue])
+    const mockDeleteVendor = jest.fn().mockResolvedValue({ data: {} })
+    ;(useDeleteVendorMutation as jest.Mock).mockReturnValue([mockDeleteVendor])
 
-    const mockUpdateVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useUpdateVendorMutation as jest.Mock).mockReturnValue([mockUpdateVenue])
+    const mockUpdateVendor = jest.fn().mockResolvedValue({ data: {} })
+    ;(useUpdateVendorMutation as jest.Mock).mockReturnValue([mockUpdateVendor])
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
     ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([mockAddPhoto])
   })
 
-  it('renders venue details', () => {
+  it('renders vendor details', () => {
     const { getByText } = render(<VendorCard vendor={mockVendor} />)
 
-    expect(getByText('Test Venue')).toBeInTheDocument()
+    expect(getByText('Test Vendor')).toBeInTheDocument()
     expect(getByText('Test Address')).toBeInTheDocument()
     expect(getByText('Test Name')).toBeInTheDocument()
     expect(getByText('1234567890')).toBeInTheDocument()
@@ -59,7 +58,7 @@ describe('VendorCard Component', () => {
     expect(getByTestId('input-contact-phone-number')).toBeInTheDocument()
   })
 
-  it('calls deleteVenue when delete button is clicked', () => {
+  it('calls deleteVendor when delete button is clicked', () => {
     const { getByTestId } = render(<VendorCard vendor={mockVendor} />)
 
     fireEvent.click(getByTestId('delete-button'))
@@ -67,7 +66,7 @@ describe('VendorCard Component', () => {
     expect(useDeleteVendorMutation).toHaveBeenCalledWith()
   })
 
-  it('calls updateVenue and addPhoto when form is submitted', async () => {
+  it('calls updateVendor and addPhoto when form is submitted', async () => {
     const { getByTestId } = render(<VendorCard vendor={mockVendor} />)
 
     fireEvent.click(getByTestId('edit-button'))
@@ -91,7 +90,7 @@ describe('VendorCard Component', () => {
       },
     })
 
-    fireEvent.submit(getByTestId('venue-card-form'))
+    fireEvent.submit(getByTestId('vendor-card-form'))
 
     await waitFor(() => {
       expect(useUpdateVendorMutation).toHaveBeenCalled()
@@ -110,7 +109,7 @@ describe('VendorCard Component', () => {
       target: { value: '' },
     })
 
-    fireEvent.submit(getByTestId('venue-card-form'))
+    fireEvent.submit(getByTestId('vendor-card-form'))
 
     const warningMessage = await findByText('Please complete this field')
     expect(warningMessage).toBeInTheDocument()
