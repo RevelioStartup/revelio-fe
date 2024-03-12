@@ -17,7 +17,7 @@ describe('Footer Component', () => {
   it('renders the footer component', () => {
     renderComponent()
     expect(screen.getByAltText('logo')).toBeInTheDocument()
-    expect(screen.getByText('Find us here!')).toBeInTheDocument()
+    expect(screen.getByText('Connect with us here!')).toBeInTheDocument()
   })
 
   it('displays social media icons', () => {

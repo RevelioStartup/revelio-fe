@@ -5,7 +5,7 @@ import React from 'react'
 export const Pricing = () => {
   return (
     <Box
-      data-testid="why-revelio"
+      data-testid="pricing"
       sx={{
         display: 'flex',
         flexDirection: 'column',
