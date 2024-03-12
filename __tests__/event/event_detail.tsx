@@ -39,11 +39,11 @@ describe('Event Detail', () => {
 
     const { getByTestId, getByText } = render(
       <ReduxProvider store={store}>
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
       </ReduxProvider>
     )
 
@@ -79,11 +79,11 @@ describe('Event Detail', () => {
 
     const { getByTestId } = render(
       <ReduxProvider store={store}>
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
       </ReduxProvider>
     )
 
@@ -120,13 +120,12 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
-      
       <ReduxProvider store={store}>
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
       </ReduxProvider>
     )
 
@@ -166,11 +165,11 @@ describe('Event Detail', () => {
 
     const { getByTestId } = render(
       <ReduxProvider store={store}>
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
       </ReduxProvider>
     )
 
@@ -210,11 +209,11 @@ describe('Event Detail', () => {
 
     const { getByTestId } = render(
       <ReduxProvider store={store}>
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
       </ReduxProvider>
     )
 
