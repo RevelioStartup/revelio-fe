@@ -84,8 +84,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
     var error = false
 
     images.forEach(async (image) => {
-      await addPhoto({ venue: venueId, image }).then((res) => {
-      })
+      await addPhoto({ venue: venueId, image }).then((res) => {})
     })
 
     reset()
