@@ -2,7 +2,7 @@ import Home from '@/app/page'
 import { render, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
-jest.useFakeTimers();
+jest.useFakeTimers()
 
 describe('Home Page', () => {
   it('renders the hero section', () => {
@@ -24,36 +24,36 @@ describe('Home Page', () => {
   })
 
   it('changes message every 2 seconds', async () => {
-    const { getByText, findByText } = render(<Home />);
+    const { getByText, findByText } = render(<Home />)
 
-    expect(getByText('👎Stressful')).toBeInTheDocument();
-
-    act(() => {
-      jest.advanceTimersByTime(2000);
-    });
-
-    const messageTwo = await findByText('👎Time consuming');
-    expect(messageTwo).toBeInTheDocument();
+    expect(getByText('👎Stressful')).toBeInTheDocument()
 
     act(() => {
-      jest.advanceTimersByTime(2000);
-    });
+      jest.advanceTimersByTime(2000)
+    })
 
-    const messageThree = await findByText('👎Inefficient');
-    expect(messageThree).toBeInTheDocument();
-
-    act(() => {
-      jest.advanceTimersByTime(2000);
-    });
-
-    const messageFour = await findByText('👎Lacking of centralization');
-    expect(messageFour).toBeInTheDocument();
+    const messageTwo = await findByText('👎Time consuming')
+    expect(messageTwo).toBeInTheDocument()
 
     act(() => {
-      jest.advanceTimersByTime(2000);
-    });
+      jest.advanceTimersByTime(2000)
+    })
 
-    const messageOneNew = await findByText('👎Stressful');
-    expect(messageOneNew).toBeInTheDocument();
-  });
+    const messageThree = await findByText('👎Inefficient')
+    expect(messageThree).toBeInTheDocument()
+
+    act(() => {
+      jest.advanceTimersByTime(2000)
+    })
+
+    const messageFour = await findByText('👎Lacking of centralization')
+    expect(messageFour).toBeInTheDocument()
+
+    act(() => {
+      jest.advanceTimersByTime(2000)
+    })
+
+    const messageOneNew = await findByText('👎Stressful')
+    expect(messageOneNew).toBeInTheDocument()
+  })
 })
