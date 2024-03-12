@@ -24,7 +24,7 @@ export const EventPlan: React.FC<{
   attendees: number
   theme: string
   services: string
-}> = ({ id, name, budget, date, objective, attendees, theme, services }) => {
+}> = ({ id, budget, date, objective, attendees, theme, services }) => {
   const servicesList = services.split(',')
   const [showForm, setShowForm] = React.useState<{
     venue: boolean
