@@ -15,4 +15,3 @@ export const rootReducer = combineReducers({
   user: persistReducer(persistConfig, userReducer),
   profile: profileReducer,
 })
-
