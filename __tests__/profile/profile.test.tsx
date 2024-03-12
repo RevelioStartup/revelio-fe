@@ -1,66 +1,81 @@
-// import React from 'react'
-// import { render, waitFor } from '@testing-library/react'
-// import { useGetProfileQuery } from '@/redux/api/profileApi'
-// import Profile from '@/app/profile/page'
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { Provider } from 'react-redux';
+import { store } from '@/redux/store'; // Update the import path according to your file structure
+import { useGetProfileQuery } from '@/redux/api/profileApi';
+import Profile from '@/app/profile/page';
 
-// jest.mock('@/redux/api/profileApi', () => ({
-//   useGetProfileQuery: jest.fn(),
-// }))
+// Mocking the RTK Query hook used in the component
+jest.mock('@/redux/api/profileApi', () => ({
+  useGetProfileQuery: jest.fn(),
+}));
 
-// describe('Profile component', () => {
-//   it('renders profile information', async () => {
-//     const mockData = {
-//       data: {
-//         user: {
-//           username: 'testuser',
-//           email: 'testuser@example.com',
-//         },
-//         profile: {
-//           bio: 'Test bio',
-//           profile_picture: '/path/to/image',
-//         },
-//       },
-//       isLoading: false,
-//       isError: false,
-//     }
+describe('Profile Component', () => {
+  it('displays loading state correctly', () => {
+    (useGetProfileQuery as jest.Mock).mockReturnValue({ isLoading: true });
 
-//     ;(useGetProfileQuery as jest.Mock).mockReturnValue(mockData)
+    render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    );
 
-//     const { getByText } = render(<Profile />)
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
 
-//     // Wait for profile data to be loaded
-//     await waitFor(() => {
-//       expect(getByText('testuser')).toBeInTheDocument()
-//       expect(getByText('testuser@example.com')).toBeInTheDocument()
-//       expect(getByText('Test bio')).toBeInTheDocument()
-//     })
-//   })
+  it('displays error state correctly', () => {
+    (useGetProfileQuery as jest.Mock).mockReturnValue({ isError: true });
 
-//   it('renders loading state while profile data is loading', async () => {
-//     const mockData = {
-//       isLoading: true,
-//       isError: false,
-//     }
+    render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    );
 
-//     ;(useGetProfileQuery as jest.Mock).mockReturnValue(mockData)
+    expect(screen.getByText('Error loading profile')).toBeInTheDocument();
+  });
 
-//     const { getByText } = render(<Profile />)
+  it('displays profile information correctly', () => {
+    (useGetProfileQuery as jest.Mock).mockReturnValue({
+      data: {
+        user: { username: 'JohnDoe', email: 'johndoe@example.com' },
+        profile: { bio: 'Developer', profile_picture: '/path/to/image' },
+      },
+      isLoading: false,
+      isError: false,
+    });
 
-//     // Ensure loading state is displayed
-//     expect(getByText('Loading...')).toBeInTheDocument()
-//   })
+    render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    );
 
-//   it('renders error message when there is an error loading profile data', async () => {
-//     const mockData = {
-//       isLoading: false,
-//       isError: true,
-//     }
+    expect(screen.getByText('JohnDoe')).toBeInTheDocument();
+    expect(screen.getByText('johndoe@example.com')).toBeInTheDocument();
+    expect(screen.getByText('Developer')).toBeInTheDocument();
+    expect(screen.getByAltText('Profile Picture')).toHaveAttribute('src', '/path/to/image');
+  });
 
-//     ;(useGetProfileQuery as jest.Mock).mockReturnValue(mockData)
+  it('has correct buttons and links', () => {
+    (useGetProfileQuery as jest.Mock).mockReturnValue({
+      data: {
+        user: { username: 'JohnDoe', email: 'johndoe@example.com' },
+        profile: { bio: 'Developer', profile_picture: '/path/to/image' },
+      },
+      isLoading: false,
+      isError: false,
+    });
 
-//     const { getByText } = render(<Profile />)
+    render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    );
 
-//     // Ensure error message is displayed
-//     expect(getByText('Error loading profile')).toBeInTheDocument()
-//   })
-// })
+    expect(screen.getByText('Change Profile')).toHaveAttribute('href', '/profile/change-profile');
+    expect(screen.getByText('Change Password')).toHaveAttribute('href', '/profile/change-password');
+    expect(screen.getByText('Logout')).toHaveAttribute('href', '#logout');
+  });
+});

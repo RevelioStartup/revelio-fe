@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux'
 import { setProfile } from '@/redux/features/profileSlice'
 import { Button as ButtonVariants } from '@/components/elements/Button'
 import { Input } from '@/components/elements/Forms/input'
-import { useRouter } from 'next/navigation'
 
 const ChangeProfile = () => {
   const dispatch = useDispatch()
@@ -23,9 +22,10 @@ const ChangeProfile = () => {
     },
   })
 
-  const router = useRouter()
   const profilePictureRef = useRef<HTMLInputElement>(null)
-  const [profilePicPreview, setProfilePicPreview] = useState('')
+  // const [profilePicPreview, setProfilePicPreview] = useState('')
+    const [error, setError] = useState(''); 
+
 
   useEffect(() => {
     // Set bio value if profile data is available
@@ -34,14 +34,14 @@ const ChangeProfile = () => {
     }
   }, [profileData, setValue])
 
-  const onProfilePictureChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0]
-      setProfilePicPreview(URL.createObjectURL(file))
-    }
-  }
+  // const onProfilePictureChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const file = event.target.files[0]
+  //     setProfilePicPreview(URL.createObjectURL(file))
+  //   }
+  // }
 
   const onSubmit = async (data: { bio: string | Blob }) => {
     const formData = new FormData()
@@ -53,7 +53,6 @@ const ChangeProfile = () => {
     ) {
       formData.append('profile_picture', profilePictureRef.current.files[0])
     } else {
-      console.log('File is missing')
     }
 
     formData.append('bio', data.bio)
@@ -76,12 +75,11 @@ const ChangeProfile = () => {
             },
           })
         )
-        reset()
-        router.push('/profile')
-        console.error('Profile data is not available for updating the state')
+        reset();
+        window.location.href = '/profile';
       }
     } catch (error) {
-      console.error('Failed to update profile:', error)
+      setError('Failed to update profile. Please try again.');
     }
   }
 
@@ -135,6 +133,7 @@ const ChangeProfile = () => {
           Update Profile
         </ButtonVariants>
       </form>
+      {error && <div data-testid="errorMessage">{error}</div>}
     </Box>
   )
 }
