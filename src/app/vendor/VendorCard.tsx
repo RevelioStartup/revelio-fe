@@ -60,7 +60,7 @@ export const VendorCard = ({ vendor, isDetail }: VendorCardProps) => {
   const { control, handleSubmit, reset } = methods
 
   const onSubmit: SubmitHandler<UpdateVendorRequest> = async (data) => {
-    await updateVendor(data).then(async (response) => {})
+    await updateVendor(data)
 
     const vendorId = data.id
 
