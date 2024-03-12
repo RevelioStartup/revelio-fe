@@ -261,8 +261,9 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
 
         {!isDetail && photos.length > 0 && (
           <>
-            {!isEditing ? <GalleryPage photos={photos} /> : <Box></Box>}
-            {isEditing && (
+            {!isEditing ? (
+              <GalleryPage photos={photos} />
+            ) : (
               <Box>
                 <GalleryPageDelete photos={photos} />
               </Box>
