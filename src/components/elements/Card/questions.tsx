@@ -43,11 +43,11 @@ function Questions() {
     <>
       {items.map((item) => (
         <div key={item.id} className="flex flex-col gap-4 mt-5">
-          <div
+          <button
             className="flex items-center justify-between hover:text-[#14b8a6] hover:text-bold"
             style={{ transition: '0.2s ease' }}
             onClick={() => handleToggle(item.id)}
-            role="button"
+            
           >
             <button className="text-start font-bold leading-5">
               <Typography variant={'h6'} mb={1}>
@@ -67,7 +67,7 @@ function Questions() {
                 />
               )}
             </button>
-          </div>
+          </button>
           <div
             className={`transition-all duration-350 ease-in-out ${item.isVisible ? 'opacity-100 max-h-full' : 'opacity-0 max-h-0'}`}
           >
