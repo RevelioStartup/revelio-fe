@@ -1,36 +1,55 @@
+import { VenuePhoto } from '@/types/venue'
+import Image from 'next/image'
 import React from 'react'
 
-const images = [
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-  '/assets/images/Landingpage-Image.svg',
-]
+interface GalleryPageProps {
+  photos: VenuePhoto[]
+}
 
-export const GalleryPage = () => {
+export const GalleryPage = ({ photos }: GalleryPageProps) => {
+  const [currentSlide, setCurrentSlide] = React.useState(0)
+
+  const nextSlide = () => {
+    setCurrentSlide((currentSlide + 1) % photos.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((currentSlide - 1 + photos.length) % photos.length)
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center p-8 bg-gradient-to-r from-white via-teal-100 to-teal-400">
-      <h1 className="text-2xl font-bold mb-4">Gallery</h1>
-      <div className="grid grid-cols-3 gap-4">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className="border border-gray-300 rounded overflow-hidden shadow-md transform transition duration-500 ease-in-out hover:scale-110 hover:shadow-lg"
-          >
-            <img
-              src={image}
-              alt={`Gallery ${index + 1}`}
-              className="w-full object-cover"
+    <div className="relative w-full overflow-hidden">
+      <div
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${currentSlide * 33.33}%)` }}
+      >
+        {photos.map((photo, index) => (
+          <div key={index} className="flex-shrink-0 w-1/3 p-2">
+            <Image
+              src={photo.image}
+              alt={`Photo ${index + 1}`}
+              className="w-full h-40 object-cover rounded-lg"
+              width={300}
+              height={300}
             />
           </div>
         ))}
       </div>
+
+      <button
+        type="button"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 bg-gray-300"
+        onClick={prevSlide}
+      >
+        Previous
+      </button>
+      <button
+        type="button"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 bg-gray-300"
+        onClick={nextSlide}
+      >
+        Next
+      </button>
     </div>
   )
 }

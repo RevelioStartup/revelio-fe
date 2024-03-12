@@ -1,6 +1,9 @@
+import VenueCreateForm from '@/app/venue/VenueCreateForm'
+import VenueList from '@/app/venue/[id]/VenueList'
 import { IEvent } from '@/types/event'
 import CheckIcon from '@mui/icons-material/Check'
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -8,6 +11,7 @@ import {
   TableContainer,
   TableRow,
 } from '@mui/material'
+import React from 'react'
 
 export const EventPlan: React.FC<{
   id: string
@@ -20,6 +24,11 @@ export const EventPlan: React.FC<{
   services: string
 }> = ({ id, name, budget, date, objective, attendees, theme, services }) => {
   const servicesList = services.split(',')
+  const [showForm, setShowForm] = React.useState(false)
+  const handleToggle = () => {
+    setShowForm((showForm) => !showForm)
+  }
+
   return (
     <div className="flex flex-col gap-y-4">
       <TableContainer component={Paper}>
@@ -71,6 +80,24 @@ export const EventPlan: React.FC<{
           ))}
         </div>
       </div>
+
+      <Box className="font-bold text-gray-900">
+        <h2> Venue Candidates List </h2>
+      </Box>
+      <Box
+        className={`flex justify-center items-start ${
+          showForm
+            ? 'border border-teal-200 text-teal-300 hover:border-teal-400 hover:bg-gray-50 hover:text-teal-400'
+            : 'bg-teal-300 text-gray-500 hover:text-gray-800'
+        } rounded-md p-1 w-36`}
+      >
+        <button onClick={handleToggle} className="mr-1 p-1 items-center">
+          {showForm ? 'Hide Form' : 'Add Venue'}
+        </button>
+      </Box>
+
+      {showForm && <VenueCreateForm eventId={id} />}
+      <VenueList eventId={id} />
     </div>
   )
 }
