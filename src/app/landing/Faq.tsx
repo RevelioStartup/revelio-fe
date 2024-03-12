@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { Card } from '../../components/elements/Card/index'
 
-export const FAQ = () => {
+export const Faq = () => {
   return (
     <Box
       data-testid="faq"

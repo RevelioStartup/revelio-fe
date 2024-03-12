@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from '@mui/material'
-import Image from 'next/image'
 import React from 'react'
 
 export const Pricing = () => {

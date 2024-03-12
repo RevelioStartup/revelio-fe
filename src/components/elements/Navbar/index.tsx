@@ -1,5 +1,5 @@
 'use client'
-import { Box, Typography, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import Image from 'next/image'
 import { MENU, MENU_LOGGED_IN } from './constant'
 import Link from 'next/link'

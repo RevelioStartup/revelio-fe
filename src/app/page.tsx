@@ -3,7 +3,7 @@ import { Hero } from './landing/Hero'
 import { WhyRevelio } from './landing/WhyRevelio'
 import { WithoutRevelio } from './landing/WithoutRevelio'
 import { Pricing } from './landing/Pricing'
-import { FAQ } from './landing/Faq'
+import { Faq } from './landing/Faq'
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       <WithoutRevelio />
       <WhyRevelio />
       <Pricing />
-      <FAQ />
+      <Faq />
     </Box>
   )
 }

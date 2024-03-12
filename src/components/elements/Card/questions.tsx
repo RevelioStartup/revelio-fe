@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 
 function Questions() {
   const [items, setItems] = useState([
@@ -29,7 +29,7 @@ function Questions() {
     },
   ])
 
-  const handleToggle = (id: Number) => {
+  const handleToggle = (id: number) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
         item.id === id
@@ -47,6 +47,7 @@ function Questions() {
             className="flex items-center justify-between hover:text-[#14b8a6] hover:text-bold"
             style={{ transition: '0.2s ease' }}
             onClick={() => handleToggle(item.id)}
+            role="button" 
           >
             <button className="text-start font-bold leading-5">
               <Typography variant={'h6'} mb={1}>
