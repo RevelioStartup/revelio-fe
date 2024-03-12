@@ -1,138 +1,112 @@
-'use client'
+"use client"; 
 
-import { Button as ButtonVariants } from '@/components/elements/Button'
-import { Input } from '@/components/elements/Forms/input'
-import { Avatar, Box, Button, styled } from '@mui/material'
-import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchProfile,
-  updateProfile,
-} from '../../../redux/features/profileSlice'
-import React, { useEffect, useState } from 'react'
-import { AppDispatch, RootState } from '@/redux/store'
-import { useRouter } from 'next/navigation'
-import { selectProfileBio } from '@/redux/selectors/profileSelector'
+import React, { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Avatar, Box, Button, styled } from '@mui/material';
+import { useUpdateProfileMutation, useGetProfileQuery  } from '@/redux/api/profileApi';
+import { useDispatch } from 'react-redux';
+import { setProfile } from '@/redux/features/profileSlice';
+import { Button as ButtonVariants } from '@/components/elements/Button';
+import { Input } from '@/components/elements/Forms/input';
+import { useRouter } from 'next/navigation';
 
 const ChangeProfile = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const profileData = useSelector((state: RootState) => state.profile) // Assuming the state shape
-  const bio = useSelector(selectProfileBio) // Use the selector here
-  const [preview, setPreview] = useState<string | null>(null)
-
-  type ChangeProfileFormType = {
-    bio: string
-  }
-  const { control, handleSubmit, reset } = useForm<ChangeProfileFormType>({
+  const dispatch = useDispatch();
+  const { data: profileData } = useGetProfileQuery();
+  const [updateProfile] = useUpdateProfileMutation();
+  const { control, handleSubmit, reset, setValue  } = useForm({
     defaultValues: {
-      bio: bio || '',
+      bio: '',
     },
-  })
+  });
+
+  const router = useRouter();
+  const profilePictureRef = useRef<HTMLInputElement>(null);
+  const [profilePicPreview, setProfilePicPreview] = useState('');
 
   useEffect(() => {
-    dispatch(fetchProfile())
-  }, [dispatch])
-
-  useEffect(() => {
-    // Reset form with fetched data
-    reset({ bio: bio || '' })
-  }, [profileData, reset])
-
-  useEffect(() => {
-    // Revoke the data uris to avoid memory leaks
-    return () => {
-      if (preview) {
-        URL.revokeObjectURL(preview)
-      }
+    // Set bio value if profile data is available
+    if (profileData && profileData.profile.bio) {
+      setValue('bio', profileData.profile.bio);
     }
-  }, [preview])
+  }, [profileData, setValue]);
 
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview(null)
-      return
+  const onProfilePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setProfilePicPreview(URL.createObjectURL(file));
     }
+  };
 
-    const objectUrl = URL.createObjectURL(selectedFile)
-    setPreview(objectUrl)
-
-    // Free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl)
-  }, [selectedFile])
-
-  const onSubmit = async (data: ChangeProfileFormType) => {
-    const formData = new FormData()
-    formData.append('bio', data.bio)
-
-    if (selectedFile) {
-      formData.append('profile_picture', selectedFile)
-    }
+  const onSubmit = async (data: { bio: string | Blob}) => {
+    const formData = new FormData();
+  
+    if (profilePictureRef.current && profilePictureRef.current.files && profilePictureRef.current.files[0]) {
+      formData.append('profile_picture', profilePictureRef.current.files[0]);
+    } else {
+      console.log('File is missing');
+    }  
+    
+    formData.append('bio', data.bio);
 
     try {
-      await dispatch(updateProfile(formData)).unwrap()
-      // Redirect to the profile page after successful update
-      window.location.href = '/profile'
+      const updatedProfileResponse = await updateProfile(formData).unwrap();
+  
+      // Update profile data in Redux state
+      if (profileData) {
+        dispatch(setProfile({
+          user: {
+            id: profileData.user.id,
+            username: profileData.user.username,
+            email: profileData.user.email,
+          },
+          profile: {
+            bio: updatedProfileResponse.bio,
+            profile_picture: updatedProfileResponse.profile_picture,
+          },
+        }));
+        reset(); 
+        router.push('/profile'); 
+        console.error('Profile data is not available for updating the state');
+      }
     } catch (error) {
-      console.error('Failed to update profile:', error)
+      console.error('Failed to update profile:', error);
     }
-  }
+  };
+  
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-      alignItems={'center'}
-      justifyContent={'center'}
-      padding={{ xs: '6em 2em', lg: '6em 12em' }}
-    >
-      <h1 className="text-3xl md:text-5xl font-bold mb-5 text-center">
-        Change Profile
-      </h1>
-      <form
-        className="flex flex-col gap-3"
-        style={{ flex: 1 }}
-        data-testid="change-profile-form"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems={'center'} justifyContent={'center'} padding={{ xs: '6em 2em', lg: '6em 12em' }}>
+      <h1 className='text-3xl md:text-5xl font-bold mb-5 text-center'>Change Profile</h1>
+      {/* <Avatar src={profilePicPreview} sx={{ width: 181, height: 181 }} /> */}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3" encType="multipart/form-data">
         <Box className="mb-8 flex flex-col justify-center">
-          <Button sx={{ borderRadius: '50%' }} component="label">
-            <Avatar
-              alt=""
-              src={preview || ''}
-              sx={{ width: 180, height: 180 }}
-            />
-            <input
-              type="file"
-              hidden
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  setSelectedFile(e.target.files[0])
-                }
-              }}
-            />
+          <Button sx={{ borderRadius: "50%" }} component="label">
+            Upload Profile Picture
+            <VisuallyHiddenInput ref={profilePictureRef} type="file" name="profile_picture" />
           </Button>
         </Box>
         <Input
           control={control}
           name="bio"
           placeholder="Enter bio"
-          data-testid="bio-input"
-          className="w-72 h-14 md:w-[400px] text-base md:text-xl mx-auto"
+          className='w-72 h-14 md:w-[400px] text-base md:text-xl mx-auto'
         />
-        <ButtonVariants
-          variant="primary"
-          type="submit"
-          width="auto"
-          className="w-72 h-14 md:w-[400px] text-xl font-bold mx-auto mt-12"
-        >
-          Change Profile
+        <ButtonVariants variant="primary" type="submit" className='w-72 h-14 md:w-[400px] text-xl font-bold mx-auto mt-12'>
+          Update Profile
         </ButtonVariants>
       </form>
     </Box>
-  )
-}
+  );
+};
 
-export default ChangeProfile
+export default ChangeProfile;

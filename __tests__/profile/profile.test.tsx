@@ -1,59 +1,66 @@
-import Profile from '@/app/profile/page'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import { render, waitFor } from '@testing-library/react';
+import { useGetProfileQuery } from '@/redux/api/profileApi';
+import Profile from '@/app/profile/page';
 
-// Mock the useSelector and useDispatch hooks
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}))
+jest.mock('@/redux/api/profileApi', () => ({
+  useGetProfileQuery: jest.fn(),
+}));
 
-test('Profile component renders correctly', async () => {
-  // Mock useSelector to return some sample profile data
-  const mockProfile = {
-    profile: {
-      user: {
-        username: 'testuser',
-        email: 'test@example.com',
+describe('Profile component', () => {
+  it('renders profile information', async () => {
+    const mockData = {
+      data: {
+        user: {
+          username: 'testuser',
+          email: 'testuser@example.com',
+        },
+        profile: {
+          bio: 'Test bio',
+          profile_picture: '/path/to/image',
+        },
       },
-      profile: {
-        bio: 'Sample bio',
-      },
-    },
-    status: 'succeeded',
-    error: null,
-  }
+      isLoading: false,
+      isError: false,
+    };
 
-  // Typecast useSelector to any before calling mockReturnValue
-  ;(useSelector as unknown as jest.Mock).mockReturnValue(mockProfile)
+    (useGetProfileQuery as jest.Mock).mockReturnValue(mockData);
 
-  // Render the Profile component
-  render(<Profile />)
+    const { getByText } = render(<Profile />);
 
-  // Assert loading message is not present
-  expect(screen.queryByText('Loading your profile...')).not.toBeInTheDocument()
+    // Wait for profile data to be loaded
+    await waitFor(() => {
+      expect(getByText('testuser')).toBeInTheDocument();
+      expect(getByText('testuser@example.com')).toBeInTheDocument();
+      expect(getByText('Test bio')).toBeInTheDocument();
+    });
+  });
 
-  // Assert profile information is rendered correctly
-  expect(screen.getByText('Your Profile')).toBeInTheDocument()
-  expect(screen.getByText('testuser')).toBeInTheDocument()
-  expect(screen.getByText('test@example.com')).toBeInTheDocument()
-  expect(screen.getByText('Sample bio')).toBeInTheDocument()
+  it('renders loading state while profile data is loading', async () => {
+    const mockData = {
+      isLoading: true,
+      isError: false,
+    };
 
-  // Assert premium text is rendered correctly
-  expect(screen.getByText('PREMIUM')).toBeInTheDocument()
+    (useGetProfileQuery as jest.Mock).mockReturnValue(mockData);
 
-  // Assert buttons are rendered correctly
-  expect(
-    screen.getByRole('button', { name: /change profile/i })
-  ).toBeInTheDocument()
-  expect(
-    screen.getByRole('button', { name: /change password/i })
-  ).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: /logout/i })).toBeInTheDocument()
+    const { getByText } = render(<Profile />);
 
-  // Simulate button click
-  userEvent.click(screen.getByRole('button', { name: /change profile/i }))
-  // Add assertions for the behavior that should follow button click
-})
+    // Ensure loading state is displayed
+    expect(getByText('Loading...')).toBeInTheDocument();
+  });
+
+  it('renders error message when there is an error loading profile data', async () => {
+    const mockData = {
+      isLoading: false,
+      isError: true,
+    };
+
+    (useGetProfileQuery as jest.Mock).mockReturnValue(mockData);
+
+    const { getByText } = render(<Profile />);
+
+    // Ensure error message is displayed
+    expect(getByText('Error loading profile')).toBeInTheDocument();
+  });
+});

@@ -2,12 +2,24 @@ import { render, fireEvent, waitFor } from '@testing-library/react'
 import RecoverAccount from '@/app/login/recover-account/page'
 import { useSendChangePasswordMutation } from '@/redux/api/authApi'
 import '@testing-library/jest-dom'
+import AccountRecoveryForm from '@/app/login/recover-account/AccountRecoveryForm'
 
 jest.mock('@/redux/api/authApi', () => ({
   useSendChangePasswordMutation: jest.fn(),
 }))
 
 describe('Test for recover account page', () => {
+  const mockChangePassword = jest.fn().mockResolvedValue({ data: {} })
+  ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
+    mockChangePassword,
+  ])
+  it('renders recover account form', () => {
+    const { getByTestId } = render(<RecoverAccount />)
+    expect(getByTestId('recover-form')).toBeInTheDocument()
+  })
+})
+
+describe('Test for recover account forms', () => {
   beforeEach(() => {
     const mockChangePassword = jest.fn().mockResolvedValue({ data: {} })
     ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
@@ -16,7 +28,7 @@ describe('Test for recover account page', () => {
   })
 
   it('renders recover account form', () => {
-    const { getByTestId } = render(<RecoverAccount />)
+    const { getByTestId } = render(<AccountRecoveryForm />)
     expect(getByTestId('recover-form')).toBeInTheDocument()
   })
 
@@ -25,7 +37,7 @@ describe('Test for recover account page', () => {
     ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
       mockChangePassword,
     ])
-    const { getByTestId } = render(<RecoverAccount />)
+    const { getByTestId } = render(<AccountRecoveryForm />)
     fireEvent.change(getByTestId('email-input'), {
       target: { value: 'email@email.com' },
     })
@@ -47,7 +59,7 @@ describe('Test for recover account page', () => {
     ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
       mockChangePassword,
     ])
-    const { getByTestId, getByText } = render(<RecoverAccount />)
+    const { getByTestId, getByText } = render(<AccountRecoveryForm />)
     fireEvent.change(getByTestId('email-input'), {
       target: { value: 'email@email.com' },
     })
@@ -68,7 +80,7 @@ describe('Test for recover account page', () => {
     ;(useSendChangePasswordMutation as jest.Mock).mockReturnValue([
       mockChangePassword,
     ])
-    const { getByTestId, getByText } = render(<RecoverAccount />)
+    const { getByTestId, getByText } = render(<AccountRecoveryForm />)
     fireEvent.change(getByTestId('email-input'), {
       target: { value: 'email@email.com' },
     })

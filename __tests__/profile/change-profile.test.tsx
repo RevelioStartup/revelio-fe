@@ -1,70 +1,85 @@
-// YourComponent.test.tsx
-import React from 'react'
-import { render, fireEvent, waitFor, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import { Provider } from 'react-redux'
-import { configureStore } from '@reduxjs/toolkit'
-import profileReducer from '../../src/redux/features/profileSlice'
-import ChangeProfile from '@/app/profile/change-profile/page'
-import { RootState, AppDispatch } from '../../src/redux/store' // Adjust the import path as needed
+import React from 'react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+import ChangeProfile from '@/app/profile/change-profile/page';
+import { useUpdateProfileMutation, useGetProfileQuery } from '@/redux/api/profileApi';
+import { useDispatch } from 'react-redux';
+import { store } from '@/redux/store';
+import { setProfile } from '@/redux/features/profileSlice';
+import { Provider } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
-describe('ChangeProfile Component Tests', () => {
-  let store: ReturnType<
-    typeof configureStore<{ profile: typeof profileReducer }>
-  >
+jest.mock('@/redux/api/profileApi', () => ({
+  useUpdateProfileMutation: jest.fn(),
+  useGetProfileQuery: () => ({
+    data: { profile: { 
+      bio: "hi"
+     } }
+  })
+}));
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(),
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
+describe('Test for ChangeProfile component', () => {
   beforeEach(() => {
-    // store = configureStore({
-    //   reducer: {
-    //     profile: profileReducer,
-    //   },
-    // })
+    const mockDispatch = jest.fn();
+    (useDispatch as any).mockReturnValue(mockDispatch);
 
-    render(
+    const mockUpdateProfile = jest.fn().mockResolvedValue({ data: { bio: 'New bio' } });
+    (useUpdateProfileMutation as jest.Mock).mockReturnValue([mockUpdateProfile]);
+
+    const mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+  });
+
+  it('renders profile update form', () => {
+    const { getByPlaceholderText, getByText } = render(
       <Provider store={store}>
         <ChangeProfile />
       </Provider>
-    )
-  })
+    );
+    expect(getByPlaceholderText('Enter bio')).toBeInTheDocument();
+    expect(getByText('Update Profile')).toBeInTheDocument();
+  });
 
-  test('initial render and bio display', async () => {
-    // Implement test logic...
-    // Example:
-    const bioInput = screen.getByTestId('bio-input')
-    expect(bioInput).toHaveValue('')
-  })
+  it('updates profile successfully', async () => {
+    const mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
 
-  test('initial render and bio display', () => {
-    const bioInput = screen.getByTestId('bio-input')
-    expect(bioInput).toHaveValue('Existing bio')
-  })
+    const { getByPlaceholderText, getByText } = render(
+      <Provider store={store}>
+        <ChangeProfile />
+      </Provider>
+    );
 
-  test('input change and submit button', async () => {
-    const newBio = 'New bio text'
-    const bioInput = screen.getByTestId('bio-input')
-    fireEvent.change(bioInput, { target: { value: newBio } })
+    // Fill form input
+    fireEvent.change(getByPlaceholderText('Enter bio'), { target: { value: 'New bio text' } });
 
-    const submitButton = screen.getByRole('button', { name: /Change Profile/i })
-    fireEvent.click(submitButton)
+    // Submit form
+    fireEvent.click(getByText('Update Profile'));
 
-    // await waitFor(() => {
-    //   // Check for state updates or dispatched actions as needed
-    //   const updatedState = store.getState()
-    //   expect(updatedState.profile.profile.bio).toEqual(newBio)
-    // })
-  })
-
-  test('file input change', async () => {
-    const fileInput = screen.getByLabelText(/Avatar/i)
-    const file = new File(['(⌐□_□)'], 'profile-pic.png', { type: 'image/png' })
-
-    fireEvent.change(fileInput, { target: { files: [file] } })
-
+    // Wait for the update to complete
     await waitFor(() => {
-      // Check for UI updates or state changes related to the file input
-      expect(screen.getByAltText('')).toHaveAttribute('src')
-    })
-  })
+      expect(useUpdateProfileMutation).toHaveBeenCalledTimes(1);
+      expect(useUpdateProfileMutation).toHaveBeenCalledWith(expect.any(Function));
+    });
 
-  // Add more tests as needed
-})
+    // Assert dispatch function is called with the updated profile
+    expect(useDispatch).toHaveBeenCalledWith(setProfile({
+      user: expect.any(Object),
+      profile: {
+        bio: 'New bio',
+        profile_picture: null
+      },
+    }));
+
+    // Assert navigation push function is called
+    expect(mockPush).toHaveBeenCalledWith('/profile');
+  });
+});
