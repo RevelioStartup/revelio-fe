@@ -1,4 +1,5 @@
 // profileApi.ts
+import { IEvent } from '@/types/event'
 import { baseApi } from './baseApi'
 import { Profile, UpdateProfileRequest, ProfileResponse } from '@/types/profile'
 
@@ -14,7 +15,10 @@ export const profileApi = baseApi.injectEndpoints({
         body: formData,
       }),
     }),
+    getEvents: builder.query<IEvent[], void>({
+        query: () => ({ url: '/event/', method: 'GET' }),
+      }),
   }),
 })
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi
+export const { useGetProfileQuery, useUpdateProfileMutation, useGetEventsQuery} = profileApi
