@@ -29,7 +29,6 @@ jest.mock('@/redux/store', () => ({
   useAppSelector: () => null,
 }))
 
-
 describe('Navbar Component', () => {
   beforeEach(() => {
     global.window.scrollY = 0
@@ -41,7 +40,6 @@ describe('Navbar Component', () => {
     global.window.removeEventListener = jest.fn()
   })
   it('renders the navbar with logo', async () => {
-
     render(<Navbar />)
 
     const logo = screen.getByAltText('logo')

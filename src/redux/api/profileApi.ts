@@ -1,6 +1,6 @@
 // profileApi.ts
-import { baseApi } from './baseApi';
-import { Profile, UpdateProfileRequest, ProfileResponse } from '@/types/profile'; 
+import { baseApi } from './baseApi'
+import { Profile, UpdateProfileRequest, ProfileResponse } from '@/types/profile'
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,13 +8,13 @@ export const profileApi = baseApi.injectEndpoints({
       query: () => '/profile/',
     }),
     updateProfile: builder.mutation<ProfileResponse, FormData>({
-        query: (formData) => ({
-          url: '/profile/',
-          method: 'PUT',
-          body: formData,
-        }),
+      query: (formData) => ({
+        url: '/profile/',
+        method: 'PUT',
+        body: formData,
       }),
+    }),
   }),
-});
+})
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi;
+export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi

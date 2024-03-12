@@ -20,15 +20,14 @@ jest.mock('next/image', () => ({
 }))
 
 const mockUser = {
-    id: 1,
-    name: 'John Doe',
+  id: 1,
+  name: 'John Doe',
 }
-  
-jest.mock('@/redux/store', () => ({
-    ...jest.requireActual('@/redux/store'),
-    useAppSelector: () => mockUser,
-}))
 
+jest.mock('@/redux/store', () => ({
+  ...jest.requireActual('@/redux/store'),
+  useAppSelector: () => mockUser,
+}))
 
 describe('Navbar Component after User Log In', () => {
   beforeEach(() => {
@@ -42,7 +41,6 @@ describe('Navbar Component after User Log In', () => {
   })
 
   it('finds <a> tags with specific texts for each menu item for logged in user', () => {
-
     render(<Navbar />)
 
     MENU_LOGGED_IN.forEach(({ label }) => {
