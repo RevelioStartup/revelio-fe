@@ -1,6 +1,8 @@
+import { VenueCard } from '@/app/venue/VenueCard'
 import VenueCreateForm from '@/app/venue/VenueCreateForm'
-import VenueList from '@/app/venue/[id]/VenueList'
+import { useGetVenueListQuery } from '@/redux/api/venueApi'
 import { IEvent } from '@/types/event'
+import { Venue } from '@/types/venue'
 import CheckIcon from '@mui/icons-material/Check'
 import {
   Box,
@@ -28,6 +30,8 @@ export const EventPlan: React.FC<{
   const handleToggle = () => {
     setShowForm((showForm) => !showForm)
   }
+
+  const { data: venues = [] } = useGetVenueListQuery(id)
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -97,7 +101,11 @@ export const EventPlan: React.FC<{
       </Box>
 
       {showForm && <VenueCreateForm eventId={id} />}
-      <VenueList eventId={id} />
+      <Box>
+      {venues.map((venue, index) => (
+        <VenueCard key={index} venue={venue} />
+      ))}
+    </Box>
     </div>
   )
 }
