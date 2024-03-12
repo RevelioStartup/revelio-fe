@@ -20,7 +20,7 @@ export const vendorApi = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Venue'],
+      invalidatesTags: ['Vendor'],
     }),
     updateVendor: builder.mutation<Vendor, UpdateVendorRequest>({
       query: (body) => ({

@@ -38,24 +38,24 @@ export const venueApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? result.map((venue) => ({
-              type: 'Vendor',
+              type: 'Venue',
               id: venue.id.toString(),
             }))
           : ['Venue'],
     }),
     getVenueDetail: builder.query<VenueDetailResponse, VenueDetailRequest>({
-      query: ({ id }) => ({
+    query: ({ id }) => ({
         url: `/venues/${id}/`,
         method: 'GET',
       }),
-      providesTags: (result) => [{ type: 'Vendor', id: result?.id }, 'Vendor'],
+      providesTags: (result) => [{ type: 'Venue', id: result?.id }, 'Venue'],
     }),
     deleteVenue: builder.mutation<{ pk: number }, VenueDetailRequest>({
       query: ({ id }) => ({
         url: `/venues/${id}/`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result) => [{ type: 'Vendor', id: result?.pk }],
+      invalidatesTags: (result) => [{ type: 'Venue', id: result?.pk }],
     }),
     addPhoto: builder.mutation<VenuePhoto, AddPhotoRequest>({
       query: ({ venue, image }) => {
@@ -64,14 +64,14 @@ export const venueApi = baseApi.injectEndpoints({
         formData.append('image', image)
         return { url: `/venues/photos/`, method: 'POST', body: formData }
       },
-      invalidatesTags: (result) => [{ type: 'Vendor', venue: result?.venue }],
+      invalidatesTags: (result) => [{ type: 'Venue', venue: result?.venue }],
     }),
     deletePhoto: builder.mutation<{ pk: number }, DeletePhotoRequest>({
       query: ({ photo }) => ({
         url: `/venues/photos/${photo.id}/`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result) => [{ type: 'Vendor', id: result?.pk }],
+      invalidatesTags: (result) => [{ type: 'Venue', id: result?.pk }],
     }),
   }),
 })

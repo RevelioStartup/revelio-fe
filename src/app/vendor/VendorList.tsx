@@ -10,12 +10,10 @@ interface VendorListProps {
 }
 
 export const VendorList = ({ eventId }: VendorListProps) => {
-  const { data: venues = [] } = useGetVendorListQuery(eventId)
+  const { data: vendors } = useGetVendorListQuery(eventId)
   return (
     <Box>
-      {venues.map((venue) => (
-        <VendorCard key={venue.id} vendor={venue} />
-      ))}
+      {vendors?.map((vendor) => <VendorCard key={vendor.id} vendor={vendor} />)}
     </Box>
   )
 }
