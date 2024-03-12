@@ -17,11 +17,6 @@ describe('Footer Component', () => {
   it('renders the footer component', () => {
     renderComponent()
     expect(screen.getByAltText('logo')).toBeInTheDocument()
-    expect(
-      screen.getByText(
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quos amat.'
-      )
-    ).toBeInTheDocument()
     expect(screen.getByText('Find us here!')).toBeInTheDocument()
   })
 

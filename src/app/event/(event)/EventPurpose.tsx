@@ -78,7 +78,7 @@ export const EventPurpose: React.FC = () => {
         budget: budget,
       })?.unwrap()
       setOpen(true)
-      window.location.href = `/event/${res?.id}`
+      window.location.assign(`/event/${res.id}`)
     } catch (error) {
       setOpen(true)
     }

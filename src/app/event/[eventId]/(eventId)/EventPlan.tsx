@@ -1,3 +1,4 @@
+import { AIButton } from '@/app/plans/AISuggestion/AIButton'
 import { VenueCard } from '@/app/venue/VenueCard'
 import { useGetVenueListQuery } from '@/redux/api/venueApi'
 import VenueCreateForm from '@/app/venue/VenueCreateForm'
@@ -41,22 +42,22 @@ export const EventPlan: React.FC<{
 
   return (
     <div className="flex flex-col gap-y-4">
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className='!shadow-none !border-2 !border-teal-400 lg:!w-fit w-full overflow-auto'>
         <Table sx={{ minWidth: 500 }} aria-label="event table">
           <TableBody className="!border-teal-500 ">
             <TableRow key={'Date'} className="!border-teal-500">
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" className = "!border-b-2 !border-b-teal-400">
                 Date
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row"   className = "!border-b-2 !border-b-teal-400 !border-l-2 !border-l-teal-400">
                 {date}
               </TableCell>
             </TableRow>
             <TableRow key={'Budget'}>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row"  className = "!border-b-2 !border-b-teal-400">
                 Budget
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row"  className = "!border-b-2 !border-b-teal-400 !border-l-2 !border-l-teal-400">
                 {budget}
               </TableCell>
             </TableRow>
@@ -64,7 +65,7 @@ export const EventPlan: React.FC<{
               <TableCell component="th" scope="row">
                 Attendees
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" className = "!border-l-2 !border-l-teal-400">
                 {attendees}
               </TableCell>
             </TableRow>
@@ -133,6 +134,9 @@ export const EventPlan: React.FC<{
 
       {showForm.vendor && <VendorCreateForm eventId={id} />}
       <VendorList eventId={id} />
+      <div className="sticky bottom-10 right-10 w-full">
+        <AIButton />
+      </div>
     </div>
   )
 }

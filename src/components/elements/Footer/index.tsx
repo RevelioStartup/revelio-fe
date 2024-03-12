@@ -24,10 +24,7 @@ export const Footer = () => {
           height={100}
           priority
         />
-        <p className="text-sm text-justify md:pl-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quos
-          amat.
-        </p>
+        <p className="text-sm text-justify md:pl-4"></p>
       </Box>
       <Box
         sx={{

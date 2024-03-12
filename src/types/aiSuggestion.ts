@@ -1,10 +1,16 @@
 export type AISuggestionFormType = {
-  event_id: number
   prompt: string
+  event: {
+    name: string
+    theme: string
+  }
+  type: string
 }
 
 export type AISuggestionResponse = {
-  msg: string
+  output: string
+  list: string[]
+  keyword: string[]
 }
 
 export type AISugesstionHistory = {
@@ -12,4 +18,7 @@ export type AISugesstionHistory = {
   date: string
   prompt: string
   output: string
+  list: string[]
+  keyword: string[]
+  type: string
 }

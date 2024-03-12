@@ -37,14 +37,12 @@ export default function EventDetail({
         case 'tracker':
           return <div> Tracker </div>
       }
-    } else {
-      return <div className="font-bold"> No Data Avalaible </div>
     }
   }
 
   return isLoading || !data ? (
     <div className="flex flex-col justify-center items-center min-h-[90vh]">
-      <div className="loader"></div>
+      <div data-testid="loader" className="loader"></div>
     </div>
   ) : (
     <div className="flex flex-col gap-y-4">
@@ -53,6 +51,7 @@ export default function EventDetail({
       <div className="flex gap-x-4 flex-wrap">
         <Chip
           label="My Plan"
+          data-testid="myplan"
           avatar={
             <AppRegistration
               className={`${chipType === 'plan' ? '!text-teal-50' : '!text-black'}`}
@@ -74,11 +73,13 @@ export default function EventDetail({
           className={
             chipType === 'timeline' ? CHIP_STYLE_ACTIVE : CHIP_STYLE_INACTIVE
           }
+          data-testid="timeline"
           onClick={() => handleClick('timeline')}
         />
         <Chip
           label="Tracker"
           variant="outlined"
+          data-testid="tracker"
           avatar={
             <PlaylistAdd
               className={`${chipType === 'tracker' ? '!text-teal-50' : '!text-black'}`}
