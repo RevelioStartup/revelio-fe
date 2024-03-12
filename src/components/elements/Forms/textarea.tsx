@@ -4,6 +4,7 @@ import { TextAreaType } from './interface'
 import { twMerge } from 'tailwind-merge'
 
 import { InputVariants } from './style'
+import useAutosizeTextArea from '@/utils/useAutosizeTextArea'
 
 export const TextArea: FC<TextAreaType> = ({
   id,
@@ -28,8 +29,10 @@ export const TextArea: FC<TextAreaType> = ({
       name={name}
       rules={{ ...rules, required }}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useAutosizeTextArea(textAreaRef.current, value)
         return (
-          <div>
+          <div className="w-full">
             {label && (
               <p className="text-xl text-slate-900 mb-3 flex flex-col">
                 <span>{label}</span>

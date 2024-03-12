@@ -16,6 +16,7 @@ export const rtkQueryErrorLogger: Middleware =
       ) {
         api.dispatch(logout())
       } else {
+        console.log(action)
         const errorData =
           action.payload.data?.error?.message ||
           action.payload.data?.message ||
