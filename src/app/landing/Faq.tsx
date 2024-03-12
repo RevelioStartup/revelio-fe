@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { Card }  from '../../components/elements/Card/index'
+import { Card } from '../../components/elements/Card/index'
 
 export const FAQ = () => {
   return (
@@ -15,7 +15,7 @@ export const FAQ = () => {
       gap={'2em'}
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
-        <Card />
+      <Card />
     </Box>
   )
 }

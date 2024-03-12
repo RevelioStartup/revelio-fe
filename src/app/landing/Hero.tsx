@@ -11,26 +11,34 @@ export const Hero = () => {
         flexDirection: 'column',
         width: '100%',
       }}
-      alignItems= 'center'
-      justifyContent= 'center'
-      minHeight= 'calc(100vh - 80px)'
-  
+      alignItems="center"
+      justifyContent="center"
+      minHeight="calc(100vh - 80px)"
       // borderRadius={'0 0 80% 0'}
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
-      <Box 
+      <Box
         sx={{
           transition: 'all 0.4s ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.05)',
-            },
+          '&:hover': {
+            transform: 'scale(1.05)',
+          },
         }}
       >
-        <Typography variant={'h4'} fontWeight={'bold'} textAlign="center" mb={3}>
-        Ease.<Box component="span" color={'#2DD4BF'}>{' '}Enhance.{' '}</Box>Commemorate.
-      </Typography>
+        <Typography
+          variant={'h4'}
+          fontWeight={'bold'}
+          textAlign="center"
+          mb={3}
+        >
+          Ease.
+          <Box component="span" color={'#2DD4BF'}>
+            {' '}
+            Enhance.{' '}
+          </Box>
+          Commemorate.
+        </Typography>
       </Box>
-      
 
       <Box
         sx={{
@@ -49,39 +57,48 @@ export const Hero = () => {
           justifyContent={'center'}
           gap={'24px'}
           width={'50%'}
-      >
-          <Typography variant={'h6'} sx={{ opacity: 0.7, textAlign: "left" }}>
+        >
+          <Typography variant={'h6'} sx={{ opacity: 0.7, textAlign: 'left' }}>
+            {' '}
+            <Box component="span" color={'#1ec2ae'} fontWeight="800">
+              Revelio{' '}
+            </Box>
+            is designed to simplify and enhance the entire
+            <Box component="span" fontWeight="600">
               {' '}
-              <Box component="span" color={'#1ec2ae'}  fontWeight="800">Revelio </Box>
-              is designed to simplify and enhance the entire 
-              <Box component="span" fontWeight="600"> event planning </Box>
-              experience, providing you with powerful tools to structure, track, and manage every aspect of 
-              your event seamlessly, 
-              <Box component="span" fontWeight="600"> all from one central platform. </Box>
-            
+              event planning{' '}
+            </Box>
+            experience, providing you with powerful tools to structure, track,
+            and manage every aspect of your event seamlessly,
+            <Box component="span" fontWeight="600">
+              {' '}
+              all from one central platform.{' '}
+            </Box>
           </Typography>
-          <Button variant="contained" 
-              sx={{ 
-                  bgcolor: '#2DD4BF', 
-                  borderRadius: 2, 
-                  textTransform: 'none',
-                  alignItems: 'left',
-                  py: 0.5, 
-                  fontSize: '16px', 
-                  ':hover': { bgcolor: '#2DD4BF' } 
-              }} 
-              href="/register">
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: '#2DD4BF',
+              borderRadius: 2,
+              textTransform: 'none',
+              alignItems: 'left',
+              py: 0.5,
+              fontSize: '16px',
+              ':hover': { bgcolor: '#2DD4BF' },
+            }}
+            href="/register"
+          >
             Get Started
           </Button>
-      </Box>
+        </Box>
         <Image
-            src="/assets/images/Landingpage-Image.svg"
-            alt="landing"
-            width={320}
-            height={320}
-            priority
-          />
+          src="/assets/images/Landingpage-Image.svg"
+          alt="landing"
+          width={320}
+          height={320}
+          priority
+        />
       </Box>
     </Box>
-  );
-};
+  )
+}

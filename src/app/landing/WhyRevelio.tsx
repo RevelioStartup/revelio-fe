@@ -21,10 +21,12 @@ export const WhyRevelio = () => {
         <p>Why Revelio</p>
       </Box>
       <Typography variant={'h3'} textAlign={'center'}>
-        We are committed to revolutionizing and solving problems in event planning
+        We are committed to revolutionizing and solving problems in event
+        planning
       </Typography>
       <Typography variant={'h6'} sx={{ opacity: 0.5 }} textAlign={'center'}>
-        Revelio is meant to make your event planning <u>seamless</u> and <u>enjoyable</u>
+        Revelio is meant to make your event planning <u>seamless</u> and{' '}
+        <u>enjoyable</u>
       </Typography>
       <Box
         sx={{

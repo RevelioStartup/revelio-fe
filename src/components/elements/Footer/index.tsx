@@ -8,7 +8,7 @@ export const Footer = () => {
       sx={{
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
-        alignItems: 'flex-top'
+        alignItems: 'flex-top',
       }}
       width={'100%'}
       alignItems={'center'}
@@ -19,8 +19,7 @@ export const Footer = () => {
       className="justify-between"
     >
       <Box className="flex gap-2 justify-center items-center md:items-start flex-col">
-
-        <Box className = "flex gap-2 justify-center items-center flex-row">
+        <Box className="flex gap-2 justify-center items-center flex-row">
           <Image
             data-testid="nav-logo"
             src="/assets/images/Logo.svg"
@@ -36,14 +35,17 @@ export const Footer = () => {
           Committed to revolutionizing and solving problems in event planning
         </p>
 
-        <p className='text-md text-justify md:pl-1 pt-4' style={{ opacity: 0.25, display: 'flex', alignItems: 'center' }}>
+        <p
+          className="text-md text-justify md:pl-1 pt-4"
+          style={{ opacity: 0.25, display: 'flex', alignItems: 'center' }}
+        >
           <span style={{ display: 'flex', alignItems: 'center' }}>
             <i
               className="i-ph-copyright-light"
               data-testid="i-ph-copyright-light"
             />
-          </span>
-          {' '}2024 Revelio. All rights reserved.
+          </span>{' '}
+          2024 Revelio. All rights reserved.
         </p>
       </Box>
       <Box
@@ -66,18 +68,26 @@ export const Footer = () => {
           }}
           alignItems={'center'}
           justifyContent={'flex-end'}
-          width = '100%'
+          width="100%"
           gap={'2em'}
           paddingY={'1em'}
           textAlign={'center'}
         >
-          <a href="https://www.instagram.com/revelio.hq/" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.instagram.com/revelio.hq/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i
               className="i-ph-instagram-logo-bold text-teal-500 size-8"
               data-testid="i-ph-instagram-logo-bold"
             />
           </a>
-          <a href="mailto:revelio.startup@gmail.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href="mailto:revelio.startup@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i
               className="i-ph-envelope-simple-bold text-teal-500 size-8"
               data-testid="i-ph-envelope-simple-bold"
