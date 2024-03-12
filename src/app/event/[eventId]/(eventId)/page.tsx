@@ -3,9 +3,11 @@
 import { useGetEventQuery } from '@/redux/api/eventApi'
 import { IEvent } from '@/types/event'
 import { AppRegistration, EditCalendar, PlaylistAdd } from '@mui/icons-material'
-import { Chip } from '@mui/material'
+import { Box, Chip } from '@mui/material'
 import React from 'react'
 import { EventPlan } from './EventPlan'
+import VenueList from '@/app/venue/VenueList'
+import VenueCreateForm from '@/app/venue/VenueCreateForm'
 
 const CHIP_STYLE = '!font-bold !p-5 !border-none'
 const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
