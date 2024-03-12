@@ -17,14 +17,13 @@ import VendorCreateForm from '../../../vendor/VendorCreateForm'
 
 export const EventPlan: React.FC<{
   id: string
-  name: string
   budget: number
   date: string
   objective: string
   attendees: number
   theme: string
   services: string
-}> = ({ id, name, budget, date, objective, attendees, theme, services }) => {
+}> = ({ id, budget, date, objective, attendees, theme, services }) => {
   const servicesList = services.split(',')
   const [showForm, setShowForm] = React.useState<{
     venue: boolean
@@ -104,7 +103,7 @@ export const EventPlan: React.FC<{
         <h2> Services </h2>
         <div className="flex flex-col gap-y-2">
           {servicesList.map((service, index) => (
-            <div key={index} className="flex gap-x-2 items-center">
+            <div key={service + index} className="flex gap-x-2 items-center">
               <CheckIcon className="!text-white bg-teal-400 !rounded-md !p-1" />
               <span> {service} </span>
             </div>
