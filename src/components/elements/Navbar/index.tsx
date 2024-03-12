@@ -5,12 +5,10 @@ import { MENU, MENU_LOGGED_IN } from './constant'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import React, { useEffect, useState } from 'react'
-import { RootState, useAppSelector } from "@/redux/store";
+import { RootState, useAppSelector } from '@/redux/store'
 
 export const Navbar: React.FC = () => {
   const [atTop, setAtTop] = useState<boolean>(true)
-
-  const { token } = useAppSelector((state: RootState) => state.user);
 
   useEffect(() => {
     const handleScroll = () => {
