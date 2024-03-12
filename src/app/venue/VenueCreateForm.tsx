@@ -37,7 +37,7 @@ export const VenueCreateForm = ({ eventId }: VenueCreateFormProps) => {
   const onSubmit: SubmitHandler<CreateVenueRequest> = async (data) => {
     await createVenue(data).then(async (response) => {
       if ('data' in response) {
-        if (response.data && response.data.id) {
+        if (response.data?.id) {
           const venueId = response.data.id
           for (const image of images) {
             await addPhoto({ venue: venueId, image })
