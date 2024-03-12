@@ -17,7 +17,6 @@ import VendorCreateForm from '../../../vendor/VendorCreateForm'
 
 export const EventPlan: React.FC<{
   id: string
-  name: string
   budget: number
   date: string
   objective: string

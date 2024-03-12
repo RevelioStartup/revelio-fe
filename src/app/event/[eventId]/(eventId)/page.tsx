@@ -1,7 +1,6 @@
 'use client'
 
 import { useGetEventQuery } from '@/redux/api/eventApi'
-import { IEvent } from '@/types/event'
 import { AppRegistration, EditCalendar, PlaylistAdd } from '@mui/icons-material'
 import { Chip } from '@mui/material'
 import React from 'react'
