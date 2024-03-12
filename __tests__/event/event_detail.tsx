@@ -4,6 +4,9 @@ import '@testing-library/jest-dom'
 import EventDetail from '@/app/event/[eventId]/(eventId)/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
 
+import { Provider as ReduxProvider } from 'react-redux'
+import { store } from '@/redux/store'
+
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
 }))
@@ -35,11 +38,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId, getByText } = render(
+      <ReduxProvider store={store}>
       <EventDetail
         params={{
           eventId: eventId,
         }}
       />
+      </ReduxProvider>
     )
 
     const myPlan = getByText('My Plan')
@@ -73,11 +78,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
+      <ReduxProvider store={store}>
       <EventDetail
         params={{
           eventId: eventId,
         }}
       />
+      </ReduxProvider>
     )
 
     const loader = getByTestId('loader')
@@ -113,11 +120,14 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
+      
+      <ReduxProvider store={store}>
       <EventDetail
         params={{
           eventId: eventId,
         }}
       />
+      </ReduxProvider>
     )
 
     const myPlan = getByTestId('myplan')
@@ -155,11 +165,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
+      <ReduxProvider store={store}>
       <EventDetail
         params={{
           eventId: eventId,
         }}
       />
+      </ReduxProvider>
     )
 
     const timeline = getByTestId('timeline')
@@ -197,11 +209,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
+      <ReduxProvider store={store}>
       <EventDetail
         params={{
           eventId: eventId,
         }}
       />
+      </ReduxProvider>
     )
 
     const tracker = getByTestId('tracker')
