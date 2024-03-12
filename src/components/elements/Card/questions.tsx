@@ -7,25 +7,19 @@ function Questions() {
       id: 1,
       isVisible: false,
       title: 'What is Revelio, and how will it help me?',
-      text: `Frontend Mentor offers realistic coding challenges to help developers improve their frontend coding skills with projects in HTML, CSS, and JavaScript. It's suitable for all levels and ideal for portfolio building.`,
+      text: `Revelio is a on-stop event planning app that will ease your whole event planning activity, supported with an AI assistant to make your event planning experience seamless.`,
     },
     {
       id: 2,
       isVisible: false,
       title: 'Is Revelio free?',
-      text: `Yes, Frontend Mentor offers both free and premium coding challenges, with the free option providing access to a range of projects suitable for all skill levels.`,
+      text: `Revelio offer Freemium membership. Free plan users will still be able to use Revelio features, but premium feature like AI Assistant is currently not offered.`,
     },
     {
       id: 3,
       isVisible: false,
-      title: 'Can I use Revelio with other people?',
-      text: `Yes, you can use projects completed on Frontend Mentor in your portfolio. It's an excellent way to showcase your skills to potential employers!`,
-    },
-    {
-      id: 4,
-      isVisible: false,
       title: `How can I get help if I'm stuck when using this app?`,
-      text: `The best place to get help is inside Frontend Mentor's Discord community. There's a help channel where you can ask questions and seek support from other community members.`,
+      text: `You can ask us any questions regarding Revelio through our Instagram or email account.`,
     },
   ])
 

@@ -66,7 +66,7 @@ export const Pricing = () => {
                   data-testid="i-ph-check-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>Event Planner</p>
             </div>
             <div
               className="pt-2"
@@ -78,7 +78,7 @@ export const Pricing = () => {
                   data-testid="i-ph-check-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>Event Tracking</p>
             </div>
             <div
               className="pt-2"
@@ -90,7 +90,7 @@ export const Pricing = () => {
                   data-testid="i-ph-x-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>AI Assistant</p>
             </div>
             <div
               className="pt-2"
@@ -102,19 +102,7 @@ export const Pricing = () => {
                   data-testid="i-ph-x-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
-            </div>
-            <div
-              className="pt-2"
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center' }}>
-                <i
-                  className="i-ph-x-circle-fill text-red-500 size-6"
-                  data-testid="i-ph-x-circle-fill"
-                />
-              </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>Limited Event Creation</p>
             </div>
           </Box>
           <Button
@@ -168,7 +156,7 @@ export const Pricing = () => {
                   data-testid="i-ph-check-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>Event Planning</p>
             </div>
             <div
               className="pt-2"
@@ -180,7 +168,7 @@ export const Pricing = () => {
                   data-testid="i-ph-check-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>Event Tracking</p>
             </div>
             <div
               className="pt-2"
@@ -192,7 +180,7 @@ export const Pricing = () => {
                   data-testid="i-ph-check-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>AI Assistant</p>
             </div>
             <div
               className="pt-2"
@@ -204,19 +192,7 @@ export const Pricing = () => {
                   data-testid="i-ph-check-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
-            </div>
-            <div
-              className="pt-2"
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center' }}>
-                <i
-                  className="i-ph-check-circle-fill text-green-500 size-6"
-                  data-testid="i-ph-check-circle-fill"
-                />
-              </span>
-              <p style={{ fontSize: '20px' }}>Fitur 1</p>
+              <p style={{ fontSize: '20px' }}>Unlimited Evant Creation</p>
             </div>
           </Box>
           <Button
@@ -225,7 +201,6 @@ export const Pricing = () => {
               bgcolor: '#357876',
               borderRadius: 2,
               textTransform: 'none',
-              // alignItems: 'center',
               my: 1,
               fontSize: '20px',
               ':hover': { bgcolor: 'rgb(53, 120, 118, 0.75)' },
