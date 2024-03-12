@@ -22,7 +22,7 @@ const Toggle = ({
     <div style={{ display: 'flex', gap: '10px' }}>
       {options.map(({ label }, index) => (
         <li
-          key={index + (label || '')}
+          key={index + (label ?? '')}
           className="relative m-1 flex h-10 w-full cursor-pointer items-center justify-center rounded-full p-1 text-center"
           onClick={() => handleClick(index)}
           onKeyDown={() => {}}
