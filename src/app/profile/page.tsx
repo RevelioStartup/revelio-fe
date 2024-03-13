@@ -12,8 +12,8 @@ export default function Profile() {
   const {
     data: events,
     isLoading: isEventsLoading,
-    isError: isEventsError
-  } = useGetEventsQuery();
+    isError: isEventsError,
+  } = useGetEventsQuery()
 
   const TealButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText(teal[400]),
@@ -30,7 +30,10 @@ export default function Profile() {
     },
   }))
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return 
+  <div className="flex flex-col justify-center items-center min-h-[90vh]">
+    <div data-testid="loader" className="loader"></div>
+  </div>
   if (isError || !data) return <div>Error loading profile</div>
   const { user, profile } = data
 
@@ -97,47 +100,47 @@ export default function Profile() {
       {/* <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
         Your Events
       </h2> */}
-      <Box component="section">
-        <h2 className="text-3xl md:text-5xl text-left w-full font-bold">Your Events</h2>
+      <Box component="section" className='flex flex-wrap gap-3 w-full'>
+        <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
+          Your Events
+        </h2>
         {events && events.length > 0 ? (
           events.map((event) => (
             <Box
-  key={event.id}
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    maxWidth: '400px', // Adjust the width as needed
-    padding: '1rem',
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: '4px',
-    mb: '1rem', // Add margin bottom for spacing between events
-    bgcolor: 'background.paper',
-  }}
->
-  <Box sx={{ mb: '0.5rem' }}>
-    <h3 style={{ margin: 0, fontWeight: 'bold', fontSize: '1.25rem' }}>{event.name}</h3>
-  </Box>
-      <Box sx={{ flexGrow: 1, mb: '0.5rem' }}>
-        <p style={{ margin: 0 }}>{event.date}</p>
-        <p style={{ margin: 0 }}>{event.budget}</p>
-        <p style={{ margin: 0 }}>{event.objective}</p>
-      </Box>
-      <Button
-        variant="contained"
-        href={`/events/${event.id}`}
-        sx={{
-          alignSelf: 'start',
-          bgcolor: 'primary.main',
-          ':hover': {
-            bgcolor: 'primary.dark',
-          },
-        }}
-      >
-        See Details
-      </Button>
-    </Box>
-
+              key={event.id}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                maxWidth: '400px', // Adjust the width as needed
+                padding: '1rem',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                borderRadius: '4px',
+                mb: '1rem', // Add margin bottom for spacing between events
+                bgcolor: 'background.paper',
+              }}
+            >
+              <Box sx={{ mb: '0.5rem' }}>
+                <h3
+                  style={{ margin: 0, fontWeight: 'bold', fontSize: '1.25rem' }}
+                >
+                  {event.name}
+                </h3>
+              </Box>
+              <Box sx={{ flexGrow: 1, mb: '0.5rem' }}>
+                <p style={{ margin: 0 }}>{event.date}</p>
+                <p style={{ margin: 0 }}>{event.budget}</p>
+                <p style={{ margin: 0 }}>{event.objective}</p>
+              </Box>
+                <TealButton
+              variant="contained"
+              href={`/event/${event.id}`}
+              sx={{ borderRadius: '10px' }}
+              className="w-full"
+            >
+            See Details
+            </TealButton>
+            </Box>
           ))
         ) : (
           <p>No events found.</p>

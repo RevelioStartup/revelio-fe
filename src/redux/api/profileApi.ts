@@ -16,9 +16,13 @@ export const profileApi = baseApi.injectEndpoints({
       }),
     }),
     getEvents: builder.query<IEvent[], void>({
-        query: () => ({ url: '/event/', method: 'GET' }),
-      }),
+      query: () => ({ url: '/events/', method: 'GET' }),
+    }),
   }),
 })
 
-export const { useGetProfileQuery, useUpdateProfileMutation, useGetEventsQuery} = profileApi
+export const {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useGetEventsQuery,
+} = profileApi
