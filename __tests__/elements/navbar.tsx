@@ -19,9 +19,15 @@ jest.mock('next/image', () => ({
   },
 }))
 
+const mockUser = {
+  id: 1,
+  name: 'John Doe',
+  token: null,
+}
+
 jest.mock('@/redux/store', () => ({
   ...jest.requireActual('@/redux/store'),
-  useAppSelector: () => null,
+  useAppSelector: () => mockUser,
 }))
 
 describe('Navbar Component', () => {

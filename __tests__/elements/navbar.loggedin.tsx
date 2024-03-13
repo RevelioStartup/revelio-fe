@@ -22,6 +22,7 @@ jest.mock('next/image', () => ({
 const mockUser = {
   id: 1,
   name: 'John Doe',
+  token: 'token',
 }
 
 jest.mock('@/redux/store', () => ({
