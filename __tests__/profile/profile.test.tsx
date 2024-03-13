@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { Provider } from 'react-redux';
-import { store } from '@/redux/store'; // Update the import path according to your file structure
-import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi';
-import Profile from '@/app/profile/page';
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store' // Update the import path according to your file structure
+import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
+import Profile from '@/app/profile/page'
 
 // Mock data based on the IEvent type
 const mockEventsData = [
@@ -19,94 +19,93 @@ const mockEventsData = [
     services: 'Live Music, Food Stalls, Security',
   },
   // ... add more mock events as needed
-];
+]
 
 // Mocking the RTK Query hook used in the component
 jest.mock('@/redux/api/profileApi', () => ({
   useGetProfileQuery: jest.fn(),
   useGetEventsQuery: jest.fn(),
-}));
+}))
 
 describe('Profile Component', () => {
   beforeEach(() => {
     // Mock profile data
-    (useGetProfileQuery as jest.Mock).mockReturnValue({
+    ;(useGetProfileQuery as jest.Mock).mockReturnValue({
       data: {
         user: { username: 'JohnDoe', email: 'johndoe@example.com' },
         profile: { bio: 'Developer', profile_picture: '/path/to/image' },
       },
       isLoading: false,
       isError: false,
-    });
+    })
 
     // Mock events data
-    (useGetEventsQuery as jest.Mock).mockReturnValue({
+    ;(useGetEventsQuery as jest.Mock).mockReturnValue({
       data: mockEventsData,
       isLoading: false,
       isError: false,
-    });
-  });
-
+    })
+  })
 
   it('displays error state correctly', () => {
-    (useGetProfileQuery as jest.Mock).mockReturnValue({ isError: true });
-    (useGetEventsQuery as jest.Mock).mockReturnValue({ isError: true });
+    ;(useGetProfileQuery as jest.Mock).mockReturnValue({ isError: true })
+    ;(useGetEventsQuery as jest.Mock).mockReturnValue({ isError: true })
 
     render(
       <Provider store={store}>
         <Profile />
       </Provider>
-    );
+    )
 
-    expect(screen.getByText('Error loading profile')).toBeInTheDocument();
-  });
+    expect(screen.getByText('Error loading profile')).toBeInTheDocument()
+  })
 
   it('displays profile information correctly', () => {
     render(
       <Provider store={store}>
         <Profile />
       </Provider>
-    );
+    )
 
-    expect(screen.getByText('JohnDoe')).toBeInTheDocument();
-    expect(screen.getByText('johndoe@example.com')).toBeInTheDocument();
-    expect(screen.getByText('Developer')).toBeInTheDocument();
+    expect(screen.getByText('JohnDoe')).toBeInTheDocument()
+    expect(screen.getByText('johndoe@example.com')).toBeInTheDocument()
+    expect(screen.getByText('Developer')).toBeInTheDocument()
     expect(screen.getByAltText('Profile Picture')).toHaveAttribute(
       'src',
       '/path/to/image'
-    );
-  });
+    )
+  })
 
   it('displays event information correctly', () => {
     render(
       <Provider store={store}>
         <Profile />
       </Provider>
-    );
+    )
 
     mockEventsData.forEach((event) => {
-      expect(screen.getByText(event.name)).toBeInTheDocument();
-      expect(screen.getByText(event.date)).toBeInTheDocument();
-      expect(screen.getByText(event.objective)).toBeInTheDocument();
+      expect(screen.getByText(event.name)).toBeInTheDocument()
+      expect(screen.getByText(event.date)).toBeInTheDocument()
+      expect(screen.getByText(event.objective)).toBeInTheDocument()
       // ... assert other event details
-    });
-  });
+    })
+  })
 
   it('has correct buttons and links', () => {
     render(
       <Provider store={store}>
         <Profile />
       </Provider>
-    );
+    )
 
     expect(screen.getByText('Change Profile')).toHaveAttribute(
       'href',
       '/profile/change-profile'
-    );
+    )
     expect(screen.getByText('Change Password')).toHaveAttribute(
       'href',
       '/profile/change-password'
-    );
-    expect(screen.getByText('Logout')).toHaveAttribute('href', '#logout');
-  });
-});
+    )
+    expect(screen.getByText('Logout')).toHaveAttribute('href', '#logout')
+  })
+})

@@ -11,8 +11,6 @@ export default function Profile() {
   const { data, isLoading, isError } = useGetProfileQuery()
   const {
     data: events,
-    isLoading: isEventsLoading,
-    isError: isEventsError,
   } = useGetEventsQuery()
 
   const TealButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -30,10 +28,7 @@ export default function Profile() {
     },
   }))
 
-  if (isLoading) return
-  ;<div className="flex flex-col justify-center items-center min-h-[90vh]">
-    <div data-testid="loader" className="loader"></div>
-  </div>
+  if (isLoading) return <div>Loading...</div>
   if (isError || !data) return <div>Error loading profile</div>
   const { user, profile } = data
 
