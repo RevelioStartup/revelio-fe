@@ -30,8 +30,8 @@ export default function Profile() {
     },
   }))
 
-  if (isLoading) return 
-  <div className="flex flex-col justify-center items-center min-h-[90vh]">
+  if (isLoading) return
+  ;<div className="flex flex-col justify-center items-center min-h-[90vh]">
     <div data-testid="loader" className="loader"></div>
   </div>
   if (isError || !data) return <div>Error loading profile</div>
@@ -100,7 +100,7 @@ export default function Profile() {
       {/* <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
         Your Events
       </h2> */}
-      <Box component="section" className='flex flex-wrap gap-3 w-full'>
+      <Box component="section" className="flex flex-wrap gap-3 w-full">
         <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
           Your Events
         </h2>
@@ -132,14 +132,14 @@ export default function Profile() {
                 <p style={{ margin: 0 }}>{event.budget}</p>
                 <p style={{ margin: 0 }}>{event.objective}</p>
               </Box>
-                <TealButton
-              variant="contained"
-              href={`/event/${event.id}`}
-              sx={{ borderRadius: '10px' }}
-              className="w-full"
-            >
-            See Details
-            </TealButton>
+              <TealButton
+                variant="contained"
+                href={`/event/${event.id}`}
+                sx={{ borderRadius: '10px' }}
+                className="w-full"
+              >
+                See Details
+              </TealButton>
             </Box>
           ))
         ) : (
