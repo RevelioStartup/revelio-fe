@@ -16,19 +16,11 @@ export const rtkQueryErrorLogger: Middleware =
       ) {
         api.dispatch(logout())
       } else {
-        console.log(action)
         const errorData =
           action.payload.data?.error?.message ||
           action.payload.data?.message ||
           action.error.message
-
-        if (Array.isArray(errorData)) {
-          errorData.forEach((message) => {
-            toast.error(message)
-          })
-        } else if (typeof errorData === 'string') {
-          toast.error(errorData)
-        }
+        console.log(errorData)
       }
     }
     return next(action)
