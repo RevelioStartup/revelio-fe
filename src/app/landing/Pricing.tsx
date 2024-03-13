@@ -192,7 +192,7 @@ export const Pricing = () => {
                   data-testid="i-ph-check-circle-fill"
                 />
               </span>
-              <p style={{ fontSize: '20px' }}>Unlimited Evant Creation</p>
+              <p style={{ fontSize: '20px' }}>Unlimited Event Creation</p>
             </div>
           </Box>
           <Button

@@ -7,7 +7,7 @@ function Questions() {
       id: 1,
       isVisible: false,
       title: 'What is Revelio, and how will it help me?',
-      text: `Revelio is a on-stop event planning app that will ease your whole event planning activity, supported with an AI assistant to make your event planning experience seamless.`,
+      text: `Revelio is a one-stop event planning app that will ease your whole event planning activity, supported with an AI assistant to make your event planning experience seamless.`,
     },
     {
       id: 2,
