@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Avatar, Box, Button, styled } from '@mui/material'
+import { Box, Button, styled } from '@mui/material'
 import {
   useUpdateProfileMutation,
   useGetProfileQuery,
