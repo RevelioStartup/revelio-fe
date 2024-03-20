@@ -1,4 +1,6 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Button } from '@/components/elements/Button'
+import { Box, Typography } from '@mui/material'
+import Link from 'next/link'
 import React from 'react'
 
 export const Pricing = () => {
@@ -105,21 +107,9 @@ export const Pricing = () => {
               <p style={{ fontSize: '20px' }}>Limited Event Creation</p>
             </div>
           </Box>
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: 'white',
-              color: '#357876',
-              borderRadius: 2,
-              textTransform: 'none',
-              my: 1,
-              fontSize: '20px',
-              ':hover': { bgcolor: 'white' },
-            }}
-            href="/register"
-          >
-            Choose Plan
-          </Button>
+          <Link href="/register">
+            <Button variant={'ghost'}>Choose Plan</Button>
+          </Link>
         </Box>
         <Box
           sx={{
@@ -195,20 +185,9 @@ export const Pricing = () => {
               <p style={{ fontSize: '20px' }}>Unlimited Event Creation</p>
             </div>
           </Box>
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: '#357876',
-              borderRadius: 2,
-              textTransform: 'none',
-              my: 1,
-              fontSize: '20px',
-              ':hover': { bgcolor: 'rgb(53, 120, 118, 0.75)' },
-            }}
-            href="/register"
-          >
-            Choose Plan
-          </Button>
+          <Link href="/register">
+            <Button variant={'ghost'}>Choose Plan</Button>
+          </Link>
         </Box>
       </Box>
     </Box>

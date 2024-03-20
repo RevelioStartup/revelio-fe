@@ -12,6 +12,7 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useVerifyEmailMutation } from '@/redux/api/authApi'
 import Link from 'next/link'
+import { Button } from '@/components/elements/Button'
 
 type VerifyEmailFormType = {
   token: string
@@ -79,9 +80,7 @@ export default function VerifyEmailForm() {
           required
           data-testid="token-input"
         />
-        <button type="submit" className="bg-teal-50">
-          Verify
-        </button>
+        <Button type="submit">Verify</Button>
       </form>
 
       <Dialog open={openPrompt} data-testid="verify-redirect-success-msg">
@@ -104,9 +103,14 @@ export default function VerifyEmailForm() {
           <p>{errorMessage}</p>
         </DialogContent>
         <DialogActions>
-          <button data-testid="button-error" onClick={handleClosePopUP}>
+          <Button
+            size="small"
+            variant={'ghost'}
+            data-testid="button-error"
+            onClick={handleClosePopUP}
+          >
             Close
-          </button>
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

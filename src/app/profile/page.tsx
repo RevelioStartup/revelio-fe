@@ -1,29 +1,14 @@
 'use client'
 
 import { Avatar, Box } from '@mui/material'
-import Button, { ButtonProps } from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
-import { teal, red } from '@mui/material/colors'
+
 import React from 'react'
 import { useGetProfileQuery } from '@/redux/api/profileApi'
+import { Button } from '@/components/elements/Button'
+import Link from 'next/link'
 
 export default function Profile() {
   const { data, isLoading, isError } = useGetProfileQuery()
-
-  const TealButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText(teal[400]),
-    backgroundColor: '#2DD4BF',
-    '&:hover': {
-      backgroundColor: teal[400],
-    },
-  }))
-  const RedButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText(red[800]),
-    backgroundColor: '#DC2626',
-    '&:hover': {
-      backgroundColor: red[800],
-    },
-  }))
 
   if (isLoading) return <div>Loading...</div>
   if (isError || !data) return <div>Error loading profile</div>
@@ -63,30 +48,15 @@ export default function Profile() {
         justifyContent={'center'}
         padding={{ xs: '4em 2em', lg: '4em 12em' }}
       >
-        <TealButton
-          variant="contained"
-          href="/profile/change-profile"
-          sx={{ borderRadius: '10px' }}
-          className="w-56 h-12 md:w-[400px] md:h-14 mb-3"
-        >
-          Change Profile
-        </TealButton>
-        <TealButton
-          variant="contained"
-          href="/profile/change-password"
-          sx={{ borderRadius: '10px' }}
-          className="w-56 h-12 md:w-[400px] md:h-14 mb-3"
-        >
-          Change Password
-        </TealButton>
-        <RedButton
-          variant="contained"
-          href="#logout"
-          sx={{ borderRadius: '10px' }}
-          className="w-56 h-12 md:w-[400px] md:h-14 mb-3"
-        >
-          Logout
-        </RedButton>
+        <Link href="/profile/change-profile">
+          <Button>Change Profile</Button>
+        </Link>
+        <Link href="/profile/change-password">
+          <Button variant="secondary">Change Password</Button>
+        </Link>
+        <Link href="#logout">
+          <Button variant="danger">Logout</Button>
+        </Link>
       </Box>
       <hr className="border border-slate-500 w-full mb-6" />
       <h2 className="text-3xl md:text-5xl text-left w-full font-bold">

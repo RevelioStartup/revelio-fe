@@ -76,15 +76,25 @@ describe('Profile Component', () => {
         <Profile />
       </Provider>
     )
-
-    expect(screen.getByText('Change Profile')).toHaveAttribute(
+    const changeProfileButton = screen
+      .getByRole('button', { name: 'Change Profile' })
+      .closest('a')
+    expect(changeProfileButton).toHaveAttribute(
       'href',
       '/profile/change-profile'
     )
-    expect(screen.getByText('Change Password')).toHaveAttribute(
+
+    const changePasswordButton = screen
+      .getByRole('button', { name: 'Change Password' })
+      .closest('a')
+    expect(changePasswordButton).toHaveAttribute(
       'href',
       '/profile/change-password'
     )
-    expect(screen.getByText('Logout')).toHaveAttribute('href', '#logout')
+
+    const logoutButton = screen
+      .getByRole('button', { name: 'Logout' })
+      .closest('a')
+    expect(logoutButton).toHaveAttribute('href', '#logout')
   })
 })

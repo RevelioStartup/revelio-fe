@@ -14,6 +14,7 @@ import {
 import React from 'react'
 import VendorList from '../../../vendor/VendorList'
 import VendorCreateForm from '../../../vendor/VendorCreateForm'
+import { Button } from '@/components/elements/Button'
 
 export const EventPlan: React.FC<{
   id: string
@@ -118,12 +119,12 @@ export const EventPlan: React.FC<{
             : 'bg-teal-300 text-gray-500 hover:text-gray-800'
         } rounded-md p-1 w-36`}
       >
-        <button
+        <Button
           onClick={() => handleToggle('venue')}
           className="mr-1 p-1 items-center"
         >
           {showForm.venue ? 'Hide Form' : 'Add Venue'}
-        </button>
+        </Button>
       </Box>
 
       <Box className="font-bold text-gray-900">
@@ -140,12 +141,12 @@ export const EventPlan: React.FC<{
             : 'bg-teal-300 text-gray-500 hover:text-gray-800'
         } rounded-md p-1 w-36`}
       >
-        <button
+        <Button
           onClick={() => handleToggle('vendor')}
           className="mr-1 p-1 items-center"
         >
           {showForm.vendor ? 'Hide Form' : 'Add Vendor'}
-        </button>
+        </Button>
       </Box>
       <Box className="font-bold text-gray-900">
         <h2> Vendor Candidates List </h2>
