@@ -3,12 +3,13 @@
 import { Avatar, Box } from '@mui/material'
 
 import React from 'react'
-import { useGetProfileQuery } from '@/redux/api/profileApi'
 import { Button } from '@/components/elements/Button'
 import Link from 'next/link'
+import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 
 export default function Profile() {
   const { data, isLoading, isError } = useGetProfileQuery()
+  const { data: events } = useGetEventsQuery()
 
   if (isLoading) return <div>Loading...</div>
   if (isError || !data) return <div>Error loading profile</div>
@@ -59,9 +60,50 @@ export default function Profile() {
         </Link>
       </Box>
       <hr className="border border-slate-500 w-full mb-6" />
-      <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
+      {/* <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
         Your Events
-      </h2>
+      </h2> */}
+      <Box component="section" className="flex flex-wrap gap-3 w-full">
+        <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
+          Your Events
+        </h2>
+        {events && events.length > 0 ? (
+          events.map((event) => (
+            <Box
+              key={event.id}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                maxWidth: '400px', // Adjust the width as needed
+                padding: '1rem',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                borderRadius: '4px',
+                mb: '1rem', // Add margin bottom for spacing between events
+                bgcolor: 'background.paper',
+              }}
+            >
+              <Box sx={{ mb: '0.5rem' }}>
+                <h3
+                  style={{ margin: 0, fontWeight: 'bold', fontSize: '1.25rem' }}
+                >
+                  {event.name}
+                </h3>
+              </Box>
+              <Box sx={{ flexGrow: 1, mb: '0.5rem' }}>
+                <p style={{ margin: 0 }}>{event.date}</p>
+                <p style={{ margin: 0 }}>{event.budget}</p>
+                <p style={{ margin: 0 }}>{event.objective}</p>
+              </Box>
+              <Link href={`/event/${event.id}`}>
+                <Button className="w-full">See Details</Button>
+              </Link>
+            </Box>
+          ))
+        ) : (
+          <p>No events found.</p>
+        )}
+      </Box>
     </Box>
   )
 }
