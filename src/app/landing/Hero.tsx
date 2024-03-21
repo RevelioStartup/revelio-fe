@@ -1,5 +1,7 @@
-import { Box, Typography, Button } from '@mui/material'
+import { Button } from '@/components/elements/Button'
+import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 export const Hero = () => {
@@ -75,21 +77,9 @@ export const Hero = () => {
               all from one central platform.{' '}
             </Box>
           </Typography>
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: '#2DD4BF',
-              borderRadius: 2,
-              textTransform: 'none',
-              alignItems: 'left',
-              py: 0.5,
-              fontSize: '16px',
-              ':hover': { bgcolor: '#2DD4BF' },
-            }}
-            href="/register"
-          >
-            Get Started
-          </Button>
+          <Link href="/register">
+            <Button>Get Started</Button>
+          </Link>
         </Box>
         <Image
           src="/assets/images/Landingpage-Image.svg"
