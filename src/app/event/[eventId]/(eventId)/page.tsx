@@ -43,8 +43,11 @@ export default function EventDetail({
     </div>
   ) : (
     <div className="flex flex-col gap-y-4">
-      <h1 className="font-bold text-3xl"> {data?.name} </h1>
-      <span className="border-t-2 border-slate-500"> </span>
+      <h1 className="font-bold text-3xl text-neutral-900 capitalize">
+        {' '}
+        {data?.name}{' '}
+      </h1>
+      <span className="border-t-2 border-teal-600"> </span>
       <div className="flex gap-x-4 flex-wrap">
         <Chip
           label="My Plan"
