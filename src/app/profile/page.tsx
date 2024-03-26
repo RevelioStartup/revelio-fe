@@ -1,29 +1,25 @@
 'use client'
 
-import { Avatar, Box } from '@mui/material'
+import { Avatar, Box, Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent, } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import React from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/elements/Button'
 import Link from 'next/link'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
-import {
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material'
-import { useState } from 'react'
 
 export default function Profile() {
   const [openPopup, setOpenPopup] = useState(false)
   const { data, isLoading, isError } = useGetProfileQuery()
   const { data: events } = useGetEventsQuery()
+  const dispatch = useDispatch()
 
   if (isLoading) return <div>Loading...</div>
   if (isError || !data) return <div>Error loading profile</div>
   const { user, profile } = data
-  const dispatch = useDispatch()
 
   const handleLogout = () => {
     dispatch(logout())
