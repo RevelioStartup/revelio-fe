@@ -1,19 +1,37 @@
 'use client'
 
-import { Avatar, Box } from '@mui/material'
-
-import React from 'react'
+import { Avatar, Box, Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent, } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 import { Button } from '@/components/elements/Button'
 import Link from 'next/link'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
+import { logout } from '@/redux/features/userSlice'
 
 export default function Profile() {
+  const [openPopup, setOpenPopup] = useState(false)
   const { data, isLoading, isError } = useGetProfileQuery()
   const { data: events } = useGetEventsQuery()
+  const dispatch = useDispatch()
 
   if (isLoading) return <div>Loading...</div>
   if (isError || !data) return <div>Error loading profile</div>
   const { user, profile } = data
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
+  const handleClosePopup = () => {
+    setOpenPopup(false)
+  }
+
+  const handleOpenPopup = () => {
+    setOpenPopup(true)
+  }
 
   return (
     <Box
@@ -55,9 +73,40 @@ export default function Profile() {
         <Link href="/profile/change-password">
           <Button variant="secondary">Change Password</Button>
         </Link>
-        <Link href="#logout">
-          <Button variant="danger">Logout</Button>
-        </Link>
+        <Button
+          variant="ghost"
+          onClick={handleOpenPopup}
+          data-testid="logout-button"
+        >
+          Logout
+        </Button>
+        <Dialog
+          open={openPopup}
+          onClose={handleClosePopup}
+          data-testid="logout-dialog"
+        >
+          <DialogTitle>Log Out</DialogTitle>
+          <DialogContent>
+            <p>Are you sure you want to log out?</p>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="ghost"
+              size="small"
+              data-testid="button-yes"
+              onClick={handleLogout}
+            >
+              Yes
+            </Button>
+            <Button
+              size="small"
+              data-testid="button-close"
+              onClick={handleClosePopup}
+            >
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
       <hr className="border border-slate-500 w-full mb-6" />
       {/* <h2 className="text-3xl md:text-5xl text-left w-full font-bold">
