@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react'
 export default function TaskDetailPage({
   params,
 }: Readonly<{
-  params: Readonly<{ eventId: string; taskId: string }>;
+  params: Readonly<{ eventId: string; taskId: string }>
 }>) {
   const { data: taskData, isLoading } = useGetTaskDetailQuery(params)
   const { data: eventData } = useGetEventQuery(params.eventId)
@@ -82,7 +82,7 @@ export default function TaskDetailPage({
             </tr>
           </tbody>
         </table>
-        <Box sx={{ maxWidth: 400 }}>
+        <Box >
           {steps?.length === 0 ? (
             <div className="mt-2 space-y-2 sm:mt-4 sm:space-y-4">
               <Paper square elevation={0} sx={{ p: 3 }}>
