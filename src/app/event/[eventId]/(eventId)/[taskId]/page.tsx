@@ -17,9 +17,9 @@ import { useState, useEffect } from 'react'
 
 export default function TaskDetailPage({
   params,
-}: {
-  params: { eventId: string; taskId: string }
-}) {
+}: Readonly<{
+  params: Readonly<{ eventId: string; taskId: string }>;
+}>) {
   const { data: taskData, isLoading } = useGetTaskDetailQuery(params)
   const { data: eventData } = useGetEventQuery(params.eventId)
 
@@ -48,7 +48,7 @@ export default function TaskDetailPage({
     }
   }, [isLoading, steps])
 
-  if (!isLoading && taskData && taskData.task_steps) {
+  if (!isLoading && taskData?.task_steps) {
     return (
       <div className="flex flex-col gap-y-4">
         <h1 className="font-bold text-3xl text-neutral-900 capitalize">

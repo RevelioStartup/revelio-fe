@@ -17,7 +17,6 @@ describe('TaskDetailPage with step', () => {
     interface Step {
         id: string
         name: string
-        output: string
         description: string
         status: string
         step_order: number
@@ -38,7 +37,6 @@ describe('TaskDetailPage with step', () => {
     const mockStepData: Step = {
         id: '1',
         name: 'step name',
-        output: 'step output',
         description: 'step description',
         status: 'DONE',
         step_order: 1,
@@ -48,7 +46,6 @@ describe('TaskDetailPage with step', () => {
     const mockStepData2: Step = {
         id: '2',
         name: 'step name 2',
-        output: 'step output 2',
         description: 'step description 2',
         status: 'NOT_STARTED',
         step_order: 2,
