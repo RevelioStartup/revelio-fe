@@ -84,17 +84,19 @@ export default function TaskDetailPage({
         </table>
         <Box >
           {steps?.length === 0 ? (
-            <div className="mt-2 space-y-2 sm:mt-4 sm:space-y-4">
-              <Paper square elevation={0} sx={{ p: 3 }}>
-                <Typography variant="h5">No steps created yet</Typography>
-                <Link href={``}>
-                  <Button>Generate Manually</Button>
-                </Link>
-                <Typography>or</Typography>
-                <Link href={``}>
-                  <Button>Generate using AI</Button>
-                </Link>
-              </Paper>
+            <div className="flex flex-col items-center justify-center h-full">
+              <div className="mt-2 space-y-2 sm:mt-4 sm:space-y-4 w-full max-w-md">
+                <Typography variant="h5" className="text-lg font-bold text-center">No steps created yet</Typography>
+                <div className="flex flex-col sm:flex-row justify-center gap-2">
+                  <Link href={``}>
+                    <Button variant='ghost'>Generate Manually</Button>
+                  </Link>
+                  <Typography className="self-center">or</Typography>
+                  <Link href={``}>
+                    <Button>Generate using AI</Button>
+                  </Link>
+                </div>
+              </div>
             </div>
           ) : (
             <div>
