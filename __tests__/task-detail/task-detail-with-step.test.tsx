@@ -95,7 +95,5 @@ describe('TaskDetailPage with step', () => {
     const buttonFinish = screen.getByText('Finish')
     fireEvent.click(buttonFinish)
     expect(screen.getByText('All steps completed - you have finished this task')).toBeInTheDocument();
-    const buttonReset = screen.getByText('Reset')
-    fireEvent.click(buttonReset)
   });
 });

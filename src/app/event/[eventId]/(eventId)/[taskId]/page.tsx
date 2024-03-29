@@ -35,10 +35,6 @@ export default function TaskDetailPage({
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
 
-  const handleReset = () => {
-    setActiveStep(0)
-  }
-
   useEffect(() => {
     if (!isLoading && steps) {
       const finishedSteps = steps.filter(
@@ -142,15 +138,11 @@ export default function TaskDetailPage({
                   <Typography>
                     All steps completed - you have finished this task
                   </Typography>
-                  <Button onClick={handleReset}>Reset</Button>
                 </Paper>
               )}
             </div>
           )}
         </Box>
-        <Link href={``}>
-          <Button>Save</Button>
-        </Link>
         <Link href={`/event/${eventData?.id}`}>
           <Button variant="ghost">Back to Event Page</Button>
         </Link>
