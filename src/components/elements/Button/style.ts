@@ -1,7 +1,7 @@
 import { VariantProps, cva } from 'class-variance-authority'
 
 export const ButtonVariants = cva(
-  'rounded-2xl flex flex-row items-center gap-2',
+  'rounded-2xl flex flex-row items-center gap-2 justify-center',
   {
     variants: {
       variant: {
@@ -30,7 +30,7 @@ export const ButtonVariants = cva(
       variant: 'primary',
       intent: 'active',
       width: 'auto',
-      size: 'large',
+      size: 'medium',
     },
   }
 )
