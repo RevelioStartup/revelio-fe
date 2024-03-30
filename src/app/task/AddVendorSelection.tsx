@@ -30,7 +30,9 @@ export const AddVendorSelection = ({
     event: eventId,
   }
 
-  const methods = useForm<CreateTaskRequest>({ defaultValues: defaultValuesVendor })
+  const methods = useForm<CreateTaskRequest>({
+    defaultValues: defaultValuesVendor,
+  })
   const { handleSubmit } = methods
 
   const onSubmit: SubmitHandler<CreateTaskRequest> = async (taskData) => {
@@ -72,7 +74,7 @@ export const AddVendorSelection = ({
                 data-testid="task-title"
                 className="text-gray-500 text-lg font-bold"
               >
-              {defaultValuesVendor.title}
+                {defaultValuesVendor.title}
               </h2>
             </div>
             <div>
@@ -93,7 +95,7 @@ export const AddVendorSelection = ({
             </div>
           </div>
           <p data-testid="task-description" className="text-gray-400 text-sm">
-          {defaultValuesVendor.description}
+            {defaultValuesVendor.description}
           </p>
         </div>
       )}

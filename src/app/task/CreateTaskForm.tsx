@@ -35,7 +35,6 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
   }
 
   return (
-    <Box>
       <Box className="bg-gray-100 p-6 rounded-2xl">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box>
@@ -85,7 +84,6 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
           </Box>
         </form>
       </Box>
-    </Box>
   )
 }
 
