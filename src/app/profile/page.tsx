@@ -9,9 +9,7 @@ import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 
 export default function Profile() {
   const { data, isLoading, isError } = useGetProfileQuery()
-  const {
-    data: events,
-  } = useGetEventsQuery()
+  const { data: events } = useGetEventsQuery()
 
   const TealButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText(teal[400]),
