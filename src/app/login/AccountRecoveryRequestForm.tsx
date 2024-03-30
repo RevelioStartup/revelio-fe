@@ -11,6 +11,7 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useSendRecoverPasswordEmailMutation } from '@/redux/api/authApi'
 import Link from 'next/link'
+import { Button } from '@/components/elements/Button'
 
 type RecPassFormType = {
   email: string
@@ -90,13 +91,17 @@ export default function AccountRecoveryRequestForm({
                 placeholder="Enter email"
                 data-testid="email-input"
               />
-              <button type="submit" data-testid="button-submit-email">
+              <Button type="submit" data-testid="button-submit-email">
                 Send Recovery Email
-              </button>
+              </Button>
             </form>
-            <button data-testid="close-acc-rec-form" onClick={onClose}>
+            <Button
+              variant={'secondary'}
+              data-testid="close-acc-rec-form"
+              onClick={onClose}
+            >
               Close
-            </button>
+            </Button>
           </div>
         </DialogActions>
       </Dialog>
@@ -121,12 +126,14 @@ export default function AccountRecoveryRequestForm({
           <p>{errorMessage}</p>
         </DialogContent>
         <DialogActions>
-          <button
+          <Button
+            variant={'ghost'}
+            size={'small'}
             data-testid="button-error-account-recovery"
             onClick={handleClosePopup}
           >
             Close
-          </button>
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

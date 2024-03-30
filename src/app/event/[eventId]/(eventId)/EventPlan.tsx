@@ -14,6 +14,7 @@ import {
 import React from 'react'
 import VendorList from '../../../vendor/VendorList'
 import VendorCreateForm from '../../../vendor/VendorCreateForm'
+import { Button } from '@/components/elements/Button'
 
 export const EventPlan: React.FC<{
   id: string
@@ -37,79 +38,42 @@ export const EventPlan: React.FC<{
   }
 
   return (
-    <div className="flex flex-col gap-y-4">
-      <TableContainer
-        component={Paper}
-        className="!shadow-none !border-2 !border-teal-400 lg:!w-fit w-full overflow-auto"
-      >
-        <Table sx={{ minWidth: 500 }} aria-label="event table">
-          <TableBody className="!border-teal-500 ">
-            <TableRow key={'Date'} className="!border-teal-500">
-              <TableCell
-                component="th"
-                scope="row"
-                className="!border-b-2 !border-b-teal-400"
-              >
-                Date
-              </TableCell>
-              <TableCell
-                component="th"
-                scope="row"
-                className="!border-b-2 !border-b-teal-400 !border-l-2 !border-l-teal-400"
-              >
-                {date}
-              </TableCell>
-            </TableRow>
-            <TableRow key={'Budget'}>
-              <TableCell
-                component="th"
-                scope="row"
-                className="!border-b-2 !border-b-teal-400"
-              >
-                Budget
-              </TableCell>
-              <TableCell
-                component="th"
-                scope="row"
-                className="!border-b-2 !border-b-teal-400 !border-l-2 !border-l-teal-400"
-              >
-                {budget}
-              </TableCell>
-            </TableRow>
-            <TableRow key={'Attendees'}>
-              <TableCell component="th" scope="row">
-                Attendees
-              </TableCell>
-              <TableCell
-                component="th"
-                scope="row"
-                className="!border-l-2 !border-l-teal-400"
-              >
-                {attendees}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div className="flex flex-col gap-y-4 font-bold">
-        <h2> Objective </h2>
+    <div className="flex flex-col gap-y-4 text-gray-900">
+      <table className="table w-full max-w-xl border-separate border-spacing-y-5">
+        <tr className="table-row">
+          <td className="text-teal-800 font-bold text-left"> Date </td>
+          <td className="font-medium text-left"> {date} </td>
+        </tr>
+        <tr className="table-row m-5">
+          <td className="text-teal-800 font-bold text-left"> Budget </td>
+          <td className="font-medium text-left"> {budget} </td>
+        </tr>
+        <tr className="table-row m-5">
+          <td className="text-teal-800 font-bold text-left"> Attendees </td>
+          <td className="font-medium text-left"> {attendees} </td>
+        </tr>
+      </table>
+      <div className="flex flex-col bg-gray-50 p-5 gap-5">
+        <h2 className="font-bold text-teal-800"> Objective </h2>
         <p> {objective} </p>
       </div>
-      <div className="flex flex-col gap-y-4 font-bold">
-        <h2> Theme </h2>
+      <div className="flex flex-col bg-gray-50 p-5 gap-5">
+        <h2 className="font-bold text-teal-800"> Theme </h2>
         <p> {theme} </p>
       </div>
-      <div className="flex flex-col gap-y-4 font-bold">
+      <div className="flex flex-col gap-y-5 font-bold p-5">
         <h2> Services </h2>
-        <div className="flex flex-col gap-y-2">
+        <div className="flex flex-col gap-y-5">
           {servicesList.map((service, index) => (
-            <div key={service + index} className="flex gap-x-2 items-center">
-              <CheckIcon className="!text-white bg-teal-400 !rounded-md !p-1" />
-              <span> {service} </span>
+            <div key={service + index} className="flex gap-x-3 items-center">
+              <CheckIcon className="!text-white bg-teal-400 !rounded-md !p-1 !w-[22px] !h-[22px]" />
+              <span className="font-medium"> {service} </span>
             </div>
           ))}
         </div>
       </div>
+
+      <div className="w-full border-t-2 border-teal-600" />
 
       <Box
         className={`flex justify-center items-start ${
@@ -118,12 +82,12 @@ export const EventPlan: React.FC<{
             : 'bg-teal-300 text-gray-500 hover:text-gray-800'
         } rounded-md p-1 w-36`}
       >
-        <button
+        <Button
           onClick={() => handleToggle('venue')}
           className="mr-1 p-1 items-center"
         >
           {showForm.venue ? 'Hide Form' : 'Add Venue'}
-        </button>
+        </Button>
       </Box>
 
       <Box className="font-bold text-gray-900">
@@ -132,7 +96,6 @@ export const EventPlan: React.FC<{
       {showForm.venue && <VenueCreateForm eventId={id} />}
       <VenueList eventId={id} />
 
-      <div className="w-full h-0.5 bg-gray-200" />
       <Box
         className={`flex justify-center items-start ${
           showForm
@@ -140,12 +103,12 @@ export const EventPlan: React.FC<{
             : 'bg-teal-300 text-gray-500 hover:text-gray-800'
         } rounded-md p-1 w-36`}
       >
-        <button
+        <Button
           onClick={() => handleToggle('vendor')}
           className="mr-1 p-1 items-center"
         >
           {showForm.vendor ? 'Hide Form' : 'Add Vendor'}
-        </button>
+        </Button>
       </Box>
       <Box className="font-bold text-gray-900">
         <h2> Vendor Candidates List </h2>

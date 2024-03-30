@@ -13,6 +13,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLoginMutation } from '@/redux/api/authApi'
 import Link from 'next/link'
 import AccountRecoveryRequestForm from './AccountRecoveryRequestForm'
+import { Button } from '@/components/elements/Button'
 
 type LoginFormType = {
   username: string
@@ -115,9 +116,7 @@ export default function LoginForm() {
         >
           Recover Account
         </Typography>
-        <button type="submit" className="bg-teal-50">
-          Log In
-        </button>
+        <Button type="submit">Log In</Button>
       </form>
 
       <AccountRecoveryRequestForm
@@ -148,9 +147,14 @@ export default function LoginForm() {
           <p>{errorMessage}</p>
         </DialogContent>
         <DialogActions>
-          <button data-testid="button-error" onClick={handleClosePopup}>
+          <Button
+            variant="ghost"
+            size="small"
+            data-testid="button-error"
+            onClick={handleClosePopup}
+          >
             Close
-          </button>
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

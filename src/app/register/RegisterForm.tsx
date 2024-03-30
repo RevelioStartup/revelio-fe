@@ -14,6 +14,7 @@ import {
 } from '@/redux/api/authApi'
 import Link from 'next/link'
 import { Input } from '@/components/elements/Forms/input'
+import { Button } from '@/components/elements/Button'
 
 type RegisterFormType = {
   username: string
@@ -108,9 +109,7 @@ export default function RegisterForm() {
           required
           data-testid="password-input"
         />
-        <button type="submit" className="bg-teal-50">
-          Register
-        </button>
+        <Button type="submit">Register</Button>
       </form>
 
       <Dialog open={openPrompt} data-testid="register-verify-email-msg">
@@ -133,9 +132,14 @@ export default function RegisterForm() {
           <p>{errorMessage}</p>
         </DialogContent>
         <DialogActions>
-          <button data-testid="button-error" onClick={handleClosePopUP}>
+          <Button
+            size={'small'}
+            variant={'danger'}
+            data-testid="button-error"
+            onClick={handleClosePopUP}
+          >
             Close
-          </button>
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

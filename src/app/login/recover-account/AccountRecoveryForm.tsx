@@ -12,6 +12,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useSendChangePasswordMutation } from '@/redux/api/authApi'
 import { Input } from '@/components/elements/Forms/input'
 import Link from 'next/link'
+import { Button } from '@/components/elements/Button'
 
 type ChangePassFormType = {
   token: string
@@ -111,9 +112,7 @@ export default function AccountRecoveryForm() {
           required
           data-testid="password-input"
         />
-        <button type="submit" className="bg-teal-50">
-          Recover Account
-        </button>
+        <Button type="submit">Recover Account</Button>
       </form>
 
       <Dialog open={openPrompt} data-testid="recover-login-redirect-msg">
@@ -136,9 +135,14 @@ export default function AccountRecoveryForm() {
           <p>{errorMessage}</p>
         </DialogContent>
         <DialogActions>
-          <button data-testid="button-error" onClick={handleClosePopUP}>
+          <Button
+            variant={'ghost'}
+            size={'small'}
+            data-testid="button-error"
+            onClick={handleClosePopUP}
+          >
             Close
-          </button>
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
