@@ -7,6 +7,6 @@ export type IEvent = {
   attendees: number
   theme: string
   services: string
-  recommend_venue: boolean
-  recommend_vendor: boolean
+  recommend_venue?: boolean
+  recommend_vendor?: boolean
 }

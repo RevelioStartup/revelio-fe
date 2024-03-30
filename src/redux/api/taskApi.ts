@@ -1,4 +1,4 @@
-import { Task as TaskObject, CreateTaskRequest } from '@/types/task';
+import { Task as TaskObject, CreateTaskRequest } from '@/types/task'
 import { baseApi } from './baseApi'
 import { Task } from '@/types/taskDetails'
 
@@ -21,7 +21,4 @@ export const taskApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { 
-  useGetTaskDetailQuery,
-  useCreateTaskMutation,
-} = taskApi
+export const { useGetTaskDetailQuery, useCreateTaskMutation } = taskApi

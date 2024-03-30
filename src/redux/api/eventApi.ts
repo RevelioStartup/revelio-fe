@@ -25,7 +25,10 @@ export const eventApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
     }),
-    updateEvent: builder.mutation<IEvent, { id: string, changes: Partial<IEvent> }>({
+    updateEvent: builder.mutation<
+      IEvent,
+      { id: string; changes: Partial<IEvent> }
+    >({
       query: ({ id, changes }) => ({
         url: `/events/update/${id}/`,
         method: 'PATCH',

@@ -11,16 +11,16 @@ interface CreateTaskFormProps {
 
 export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
   const [createTask] = useCreateTaskMutation()
-  
 
   const defaultValues: CreateTaskRequest = {
     title: '',
     description: '',
     status: 'Not Started',
-    event: eventId
+    event: eventId,
   }
 
-  const { control, register, handleSubmit, reset, watch } = useForm<CreateTaskRequest>({ defaultValues })
+  const { control, register, handleSubmit, reset, watch } =
+    useForm<CreateTaskRequest>({ defaultValues })
 
   const title = watch('title')
   const description = watch('description')
@@ -38,7 +38,9 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
       <Box className="bg-gray-100 p-6 rounded-2xl">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box>
-            <div className={`relative my-3 transition-all duration-200 ${title && 'pt-3'}`}>
+            <div
+              className={`relative my-3 transition-all duration-200 ${title && 'pt-3'}`}
+            >
               <Input
                 data-testid="title-input"
                 name="title"
@@ -46,9 +48,16 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
                 className={`bg-white block w-full text-sm text-gray-500 rounded-2xl p-3 ${title && 'mt-3'} ${description && 'mb-6'}`}
                 control={control}
               />
-              <label data-testid="title-label" className={`absolute top-3 left-3 text-lg transition-all duration-200 text-sm text-gray-300 ${title && 'top-[-0.5rem] left-[-0.05rem] text-gray-800'}`}>Title</label>
+              <label
+                data-testid="title-label"
+                className={`absolute top-3 left-3 text-lg transition-all duration-200 text-sm text-gray-300 ${title && 'top-[-0.5rem] left-[-0.05rem] text-gray-800'}`}
+              >
+                Title
+              </label>
             </div>
-            <div className={`relative mb-4 transition-all duration-200 ${description && 'py-3'}`}>
+            <div
+              className={`relative mb-4 transition-all duration-200 ${description && 'py-3'}`}
+            >
               <Input
                 data-testid="description-input"
                 name="description"
@@ -56,7 +65,12 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
                 className={`bg-white block w-full text-sm text-gray-500 rounded-2xl p-3 ${description && 'my-3'}`}
                 control={control}
               />
-              <label data-testid="description-label" className={`absolute top-3 left-3 text-lg transition-all duration-200 text-sm text-gray-300 ${description && 'top-[-0.5rem] left-[-0.05rem] text-gray-800'}`}>Description</label>
+              <label
+                data-testid="description-label"
+                className={`absolute top-3 left-3 text-lg transition-all duration-200 text-sm text-gray-300 ${description && 'top-[-0.5rem] left-[-0.05rem] text-gray-800'}`}
+              >
+                Description
+              </label>
             </div>
             <Box className="flex justify-end w-full">
               <Button
