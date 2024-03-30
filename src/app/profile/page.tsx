@@ -1,9 +1,13 @@
 'use client'
 
-import { Avatar, Box, Dialog,
+import {
+  Avatar,
+  Box,
+  Dialog,
   DialogTitle,
   DialogActions,
-  DialogContent, } from '@mui/material'
+  DialogContent,
+} from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { Button } from '@/components/elements/Button'

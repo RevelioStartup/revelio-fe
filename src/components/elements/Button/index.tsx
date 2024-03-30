@@ -20,12 +20,16 @@ export const Button = ({
   intent,
   width,
   className,
+  size,
   ...props
 }: ButtonProps) => {
   return (
     <button
       {...props}
-      className={twMerge(ButtonVariants({ variant, intent, width }), className)}
+      className={twMerge(
+        ButtonVariants({ variant, intent, width, size }),
+        className
+      )}
     >
       {!!leftIcon && <span>{leftIcon}</span>}
       <span>{children}</span>
