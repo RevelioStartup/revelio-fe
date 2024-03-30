@@ -22,7 +22,7 @@ export const AddVendorSelection = ({
 
   const [isVisible, setIsVisible] = React.useState(true)
 
-  const defaultValues: CreateTaskRequest = {
+  const defaultValuesVendor: CreateTaskRequest = {
     title: 'Vendor Selection',
     description:
       'This task entails the meticulous process of identifying, assessing, and choosing the most suitable vendor for the event. It involves thorough research and evaluation of vendor proposals.',
@@ -30,7 +30,7 @@ export const AddVendorSelection = ({
     event: eventId,
   }
 
-  const methods = useForm<CreateTaskRequest>({ defaultValues: defaultValues })
+  const methods = useForm<CreateTaskRequest>({ defaultValues: defaultValuesVendor })
   const { handleSubmit } = methods
 
   const onSubmit: SubmitHandler<CreateTaskRequest> = async (taskData) => {
@@ -72,7 +72,7 @@ export const AddVendorSelection = ({
                 data-testid="task-title"
                 className="text-gray-500 text-lg font-bold"
               >
-                Vendor Selection
+              {defaultValuesVendor.title}
               </h2>
             </div>
             <div>
@@ -93,9 +93,7 @@ export const AddVendorSelection = ({
             </div>
           </div>
           <p data-testid="task-description" className="text-gray-400 text-sm">
-            The choice of vendor sets the tone for the entire event. This task
-            involves researching, evaluating, and ultimately selecting a
-            suitable vendor that aligns with the objectives of the event.
+          {defaultValuesVendor.description}
           </p>
         </div>
       )}

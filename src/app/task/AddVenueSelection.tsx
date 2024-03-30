@@ -22,7 +22,7 @@ export const AddVenueSelection = ({
 
   const [isVisible, setIsVisible] = React.useState(true)
 
-  const defaultValues: CreateTaskRequest = {
+  const defaultValuesVenue: CreateTaskRequest = {
     title: 'Venue Selection',
     description:
       'The choice of venue sets the tone for the entire event. This task involves researching, evaluating, and ultimately selecting a suitable venue that aligns with the objectives of the event.',
@@ -30,7 +30,7 @@ export const AddVenueSelection = ({
     event: eventId,
   }
 
-  const methods = useForm<CreateTaskRequest>({ defaultValues: defaultValues })
+  const methods = useForm<CreateTaskRequest>({ defaultValues: defaultValuesVenue })
   const { handleSubmit } = methods
 
   const onSubmit: SubmitHandler<CreateTaskRequest> = async (taskData) => {
@@ -72,7 +72,7 @@ export const AddVenueSelection = ({
                 data-testid="task-title"
                 className="text-gray-500 text-lg font-bold"
               >
-                Venue Selection
+              {defaultValuesVenue.title}
               </h2>
             </div>
             <div>
@@ -93,9 +93,7 @@ export const AddVenueSelection = ({
             </div>
           </div>
           <p data-testid="task-description" className="text-gray-400 text-sm">
-            The choice of venue sets the tone for the entire event. This task
-            involves researching, evaluating, and ultimately selecting a
-            suitable venue that aligns with the objectives of the event.
+          {defaultValuesVenue.description}
           </p>
         </div>
       )}

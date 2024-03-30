@@ -19,8 +19,9 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
     event: eventId,
   }
 
-  const { control, handleSubmit, reset, watch } =
-    useForm<CreateTaskRequest>({ defaultValues })
+  const { control, handleSubmit, reset, watch } = useForm<CreateTaskRequest>({
+    defaultValues,
+  })
 
   const title = watch('title')
   const description = watch('description')
