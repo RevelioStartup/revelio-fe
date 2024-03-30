@@ -12,6 +12,19 @@ jest.mock('@/app/plans/AISuggestion/AIButton', () => ({
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
 }))
+jest.mock('@/redux/api/eventApi', () => ({
+  useGetEventQuery: jest.fn().mockReturnValue({
+    data: { id: '1', recommend_venue: true, recommend_vendor: true },
+  }),
+  useUpdateEventMutation: jest
+    .fn()
+    .mockReturnValue([jest.fn().mockResolvedValue({ data: {} })]),
+}))
+jest.mock('@/redux/api/taskApi', () => ({
+  useCreateTaskMutation: jest
+    .fn()
+    .mockReturnValue([jest.fn().mockResolvedValue({ data: { id: 1 } })]),
+}))
 
 describe('Event Detail', () => {
   it('renders the myplan', () => {
@@ -206,11 +219,13 @@ describe('Event Detail', () => {
     })
 
     const { getByTestId } = render(
+      <Provider store={store}>
       <EventDetail
         params={{
           eventId: eventId,
         }}
       />
+      </Provider>
     )
 
     const tracker = getByTestId('tracker')
