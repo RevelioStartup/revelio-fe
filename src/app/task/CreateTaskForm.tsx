@@ -19,7 +19,7 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
     event: eventId,
   }
 
-  const { control, register, handleSubmit, reset, watch } =
+  const { control, handleSubmit, reset, watch } =
     useForm<CreateTaskRequest>({ defaultValues })
 
   const title = watch('title')
@@ -48,12 +48,12 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
                 className={`bg-white block w-full text-sm text-gray-500 rounded-2xl p-3 ${title && 'mt-3'} ${description && 'mb-6'}`}
                 control={control}
               />
-              <label
+              <p
                 data-testid="title-label"
                 className={`absolute top-3 left-3 text-lg transition-all duration-200 text-sm text-gray-300 ${title && 'top-[-0.5rem] left-[-0.05rem] text-gray-800'}`}
               >
                 Title
-              </label>
+              </p>
             </div>
             <div
               className={`relative mb-4 transition-all duration-200 ${description && 'py-3'}`}
@@ -65,12 +65,12 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
                 className={`bg-white block w-full text-sm text-gray-500 rounded-2xl p-3 ${description && 'my-3'}`}
                 control={control}
               />
-              <label
+              <p
                 data-testid="description-label"
                 className={`absolute top-3 left-3 text-lg transition-all duration-200 text-sm text-gray-300 ${description && 'top-[-0.5rem] left-[-0.05rem] text-gray-800'}`}
               >
                 Description
-              </label>
+              </p>
             </div>
             <Box className="flex justify-end w-full">
               <Button

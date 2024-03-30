@@ -1,10 +1,9 @@
-import { useGetEventQuery } from '@/redux/api/eventApi'
+import { useGetEventQuery, useUpdateEventMutation } from '@/redux/api/eventApi'
 import { useCreateTaskMutation } from '@/redux/api/taskApi'
 import { CreateTaskRequest } from '@/types/task'
 import { Box } from '@mui/material'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useUpdateEventMutation } from '@/redux/api/eventApi'
 
 interface TaskCreateFormProps {
   eventId: string
@@ -37,7 +36,7 @@ export const AddVendorSelection = ({
   const onSubmit: SubmitHandler<CreateTaskRequest> = async (taskData) => {
     await createTask(taskData).then(async (res) => {})
 
-    if (data && data.id) {
+    if (data?.id) {
       const updatedEvent = {
         recommend_vendor: false,
       }
@@ -49,7 +48,7 @@ export const AddVendorSelection = ({
   }
 
   const handleUpdateVendor = async () => {
-    if (data && data.id) {
+    if (data?.id) {
       const updatedEvent = {
         recommend_vendor: false,
       }
@@ -62,7 +61,7 @@ export const AddVendorSelection = ({
 
   return (
     <Box>
-      {data && data.recommend_vendor == true && isVisible == true && (
+      {data?.recommend_vendor && isVisible && (
         <div
           data-testid="add-vendor-selection"
           className="bg-gray-100 p-6 rounded-lg shadow-lg w-96"

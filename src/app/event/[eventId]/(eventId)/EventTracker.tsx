@@ -1,6 +1,5 @@
 'use client'
 
-import { Box } from '@mui/material'
 import React from 'react'
 import { AddVenueSelection } from '@/app/task/AddVenueSelection'
 import { AddVendorSelection } from '@/app/task/AddVendorSelection'
@@ -49,35 +48,35 @@ export const EventTracker: React.FC<{
     <div className="flex flex-col gap-y-4">
       {(recommend_venue || recommend_vendor) &&
         (isVenueVisible || isVendorVisible) && (
-          <label
+          <p
             data-testid="label-1"
             className="text-lg text-md text-teal-600 font-bold"
           >
             Struggling to get started? Try this template!
-          </label>
+          </p>
         )}
       <div className="flex flex-row gap-x-4">
-        {recommend_venue == true && (
+        {recommend_venue && (
           <AddVenueSelection
             eventId={id}
             setIsVenueVisible={handleVenueVisibility}
           />
         )}
-        {recommend_vendor == true && (
+        {recommend_vendor && (
           <AddVendorSelection
             eventId={id}
             setIsVendorVisible={handleVendorVisibility}
           />
         )}
       </div>
-      {(recommend_venue == true || recommend_vendor == true) &&
+      {(recommend_venue || recommend_vendor) &&
         (isVenueVisible || isVendorVisible) && (
-          <label
+          <p
             data-testid="label-2"
             className="text-lg text-md text-teal-600 font-bold mt-2"
           >
             Or create your own task manually!
-          </label>
+          </p>
         )}
       <Button
         data-testid="show-or-hide-button"
@@ -86,13 +85,13 @@ export const EventTracker: React.FC<{
       >
         {showForm ? 'Hide Form' : 'Create New Task'}
       </Button>
-      {showForm && recommend_venue == false && recommend_vendor == false && (
-        <label
+      {showForm && !recommend_venue && !recommend_vendor && (
+        <p
           data-testid="label-3"
           className="text-lg text-md text-teal-600 font-bold"
         >
           Fill out this form to create a new task!
-        </label>
+        </p>
       )}
       {showForm && (
         <CreateTaskForm data-testid="create-task-form" eventId={id} />
