@@ -220,11 +220,11 @@ describe('Event Detail', () => {
 
     const { getByTestId } = render(
       <Provider store={store}>
-      <EventDetail
-        params={{
-          eventId: eventId,
-        }}
-      />
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
       </Provider>
     )
 

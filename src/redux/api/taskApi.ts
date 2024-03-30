@@ -1,3 +1,4 @@
+import { Task as TaskObject, CreateTaskRequest } from '@/types/task';
 import { baseApi } from './baseApi'
 import { Task } from '@/types/taskDetails'
 
@@ -9,7 +10,18 @@ export const taskApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    createTask: builder.mutation<TaskObject, CreateTaskRequest>({
+      query: (body) => ({
+        url: '/tasks/',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Task'],
+    }),
   }),
 })
 
-export const { useGetTaskDetailQuery } = taskApi
+export const { 
+  useGetTaskDetailQuery,
+  useCreateTaskMutation,
+} = taskApi
