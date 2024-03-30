@@ -62,7 +62,7 @@ export const AddVenueSelection = ({
   }
 
   return (
-    <Box>
+    <Box className={`${isVisible && 'mr-4'}`}>
       {data?.recommend_venue && isVisible && (
         <div
           data-testid="add-venue-selection"
