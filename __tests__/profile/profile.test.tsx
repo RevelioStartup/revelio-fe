@@ -29,7 +29,7 @@ jest.mock('@/redux/api/profileApi', () => ({
 
 Object.defineProperty(window, 'location', {
   value: { pathname: '/mock-path' },
-});
+})
 
 describe('Profile Component', () => {
   beforeEach(() => {
