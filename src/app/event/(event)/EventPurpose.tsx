@@ -76,6 +76,8 @@ export const EventPurpose: React.FC = () => {
         name: name,
         date: cleanedDate,
         budget: budget,
+        recommend_venue: true,
+        recommend_vendor: true,
       })?.unwrap()
       setOpen(true)
       window.location.assign(`/event/${res.id}`)
