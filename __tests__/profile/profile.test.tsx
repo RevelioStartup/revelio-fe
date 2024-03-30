@@ -29,7 +29,7 @@ jest.mock('@/redux/api/profileApi', () => ({
 
 Object.defineProperty(window, 'location', {
   value: { pathname: '/mock-path' },
-});
+})
 
 describe('Profile Component', () => {
   beforeEach(() => {
@@ -121,12 +121,13 @@ describe('Profile Component', () => {
   })
   it('has correct logout functionality', () => {
     const { getByText } = render(
-    <Provider store={store}>
-      <Profile />
-    </Provider>);
-  
-    const logoutButton = getByText('Logout'); 
-  
-    fireEvent.click(logoutButton);
-  });
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
+
+    const logoutButton = getByText('Logout')
+
+    fireEvent.click(logoutButton)
+  })
 })

@@ -37,10 +37,9 @@ export default function Profile() {
     setOpenPopup(true)
   }
 
-   return (
+  return (
     <Box component="section" className="flex flex-wrap lg:flex-nowrap w-full">
       <Box
-        
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -49,14 +48,13 @@ export default function Profile() {
         alignItems={'center'}
         justifyContent={'center'}
         padding={{ xs: '2em 2em', lg: '4em 6em' }}
-        
       >
         <h1 className="text-5xl font-bold mb-5">Your Profile</h1>
         <Avatar
-        alt="Profile Picture"
-        src={profile.profile_picture || '/path/to/default/image'} // Fallback to a default image if null
-        sx={{ width: 181, height: 181 }}
-      />
+          alt="Profile Picture"
+          src={profile.profile_picture || '/path/to/default/image'} // Fallback to a default image if null
+          sx={{ width: 181, height: 181 }}
+        />
         <p className="font-bold text-3xl mt-5">{user.username}</p>
         <p className="font-bold text-xl mt-3 md:mt-6">{user.email}</p>
         <p className="font-bold text-xl mt-3 md:mt-6">
@@ -77,13 +75,23 @@ export default function Profile() {
           padding={{ xs: '2em 2em', lg: '4em 6em' }}
         >
           <Link href="/profile/change-profile">
-            <Button variant="primary" className="w-72">Change Profile</Button>
+            <Button variant="primary" className="w-72">
+              Change Profile
+            </Button>
           </Link>
           <Link href="/profile/change-password">
-            <Button variant="primary" className="w-72">Change Password</Button>
+            <Button variant="primary" className="w-72">
+              Change Password
+            </Button>
           </Link>
           <Link href="#logout">
-            <Button variant="ghost" className="w-32" data-testid="logout-button">Logout</Button>
+            <Button
+              variant="ghost"
+              className="w-32"
+              data-testid="logout-button"
+            >
+              Logout
+            </Button>
           </Link>
         </Box>
       </Box>
@@ -102,13 +110,13 @@ export default function Profile() {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                height:'40%',
+                height: '40%',
                 width: '100%',
                 maxWidth: '600px',
                 padding: '1rem',
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                 borderRadius: '4px',
-                mb: '1rem', 
+                mb: '1rem',
                 bgcolor: '#0D9488',
               }}
               className="mx-auto"
