@@ -48,4 +48,5 @@ const profileSlice = createSlice({
 export const { setProfile, setProfileBio, setProfilePicture, resetProfile } =
   profileSlice.actions
 
+
 export default profileSlice.reducer
