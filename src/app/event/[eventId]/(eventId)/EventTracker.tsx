@@ -45,60 +45,58 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
 
   return (
     <div className="flex flex-col gap-y-16">
-      
-    <div className="flex flex-col gap-y-4">
-      {(recommend_venue || recommend_vendor) &&
-        (isVenueVisible || isVendorVisible) && (
+      <div className="flex flex-col gap-y-4">
+        {(recommend_venue || recommend_vendor) &&
+          (isVenueVisible || isVendorVisible) && (
+            <p
+              data-testid="label-1"
+              className="text-lg text-md text-teal-600 font-bold"
+            >
+              Struggling to get started? Try this template!
+            </p>
+          )}
+        <div className="flex flex-row gap-x-4">
+          {recommend_venue && (
+            <AddVenueSelection
+              eventId={id}
+              setIsVenueVisible={handleVenueVisibility}
+            />
+          )}
+          {recommend_vendor && (
+            <AddVendorSelection
+              eventId={id}
+              setIsVendorVisible={handleVendorVisibility}
+            />
+          )}
+        </div>
+        {(recommend_venue || recommend_vendor) &&
+          (isVenueVisible || isVendorVisible) && (
+            <p
+              data-testid="label-2"
+              className="text-lg text-md text-teal-600 font-bold mt-2"
+            >
+              Or create your own task manually!
+            </p>
+          )}
+
+        <Button
+          data-testid="show-or-hide-button"
+          onClick={() => handleToggle()}
+          className="w-44 flex justify-center bg-white hover:bg-gray-100 text-teal-600 border border-teal-600 font-bold text-sm"
+        >
+          {showForm ? 'Hide Form' : 'Create New Task'}
+        </Button>
+        {showForm && !recommend_venue && !recommend_vendor && (
           <p
-            data-testid="label-1"
+            data-testid="label-3"
             className="text-lg text-md text-teal-600 font-bold"
           >
-            Struggling to get started? Try this template!
+            Fill out this form to create a new task!
           </p>
         )}
-      <div className="flex flex-row gap-x-4">
-        {recommend_venue && (
-          <AddVenueSelection
-            eventId={id}
-            setIsVenueVisible={handleVenueVisibility}
-          />
+        {showForm && (
+          <CreateTaskForm data-testid="create-task-form" eventId={id} />
         )}
-        {recommend_vendor && (
-          <AddVendorSelection
-            eventId={id}
-            setIsVendorVisible={handleVendorVisibility}
-          />
-        )}
-      </div>
-      {(recommend_venue || recommend_vendor) &&
-        (isVenueVisible || isVendorVisible) && (
-          <p
-            data-testid="label-2"
-            className="text-lg text-md text-teal-600 font-bold mt-2"
-          >
-            Or create your own task manually!
-          </p>
-        )}
-
-      <Button
-        data-testid="show-or-hide-button"
-        onClick={() => handleToggle()}
-        className="w-44 flex justify-center bg-white hover:bg-gray-100 text-teal-600 border border-teal-600 font-bold text-sm"
-      >
-        {showForm ? 'Hide Form' : 'Create New Task'}
-      </Button>
-      {showForm && !recommend_venue && !recommend_vendor && (
-        <p
-          data-testid="label-3"
-          className="text-lg text-md text-teal-600 font-bold"
-        >
-          Fill out this form to create a new task!
-        </p>
-      )}
-      {showForm && (
-        <CreateTaskForm data-testid="create-task-form" eventId={id} />
-      )}
-      
       </div>
 
       <div className="flex flex-col gap-y-5">
