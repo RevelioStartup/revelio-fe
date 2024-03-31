@@ -55,7 +55,7 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
               Struggling to get started? Try this template!
             </p>
           )}
-        <div className="flex flex-row gap-x-4">
+        <div className="flex flex-row">
           {recommend_venue && (
             <AddVenueSelection
               eventId={id}
