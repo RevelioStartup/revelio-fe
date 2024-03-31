@@ -41,8 +41,7 @@ describe('EventTracker', () => {
   it('renders without crashing', () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <EventTracker {...props} 
-         tasks={[]} />
+        <EventTracker {...props} tasks={[]} />
       </Provider>
     )
     expect(getByTestId('label-1')).toBeInTheDocument()
@@ -51,8 +50,7 @@ describe('EventTracker', () => {
   it('toggles form visibility when button is clicked', () => {
     const { getByTestId, queryByTestId } = render(
       <Provider store={store}>
-        <EventTracker {...props}
-         tasks={[]} />
+        <EventTracker {...props} tasks={[]} />
       </Provider>
     )
     const button = getByTestId('show-or-hide-button')
