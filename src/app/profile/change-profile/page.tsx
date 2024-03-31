@@ -2,16 +2,15 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Box, styled } from '@mui/material'
+import { Box, Button, styled } from '@mui/material'
 import {
   useUpdateProfileMutation,
   useGetProfileQuery,
 } from '@/redux/api/profileApi'
 import { useDispatch } from 'react-redux'
 import { setProfile } from '@/redux/features/profileSlice'
-
+import { Button as ButtonVariants } from '@/components/elements/Button'
 import { Input } from '@/components/elements/Forms/input'
-import { Button } from '@/components/elements/Button'
 
 const ChangeProfile = () => {
   const dispatch = useDispatch()
@@ -24,24 +23,13 @@ const ChangeProfile = () => {
   })
 
   const profilePictureRef = useRef<HTMLInputElement>(null)
-  // const [profilePicPreview, setProfilePicPreview] = useState('')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    // Set bio value if profile data is available
     if (profileData && profileData.profile.bio) {
       setValue('bio', profileData.profile.bio)
     }
   }, [profileData, setValue])
-
-  // const onProfilePictureChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const file = event.target.files[0]
-  //     setProfilePicPreview(URL.createObjectURL(file))
-  //   }
-  // }
 
   const onSubmit = async (data: { bio: string | Blob }) => {
     const formData = new FormData()
@@ -60,7 +48,6 @@ const ChangeProfile = () => {
     try {
       const updatedProfileResponse = await updateProfile(formData).unwrap()
 
-      // Update profile data in Redux state
       if (profileData) {
         dispatch(
           setProfile({
@@ -103,14 +90,13 @@ const ChangeProfile = () => {
       <h1 className="text-3xl md:text-5xl font-bold mb-5 text-center">
         Change Profile
       </h1>
-      {/* <Avatar src={profilePicPreview} sx={{ width: 181, height: 181 }} /> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-3"
         encType="multipart/form-data"
       >
         <Box className="mb-8 flex flex-col justify-center">
-          <Button size={'small'}>
+          <Button sx={{ borderRadius: '50%' }} component="label">
             Upload Profile Picture
             <VisuallyHiddenInput
               ref={profilePictureRef}
@@ -119,10 +105,19 @@ const ChangeProfile = () => {
             />
           </Button>
         </Box>
-        <Input control={control} name="bio" placeholder="Enter bio" />
-        <Button variant="primary" type="submit">
+        <Input
+          control={control}
+          name="bio"
+          placeholder="Enter bio"
+          className="w-72 h-14 md:w-[400px] text-base md:text-xl mx-auto"
+        />
+        <ButtonVariants
+          variant="primary"
+          type="submit"
+          className="w-72 h-14 md:w-[400px] text-xl font-bold mx-auto mt-12"
+        >
           Update Profile
-        </Button>
+        </ButtonVariants>
       </form>
       {error && <div data-testid="errorMessage">{error}</div>}
     </Box>

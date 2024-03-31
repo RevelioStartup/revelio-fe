@@ -36,12 +36,35 @@ describe('EventTracker', () => {
     services: 'Test Services',
     recommend_venue: true,
     recommend_vendor: true,
+    tasks: [
+      {
+        id: 1,
+        title: 'Test Task',
+        description: 'Test Description',
+        event: '1',
+        status: 'Not Started',
+      },
+      {
+        id: 2,
+        title: 'Test Task 2',
+        description: 'Test Description 2',
+        event: '1',
+        status: 'On Progress',
+      },
+      {
+        id: 3,
+        title: 'Test Task 3',
+        description: 'Test Description 3',
+        event: '1',
+        status: 'Done',
+      },
+    ],
   }
 
   it('renders without crashing', () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <EventTracker {...props} tasks={[]} />
+        <EventTracker {...props} tasks={props.tasks} />
       </Provider>
     )
     expect(getByTestId('label-1')).toBeInTheDocument()
