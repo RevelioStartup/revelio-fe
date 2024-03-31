@@ -56,7 +56,7 @@ describe('ChangePassword Component', () => {
 
     render(
       <Provider store={store}>
-        <ChangePassword/>
+        <ChangePassword />
       </Provider>
     )
 
@@ -76,11 +76,10 @@ describe('ChangePassword Component', () => {
       <Provider store={store}>
         <ChangePassword />
       </Provider>
-    );
-  
-    fireEvent.click(screen.getByRole('button', { name: /Send Reset Token/i }));
-  });
-  
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: /Send Reset Token/i }))
+  })
 
   it('shows error message when request token fails', async () => {
     const requestTokenFn = jest
@@ -93,7 +92,7 @@ describe('ChangePassword Component', () => {
 
     render(
       <Provider store={store}>
-        <ChangePassword/>
+        <ChangePassword />
       </Provider>
     )
 
@@ -109,13 +108,10 @@ describe('ChangePassword Component', () => {
 
     render(
       <Provider store={store}>
-        <ChangePassword/>
+        <ChangePassword />
       </Provider>
     )
 
     fireEvent.click(screen.getByRole('button', { name: /Send Reset Token/i }))
   })
-
-
 })
-

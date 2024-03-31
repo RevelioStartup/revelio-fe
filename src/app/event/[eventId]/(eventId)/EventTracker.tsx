@@ -14,13 +14,6 @@ import Link from 'next/link'
 
 interface EventTrackerProps {
   id: string
-  name: string
-  budget: number
-  date: string
-  objective: string
-  attendees: number
-  theme: string
-  services: string
   recommend_venue: boolean
   recommend_vendor: boolean
   tasks: Task[]
@@ -51,18 +44,18 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-16 py-16">
-      {(recommend_venue || recommend_vendor) &&
-        (isVenueVisible || isVendorVisible) && (
-          <p
-            data-testid="label-1"
-            className="text-lg text-md text-teal-600 font-bold"
-          >
-            Struggling to get started? Try this template!
-          </p>
-        )}
-      {(recommend_venue || recommend_vendor) && (
-        <div className="flex flex-row gap-x-4">
+    <div className="flex flex-col gap-y-16">
+      <div className="flex flex-col gap-y-4">
+        {(recommend_venue || recommend_vendor) &&
+          (isVenueVisible || isVendorVisible) && (
+            <p
+              data-testid="label-1"
+              className="text-lg text-md text-teal-600 font-bold"
+            >
+              Struggling to get started? Try this template!
+            </p>
+          )}
+        <div className="flex flex-row">
           {recommend_venue && (
             <AddVenueSelection
               eventId={id}
@@ -76,16 +69,35 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
             />
           )}
         </div>
-      )}
-      {(recommend_venue || recommend_vendor) &&
-        (isVenueVisible || isVendorVisible) && (
+        {(recommend_venue || recommend_vendor) &&
+          (isVenueVisible || isVendorVisible) && (
+            <p
+              data-testid="label-2"
+              className="text-lg text-md text-teal-600 font-bold mt-2"
+            >
+              Or create your own task manually!
+            </p>
+          )}
+
+        <Button
+          data-testid="show-or-hide-button"
+          onClick={() => handleToggle()}
+          className="w-44 flex justify-center bg-white hover:bg-gray-100 text-teal-600 border border-teal-600 font-bold text-sm"
+        >
+          {showForm ? 'Hide Form' : 'Create New Task'}
+        </Button>
+        {showForm && !recommend_venue && !recommend_vendor && (
           <p
-            data-testid="label-2"
-            className="text-lg text-md text-teal-600 font-bold mt-2"
+            data-testid="label-3"
+            className="text-lg text-md text-teal-600 font-bold"
           >
-            Or create your own task manually!
+            Fill out this form to create a new task!
           </p>
         )}
+        {showForm && (
+          <CreateTaskForm data-testid="create-task-form" eventId={id} />
+        )}
+      </div>
 
       <div className="flex flex-col gap-y-5">
         <h1 className="font-bold text-teal-800 text-2xl"> Your Tasks </h1>
@@ -138,25 +150,6 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
           </Link>
         </div>
       ))}
-
-      <Button
-        data-testid="show-or-hide-button"
-        onClick={() => handleToggle()}
-        className="w-44 flex justify-center bg-white hover:bg-gray-100 text-teal-600 border border-teal-600 font-bold text-sm"
-      >
-        {showForm ? 'Hide Form' : 'Create New Task'}
-      </Button>
-      {showForm && !recommend_venue && !recommend_vendor && (
-        <p
-          data-testid="label-3"
-          className="text-lg text-md text-teal-600 font-bold"
-        >
-          Fill out this form to create a new task!
-        </p>
-      )}
-      {showForm && (
-        <CreateTaskForm data-testid="create-task-form" eventId={id} />
-      )}
     </div>
   )
 }
