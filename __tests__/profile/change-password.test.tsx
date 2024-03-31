@@ -135,9 +135,4 @@ describe('ChangePassword Component', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Send Reset Token/i }))
   })
-});
-  
-  
-
-
-
+})

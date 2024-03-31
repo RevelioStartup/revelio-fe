@@ -5,6 +5,7 @@ import { AppRegistration, EditCalendar, PlaylistAdd } from '@mui/icons-material'
 import { Chip } from '@mui/material'
 import React from 'react'
 import { EventPlan } from './EventPlan'
+import { EventTracker } from './EventTracker'
 
 const CHIP_STYLE = '!font-bold !p-5 !border-none'
 const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
@@ -32,7 +33,7 @@ export default function EventDetail({
         case 'timeline':
           return <div> Timeline </div>
         case 'tracker':
-          return <div> Tracker </div>
+          return <EventTracker {...data} />
       }
     }
   }
