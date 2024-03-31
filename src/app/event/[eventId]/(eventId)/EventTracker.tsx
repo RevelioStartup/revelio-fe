@@ -46,6 +46,10 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
     setShowForm(!showForm)
   }
 
+  const getTasksDone = () => {
+    return tasks.filter((task) => task.status === 'Done').length
+  }
+
   return (
     <div className="flex flex-col gap-y-16 py-16">
       {(recommend_venue || recommend_vendor) &&
@@ -91,7 +95,7 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
         </div> */}
         <div className="flex gap-3 items-center">
           <AssignmentIcon />
-          <p className="text-gray-900"> 1 out of 4 tasks completed </p>
+          <p className="text-gray-900"> {getTasksDone()} out of {tasks.length} tasks completed </p>
         </div>
       </div>
 
