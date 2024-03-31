@@ -138,11 +138,9 @@ export default function TaskDetailPage({
     )
   }
 
-  return isLoading ? (
+  return (
     <div className="flex flex-col justify-center items-center min-h-[90vh]">
       <div data-testid="loader" className="loader"></div>
     </div>
-  ) : (
-    <div>{/* not found */}</div>
   )
 }
