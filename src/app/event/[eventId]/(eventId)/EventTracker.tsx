@@ -6,7 +6,8 @@ import { AddVendorSelection } from '@/app/task/AddVendorSelection'
 import CreateTaskForm from '@/app/task/CreateTaskForm'
 import { Button } from '@/components/elements/Button'
 import { Task } from '@/types/task'
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 interface EventTrackerProps {
   id: string
@@ -20,12 +21,12 @@ interface EventTrackerProps {
   recommend_venue: boolean
   recommend_vendor: boolean
   tasks: Task[]
-} 
+}
 export const EventTracker: React.FC<EventTrackerProps> = ({
   id,
   recommend_venue,
   recommend_vendor,
-  tasks
+  tasks,
 }) => {
   const [isVenueVisible, setIsVenueVisible] = React.useState(true)
   const handleVenueVisibility = (isVisible: boolean) => {
@@ -53,20 +54,22 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
             Struggling to get started? Try this template!
           </p>
         )}
-      {(recommend_venue || recommend_vendor) && <div className="flex flex-row gap-x-4">
-        {recommend_venue && (
-          <AddVenueSelection
-            eventId={id}
-            setIsVenueVisible={handleVenueVisibility}
-          />
-        )}
-        {recommend_vendor && (
-          <AddVendorSelection
-            eventId={id}
-            setIsVendorVisible={handleVendorVisibility}
-          />
-        )}
-      </div>}
+      {(recommend_venue || recommend_vendor) && (
+        <div className="flex flex-row gap-x-4">
+          {recommend_venue && (
+            <AddVenueSelection
+              eventId={id}
+              setIsVenueVisible={handleVenueVisibility}
+            />
+          )}
+          {recommend_vendor && (
+            <AddVendorSelection
+              eventId={id}
+              setIsVendorVisible={handleVendorVisibility}
+            />
+          )}
+        </div>
+      )}
       {(recommend_venue || recommend_vendor) &&
         (isVenueVisible || isVendorVisible) && (
           <p
@@ -77,10 +80,15 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
           </p>
         )}
       <div className="flex flex-col gap-y-5">
-          <h1> Your Tasks </h1>
-          <div >
-
-          </div>
+        <h1> Your Tasks </h1>
+        <div className = "flex gap-y-3">
+            <AccessTimeIcon />
+            <p> 13 days to go. </p>
+        </div>
+        <div className = "flex gap-y-3">
+            <AssignmentIcon />
+            <p> 1 out of 4 tasks completed </p>
+        </div>
       </div>
       <Button
         data-testid="show-or-hide-button"

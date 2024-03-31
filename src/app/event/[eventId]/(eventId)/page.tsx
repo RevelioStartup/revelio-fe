@@ -23,7 +23,9 @@ export default function EventDetail({
   >('plan')
   const { data, isLoading } = useGetEventQuery(params.eventId)
 
-  const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(params.eventId)
+  const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(
+    params.eventId
+  )
 
   console.log(trackerData)
   const handleClick = (type: 'plan' | 'timeline' | 'tracker') => {
@@ -38,7 +40,9 @@ export default function EventDetail({
         case 'timeline':
           return <div> Timeline </div>
         case 'tracker':
-          return <EventTracker {...data} tasks = {trackerData as unknown as Task[]} />
+          return (
+            <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
+          )
       }
     }
   }
