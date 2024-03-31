@@ -95,20 +95,23 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
         </div> */}
         <div className="flex gap-3 items-center">
           <AssignmentIcon />
-          <p className="text-gray-900"> {getTasksDone()} out of {tasks.length} tasks completed </p>
+          <p className="text-gray-900">
+            {' '}
+            {getTasksDone()} out of {tasks.length} tasks completed{' '}
+          </p>
         </div>
       </div>
 
       {tasks.map((task) => (
-        <div className="flex flex-col bg-gray-50 p-5 gap-5 rounded-[20px]">
+        <div className="flex flex-col bg-gray-50 p-5 gap-5 rounded-[20px]" key = {task.id}>
           <h2 className="text-teal-800 font-semibold"> {task.title} </h2>
           <p className="text-gray-900"> {task.description} </p>
           <div className="flex items-center gap-x-4">
             <p> Status </p>
             <Chip
-              label="My Plan"
-              data-testid="myplan"
-              avatar={<CircleIcon />}
+              label={task.status}
+              data-testid="progress"
+              avatar={<CircleIcon  color= {task.status === "Done" ? "success" : task.status === "On Progress" ? "warning" : "disabled"}/>}
             />
           </div>
           <Link
