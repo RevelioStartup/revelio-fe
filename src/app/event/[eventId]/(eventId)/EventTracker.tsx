@@ -7,9 +7,9 @@ import CreateTaskForm from '@/app/task/CreateTaskForm'
 import { Button } from '@/components/elements/Button'
 import { Task } from '@/types/task'
 import AssignmentIcon from '@mui/icons-material/Assignment'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
+// import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { Chip } from '@mui/material'
-import CircleIcon from '@mui/icons-material/Circle';
+import CircleIcon from '@mui/icons-material/Circle'
 import Link from 'next/link'
 
 interface EventTrackerProps {
@@ -84,36 +84,37 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
         )}
 
       <div className="flex flex-col gap-y-5">
-        <h1 className = "font-bold text-teal-800 text-2xl"> Your Tasks </h1>
-        <div className="flex gap-3 items-center">
+        <h1 className="font-bold text-teal-800 text-2xl"> Your Tasks </h1>
+        {/* <div className="flex gap-3 items-center">
           <AccessTimeIcon />
-          <p className = "text-gray-900"> 13 days to go. </p>
-        </div>
+          <p className="text-gray-900"> 13 days to go. </p>
+        </div> */}
         <div className="flex gap-3 items-center">
           <AssignmentIcon />
-          <p className = "text-gray-900"> 1 out of 4 tasks completed </p>
+          <p className="text-gray-900"> 1 out of 4 tasks completed </p>
         </div>
       </div>
 
-          
       {tasks.map((task) => (
-      <div className="flex flex-col bg-gray-50 p-5 gap-5 rounded-[20px]">
-          <h2 className = "text-teal-800 font-semibold"> {task.title} </h2>
-          <p className = "text-gray-900"> {task.description} </p>
-          <div className = "flex items-center gap-x-4">
+        <div className="flex flex-col bg-gray-50 p-5 gap-5 rounded-[20px]">
+          <h2 className="text-teal-800 font-semibold"> {task.title} </h2>
+          <p className="text-gray-900"> {task.description} </p>
+          <div className="flex items-center gap-x-4">
             <p> Status </p>
             <Chip
               label="My Plan"
               data-testid="myplan"
-              avatar={
-                <CircleIcon
-
-                />
-              }
+              avatar={<CircleIcon />}
             />
           </div>
-          <Link href={`/event/${id}/task/${task.id}`} className = "text-right w-full flex flex-col items-end">
-            <Button className = "bg-teal-600 text-teal-50 font-semibold"> See More </Button>
+          <Link
+            href={`/event/${id}/task/${task.id}`}
+            className="text-right w-full flex flex-col items-end"
+          >
+            <Button className="bg-teal-600 text-teal-50 font-semibold">
+              {' '}
+              See More{' '}
+            </Button>
           </Link>
         </div>
       ))}
