@@ -7,7 +7,10 @@ import CreateTaskForm from '@/app/task/CreateTaskForm'
 import { Button } from '@/components/elements/Button'
 import { Task } from '@/types/task'
 import AssignmentIcon from '@mui/icons-material/Assignment'
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import { Chip } from '@mui/material'
+import CircleIcon from '@mui/icons-material/Circle';
+import Link from 'next/link'
 
 interface EventTrackerProps {
   id: string
@@ -44,7 +47,7 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-16">
+    <div className="flex flex-col gap-y-16 py-16">
       {(recommend_venue || recommend_vendor) &&
         (isVenueVisible || isVendorVisible) && (
           <p
@@ -79,17 +82,42 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
             Or create your own task manually!
           </p>
         )}
+
       <div className="flex flex-col gap-y-5">
-        <h1> Your Tasks </h1>
-        <div className = "flex gap-y-3">
-            <AccessTimeIcon />
-            <p> 13 days to go. </p>
+        <h1 className = "font-bold text-teal-800 text-2xl"> Your Tasks </h1>
+        <div className="flex gap-3 items-center">
+          <AccessTimeIcon />
+          <p className = "text-gray-900"> 13 days to go. </p>
         </div>
-        <div className = "flex gap-y-3">
-            <AssignmentIcon />
-            <p> 1 out of 4 tasks completed </p>
+        <div className="flex gap-3 items-center">
+          <AssignmentIcon />
+          <p className = "text-gray-900"> 1 out of 4 tasks completed </p>
         </div>
       </div>
+
+          
+      {tasks.map((task) => (
+      <div className="flex flex-col bg-gray-50 p-5 gap-5 rounded-[20px]">
+          <h2 className = "text-teal-800 font-semibold"> {task.title} </h2>
+          <p className = "text-gray-900"> {task.description} </p>
+          <div className = "flex items-center gap-x-4">
+            <p> Status </p>
+            <Chip
+              label="My Plan"
+              data-testid="myplan"
+              avatar={
+                <CircleIcon
+
+                />
+              }
+            />
+          </div>
+          <Link href={`/event/${id}/task/${task.id}`} className = "text-right w-full flex flex-col items-end">
+            <Button className = "bg-teal-600 text-teal-50 font-semibold"> See More </Button>
+          </Link>
+        </div>
+      ))}
+
       <Button
         data-testid="show-or-hide-button"
         onClick={() => handleToggle()}
