@@ -85,26 +85,25 @@ export default function Profile() {
             </Button>
           </Link>
           <Button
-        variant="ghost"
-        className="w-32"
-        data-testid="logout-button"
-        onClick={handleOpenPopup}
-      >
-        Logout
-      </Button>
+            variant="ghost"
+            className="w-32"
+            data-testid="logout-button"
+            onClick={handleOpenPopup}
+          >
+            Logout
+          </Button>
 
-      {/* Logout Confirmation Dialog */}
-      <Dialog
-        open={openPopup}
-        onClose={handleClosePopup}
-        data-testid="logout-dialog"
-      >
-        <DialogTitle>Log Out</DialogTitle>
-        <DialogContent>
-          <p>Are you sure you want to log out?</p>
-        </DialogContent>
-        <DialogActions>
-          <Button
+          <Dialog
+            open={openPopup}
+            onClose={handleClosePopup}
+            data-testid="logout-dialog"
+          >
+            <DialogTitle>Log Out</DialogTitle>
+            <DialogContent>
+              <p>Are you sure you want to log out?</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
                 variant="ghost"
                 size="small"
                 data-testid="button-yes"
@@ -118,9 +117,9 @@ export default function Profile() {
                 onClick={handleClosePopup}
               >
                 No
-          </Button>
-        </DialogActions>
-      </Dialog>
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Box>
       <Box

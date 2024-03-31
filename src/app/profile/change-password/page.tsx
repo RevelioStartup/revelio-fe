@@ -30,17 +30,17 @@ interface ChangePasswordProps {
 
 const ChangePassword: React.FC<ChangePasswordProps> = ({ initialStep = 1 }) => {
   const { control, handleSubmit } = useForm<FormData>()
-  const [step, setStep] = useState(initialStep) // Step 1: Request Token. Step 2: Change Password
+  const [step, setStep] = useState(initialStep) 
   const { data: profileData, isLoading, isError } = useGetProfileQuery()
   const [sendRecoverPasswordEmail] = useSendRecoverPasswordEmailMutation()
   const [sendChangePassword, { isSuccess }] = useSendChangePasswordMutation()
-  const [openDialog, setOpenDialog] = useState(false) // State to control dialog visibility
+  const [openDialog, setOpenDialog] = useState(false)
 
   const requestToken = async (email: string) => {
     try {
       await sendRecoverPasswordEmail({ email }).unwrap()
       setStep(2)
-      setOpenDialog(true) // Open dialog on success
+      setOpenDialog(true)
     } catch (error) {
       console.error('Failed to send email')
     }
@@ -67,7 +67,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ initialStep = 1 }) => {
         new_password: data.newPassword,
       })
       if (isSuccess) {
-        window.location.assign('/login') // Redirect to login page on success
+        window.location.assign('/login') 
       }
     }
   }
