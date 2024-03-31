@@ -4,6 +4,13 @@ import { Task } from '@/types/taskDetails'
 
 export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllTasks: builder.query<Task[], string>({
+      query: (id) => ({
+        url: `/tasks/${id}/`,
+        method: 'GET',
+      }),
+      providesTags: ['Task'],
+    }),
     getTaskDetail: builder.query<Task, { eventId: string; taskId: string }>({
       query: ({ eventId, taskId }) => ({
         url: `/tasks/${eventId}/${taskId}/`,
@@ -21,4 +28,4 @@ export const taskApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetTaskDetailQuery, useCreateTaskMutation } = taskApi
+export const { useGetTaskDetailQuery, useCreateTaskMutation, useGetAllTasksQuery } = taskApi
