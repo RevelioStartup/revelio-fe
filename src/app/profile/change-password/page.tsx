@@ -24,13 +24,9 @@ interface FormData {
   token?: string
 }
 
-interface ChangePasswordProps {
-  initialStep?: number
-}
-
-const ChangePassword: React.FC<ChangePasswordProps> = ({ initialStep = 1 }) => {
+const ChangePassword: React.FC<{ initialStep?: number }> = ({ initialStep = 1 }) => {
   const { control, handleSubmit } = useForm<FormData>()
-  const [step, setStep] = useState(initialStep) 
+  const [step, setStep] = useState(initialStep)
   const { data: profileData, isLoading, isError } = useGetProfileQuery()
   const [sendRecoverPasswordEmail] = useSendRecoverPasswordEmailMutation()
   const [sendChangePassword, { isSuccess }] = useSendChangePasswordMutation()
@@ -67,7 +63,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ initialStep = 1 }) => {
         new_password: data.newPassword,
       })
       if (isSuccess) {
-        window.location.assign('/login') 
+        window.location.assign('/login')
       }
     }
   }
