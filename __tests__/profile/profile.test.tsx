@@ -29,7 +29,7 @@ jest.mock('@/redux/api/profileApi', () => ({
 
 Object.defineProperty(window, 'location', {
   value: { pathname: '/mock-path' },
-});
+})
 
 describe('Profile Component', () => {
   beforeEach(() => {
@@ -91,7 +91,6 @@ describe('Profile Component', () => {
       expect(screen.getByText(event.name)).toBeInTheDocument()
       expect(screen.getByText(event.date)).toBeInTheDocument()
       expect(screen.getByText(event.objective)).toBeInTheDocument()
-      // ... assert other event details
     })
   })
 
