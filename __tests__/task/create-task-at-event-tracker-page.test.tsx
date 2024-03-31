@@ -41,7 +41,8 @@ describe('EventTracker', () => {
   it('renders without crashing', () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <EventTracker {...props} />
+        <EventTracker {...props} 
+         tasks={[]} />
       </Provider>
     )
     expect(getByTestId('label-1')).toBeInTheDocument()
@@ -50,7 +51,8 @@ describe('EventTracker', () => {
   it('toggles form visibility when button is clicked', () => {
     const { getByTestId, queryByTestId } = render(
       <Provider store={store}>
-        <EventTracker {...props} />
+        <EventTracker {...props}
+         tasks={[]} />
       </Provider>
     )
     const button = getByTestId('show-or-hide-button')
@@ -67,6 +69,7 @@ describe('EventTracker', () => {
       <Provider store={store}>
         <EventTracker
           {...{ ...props, recommend_venue: false, recommend_vendor: false }}
+          tasks={[]}
         />
       </Provider>
     )
@@ -81,7 +84,7 @@ describe('EventTracker', () => {
   it('renders labels correctly based on props', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <EventTracker {...props} />
+        <EventTracker {...props} tasks={[]} />
       </Provider>
     )
     expect(getByTestId('label-1')).toBeInTheDocument()
@@ -93,6 +96,7 @@ describe('EventTracker', () => {
       <Provider store={store}>
         <EventTracker
           {...{ ...props, recommend_venue: true, recommend_vendor: true }}
+          tasks={[]}
         />
       </Provider>
     )

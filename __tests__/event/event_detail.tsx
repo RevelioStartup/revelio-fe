@@ -234,4 +234,5 @@ describe('Event Detail', () => {
 
     expect(setChipType).toHaveBeenCalledWith('tracker')
   })
+
 })
