@@ -10,11 +10,7 @@ export const EventTracker: React.FC<{
   id: string
   recommend_venue: boolean
   recommend_vendor: boolean
-}> = ({
-  id,
-  recommend_venue,
-  recommend_vendor,
-}) => {
+}> = ({ id, recommend_venue, recommend_vendor }) => {
   const [isVenueVisible, setIsVenueVisible] = React.useState(true)
   const handleVenueVisibility = (isVisible: boolean) => {
     setIsVenueVisible(isVisible)
