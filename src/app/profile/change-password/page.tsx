@@ -24,7 +24,9 @@ interface FormData {
   token?: string
 }
 
-const ChangePassword: React.FC<{ initialStep?: number }> = ({ initialStep = 1 }) => {
+const ChangePassword: React.FC<{ initialStep?: number }> = ({
+  initialStep = 1,
+}) => {
   const { control, handleSubmit } = useForm<FormData>()
   const [step, setStep] = useState(initialStep)
   const { data: profileData, isLoading, isError } = useGetProfileQuery()
@@ -153,4 +155,4 @@ const ChangePassword: React.FC<{ initialStep?: number }> = ({ initialStep = 1 })
   )
 }
 
-export default ChangePassword
+export default ChangePassword as React.FC<{ initialStep?: number }>;
