@@ -8,24 +8,10 @@ import { Button } from '@/components/elements/Button'
 
 export const EventTracker: React.FC<{
   id: string
-  name: string
-  budget: number
-  date: string
-  objective: string
-  attendees: number
-  theme: string
-  services: string
   recommend_venue: boolean
   recommend_vendor: boolean
 }> = ({
   id,
-  name,
-  budget,
-  date,
-  objective,
-  attendees,
-  theme,
-  services,
   recommend_venue,
   recommend_vendor,
 }) => {
