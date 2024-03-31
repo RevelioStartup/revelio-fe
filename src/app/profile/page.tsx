@@ -84,15 +84,43 @@ export default function Profile() {
               Change Password
             </Button>
           </Link>
-          <Link href="#logout">
-            <Button
-              variant="ghost"
-              className="w-32"
-              data-testid="logout-button"
-            >
-              Logout
-            </Button>
-          </Link>
+          <Button
+        variant="ghost"
+        className="w-32"
+        data-testid="logout-button"
+        onClick={handleOpenPopup}
+      >
+        Logout
+      </Button>
+
+      {/* Logout Confirmation Dialog */}
+      <Dialog
+        open={openPopup}
+        onClose={handleClosePopup}
+        data-testid="logout-dialog"
+      >
+        <DialogTitle>Log Out</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to log out?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button
+                variant="ghost"
+                size="small"
+                data-testid="button-yes"
+                onClick={handleLogout}
+              >
+                Yes
+              </Button>
+              <Button
+                size="small"
+                data-testid="button-close"
+                onClick={handleClosePopup}
+              >
+                No
+          </Button>
+        </DialogActions>
+      </Dialog>
         </Box>
       </Box>
       <Box
