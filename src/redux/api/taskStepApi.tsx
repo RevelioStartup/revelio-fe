@@ -1,5 +1,6 @@
-import { CreateTaskStepRequest } from '@/types/taskStep'
+import { CreateTaskStepRequest, EditTaskStepRequest } from '@/types/taskStep'
 import { baseApi } from './baseApi'
+import { Task } from '@/types/taskDetails'
 
 export const taskStepApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,7 +11,16 @@ export const taskStepApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+
+    updateTaskStep: builder.mutation<Task,{id:string, changes: EditTaskStepRequest}>({
+      query: ({ id, changes }) => ({
+        url: `/task-steps/${id}/edit/`,
+        method: 'PUT',
+        body: changes,
+      }),
+      invalidatesTags: ['Step'],
+    })
   }),
 })
 
-export const { useCreateTaskStepManuallyMutation } = taskStepApi
+export const { useCreateTaskStepManuallyMutation, useUpdateTaskStepMutation } = taskStepApi

@@ -1,7 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import TaskDetailPage from '@/app/event/[eventId]/(eventId)/task/[taskId]/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
 import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
+import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
 import '@testing-library/jest-dom'
 
 jest.mock('@/redux/api/eventApi', () => ({
@@ -10,6 +11,10 @@ jest.mock('@/redux/api/eventApi', () => ({
 
 jest.mock('@/redux/api/taskApi', () => ({
   useGetTaskDetailQuery: jest.fn(),
+}))
+
+jest.mock('@/redux/api/taskStepApi', () => ({
+  useUpdateTaskStepMutation: jest.fn(),
 }))
 
 describe('TaskDetailPage with step', () => {
@@ -37,7 +42,7 @@ describe('TaskDetailPage with step', () => {
     id: '1',
     name: 'step name',
     description: 'step description',
-    status: 'DONE',
+    status: 'NOT_STARTED',
     step_order: 1,
     task: '1',
   }
@@ -48,6 +53,24 @@ describe('TaskDetailPage with step', () => {
     description: 'step description 2',
     status: 'NOT_STARTED',
     step_order: 2,
+    task: '1',
+  }
+
+  const mockUpdatedStepData1: Step = {
+    id: '1',
+    name: 'step name',
+    description: 'step description',
+    status: 'DONE',
+    step_order: 1,
+    task: '1',
+  }
+
+  const mockUpdatedStepData12: Step = {
+    id: '1',
+    name: 'updated step name',
+    description: 'updated step description',
+    status: 'NOT_STARTED',
+    step_order: 1,
     task: '1',
   }
 
@@ -75,6 +98,9 @@ describe('TaskDetailPage with step', () => {
   })
 
   test('renders task details when not loading and data is available', () => {
+    const mockUseUpdateTaskStepMutation = jest.fn().mockResolvedValue({ data: mockUpdatedStepData1 })
+    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([mockUseUpdateTaskStepMutation])
+    
     render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
 
     expect(screen.getByText('event name')).toBeInTheDocument()
@@ -84,8 +110,6 @@ describe('TaskDetailPage with step', () => {
     expect(screen.getByText('step name')).toBeInTheDocument()
     expect(screen.getByText('step name 2')).toBeInTheDocument()
 
-    const buttonBack = screen.getByTestId('step name 2')
-    fireEvent.click(buttonBack)
     const buttonContinue = screen.getByText('Continue')
     fireEvent.click(buttonContinue)
     expect(screen.getByText('step name 2')).toBeInTheDocument()
@@ -94,6 +118,53 @@ describe('TaskDetailPage with step', () => {
     fireEvent.click(buttonFinish)
     expect(
       screen.getByText('All steps completed - you have finished this task')
+    ).toBeInTheDocument()
+  })
+
+  test('update step correctly', async () => {
+    const mockUseUpdateTaskStepMutation = jest.fn().mockResolvedValue({ data: mockUpdatedStepData12 })
+    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([mockUseUpdateTaskStepMutation])
+    
+    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+
+    act(()=>{
+      const buttonEdit = screen.getByTestId('button-edit-form')
+      fireEvent.click(buttonEdit)
+    })
+    const buttonClose = screen.getByTestId('close-form')
+    fireEvent.click(buttonClose)
+    act(()=>{
+      const buttonEdit = screen.getByTestId('button-edit-form')
+      fireEvent.click(buttonEdit)
+    })
+    fireEvent.change(screen.getByTestId('name-input'), {
+      target: { value: 'updated step name' },
+    })
+    fireEvent.change(screen.getByTestId('description-input'), {
+      target: { value: 'updated step description' },
+    })
+    const buttonSubmit = screen.getByTestId('button-submit')
+    fireEvent.click(buttonSubmit)
+    await waitFor(() => expect(mockUseUpdateTaskStepMutation).toHaveBeenCalledTimes(1))
+  })
+
+  test('back button functions correctly', () => {
+    const mockUseUpdateTaskStepMutation = jest.fn().mockResolvedValue({ data: mockUpdatedStepData1 })
+    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([mockUseUpdateTaskStepMutation])
+    
+    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+
+    expect(screen.getByText('step name')).toBeInTheDocument()
+    expect(screen.getByText('step name 2')).toBeInTheDocument()
+
+    const buttonContinue = screen.getByText('Continue')
+    fireEvent.click(buttonContinue)
+    expect(screen.getByText('step name 2')).toBeInTheDocument()
+
+    const buttonBack = screen.getByTestId('2-back')
+    fireEvent.click(buttonBack)
+    expect(
+      screen.getByTestId('1-back')
     ).toBeInTheDocument()
   })
 })
