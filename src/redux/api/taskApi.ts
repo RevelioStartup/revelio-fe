@@ -16,6 +16,7 @@ export const taskApi = baseApi.injectEndpoints({
         url: `/tasks/${eventId}/${taskId}/`,
         method: 'GET',
       }),
+      providesTags: (result) => [{ type: 'Step', id: result?.id }],
     }),
     createTask: builder.mutation<TaskObject, CreateTaskRequest>({
       query: (body) => ({
