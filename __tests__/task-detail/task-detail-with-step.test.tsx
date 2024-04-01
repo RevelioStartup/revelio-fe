@@ -142,7 +142,6 @@ describe('TaskDetailPage with step', () => {
         ),
       { isLoading: false },
     ])
-
     ;(useDeleteAllTaskStepsMutation as jest.Mock).mockReturnValue([
       jest
         .fn()

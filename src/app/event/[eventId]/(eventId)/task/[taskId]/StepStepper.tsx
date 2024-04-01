@@ -1,4 +1,8 @@
-import { useUpdateTaskStepMutation, useDeleteTaskStepMutation, useDeleteAllTaskStepsMutation} from '@/redux/api/taskStepApi'
+import {
+  useUpdateTaskStepMutation,
+  useDeleteTaskStepMutation,
+  useDeleteAllTaskStepsMutation,
+} from '@/redux/api/taskStepApi'
 import {
   Box,
   Typography,
@@ -15,23 +19,19 @@ import EditStepDialog from './EditStepDialog'
 import ConfirmDeleteDialog from './ConfirmDeleteDialog'
 
 export type StepUpdateRequest = {
-    name: string
-    description: string
-    status: string
-    step_order: number
-    task: string
+  name: string
+  description: string
+  status: string
+  step_order: number
+  task: string
 }
-  
 
 interface Props {
-    readonly taskId: string
-    readonly task: Task
-  }
+  readonly taskId: string
+  readonly task: Task
+}
 
-export default function StepStepper({
-    taskId,
-    task
-  }: Props) {
+export default function StepStepper({ taskId, task }: Props) {
   const [openPrompt, setOpenPrompt] = useState(false)
   const [id, setId] = useState('')
   const [name, setName] = useState('')
@@ -39,9 +39,9 @@ export default function StepStepper({
   const [status, setStatus] = useState('')
   const [stepOrder, setStepOrder] = useState(1)
   const [updateTaskStep] = useUpdateTaskStepMutation()
-  const [deleteTaskStep] = useDeleteTaskStepMutation();
-  const [deleteAllTaskSteps] = useDeleteAllTaskStepsMutation();
-  const [openDeleteAllDialog, setOpenDeleteAllDialog] = useState<boolean>(false);
+  const [deleteTaskStep] = useDeleteTaskStepMutation()
+  const [deleteAllTaskSteps] = useDeleteAllTaskStepsMutation()
+  const [openDeleteAllDialog, setOpenDeleteAllDialog] = useState<boolean>(false)
 
   const steps = task.task_steps
   const [activeStep, setActiveStep] = useState(0)
@@ -51,7 +51,7 @@ export default function StepStepper({
     name: string,
     description: string,
     status: string,
-    step_order: number,
+    step_order: number
   ) => {
     editTaskStep(id, { name, description, status, step_order, task: taskId })
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -73,27 +73,27 @@ export default function StepStepper({
 
   const handleDelete = async (stepId: string) => {
     try {
-      await deleteTaskStep({ id: stepId }).unwrap();
+      await deleteTaskStep({ id: stepId }).unwrap()
     } catch (error) {
-      console.error('Failed to delete the task step', error);
+      console.error('Failed to delete the task step', error)
     }
-  };
-  
-  const handleOpenDeleteAllDialog = () => setOpenDeleteAllDialog(true);
-  const handleCloseDeleteAllDialog = () => setOpenDeleteAllDialog(false);
+  }
+
+  const handleOpenDeleteAllDialog = () => setOpenDeleteAllDialog(true)
+  const handleCloseDeleteAllDialog = () => setOpenDeleteAllDialog(false)
   const handleConfirmDeleteAll = async () => {
-    handleCloseDeleteAllDialog();
-      const numericTaskId = Number(taskId); 
-      if (!isNaN(numericTaskId)) {
-        try {
-          await deleteAllTaskSteps({ taskId: numericTaskId }).unwrap();
-        } catch (error) {
-          console.error('Failed to delete all task steps', error);
-        }
-      } else {
-        console.error('Invalid taskId:', taskId);
+    handleCloseDeleteAllDialog()
+    const numericTaskId = Number(taskId)
+    if (!isNaN(numericTaskId)) {
+      try {
+        await deleteAllTaskSteps({ taskId: numericTaskId }).unwrap()
+      } catch (error) {
+        console.error('Failed to delete all task steps', error)
       }
-  };
+    } else {
+      console.error('Invalid taskId:', taskId)
+    }
+  }
 
   useEffect(() => {
     if (steps) {
@@ -117,7 +117,7 @@ export default function StepStepper({
     name: string,
     description: string,
     status: string,
-    step_order: number,
+    step_order: number
   ) => {
     setId(id)
     setName(name)
@@ -127,129 +127,136 @@ export default function StepStepper({
     setOpenPrompt(true)
   }
 
-  return(
+  return (
     <div className="flex flex-col gap-8 px-5 py-3 lg:px-10 lg:py-6 border border-teal-600 rounded-xl">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3">
         <i className="i-ph-list-checks-light size-6 text-gray-950" />
-            <p>step {Math.min(activeStep+1, steps?.length)} out of {steps?.length}</p>
-            <Button
-              variant="primary"
-              style={{ backgroundColor: 'red', color: 'white', marginLeft: '10px', height: '30px' }}
-              onClick={handleOpenDeleteAllDialog}
-            >
-              Delete All
-            </Button>
-        </div>
-        <Stepper activeStep={activeStep} orientation="vertical">
-            {steps?.map((step, index) => (
-            <Step key={step.name}
-                sx={{
-                '& .MuiStepLabel-root .Mui-completed': {
-                    color: '#2dd4bf',
+        <p>
+          step {Math.min(activeStep + 1, steps?.length)} out of {steps?.length}
+        </p>
+        <Button
+          variant="primary"
+          style={{
+            backgroundColor: 'red',
+            color: 'white',
+            marginLeft: '10px',
+            height: '30px',
+          }}
+          onClick={handleOpenDeleteAllDialog}
+        >
+          Delete All
+        </Button>
+      </div>
+      <Stepper activeStep={activeStep} orientation="vertical">
+        {steps?.map((step, index) => (
+          <Step
+            key={step.name}
+            sx={{
+              '& .MuiStepLabel-root .Mui-completed': {
+                color: '#2dd4bf',
+              },
+              '& .MuiStepLabel-root .Mui-active': {
+                color: '#fbbf24',
+              },
+              '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
+                {
+                  color: 'black',
                 },
-                '& .MuiStepLabel-root .Mui-active': {
-                    color: '#fbbf24',
-                },
-                '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
-                    {
-                    color: 'black',
-                    },
-                '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
-                    fill: 'black',
-                },
-                }}
-            >
-                <StepLabel>{step.name}</StepLabel>
-                <StepContent>
-                <Typography>{step.description}</Typography>
-                <Box sx={{ mb: 2 }}>
-                    <table className="table border-separate border-spacing-y-1">
-                    <tbody>
-                        <tr className="table-row">
-                        <td style={{ paddingRight: '10px' }}>
-                            {' '}
-                            <Button
-                            variant="primary"
-                            data-testid="button-edit-form"
-                            onClick={() =>
-                                handleOpenPopup(
-                                step.id,
-                                step.name,
-                                step.description,
-                                step.status,
-                                step.step_order,
-                                )
-                            }
-                            >
-                            Edit Step
-                            </Button>{' '}
-                        </td>
-                        <td style={{ paddingRight: '10px' }}>
-                            {' '}
-                            <Button
-                            variant="primary"
-                            onClick={() =>
-                                handleNext(
-                                step.id,
-                                step.name,
-                                step.description,
-                                'DONE',
-                                step.step_order,
-                                )
-                            }
-                            >
-                            {index === steps.length - 1
-                                ? 'Finish'
-                                : 'Continue'}
-                            </Button>{' '}
-                        </td>
-                        <td style={{ paddingRight: '10px' }}>
-                            {' '}
-                            <Button
-                            variant="primary"
-                            data-testid="button-delete"
-                            style={{ backgroundColor: 'red', color: 'white' }}
-                            onClick={() => handleDelete(step.id)}
-                            >
-                            Delete
-                            </Button>{' '}
-                        </td>
-                        <td style={{ paddingRight: '10px' }}>
-                            {' '}
-                            <Button
-                            disabled={index === 0}
-                            onClick={handleBack}
-                            variant="ghost"
-                            data-testid={step.id + '-back'}
-                            >
-                            Back
-                            </Button>{' '}
-                        </td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </Box>
-                </StepContent>
-            </Step>
-            ))}
-            {activeStep === steps?.length && (
-            <Paper square elevation={0} sx={{ p: 3 }}>
-                <Typography>
-                All steps completed - you have finished this task
-                </Typography>
-            </Paper>
-            )}
-        </Stepper>
-        <EditStepDialog openForm={openPrompt} 
+              '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                fill: 'black',
+              },
+            }}
+          >
+            <StepLabel>{step.name}</StepLabel>
+            <StepContent>
+              <Typography>{step.description}</Typography>
+              <Box sx={{ mb: 2 }}>
+                <table className="table border-separate border-spacing-y-1">
+                  <tbody>
+                    <tr className="table-row">
+                      <td style={{ paddingRight: '10px' }}>
+                        {' '}
+                        <Button
+                          variant="primary"
+                          data-testid="button-edit-form"
+                          onClick={() =>
+                            handleOpenPopup(
+                              step.id,
+                              step.name,
+                              step.description,
+                              step.status,
+                              step.step_order
+                            )
+                          }
+                        >
+                          Edit Step
+                        </Button>{' '}
+                      </td>
+                      <td style={{ paddingRight: '10px' }}>
+                        {' '}
+                        <Button
+                          variant="primary"
+                          onClick={() =>
+                            handleNext(
+                              step.id,
+                              step.name,
+                              step.description,
+                              'DONE',
+                              step.step_order
+                            )
+                          }
+                        >
+                          {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                        </Button>{' '}
+                      </td>
+                      <td style={{ paddingRight: '10px' }}>
+                        {' '}
+                        <Button
+                          variant="primary"
+                          data-testid="button-delete"
+                          style={{ backgroundColor: 'red', color: 'white' }}
+                          onClick={() => handleDelete(step.id)}
+                        >
+                          Delete
+                        </Button>{' '}
+                      </td>
+                      <td style={{ paddingRight: '10px' }}>
+                        {' '}
+                        <Button
+                          disabled={index === 0}
+                          onClick={handleBack}
+                          variant="ghost"
+                          data-testid={step.id + '-back'}
+                        >
+                          Back
+                        </Button>{' '}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Box>
+            </StepContent>
+          </Step>
+        ))}
+        {activeStep === steps?.length && (
+          <Paper square elevation={0} sx={{ p: 3 }}>
+            <Typography>
+              All steps completed - you have finished this task
+            </Typography>
+          </Paper>
+        )}
+      </Stepper>
+      <EditStepDialog
+        openForm={openPrompt}
         onClose={handleClosePopup}
-        prevName = {name}
+        prevName={name}
         prevDesc={description}
         stepOrder={stepOrder}
-        taskId = {taskId}
-        status = {status}
-        stepId = {id}
-        />
-        <ConfirmDeleteDialog
+        taskId={taskId}
+        status={status}
+        stepId={id}
+      />
+      <ConfirmDeleteDialog
         open={openDeleteAllDialog}
         onClose={handleCloseDeleteAllDialog}
         onConfirm={handleConfirmDeleteAll}

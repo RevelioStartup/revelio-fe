@@ -1,13 +1,24 @@
-import React from 'react';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import React from 'react'
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from '@mui/material'
 
 interface ConfirmDeleteDialogProps {
-  open: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
+  open: boolean
+  onClose: () => void
+  onConfirm: () => void
 }
 
-const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({ open, onClose, onConfirm }) => {
+const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({
+  open,
+  onClose,
+  onConfirm,
+}) => {
   return (
     <Dialog
       open={open}
@@ -16,11 +27,12 @@ const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({ open, onClose
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {"Delete All Task Steps"}
+        {'Delete All Task Steps'}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete all task steps? This action cannot be undone.
+          Are you sure you want to delete all task steps? This action cannot be
+          undone.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -30,7 +42,7 @@ const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({ open, onClose
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }
 
-export default ConfirmDeleteDialog;
+export default ConfirmDeleteDialog
