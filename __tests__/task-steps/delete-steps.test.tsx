@@ -23,7 +23,7 @@ const mockTask = {
       description: 'Description 1',
       status: 'NOT_STARTED',
       step_order: 1,
-      task: '1', 
+      task: '1',
     },
     {
       id: 'step2',
@@ -31,7 +31,7 @@ const mockTask = {
       description: 'Description 2',
       status: 'NOT_STARTED',
       step_order: 2,
-      task: '1', 
+      task: '1',
     },
   ],
   title: 'Task Title',

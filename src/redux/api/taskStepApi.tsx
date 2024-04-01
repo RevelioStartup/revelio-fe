@@ -29,7 +29,7 @@ export const taskStepApi = baseApi.injectEndpoints({
         url: `/task-steps/${id}/`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Step'],
+      invalidatesTags: ['Task'],
     }),
 
     deleteAllTaskSteps: builder.mutation<void, { taskId: number }>({
@@ -37,7 +37,7 @@ export const taskStepApi = baseApi.injectEndpoints({
         url: `/task-steps/tasks/${taskId}/delete-all-steps/`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Step'],
+      invalidatesTags: ['Task'],
     }),
   }),
 })
