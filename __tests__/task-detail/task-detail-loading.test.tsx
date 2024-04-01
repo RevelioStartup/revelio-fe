@@ -52,10 +52,13 @@ describe('TaskDetailPage loading', () => {
     isLoading: true,
   })
 
-
   test('renders loading spinner when loading', () => {
-    const mockUseUpdateTaskStepMutation = jest.fn().mockResolvedValue({ data: {} })
-    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([mockUseUpdateTaskStepMutation])
+    const mockUseUpdateTaskStepMutation = jest
+      .fn()
+      .mockResolvedValue({ data: {} })
+    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateTaskStepMutation,
+    ])
 
     render(<TaskDetailPage params={{ eventId: '3', taskId: '3' }} />)
 

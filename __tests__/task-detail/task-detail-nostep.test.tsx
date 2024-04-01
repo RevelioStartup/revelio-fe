@@ -53,8 +53,12 @@ describe('TaskDetailPage with no step', () => {
   })
 
   test('renders task details when not loading and data is available but no step', () => {
-    const mockUseUpdateTaskStepMutation = jest.fn().mockResolvedValue({ data: {} })
-    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([mockUseUpdateTaskStepMutation])
+    const mockUseUpdateTaskStepMutation = jest
+      .fn()
+      .mockResolvedValue({ data: {} })
+    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateTaskStepMutation,
+    ])
 
     render(<TaskDetailPage params={{ eventId: '3', taskId: '3' }} />)
 

@@ -2,9 +2,7 @@
 
 import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
 import { useGetEventQuery } from '@/redux/api/eventApi'
-import {
-  Box,
-} from '@mui/material'
+import { Box } from '@mui/material'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
 import { AddTaskStepsButton } from '../step/AddTaskStepsButton'
@@ -28,7 +26,6 @@ export default function TaskDetailPage({
 }: Readonly<{
   params: Readonly<{ eventId: string; taskId: string }>
 }>) {
-
   const { data: taskData, isLoading } = useGetTaskDetailQuery(params)
   const { data: eventData } = useGetEventQuery(params.eventId)
   const steps = taskData?.task_steps
@@ -51,14 +48,8 @@ export default function TaskDetailPage({
             <td className="font-medium text-left"> {eventData?.date} </td>
           </tr>
           <tr className="table-row">
-            <td className="text-teal-800 font-bold text-left">
-              {' '}
-              Description{' '}
-            </td>
-            <td className="font-medium text-left">
-              {' '}
-              {taskData?.description}{' '}
-            </td>
+            <td className="text-teal-800 font-bold text-left"> Description </td>
+            <td className="font-medium text-left"> {taskData?.description} </td>
           </tr>
           <tr className="table-row">
             <td className="text-teal-800 font-bold text-left"> Status </td>
@@ -70,7 +61,7 @@ export default function TaskDetailPage({
         {steps?.length === 0 ? (
           <AddTaskStepsButton />
         ) : (
-          <StepStepper taskId={params.taskId} task={taskData}/>
+          <StepStepper taskId={params.taskId} task={taskData} />
         )}
       </Box>
       <Link href={`/event/${eventData?.id}`}>
