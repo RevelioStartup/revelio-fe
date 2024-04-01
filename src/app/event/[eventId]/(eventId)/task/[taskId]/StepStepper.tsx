@@ -1,4 +1,4 @@
-import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
+import { useUpdateTaskStepMutation, useDeleteTaskStepMutation, useDeleteAllTaskStepsMutation} from '@/redux/api/taskStepApi'
 import {
   Box,
   Typography,
@@ -12,6 +12,7 @@ import { Button } from '@/components/elements/Button'
 import { useState, useEffect } from 'react'
 import { Task } from '@/types/taskDetails'
 import EditStepDialog from './EditStepDialog'
+import ConfirmDeleteDialog from './ConfirmDeleteDialog'
 
 export type StepUpdateRequest = {
     name: string
@@ -38,6 +39,9 @@ export default function StepStepper({
   const [status, setStatus] = useState('')
   const [stepOrder, setStepOrder] = useState(1)
   const [updateTaskStep] = useUpdateTaskStepMutation()
+  const [deleteTaskStep] = useDeleteTaskStepMutation();
+  const [deleteAllTaskSteps] = useDeleteAllTaskStepsMutation();
+  const [openDeleteAllDialog, setOpenDeleteAllDialog] = useState<boolean>(false);
 
   const steps = task.task_steps
   const [activeStep, setActiveStep] = useState(0)
@@ -66,6 +70,30 @@ export default function StepStepper({
       setActiveStep((prevActiveStep) => prevActiveStep - 1)
     }
   }
+
+  const handleDelete = async (stepId: string) => {
+    try {
+      await deleteTaskStep({ id: stepId }).unwrap();
+    } catch (error) {
+      console.error('Failed to delete the task step', error);
+    }
+  };
+  
+  const handleOpenDeleteAllDialog = () => setOpenDeleteAllDialog(true);
+  const handleCloseDeleteAllDialog = () => setOpenDeleteAllDialog(false);
+  const handleConfirmDeleteAll = async () => {
+    handleCloseDeleteAllDialog();
+      const numericTaskId = Number(taskId); 
+      if (!isNaN(numericTaskId)) {
+        try {
+          await deleteAllTaskSteps({ taskId: numericTaskId }).unwrap();
+        } catch (error) {
+          console.error('Failed to delete all task steps', error);
+        }
+      } else {
+        console.error('Invalid taskId:', taskId);
+      }
+  };
 
   useEffect(() => {
     if (steps) {
@@ -101,9 +129,16 @@ export default function StepStepper({
 
   return(
     <div className="flex flex-col gap-8 px-5 py-3 lg:px-10 lg:py-6 border border-teal-600 rounded-xl">
-        <div className="flex flex-row gap-3">
+        <div className="flex items-center gap-3">
         <i className="i-ph-list-checks-light size-6 text-gray-950" />
             <p>step {Math.min(activeStep+1, steps?.length)} out of {steps?.length}</p>
+            <Button
+              variant="primary"
+              style={{ backgroundColor: 'red', color: 'white', marginLeft: '10px', height: '30px' }}
+              onClick={handleOpenDeleteAllDialog}
+            >
+              Delete All
+            </Button>
         </div>
         <Stepper activeStep={activeStep} orientation="vertical">
             {steps?.map((step, index) => (
@@ -171,6 +206,17 @@ export default function StepStepper({
                         <td style={{ paddingRight: '10px' }}>
                             {' '}
                             <Button
+                            variant="primary"
+                            data-testid="button-delete"
+                            style={{ backgroundColor: 'red', color: 'white' }}
+                            onClick={() => handleDelete(step.id)}
+                            >
+                            Delete
+                            </Button>{' '}
+                        </td>
+                        <td style={{ paddingRight: '10px' }}>
+                            {' '}
+                            <Button
                             disabled={index === 0}
                             onClick={handleBack}
                             variant="ghost"
@@ -203,6 +249,11 @@ export default function StepStepper({
         status = {status}
         stepId = {id}
         />
+        <ConfirmDeleteDialog
+        open={openDeleteAllDialog}
+        onClose={handleCloseDeleteAllDialog}
+        onConfirm={handleConfirmDeleteAll}
+      />
     </div>
   )
 }

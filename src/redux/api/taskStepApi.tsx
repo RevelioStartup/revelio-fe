@@ -12,15 +12,39 @@ export const taskStepApi = baseApi.injectEndpoints({
       }),
     }),
 
-    updateTaskStep: builder.mutation<Task,{id:string, changes: EditTaskStepRequest}>({
+    updateTaskStep: builder.mutation<
+      Task,
+      { id: string; changes: EditTaskStepRequest }
+    >({
       query: ({ id, changes }) => ({
         url: `/task-steps/${id}/edit/`,
         method: 'PUT',
         body: changes,
       }),
       invalidatesTags: ['Step'],
-    })
+    }),
+
+    deleteTaskStep: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/task-steps/${id}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Step'],
+    }),
+
+    deleteAllTaskSteps: builder.mutation<void, { taskId: number }>({
+      query: ({ taskId }) => ({
+        url: `/task-steps/tasks/${taskId}/delete-all-steps/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Step'],
+    }),
   }),
 })
 
-export const { useCreateTaskStepManuallyMutation, useUpdateTaskStepMutation } = taskStepApi
+export const {
+  useCreateTaskStepManuallyMutation,
+  useUpdateTaskStepMutation,
+  useDeleteTaskStepMutation,
+  useDeleteAllTaskStepsMutation,
+} = taskStepApi
