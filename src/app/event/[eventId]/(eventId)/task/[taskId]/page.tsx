@@ -2,6 +2,9 @@
 
 import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
 import { useGetEventQuery } from '@/redux/api/eventApi'
+import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
+import { Input } from '@/components/elements/Forms/input'
+import { TextArea } from '@/components/elements/Forms/textarea'
 import {
   Box,
   Typography,
@@ -10,11 +13,28 @@ import {
   StepLabel,
   StepContent,
   Paper,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from '@mui/material'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
 import { useState, useEffect } from 'react'
 import { AddTaskStepsButton } from '../step/AddTaskStepsButton'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+type StepUpdateRequest = {
+  name: string
+  description: string
+  status: string
+  step_order: number
+  task: string
+}
+
+type UpdateStepFormType = {
+  name: string
+  description: string
+}
 
 export default function TaskDetailPage({
   params,
@@ -22,18 +42,49 @@ export default function TaskDetailPage({
   params: Readonly<{ eventId: string; taskId: string }>
 }>) {
   const { data: taskData, isLoading } = useGetTaskDetailQuery(params)
+  const [openPrompt, setOpenPrompt] = useState(false)
+  const [id, setId] = useState('')
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [status, setStatus] = useState('')
+  const [stepOrder, setStepOrder] = useState(1)
+  const [task, setTask] = useState('')
   const { data: eventData } = useGetEventQuery(params.eventId)
+  const [updateTaskStep] = useUpdateTaskStepMutation()
+  const defaultValues: UpdateStepFormType = {
+    name: name,
+    description: description,
+  }
+  const methods = useForm<UpdateStepFormType>({ defaultValues: defaultValues })
+  const { control, handleSubmit, reset } = methods
 
   const steps = taskData?.task_steps
-
   const [activeStep, setActiveStep] = useState(0)
 
-  const handleNext = () => {
+  const handleNext = (
+    id: string,
+    name: string,
+    description: string,
+    status: string,
+    step_order: number,
+    task: string
+  ) => {
+    editTaskStep(id, { name, description, status, step_order, task })
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+    const prev = steps![activeStep - 1]
+    if (prev) {
+      editTaskStep(prev.id, {
+        name: prev.name,
+        description: prev.description,
+        status: 'NOT_STARTED',
+        step_order: prev.step_order,
+        task: prev.task,
+      })
+      setActiveStep((prevActiveStep) => prevActiveStep - 1)
+    }
   }
 
   useEffect(() => {
@@ -44,6 +95,40 @@ export default function TaskDetailPage({
       setActiveStep(finishedSteps)
     }
   }, [isLoading, steps])
+
+  const editTaskStep = async (id: string, changes: StepUpdateRequest) => {
+    await updateTaskStep({ id, changes }).then((res) => {})
+  }
+
+  const onSubmit: SubmitHandler<UpdateStepFormType> = async (data) => {
+    const name = data.name
+    const description = data.description
+    const step_order = stepOrder
+    editTaskStep(id, { name, description, status, step_order, task })
+    setOpenPrompt(false)
+    reset()
+  }
+
+  const handleClosePopup = () => {
+    setOpenPrompt(false)
+  }
+
+  const handleOpenPopup = (
+    id: string,
+    name: string,
+    description: string,
+    status: string,
+    step_order: number,
+    task: string
+  ) => {
+    setId(id)
+    setName(name)
+    setDescription(description)
+    setStatus(status)
+    setStepOrder(step_order)
+    setTask(task)
+    setOpenPrompt(true)
+  }
 
   if (!isLoading && taskData?.task_steps) {
     return (
@@ -96,7 +181,38 @@ export default function TaskDetailPage({
                             <tr className="table-row">
                               <td style={{ paddingRight: '10px' }}>
                                 {' '}
-                                <Button variant="primary" onClick={handleNext}>
+                                <Button
+                                  variant="primary"
+                                  data-testid="button-edit-form"
+                                  onClick={() =>
+                                    handleOpenPopup(
+                                      step.id,
+                                      step.name,
+                                      step.description,
+                                      step.status,
+                                      step.step_order,
+                                      step.task
+                                    )
+                                  }
+                                >
+                                  Edit Step
+                                </Button>{' '}
+                              </td>
+                              <td style={{ paddingRight: '10px' }}>
+                                {' '}
+                                <Button
+                                  variant="primary"
+                                  onClick={() =>
+                                    handleNext(
+                                      step.id,
+                                      step.name,
+                                      step.description,
+                                      'DONE',
+                                      step.step_order,
+                                      step.task
+                                    )
+                                  }
+                                >
                                   {index === steps.length - 1
                                     ? 'Finish'
                                     : 'Continue'}
@@ -108,7 +224,7 @@ export default function TaskDetailPage({
                                   disabled={index === 0}
                                   onClick={handleBack}
                                   variant="ghost"
-                                  data-testid={step.name}
+                                  data-testid={step.id + '-back'}
                                 >
                                   Back
                                 </Button>{' '}
@@ -134,6 +250,49 @@ export default function TaskDetailPage({
         <Link href={`/event/${eventData?.id}`}>
           <Button variant="ghost">Back to Event Page</Button>
         </Link>
+        <Box>
+          <Dialog
+            open={openPrompt}
+            onClose={handleClosePopup}
+            data-testid="login-dialog-recover"
+          >
+            <DialogTitle>Edit Step</DialogTitle>
+            <DialogActions>
+              <div className="flex flex-col gap-3" style={{ flex: 1 }}>
+                <form
+                  className="flex flex-col gap-3"
+                  onSubmit={handleSubmit(onSubmit)}
+                  data-testid="recover-account-form"
+                >
+                  <Input
+                    control={control}
+                    name="name"
+                    required
+                    placeholder="Enter Step Name"
+                    data-testid="name-input"
+                  />
+                  <TextArea
+                    control={control}
+                    name="description"
+                    required
+                    placeholder="Enter Step Description"
+                    data-testid="description-input"
+                  />
+                  <Button type="submit" data-testid="button-submit">
+                    Edit Step
+                  </Button>
+                </form>
+                <Button
+                  variant={'secondary'}
+                  data-testid="close-form"
+                  onClick={handleClosePopup}
+                >
+                  Close
+                </Button>
+              </div>
+            </DialogActions>
+          </Dialog>
+        </Box>
       </div>
     )
   }
