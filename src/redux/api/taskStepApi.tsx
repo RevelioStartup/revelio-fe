@@ -12,15 +12,19 @@ export const taskStepApi = baseApi.injectEndpoints({
       }),
     }),
 
-    updateTaskStep: builder.mutation<Task,{id:string, changes: EditTaskStepRequest}>({
+    updateTaskStep: builder.mutation<
+      Task,
+      { id: string; changes: EditTaskStepRequest }
+    >({
       query: ({ id, changes }) => ({
         url: `/task-steps/${id}/edit/`,
         method: 'PUT',
         body: changes,
       }),
       invalidatesTags: ['Step'],
-    })
+    }),
   }),
 })
 
-export const { useCreateTaskStepManuallyMutation, useUpdateTaskStepMutation } = taskStepApi
+export const { useCreateTaskStepManuallyMutation, useUpdateTaskStepMutation } =
+  taskStepApi

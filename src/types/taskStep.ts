@@ -4,9 +4,9 @@ export type CreateTaskStepRequest = {
 }
 
 export type EditTaskStepRequest = {
-  name: string,
-  description: string,
-  status: string,
-  step_order: number,
+  name: string
+  description: string
+  status: string
+  step_order: number
   task: string
 }
