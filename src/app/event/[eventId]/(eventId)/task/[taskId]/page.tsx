@@ -2,25 +2,12 @@
 
 import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
 import { useGetEventQuery } from '@/redux/api/eventApi'
-import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
-import { TextArea } from '@/components/elements/Forms/textarea'
 import {
   Box,
-  Typography,
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
-  Paper,
-  Dialog,
-  DialogTitle,
-  DialogActions,
 } from '@mui/material'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
-import { useState, useEffect } from 'react'
 import { AddTaskStepsButton } from '../step/AddTaskStepsButton'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import StepStepper from './StepStepper'
 
 type StepUpdateRequest = {

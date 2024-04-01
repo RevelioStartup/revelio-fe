@@ -54,7 +54,7 @@ export default function StepStepper({
   }
 
   const handleBack = () => {
-    const prev = steps![activeStep - 1]
+    const prev = steps[activeStep - 1]
     if (prev) {
       editTaskStep(prev.id, {
         name: prev.name,
