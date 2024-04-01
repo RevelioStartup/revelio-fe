@@ -168,82 +168,102 @@ export default function TaskDetailPage({
           {steps?.length === 0 ? (
             <AddTaskStepsButton />
           ) : (
-            <div>
-              <Stepper activeStep={activeStep} orientation="vertical">
-                {steps?.map((step, index) => (
-                  <Step key={step.name}>
-                    <StepLabel>{step.name}</StepLabel>
-                    <StepContent>
-                      <Typography>{step.description}</Typography>
-                      <Box sx={{ mb: 2 }}>
-                        <table className="table border-separate border-spacing-y-1">
-                          <tbody>
-                            <tr className="table-row">
-                              <td style={{ paddingRight: '10px' }}>
-                                {' '}
-                                <Button
-                                  variant="primary"
-                                  data-testid="button-edit-form"
-                                  onClick={() =>
-                                    handleOpenPopup(
-                                      step.id,
-                                      step.name,
-                                      step.description,
-                                      step.status,
-                                      step.step_order,
-                                      step.task
-                                    )
-                                  }
-                                >
-                                  Edit Step
-                                </Button>{' '}
-                              </td>
-                              <td style={{ paddingRight: '10px' }}>
-                                {' '}
-                                <Button
-                                  variant="primary"
-                                  onClick={() =>
-                                    handleNext(
-                                      step.id,
-                                      step.name,
-                                      step.description,
-                                      'DONE',
-                                      step.step_order,
-                                      step.task
-                                    )
-                                  }
-                                >
-                                  {index === steps.length - 1
-                                    ? 'Finish'
-                                    : 'Continue'}
-                                </Button>{' '}
-                              </td>
-                              <td style={{ paddingRight: '10px' }}>
-                                {' '}
-                                <Button
-                                  disabled={index === 0}
-                                  onClick={handleBack}
-                                  variant="ghost"
-                                  data-testid={step.id + '-back'}
-                                >
-                                  Back
-                                </Button>{' '}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </Box>
-                    </StepContent>
-                  </Step>
-                ))}
-              </Stepper>
-              {activeStep === steps?.length && (
-                <Paper square elevation={0} sx={{ p: 3 }}>
-                  <Typography>
-                    All steps completed - you have finished this task
-                  </Typography>
-                </Paper>
-              )}
+            <div className="flex flex-col gap-8 px-5 py-3 lg:px-10 lg:py-6 border border-teal-600 rounded-xl">
+              <div className="flex flex-row gap-3">
+                <i className="i-ph-list-checks-light size-6 text-gray-950" />
+                    <p>Step {activeStep} out of {steps?.length}</p>
+              </div>
+                <Stepper activeStep={activeStep} orientation="vertical">
+                  {steps?.map((step, index) => (
+                    <Step key={step.name}
+                      sx={{
+                        '& .MuiStepLabel-root .Mui-completed': {
+                          color: '#2dd4bf', // circle color (COMPLETED)
+                        },
+                        '& .MuiStepLabel-root .Mui-active': {
+                          color: '#fbbf24', // circle color (ACTIVE)
+                        },
+                        '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
+                          {
+                            color: 'black', // Just text label (ACTIVE)
+                          },
+                        '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                          fill: 'black', // circle's number (ACTIVE)
+                        },
+                      }}
+                    >
+                      <StepLabel>{step.name}</StepLabel>
+                      <StepContent>
+                        <Typography>{step.description}</Typography>
+                        <Box sx={{ mb: 2 }}>
+                          <table className="table border-separate border-spacing-y-1">
+                            <tbody>
+                              <tr className="table-row">
+                                <td style={{ paddingRight: '10px' }}>
+                                  {' '}
+                                  <Button
+                                    variant="primary"
+                                    data-testid="button-edit-form"
+                                    onClick={() =>
+                                      handleOpenPopup(
+                                        step.id,
+                                        step.name,
+                                        step.description,
+                                        step.status,
+                                        step.step_order,
+                                        step.task
+                                      )
+                                    }
+                                  >
+                                    Edit Step
+                                  </Button>{' '}
+                                </td>
+                                <td style={{ paddingRight: '10px' }}>
+                                  {' '}
+                                  <Button
+                                    variant="primary"
+                                    onClick={() =>
+                                      handleNext(
+                                        step.id,
+                                        step.name,
+                                        step.description,
+                                        'DONE',
+                                        step.step_order,
+                                        step.task
+                                      )
+                                    }
+                                  >
+                                    {index === steps.length - 1
+                                      ? 'Finish'
+                                      : 'Continue'}
+                                  </Button>{' '}
+                                </td>
+                                <td style={{ paddingRight: '10px' }}>
+                                  {' '}
+                                  <Button
+                                    disabled={index === 0}
+                                    onClick={handleBack}
+                                    variant="ghost"
+                                    data-testid={step.id + '-back'}
+                                  >
+                                    Back
+                                  </Button>{' '}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </Box>
+                      </StepContent>
+                    </Step>
+                  ))}
+                  {activeStep === steps?.length && (
+                    <Paper square elevation={0} sx={{ p: 3 }}>
+                      <Typography>
+                        All steps completed - you have finished this task
+                      </Typography>
+                    </Paper>
+                  )}
+                </Stepper>
             </div>
           )}
         </Box>
@@ -264,7 +284,7 @@ export default function TaskDetailPage({
                   onSubmit={handleSubmit(onSubmit)}
                   data-testid="recover-account-form"
                 >
-                  <Input
+                  <TextArea
                     control={control}
                     name="name"
                     required
