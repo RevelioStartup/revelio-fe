@@ -1,18 +1,16 @@
 'use client'
 import { useState } from 'react'
 import { Input } from '@/components/elements/Forms/input'
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useVerifyEmailMutation } from '@/redux/api/authApi'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
+import {
+  MessageDialog,
+  MessageDialogActions,
+  MessageDialogContent,
+} from '@/components/elements/Dialog/messageDialog'
 
 type VerifyEmailFormType = {
   token: string
@@ -83,35 +81,31 @@ export default function VerifyEmailForm() {
         <Button type="submit">Verify</Button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="verify-redirect-success-msg"
-        fullWidth={true}
-        maxWidth='sm'
-        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}>
-        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
-        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
+      <MessageDialog
+        open={openPrompt}
+        data-testid="verify-redirect-success-msg"
+        title={dialogTitle}
+      >
+        <MessageDialogContent>
           <p>{message}</p>
-        </DialogContent>
-        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+        </MessageDialogContent>
+        <MessageDialogActions>
           <Button>
             <Link href={'/'}>Continue</Link>
           </Button>
-          
-        </DialogActions>
-      </Dialog>
+        </MessageDialogActions>
+      </MessageDialog>
 
-      <Dialog
+      <MessageDialog
         open={openPopup}
         onClose={handleClosePopUP}
         data-testid="verify-dialog-error-msg"
-        fullWidth={true}
-        maxWidth='sm'
-        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
+        title={dialogTitle}
       >
-        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
-        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
+        <MessageDialogContent>
           <p>{errorMessage}</p>
-        </DialogContent>
-        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+        </MessageDialogContent>
+        <MessageDialogActions>
           <Button
             size="small"
             variant={'ghost'}
@@ -120,8 +114,8 @@ export default function VerifyEmailForm() {
           >
             Close
           </Button>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogActions>
+      </MessageDialog>
     </Box>
   )
 }

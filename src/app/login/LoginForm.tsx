@@ -1,19 +1,17 @@
 'use client'
 import { useState } from 'react'
 import { Input } from '@/components/elements/Forms/input'
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLoginMutation } from '@/redux/api/authApi'
 import Link from 'next/link'
 import AccountRecoveryRequestForm from './AccountRecoveryRequestForm'
 import { Button } from '@/components/elements/Button'
+import {
+  MessageDialog,
+  MessageDialogActions,
+  MessageDialogContent,
+} from '@/components/elements/Dialog/messageDialog'
 
 type LoginFormType = {
   username: string
@@ -116,7 +114,7 @@ export default function LoginForm() {
         >
           Recover Account
         </Typography>
-        <Typography align="right" >
+        <Typography align="right">
           If you do not have an account, you can{' '}
           <Link style={{ color: 'teal' }} href="/register">
             Register Here
@@ -130,37 +128,31 @@ export default function LoginForm() {
         onClose={handleCloseForm}
       />
 
-      <Dialog
+      <MessageDialog
         open={openPromptLogin}
         data-testid="login-dialog-success-login-msg"
-        fullWidth={true}
-        maxWidth='sm'
-        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
+        title={title}
       >
-        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop:'10px' }}>{title}</DialogTitle>
-        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
+        <MessageDialogContent>
           <p>{message}</p>
-        </DialogContent>
-        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+        </MessageDialogContent>
+        <MessageDialogActions>
           <Button>
-          <Link href={'/'}>Continue</Link>
+            <Link href={'/'}>Continue</Link>
           </Button>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogActions>
+      </MessageDialog>
 
-      <Dialog
+      <MessageDialog
         open={openPopup}
         onClose={handleClosePopup}
         data-testid="recover-dialog-error-msg"
-        fullWidth={true}
-        maxWidth='sm'
-        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
+        title={title}
       >
-        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop:'10px' }}>{title}</DialogTitle>
-        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
+        <MessageDialogContent>
           <p>{errorMessage}</p>
-        </DialogContent>
-        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+        </MessageDialogContent>
+        <MessageDialogActions>
           <Button
             variant="ghost"
             size="small"
@@ -169,8 +161,8 @@ export default function LoginForm() {
           >
             Close
           </Button>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogActions>
+      </MessageDialog>
     </Box>
   )
 }
