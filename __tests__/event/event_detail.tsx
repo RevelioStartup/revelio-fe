@@ -10,9 +10,6 @@ jest.mock('@/app/plans/AISuggestion/AIButton', () => ({
   AIButton: jest.fn().mockReturnValue(<div>Mock AIButton</div>),
 }))
 jest.mock('@/redux/api/eventApi', () => ({
-  useGetEventQuery: jest.fn(),
-}))
-jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn().mockReturnValue({
     data: { id: '1', recommend_venue: true, recommend_vendor: true },
   }),
@@ -22,6 +19,9 @@ jest.mock('@/redux/api/eventApi', () => ({
 }))
 jest.mock('@/redux/api/taskApi', () => ({
   useCreateTaskMutation: jest
+    .fn()
+    .mockReturnValue([jest.fn().mockResolvedValue({ data: { id: 1 } })]),
+  useUpdateTaskMutation: jest
     .fn()
     .mockReturnValue([jest.fn().mockResolvedValue({ data: { id: 1 } })]),
 }))
