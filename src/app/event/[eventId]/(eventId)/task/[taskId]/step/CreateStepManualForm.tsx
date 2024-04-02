@@ -1,4 +1,5 @@
 'use client'
+import { useTaskContext } from '@/components/contexts/TaskContext'
 import { Button } from '@/components/elements/Button'
 import { AddableInputField } from '@/components/elements/Forms/addableInput'
 
@@ -15,9 +16,10 @@ export const CreateStepManualForm = () => {
   const pathname = usePathname()
   const taskDetailPath = pathname.split('/create-step')[0]
 
+  const { steps: contextSteps } = useTaskContext()
   const defaultValues: CreateTaskStepRequest = {
     task_id: parseInt(params.taskId as string) ?? 0,
-    steps: [],
+    steps: contextSteps,
   }
 
   const methods = useForm<CreateTaskStepRequest>({

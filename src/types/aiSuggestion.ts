@@ -1,9 +1,10 @@
 export type AISuggestionFormType = {
   prompt: string
-  event: {
+  event?: {
     name: string
     theme: string
   }
+  event_id: string
   type: string
 }
 

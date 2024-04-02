@@ -14,7 +14,7 @@ import {
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
 import { useState, useEffect } from 'react'
-import { AddTaskStepsButton } from '../step/AddTaskStepsButton'
+import { AddTaskStepsButton } from './step/AddTaskStepsButton'
 
 export default function TaskDetailPage({
   params,

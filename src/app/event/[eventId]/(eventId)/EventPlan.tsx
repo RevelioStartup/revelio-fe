@@ -40,18 +40,20 @@ export const EventPlan: React.FC<{
   return (
     <div className="flex flex-col gap-y-4 text-gray-900">
       <table className="table w-full max-w-xl border-separate border-spacing-y-5">
-        <tr className="table-row">
-          <td className="text-teal-800 font-bold text-left"> Date </td>
-          <td className="font-medium text-left"> {date} </td>
-        </tr>
-        <tr className="table-row m-5">
-          <td className="text-teal-800 font-bold text-left"> Budget </td>
-          <td className="font-medium text-left"> {budget} </td>
-        </tr>
-        <tr className="table-row m-5">
-          <td className="text-teal-800 font-bold text-left"> Attendees </td>
-          <td className="font-medium text-left"> {attendees} </td>
-        </tr>
+        <tbody>
+          <tr className="table-row">
+            <td className="text-teal-800 font-bold text-left"> Date </td>
+            <td className="font-medium text-left"> {date} </td>
+          </tr>
+          <tr className="table-row m-5">
+            <td className="text-teal-800 font-bold text-left"> Budget </td>
+            <td className="font-medium text-left"> {budget} </td>
+          </tr>
+          <tr className="table-row m-5">
+            <td className="text-teal-800 font-bold text-left"> Attendees </td>
+            <td className="font-medium text-left"> {attendees} </td>
+          </tr>
+        </tbody>
       </table>
       <div className="flex flex-col bg-gray-50 p-5 gap-5">
         <h2 className="font-bold text-teal-800"> Objective </h2>
