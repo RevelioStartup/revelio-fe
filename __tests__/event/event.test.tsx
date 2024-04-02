@@ -8,12 +8,11 @@ import {
 } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
-import { EventDate } from '@/app/event/(event)/EventDate'
 import { useEventContext } from '@/components/contexts/EventContext'
 import React from 'react'
-import dayjs from 'dayjs'
 import { useCreateEventMutation } from '@/redux/api/eventApi'
 import { useGetAllTasksQuery } from '@/redux/api/taskApi'
+import dayjs from 'dayjs'
 
 jest.mock('@/redux/api/eventApi', () => ({
   useCreateEventMutation: jest.fn(),
@@ -64,7 +63,7 @@ describe('Test for event page', () => {
 
   it('renders name form', () => {
     const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'name' })
+    mockUseEventContext.mockReturnValue({ page: 'planner' })
 
     const { getByTestId } = render(<EventPage />)
 
@@ -73,7 +72,7 @@ describe('Test for event page', () => {
 
   it('renders input field', () => {
     const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'name' })
+    mockUseEventContext.mockReturnValue({ page: 'planner' })
 
     const { getByTestId } = render(<EventPage />)
 
@@ -82,7 +81,7 @@ describe('Test for event page', () => {
 
   it('renders next button in event name page', () => {
     const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'name' })
+    mockUseEventContext.mockReturnValue({ page: 'planner' })
 
     const { getByText } = render(<EventPage />)
 
@@ -92,7 +91,7 @@ describe('Test for event page', () => {
   it('submits event name form successfully', async () => {
     const mockUseEventContext = useEventContext as jest.Mock
     mockUseEventContext.mockReturnValue({
-      page: 'name',
+      page: 'planner',
       setEventPage: jest.fn(),
     })
 
@@ -105,149 +104,6 @@ describe('Test for event page', () => {
     fireEvent.submit(getByTestId('name-form'))
 
     await waitFor(() => expect(useAppDispatch).toHaveBeenCalledTimes(1))
-  })
-
-  it('renders default event default ', async () => {
-    const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'date' })
-
-    const { getByPlaceholderText, getByTestId } = render(<EventPage />)
-
-    const inputElement = getByPlaceholderText('MM/DD/YYYY')
-
-    fireEvent.change(inputElement, {
-      target: { value: '2025-12-12' },
-    })
-
-    fireEvent.submit(getByTestId('date-form'))
-  })
-
-  it('page rendering if page is not name, date, budget, or purpose', () => {
-    jest.mock('@/components/contexts/EventContext', () => ({
-      useEventContext: jest.fn().mockReturnValue({ setEventPage: jest.fn() }),
-    }))
-    const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'invalid' })
-
-    const { getByTestId } = render(<EventPage />)
-
-    expect(getByTestId('name-form')).toBeInTheDocument()
-  })
-
-  it('test error message when date is not selected', async () => {
-    const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'date' })
-
-    const { getByTestId, getByText } = render(<EventDate />)
-
-    fireEvent.submit(getByTestId('date-form'))
-
-    await waitFor(() =>
-      expect(
-        getByText('Please select the date of your event.')
-      ).toBeInTheDocument()
-    )
-  })
-
-  it('test error message when date is in the past', async () => {
-    const myInitialState = dayjs('2022-12-12')
-
-    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
-
-    const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'date' })
-
-    jest.mock('dayjs', () => {
-      const originalDayjs = jest.requireActual('dayjs')
-      return {
-        ...originalDayjs,
-        isBefore: jest.fn().mockReturnValue(true),
-      }
-    })
-
-    render(<EventPage />)
-
-    const { getByText } = within(screen.getByTestId('date-form'))
-    expect(getByText('Please select a future date.')).toBeInTheDocument()
-  })
-
-  it('no error if date is correct', async () => {
-    let tomorrow = new Date()
-
-    tomorrow.setDate(tomorrow.getDate() + 1)
-
-    const myInitialState = dayjs(tomorrow.toString())
-
-    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
-
-    const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({
-      page: 'date',
-      setEventPage: jest.fn(),
-    })
-
-    jest.mock('dayjs', () => {
-      const originalDayjs = jest.requireActual('dayjs')
-      return {
-        ...originalDayjs,
-        isBefore: jest.fn().mockReturnValue(true),
-      }
-    })
-
-    const { getByTestId, getByPlaceholderText } = render(<EventPage />)
-
-    const inputElement = getByPlaceholderText('MM/DD/YYYY')
-
-    fireEvent.change(inputElement, {
-      target: { value: '2025-12-12' },
-    })
-
-    fireEvent.submit(getByTestId('date-form'))
-  })
-
-  it('test error message when budget is less than 0', async () => {
-    const myInitialState = 'Please enter a valid budget.'
-
-    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
-
-    const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({ page: 'budget' })
-
-    const { getByTestId, getByText } = render(<EventPage />)
-
-    const inputElement = getByTestId('budget')
-
-    fireEvent.change(inputElement, {
-      target: { value: '-123' },
-    })
-
-    fireEvent.submit(getByTestId('budget-form'))
-
-    await waitFor(() =>
-      expect(getByText('Please enter a valid budget.')).toBeInTheDocument()
-    )
-  })
-
-  it('no error if budget is correct', async () => {
-    const myInitialState = ''
-
-    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
-
-    const mockUseEventContext = useEventContext as jest.Mock
-    mockUseEventContext.mockReturnValue({
-      page: 'budget',
-      setEventPage: jest.fn(),
-    })
-
-    const { getByTestId } = render(<EventPage />)
-
-    const inputElement = getByTestId('budget')
-
-    fireEvent.change(inputElement, {
-      target: { value: '123000' },
-    })
-
-    fireEvent.submit(getByTestId('budget-form'))
   })
 
   it('test error message when purpose is not selected', async () => {
@@ -457,5 +313,51 @@ describe('Test for event page', () => {
     const { getByTestId } = render(<EventPage />)
 
     fireEvent.submit(getByTestId('purpose-form'))
+  })
+
+  it('test if createEvetData is null', async () => {
+    const myInitialState = dayjs('2022-12-12')
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+
+    jest.mock('dayjs', () => {
+      const originalDayjs = jest.requireActual('dayjs')
+      return {
+        ...originalDayjs,
+        isBefore: jest.fn().mockReturnValue(true),
+      }
+    })
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({
+      page: 'planner',
+    })
+
+    const { getByTestId } = render(<EventPage />)
+
+    fireEvent.submit(getByTestId('name-form'))
+  })
+
+  it('test if createEvetData is null', async () => {
+    const myInitialState = dayjs('2024-12-12')
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+
+    jest.mock('dayjs', () => {
+      const originalDayjs = jest.requireActual('dayjs')
+      return {
+        ...originalDayjs,
+        isBefore: jest.fn().mockReturnValue(true),
+      }
+    })
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({
+      page: 'planner',
+    })
+
+    const { getByTestId } = render(<EventPage />)
+
+    fireEvent.submit(getByTestId('name-form'))
   })
 })
