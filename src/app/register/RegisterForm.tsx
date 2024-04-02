@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  Typography,
 } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import {
@@ -15,7 +16,6 @@ import {
 import Link from 'next/link'
 import { Input } from '@/components/elements/Forms/input'
 import { Button } from '@/components/elements/Button'
-import { Typography } from '@mui/material'
 
 type RegisterFormType = {
   username: string
