@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import TaskDetailPage from '@/app/event/[eventId]/(eventId)/task/[taskId]/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
 import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
