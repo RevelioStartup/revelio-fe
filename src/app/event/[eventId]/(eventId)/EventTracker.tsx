@@ -122,12 +122,9 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
       </div>
 
       {tasks.map((task) => (
-        <div
-          className="bg-gray-50 p-5 rounded-[20px]"
-          key={task.id}
-        >      
+        <div className="bg-gray-50 p-5 rounded-[20px]" key={task.id}>
           <div className="flex flex-col gap-5">
-          {/* <button
+            {/* <button
             data-testid="edit-button"
             onClick={() => {
               handleEditToggle(!isEditing)
@@ -136,34 +133,37 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
             <i className="i-ph-pencil-bold text-blue-500 size-5" />
           </button> */}
 
-          {!isEditing ? (
-            <Box>
-            <div className="flex flex-row justify-between items-center gap-5">
-            <div>
-              <h2 className="text-teal-800 font-semibold"> {task.title} </h2>
-              <p className="text-gray-900"> {task.description} </p>
-            </div>
-              <button
-              data-testid="edit-button"
-              onClick={() => {
-                handleEditToggle(!isEditing)
-              }}
-              className="ml-auto"
-            >
-              <i className="i-ph-pencil-bold text-blue-500 size-5" />
-            </button>
-            </div>
-            </Box>
-          ) : (
-            <UpdateTaskForm
-              id={task.id}
-              title={task.title}
-              description={task.description}
-              event={task.event}
-              setIsEditing={handleEditToggle}
-            />
-          )}
-        </div>
+            {!isEditing ? (
+              <Box>
+                <div className="flex flex-row justify-between items-center gap-5">
+                  <div>
+                    <h2 className="text-teal-800 font-semibold">
+                      {' '}
+                      {task.title}{' '}
+                    </h2>
+                    <p className="text-gray-900"> {task.description} </p>
+                  </div>
+                  <button
+                    data-testid="edit-button"
+                    onClick={() => {
+                      handleEditToggle(!isEditing)
+                    }}
+                    className="ml-auto"
+                  >
+                    <i className="i-ph-pencil-bold text-blue-500 size-5" />
+                  </button>
+                </div>
+              </Box>
+            ) : (
+              <UpdateTaskForm
+                id={task.id}
+                title={task.title}
+                description={task.description}
+                event={task.event}
+                setIsEditing={handleEditToggle}
+              />
+            )}
+          </div>
 
           <div className="flex items-center gap-x-4">
             <p> Status </p>
