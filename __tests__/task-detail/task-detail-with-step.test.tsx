@@ -1,7 +1,10 @@
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import TaskDetailPage from '@/app/event/[eventId]/(eventId)/task/[taskId]/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
-import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
+import {
+  useDeleteTaskMutation,
+  useGetTaskDetailQuery,
+} from '@/redux/api/taskApi'
 import {
   useDeleteAllTaskStepsMutation,
   useDeleteTaskStepMutation,
@@ -15,6 +18,7 @@ jest.mock('@/redux/api/eventApi', () => ({
 
 jest.mock('@/redux/api/taskApi', () => ({
   useGetTaskDetailQuery: jest.fn(),
+  useDeleteTaskMutation: jest.fn(),
 }))
 
 jest.mock('@/redux/api/taskStepApi', () => ({
@@ -129,6 +133,9 @@ describe('TaskDetailPage with step', () => {
     isLoading: false,
   })
 
+  const mockDeleteTaskMutation = useDeleteTaskMutation as jest.Mock
+  mockDeleteTaskMutation.mockReturnValue([jest.fn(), { isLoading: false }])
+
   const createDeleteResponse = (message: string) => ({ data: { message } })
 
   beforeEach(() => {
@@ -237,5 +244,27 @@ describe('TaskDetailPage with step', () => {
     const buttonBack = screen.getByTestId('2-back')
     fireEvent.click(buttonBack)
     expect(screen.getByTestId('1-back')).toBeInTheDocument()
+  })
+
+  test('delete task correctly', async () => {
+    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+
+    const buttonDelete = screen.getByTestId('delete-task')
+    fireEvent.click(buttonDelete)
+    await waitFor(() => expect(mockDeleteTaskMutation).toHaveBeenCalledTimes(1))
+  })
+
+  test('delete task error', async () => {
+    const mockDeleteTaskMutation = useDeleteTaskMutation as jest.Mock
+    mockDeleteTaskMutation.mockReturnValue([
+      jest.fn().mockRejectedValue(new Error()),
+      { isLoading: false },
+    ])
+
+    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+
+    const buttonDelete = screen.getByTestId('delete-task')
+    fireEvent.click(buttonDelete)
+    await waitFor(() => expect(mockDeleteTaskMutation).toHaveBeenCalledTimes(1))
   })
 })
