@@ -1,9 +1,11 @@
+'use client'
 import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
 import { TextArea } from '@/components/elements/Forms/textarea'
 import { Box, Dialog, DialogTitle, DialogActions } from '@mui/material'
 import { Button } from '@/components/elements/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { StepUpdateRequest } from './StepStepper'
+import { useEffect } from 'react'
 
 type UpdateStepFormType = {
   name: string
@@ -39,7 +41,12 @@ export default function EditStepDialog({
   const [updateTaskStep] = useUpdateTaskStepMutation()
 
   const methods = useForm<UpdateStepFormType>({ defaultValues: defaultValues })
-  const { control, handleSubmit, reset } = methods
+  const { control, handleSubmit, reset, setValue } = methods
+
+  useEffect(() => {
+    setValue('name', prevName)
+    setValue('description', prevDesc)
+  }, [setValue, prevName, prevDesc])
 
   const editTaskStep = async (id: string, changes: StepUpdateRequest) => {
     await updateTaskStep({ id, changes }).then((res) => {})

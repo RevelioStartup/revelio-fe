@@ -105,25 +105,14 @@ export default function StepStepper({ taskId, task }: Props) {
   }, [steps])
 
   const editTaskStep = async (id: string, changes: StepUpdateRequest) => {
-    await updateTaskStep({ id, changes }).then((res) => {})
+    await updateTaskStep({ id, changes })
   }
 
   const handleClosePopup = () => {
     setOpenPrompt(false)
   }
 
-  const handleOpenPopup = (
-    id: string,
-    name: string,
-    description: string,
-    status: string,
-    step_order: number
-  ) => {
-    setId(id)
-    setName(name)
-    setDescription(description)
-    setStatus(status)
-    setStepOrder(step_order)
+  const handleOpenPopup = () => {
     setOpenPrompt(true)
   }
 
@@ -179,15 +168,14 @@ export default function StepStepper({ taskId, task }: Props) {
                         <Button
                           variant="primary"
                           data-testid="button-edit-form"
-                          onClick={() =>
-                            handleOpenPopup(
-                              step.id,
-                              step.name,
-                              step.description,
-                              step.status,
-                              step.step_order
-                            )
-                          }
+                          onClick={() => {
+                            setId(step.id)
+                            setName(step.name)
+                            setDescription(step.description)
+                            setStatus(step.status)
+                            setStepOrder(step.step_order)
+                            handleOpenPopup()
+                          }}
                         >
                           Edit Step
                         </Button>{' '}

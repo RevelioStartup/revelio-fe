@@ -8,23 +8,11 @@ import { useGetEventQuery } from '@/redux/api/eventApi'
 import { Box } from '@mui/material'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
-import { AddTaskStepsButton } from '../step/AddTaskStepsButton'
+
 import StepStepper from './StepStepper'
+import { AddTaskStepsButton } from './step/AddTaskStepsButton'
 import { LoadingButton } from '@mui/lab'
 import toast from 'react-hot-toast'
-
-type StepUpdateRequest = {
-  name: string
-  description: string
-  status: string
-  step_order: number
-  task: string
-}
-
-type UpdateStepFormType = {
-  name: string
-  description: string
-}
 
 export default function TaskDetailPage({
   params,
