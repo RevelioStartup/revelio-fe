@@ -25,11 +25,15 @@ describe('Home Page', () => {
 })
 
 it('clicking on a question toggles visibility of its text', () => {
-  render(<Home />);
-  
-  const questionButton = screen.getByText(/What is Revelio, and how will it help me\?/i);
-  fireEvent.click(questionButton);
-  
-  const text = screen.getByText(/Revelio is a one-stop event planning app that will ease your whole event planning activity/i);
-  expect(text).toBeVisible();
-});
+  render(<Home />)
+
+  const questionButton = screen.getByText(
+    /What is Revelio, and how will it help me\?/i
+  )
+  fireEvent.click(questionButton)
+
+  const text = screen.getByText(
+    /Revelio is a one-stop event planning app that will ease your whole event planning activity/i
+  )
+  expect(text).toBeVisible()
+})

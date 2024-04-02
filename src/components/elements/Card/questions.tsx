@@ -38,6 +38,7 @@ function Questions() {
       {items.map((item) => (
         <div key={item.id} className="flex flex-col gap-4 mt-5">
           <button
+            id={item.id.toString()}
             className="flex items-center justify-between hover:text-[#14b8a6] hover:text-bold"
             style={{ transition: '0.2s ease' }}
             onClick={() => handleToggle(item.id)}
