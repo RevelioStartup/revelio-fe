@@ -25,8 +25,12 @@ test('UpdateTaskForm submits the correct data', async () => {
     </Provider>
   )
 
-  fireEvent.change(getByTestId('input-update-title'), { target: { value: 'New Title' } })
-  fireEvent.change(getByTestId('input-update-description'), { target: { value: 'New Description' } })
+  fireEvent.change(getByTestId('input-update-title'), {
+    target: { value: 'New Title' },
+  })
+  fireEvent.change(getByTestId('input-update-description'), {
+    target: { value: 'New Description' },
+  })
   fireEvent.submit(getByTestId('task-update-form'))
 
   await waitFor(() => {
