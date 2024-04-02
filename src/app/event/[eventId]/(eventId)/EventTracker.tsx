@@ -124,15 +124,6 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
       {tasks.map((task) => (
         <div className="bg-gray-50 p-5 rounded-[20px]" key={task.id}>
           <div className="flex flex-col gap-5">
-            {/* <button
-            data-testid="edit-button"
-            onClick={() => {
-              handleEditToggle(!isEditing)
-            }}
-          >
-            <i className="i-ph-pencil-bold text-blue-500 size-5" />
-          </button> */}
-
             {!isEditing ? (
               <Box>
                 <div className="flex flex-row justify-between items-center gap-5">
