@@ -1,4 +1,8 @@
-import { Task as TaskObject, CreateTaskRequest } from '@/types/task'
+import {
+  Task as TaskObject,
+  CreateTaskRequest,
+  UpdateTaskRequest,
+} from '@/types/task'
 import { baseApi } from './baseApi'
 import { Task } from '@/types/taskDetails'
 
@@ -36,6 +40,14 @@ export const taskApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
+    updateTask: builder.mutation<Task, UpdateTaskRequest>({
+      query: (body) => ({
+        url: `/tasks/${body.event}/${body.id}/`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: (result) => [{ type: 'Task', id: result?.id }, 'Task'],
+    }),
   }),
 })
 
@@ -43,5 +55,6 @@ export const {
   useGetTaskDetailQuery,
   useCreateTaskMutation,
   useGetAllTasksQuery,
+  useUpdateTaskMutation,
   useDeleteTaskMutation,
 } = taskApi
