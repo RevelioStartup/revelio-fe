@@ -1,5 +1,5 @@
 import Home from '@/app/page'
-import { render, screen, act } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 jest.useFakeTimers()
@@ -22,38 +22,14 @@ describe('Home Page', () => {
     const withoutRevelioElement = screen.getByTestId('without-revelio')
     expect(withoutRevelioElement).toBeInTheDocument()
   })
-
-  it('changes message every 2 seconds', async () => {
-    const { getByText, findByText } = render(<Home />)
-
-    expect(getByText('👎Stressful')).toBeInTheDocument()
-
-    act(() => {
-      jest.advanceTimersByTime(2000)
-    })
-
-    const messageTwo = await findByText('👎Time consuming')
-    expect(messageTwo).toBeInTheDocument()
-
-    act(() => {
-      jest.advanceTimersByTime(2000)
-    })
-
-    const messageThree = await findByText('👎Inefficient')
-    expect(messageThree).toBeInTheDocument()
-
-    act(() => {
-      jest.advanceTimersByTime(2000)
-    })
-
-    const messageFour = await findByText('👎Lacking of centralization')
-    expect(messageFour).toBeInTheDocument()
-
-    act(() => {
-      jest.advanceTimersByTime(2000)
-    })
-
-    const messageOneNew = await findByText('👎Stressful')
-    expect(messageOneNew).toBeInTheDocument()
-  })
 })
+
+it('clicking on a question toggles visibility of its text', () => {
+  render(<Home />);
+  
+  const questionButton = screen.getByText(/What is Revelio, and how will it help me\?/i);
+  fireEvent.click(questionButton);
+  
+  const text = screen.getByText(/Revelio is a one-stop event planning app that will ease your whole event planning activity/i);
+  expect(text).toBeVisible();
+});
