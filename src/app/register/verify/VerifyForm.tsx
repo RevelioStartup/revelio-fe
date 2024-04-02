@@ -1,18 +1,16 @@
 'use client'
 import { useState } from 'react'
 import { Input } from '@/components/elements/Forms/input'
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useVerifyEmailMutation } from '@/redux/api/authApi'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
+import {
+  MessageDialog,
+  MessageDialogActions,
+  MessageDialogContent,
+} from '@/components/elements/Dialog/messageDialog'
 
 type VerifyEmailFormType = {
   token: string
@@ -83,26 +81,31 @@ export default function VerifyEmailForm() {
         <Button type="submit">Verify</Button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="verify-redirect-success-msg">
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+      <MessageDialog
+        open={openPrompt}
+        data-testid="verify-redirect-success-msg"
+        title={dialogTitle}
+      >
+        <MessageDialogContent>
           <p>{message}</p>
-        </DialogContent>
-        <DialogActions>
-          <Link href={'/'}>Continue</Link>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogContent>
+        <MessageDialogActions>
+          <Button>
+            <Link href={'/'}>Continue</Link>
+          </Button>
+        </MessageDialogActions>
+      </MessageDialog>
 
-      <Dialog
+      <MessageDialog
         open={openPopup}
         onClose={handleClosePopUP}
         data-testid="verify-dialog-error-msg"
+        title={dialogTitle}
       >
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+        <MessageDialogContent>
           <p>{errorMessage}</p>
-        </DialogContent>
-        <DialogActions>
+        </MessageDialogContent>
+        <MessageDialogActions>
           <Button
             size="small"
             variant={'ghost'}
@@ -111,8 +114,8 @@ export default function VerifyEmailForm() {
           >
             Close
           </Button>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogActions>
+      </MessageDialog>
     </Box>
   )
 }

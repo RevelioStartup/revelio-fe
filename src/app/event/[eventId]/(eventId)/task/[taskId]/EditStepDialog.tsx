@@ -1,11 +1,12 @@
 'use client'
+
 import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
 import { TextArea } from '@/components/elements/Forms/textarea'
-import { Box, Dialog, DialogTitle, DialogActions } from '@mui/material'
+import { Box } from '@mui/material'
 import { Button } from '@/components/elements/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { StepUpdateRequest } from './StepStepper'
-import { useEffect } from 'react'
+import { FormDialog, FormDialogActions } from '@/components/elements/Dialog'
 
 type UpdateStepFormType = {
   name: string
@@ -41,12 +42,7 @@ export default function EditStepDialog({
   const [updateTaskStep] = useUpdateTaskStepMutation()
 
   const methods = useForm<UpdateStepFormType>({ defaultValues: defaultValues })
-  const { control, handleSubmit, reset, setValue } = methods
-
-  useEffect(() => {
-    setValue('name', prevName)
-    setValue('description', prevDesc)
-  }, [setValue, prevName, prevDesc])
+  const { control, handleSubmit, reset } = methods
 
   const editTaskStep = async (id: string, changes: StepUpdateRequest) => {
     await updateTaskStep({ id, changes }).then((res) => {})
@@ -69,13 +65,13 @@ export default function EditStepDialog({
 
   return (
     <Box>
-      <Dialog
+      <FormDialog
         open={openForm}
         onClose={onClose}
         data-testid="login-dialog-recover"
+        title="Edit Step"
       >
-        <DialogTitle>Edit Step</DialogTitle>
-        <DialogActions>
+        <FormDialogActions>
           <div className="flex flex-col gap-3" style={{ flex: 1 }}>
             <form
               className="flex flex-col gap-3"
@@ -108,8 +104,8 @@ export default function EditStepDialog({
               Close
             </Button>
           </div>
-        </DialogActions>
-      </Dialog>
+        </FormDialogActions>
+      </FormDialog>
     </Box>
   )
 }

@@ -1,6 +1,5 @@
 'use client'
 import { Box, Typography } from '@mui/material'
-import Link from 'next/link'
 
 export default function RegisterPageTitle() {
   return (
@@ -20,12 +19,6 @@ export default function RegisterPageTitle() {
       <Box sx={{ flex: 1, textAlign: 'left' }} data-testid="register-title">
         <Typography variant="h3" fontWeight={'bold'}>
           Register to Plan Your Event
-        </Typography>
-        <Typography fontWeight={'bold'}>
-          If you already have an account, you can{' '}
-          <Link style={{ color: 'teal' }} href="/login">
-            Log In Here
-          </Link>
         </Typography>
       </Box>
     </Box>
