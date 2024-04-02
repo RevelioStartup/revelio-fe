@@ -1,4 +1,8 @@
-import { Task as TaskObject, CreateTaskRequest, UpdateTaskRequest } from '@/types/task'
+import {
+  Task as TaskObject,
+  CreateTaskRequest,
+  UpdateTaskRequest,
+} from '@/types/task'
 import { baseApi } from './baseApi'
 import { Task } from '@/types/taskDetails'
 
@@ -31,10 +35,7 @@ export const taskApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: (result) => [
-        { type: 'Task', id: result?.id },
-        'Task',
-      ],
+      invalidatesTags: (result) => [{ type: 'Task', id: result?.id }, 'Task'],
     }),
   }),
 })

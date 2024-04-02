@@ -33,13 +33,13 @@ export default function EventDetail({
 
   const tasks = [
     {
-      "id": 48,
-      "task_steps": [],
-      "title": "wakwaw",
-      "description": "wikwok",
-      "status": "Not Started",
-      "event": "82a6c841-f7b8-48b0-bb85-8d9630b70913"
-  }
+      id: 48,
+      task_steps: [],
+      title: 'wakwaw',
+      description: 'wikwok',
+      status: 'Not Started',
+      event: '82a6c841-f7b8-48b0-bb85-8d9630b70913',
+    },
   ]
 
   const renderComponent = () => {
