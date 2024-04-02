@@ -44,7 +44,7 @@ export const taskStepApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: changes,
       }),
-      invalidatesTags: ['Step'],
+      invalidatesTags: (result) => [{ type: 'Task', id: result?.id }],
     }),
 
     deleteTaskStep: builder.mutation<void, { id: string }>({
