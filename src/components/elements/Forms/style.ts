@@ -1,14 +1,14 @@
 import { VariantProps, cva } from 'class-variance-authority'
 
 export const InputVariants = cva(
-  'flex w-full rounded-md bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  'flex w-full rounded-md bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:cursor-not-allowed disabled:opacity-50 rounded-2xl px-5 py-4 placeholder:font-medium font-medium text-slate-600',
   {
     variants: {
       variant: {
-        active: 'border-none',
+        active: '!border !border-teal-100',
       },
       color: {
-        white: 'bg-slate-100 text-slate-800 placeholder:text-slate-400',
+        white: '!bg-white text-slate-800 placeholder:text-slate-400',
         teal: 'bg-teal-400 text-white placeholder:text-teal-200',
       },
       border: {

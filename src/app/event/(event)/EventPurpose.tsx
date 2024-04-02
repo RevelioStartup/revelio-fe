@@ -105,7 +105,6 @@ export const EventPurpose: React.FC = () => {
             data-testid="objective"
             placeholder="Write your event objectives"
             required
-            className="bg-slate-100 placeholder:text-slate-800 placeholder:font-bold !border-none placeholder:text-center flex justify-center rounded-[10px]"
           />
           <Input
             control={control}
@@ -115,7 +114,6 @@ export const EventPurpose: React.FC = () => {
             data-testid="attendees"
             placeholder="How many people are you inviting"
             required
-            className="bg-slate-100 placeholder:text-slate-800 placeholder:font-bold !border-none placeholder:text-center flex justify-center rounded-[10px]"
           />
           <Input
             control={control}
@@ -124,7 +122,6 @@ export const EventPurpose: React.FC = () => {
             data-testid="theme"
             placeholder="The theme of the event"
             required
-            className="bg-slate-100 placeholder:text-slate-800 placeholder:font-bold !border-none placeholder:text-center flex justify-center rounded-[10px]"
           />
           <div className="flex flex-col gap-3">
             <InputLabel id="services">
@@ -137,7 +134,7 @@ export const EventPurpose: React.FC = () => {
               multiple
               value={services}
               onChange={handleChange}
-              className="bg-slate-100 border-slate-100 outline-none rounded-[10px]"
+              className="!border-teal-100 border !rounded-2xl !focus:ring-teal-100 !focus:border-teal-100 !text-slate-600 !font-medium !hover:border-teal-200"
             >
               {listOfServices.map((service) => (
                 <MenuItem key={service} value={service}>
@@ -149,7 +146,7 @@ export const EventPurpose: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-y-12 w-1/2">
+      <div className="flex flex-col gap-y-12 w-1/2 items-center">
         <Image
           src="/assets/images/Illustration.svg"
           alt="illustration"
@@ -159,7 +156,7 @@ export const EventPurpose: React.FC = () => {
         />
         <LoadingButton
           type="submit"
-          className="!text-center !font-bold rounded-lg flex justify-center !w-full m-auto !bg-teal-400"
+          className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-teal-600 !text-white !w-full max-w-sm !px-6 !py-3"
           loading={isLoading}
           loadingIndicator={'Creating...'}
         >
