@@ -3,9 +3,14 @@ import TaskDetailPage from '@/app/event/[eventId]/(eventId)/task/[taskId]/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
 import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
 import '@testing-library/jest-dom'
+import { useCreateTaskStepWithAIMutation } from '@/redux/api/taskStepApi'
 
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
+}))
+
+jest.mock('@/redux/api/taskStepApi', () => ({
+  useCreateTaskStepWithAIMutation: jest.fn(),
 }))
 
 jest.mock('@/redux/api/taskApi', () => ({
@@ -32,19 +37,26 @@ describe('TaskDetailPage with no step', () => {
     status: 'task status',
     event: '3',
   }
+  beforeEach(() => {
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
 
-  const mockGetEventQuery = useGetEventQuery as jest.Mock
+    mockGetEventQuery.mockReturnValue({
+      data: mockEventData3,
+      isLoading: false,
+    })
 
-  mockGetEventQuery.mockReturnValue({
-    data: mockEventData3,
-    isLoading: false,
-  })
+    const mockGetTaskDetailQuery = useGetTaskDetailQuery as jest.Mock
 
-  const mockGetTaskDetailQuery = useGetTaskDetailQuery as jest.Mock
+    mockGetTaskDetailQuery.mockReturnValue({
+      data: mockTaskData3,
+      isLoading: false,
+    })
 
-  mockGetTaskDetailQuery.mockReturnValue({
-    data: mockTaskData3,
-    isLoading: false,
+    const mockGenerateStepsWithAI = jest.fn()
+    ;(useCreateTaskStepWithAIMutation as jest.Mock).mockReturnValue([
+      mockGenerateStepsWithAI,
+      { data: { task_id: 3, steps: ['Step 1', 'Step 2'] }, isSuccess: false },
+    ])
   })
 
   test('renders task details when not loading and data is available but no step', () => {
