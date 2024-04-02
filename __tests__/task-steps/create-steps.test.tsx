@@ -9,7 +9,7 @@ import { useCreateTaskStepManuallyMutation } from '@/redux/api/taskStepApi'
 import { toast } from 'react-hot-toast'
 
 import { redirect, useParams, usePathname } from 'next/navigation'
-import { CreateStepManualForm } from '@/app/event/[eventId]/(eventId)/task/step/CreateStepManualForm'
+import { CreateStepManualForm } from '@/app/event/[eventId]/(eventId)/task/[taskId]/step/CreateStepManualForm'
 
 jest.mock('next/navigation', () => ({
   redirect: jest.fn(),
