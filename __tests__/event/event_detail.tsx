@@ -21,6 +21,10 @@ jest.mock('@/redux/api/taskApi', () => ({
   useCreateTaskMutation: jest
     .fn()
     .mockReturnValue([jest.fn().mockResolvedValue({ data: { id: 1 } })]),
+  useGetAllTasksQuery: jest.fn().mockReturnValue({
+    data: [],
+    isLoading: false,
+  }),
   useUpdateTaskMutation: jest
     .fn()
     .mockReturnValue([jest.fn().mockResolvedValue({ data: { id: 1 } })]),

@@ -1,7 +1,11 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import TaskDetailPage from '@/app/event/[eventId]/(eventId)/task/[taskId]/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
-import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
+import {
+  useDeleteTaskMutation,
+  useGetTaskDetailQuery,
+} from '@/redux/api/taskApi'
+import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
 import '@testing-library/jest-dom'
 
 jest.mock('@/redux/api/eventApi', () => ({
@@ -10,6 +14,11 @@ jest.mock('@/redux/api/eventApi', () => ({
 
 jest.mock('@/redux/api/taskApi', () => ({
   useGetTaskDetailQuery: jest.fn(),
+  useDeleteTaskMutation: jest.fn(),
+}))
+
+jest.mock('@/redux/api/taskStepApi', () => ({
+  useUpdateTaskStepMutation: jest.fn(),
 }))
 
 describe('TaskDetailPage loading', () => {
@@ -47,7 +56,17 @@ describe('TaskDetailPage loading', () => {
     isLoading: true,
   })
 
+  const mockDeleteTaskMutation = useDeleteTaskMutation as jest.Mock
+  mockDeleteTaskMutation.mockReturnValue([jest.fn(), { isLoading: false }])
+
   test('renders loading spinner when loading', () => {
+    const mockUseUpdateTaskStepMutation = jest
+      .fn()
+      .mockResolvedValue({ data: {} })
+    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateTaskStepMutation,
+    ])
+
     render(<TaskDetailPage params={{ eventId: '3', taskId: '3' }} />)
 
     expect(screen.getByTestId('loader')).toBeInTheDocument()

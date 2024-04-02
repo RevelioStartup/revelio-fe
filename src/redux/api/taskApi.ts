@@ -9,19 +9,30 @@ export const taskApi = baseApi.injectEndpoints({
         url: `/tasks/${id}/`,
         method: 'GET',
       }),
-      providesTags: ['Task'],
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({ type: 'Task', id: id }))
+          : [{ type: 'Task' }],
     }),
     getTaskDetail: builder.query<Task, { eventId: string; taskId: string }>({
       query: ({ eventId, taskId }) => ({
         url: `/tasks/${eventId}/${taskId}/`,
         method: 'GET',
       }),
+      providesTags: (result) => [{ type: 'Task', id: result?.id }],
     }),
     createTask: builder.mutation<TaskObject, CreateTaskRequest>({
       query: (body) => ({
         url: '/tasks/',
         method: 'POST',
         body,
+      }),
+      invalidatesTags: ['Task'],
+    }),
+    deleteTask: builder.mutation<void, { eventId: string; taskId: string }>({
+      query: ({ eventId, taskId }) => ({
+        url: `/tasks/${eventId}/${taskId}/`,
+        method: 'DELETE',
       }),
       invalidatesTags: ['Task'],
     }),
@@ -32,4 +43,5 @@ export const {
   useGetTaskDetailQuery,
   useCreateTaskMutation,
   useGetAllTasksQuery,
+  useDeleteTaskMutation,
 } = taskApi
