@@ -6,6 +6,8 @@ import { Chip } from '@mui/material'
 import React from 'react'
 import { EventPlan } from './EventPlan'
 import { EventTracker } from './EventTracker'
+import { useGetAllTasksQuery } from '@/redux/api/taskApi'
+import { Task } from '@/types/task'
 
 const CHIP_STYLE = '!font-bold !p-5 !border-none'
 const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
@@ -21,6 +23,12 @@ export default function EventDetail({
   >('plan')
   const { data, isLoading } = useGetEventQuery(params.eventId)
 
+  const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(
+    params.eventId
+  )
+
+  console.log(trackerData)
+
   const handleClick = (type: 'plan' | 'timeline' | 'tracker') => {
     setChipType(type)
   }
@@ -33,12 +41,14 @@ export default function EventDetail({
         case 'timeline':
           return <div> Timeline </div>
         case 'tracker':
-          return <EventTracker {...data} />
+          return (
+            <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
+          )
       }
     }
   }
 
-  return isLoading || !data ? (
+  return isLoading || trackerLoading || !trackerData || !data ? (
     <div className="flex flex-col justify-center items-center min-h-[90vh]">
       <div data-testid="loader" className="loader"></div>
     </div>

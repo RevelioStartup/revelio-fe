@@ -13,6 +13,7 @@ import { useEventContext } from '@/components/contexts/EventContext'
 import React from 'react'
 import dayjs from 'dayjs'
 import { useCreateEventMutation } from '@/redux/api/eventApi'
+import { useGetAllTasksQuery } from '@/redux/api/taskApi'
 
 jest.mock('@/redux/api/eventApi', () => ({
   useCreateEventMutation: jest.fn(),
@@ -27,12 +28,22 @@ jest.mock('@/components/contexts/EventContext', () => ({
   useEventContext: jest.fn().mockReturnValue({ setEventPage: jest.fn() }),
 }))
 
+jest.mock('@/redux/api/taskApi', () => ({
+  useGetAllTasksQuery: jest.fn(),
+}))
+
 describe('Test for event page', () => {
   beforeEach(() => {
     const mockDispatch = jest.fn()
     ;(useAppDispatch as jest.Mock).mockReturnValue(mockDispatch)
     const mockCreateEvent = jest.fn().mockResolvedValue({ data: {} })
     ;(useCreateEventMutation as jest.Mock).mockReturnValue([mockCreateEvent])
+
+    const mockGetAllTasksQuery = useGetAllTasksQuery as jest.Mock
+    mockGetAllTasksQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+    })
 
     const mockUseAppSelector = useAppSelector as jest.Mock
     mockUseAppSelector.mockReturnValue({

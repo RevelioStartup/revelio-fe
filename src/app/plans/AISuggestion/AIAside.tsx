@@ -11,6 +11,7 @@ import {
 } from '@/redux/api/aiSuggestionApi'
 import Toggle from '@/components/elements/Toggle'
 import { AIType } from './constants'
+import { useParams } from 'next/navigation'
 
 interface AIAsideProps {
   isOpen: boolean
@@ -18,8 +19,11 @@ interface AIAsideProps {
 }
 
 export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
+  const params = useParams()
   const [askAI, { isLoading }] = useAskSuggestionMutation()
-  const { data: aiHistory } = useAiSuggestionHistoryListQuery()
+  const { data: aiHistory } = useAiSuggestionHistoryListQuery({
+    event_id: params.eventId as string,
+  })
   const [selectedType, setSelectedType] = useState(0)
   const defaultValues: AISuggestionFormType = {
     prompt: '',
@@ -27,6 +31,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
       name: '',
       theme: '',
     },
+    event_id: params.eventId as string,
     type: AIType[selectedType].value,
   }
 

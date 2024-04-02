@@ -1,27 +1,18 @@
 'use client'
 
-import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
-import { useGetEventQuery } from '@/redux/api/eventApi'
 import {
-  Box,
-} from '@mui/material'
+  useDeleteTaskMutation,
+  useGetTaskDetailQuery,
+} from '@/redux/api/taskApi'
+import { useGetEventQuery } from '@/redux/api/eventApi'
+import { Box } from '@mui/material'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
-import { AddTaskStepsButton } from '../step/AddTaskStepsButton'
+
 import StepStepper from './StepStepper'
-
-type StepUpdateRequest = {
-  name: string
-  description: string
-  status: string
-  step_order: number
-  task: string
-}
-
-type UpdateStepFormType = {
-  name: string
-  description: string
-}
+import { AddTaskStepsButton } from './step/AddTaskStepsButton'
+import { LoadingButton } from '@mui/lab'
+import toast from 'react-hot-toast'
 
 export default function TaskDetailPage({
   params,
@@ -31,7 +22,19 @@ export default function TaskDetailPage({
 
   const { data: taskData, isLoading } = useGetTaskDetailQuery(params)
   const { data: eventData } = useGetEventQuery(params.eventId)
+  const [deleteTask, { isLoading: deleteLoading }] = useDeleteTaskMutation()
+
   const steps = taskData?.task_steps
+
+  const deleteTaskMethod = async (eventId: string, taskId: string) => {
+    try {
+      await deleteTask({ eventId, taskId })
+      toast.success('Task deleted successfully')
+      window.location.assign(`/event/${eventId}`)
+    } catch (error) {
+      toast.error('Failed to delete task')
+    }
+  }
 
   return !isLoading && taskData?.task_steps ? (
     <div className="flex flex-col gap-y-4">
@@ -40,10 +43,22 @@ export default function TaskDetailPage({
         {eventData?.name}{' '}
       </h1>
       <span className="border-t-2 border-teal-600"> </span>
-      <h2 className="font-bold text-3xl text-teal-600 capitalize">
+      <div className="font-bold text-3xl text-teal-600 capitalize w-full flex justify-between">
         {' '}
-        {taskData?.title}{' '}
-      </h2>
+        <h2 className="font-bold text-3xl text-teal-600 capitalize">
+          {' '}
+          {taskData?.title}{' '}
+        </h2>
+        <LoadingButton
+          className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-red-500 !text-white !px-4 !py-2"
+          loading={deleteLoading}
+          loadingIndicator={'Creating...'}
+          onClick={() => deleteTaskMethod(params.eventId, params.taskId)}
+          data-testid="delete-task"
+        >
+          Delete{' '}
+        </LoadingButton>
+      </div>
       <table className="table w-full max-w-xl border-separate border-spacing-y-5">
         <tbody>
           <tr className="table-row">
@@ -51,14 +66,8 @@ export default function TaskDetailPage({
             <td className="font-medium text-left"> {eventData?.date} </td>
           </tr>
           <tr className="table-row">
-            <td className="text-teal-800 font-bold text-left">
-              {' '}
-              Description{' '}
-            </td>
-            <td className="font-medium text-left">
-              {' '}
-              {taskData?.description}{' '}
-            </td>
+            <td className="text-teal-800 font-bold text-left"> Description </td>
+            <td className="font-medium text-left"> {taskData?.description} </td>
           </tr>
           <tr className="table-row">
             <td className="text-teal-800 font-bold text-left"> Status </td>
@@ -70,7 +79,7 @@ export default function TaskDetailPage({
         {steps?.length === 0 ? (
           <AddTaskStepsButton />
         ) : (
-          <StepStepper taskId={params.taskId} task={taskData}/>
+          <StepStepper taskId={params.taskId} task={taskData} />
         )}
       </Box>
       <Link href={`/event/${eventData?.id}`}>

@@ -1,13 +1,7 @@
 import { EventTracker } from '@/app/event/[eventId]/(eventId)/EventTracker'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import {
-  render,
-  fireEvent,
-  waitFor,
-  getByTestId,
-  queryByTestId,
-} from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 jest.mock('@/redux/api/eventApi', () => ({
@@ -36,12 +30,35 @@ describe('EventTracker', () => {
     services: 'Test Services',
     recommend_venue: true,
     recommend_vendor: true,
+    tasks: [
+      {
+        id: 1,
+        title: 'Test Task',
+        description: 'Test Description',
+        event: '1',
+        status: 'Not Started',
+      },
+      {
+        id: 2,
+        title: 'Test Task 2',
+        description: 'Test Description 2',
+        event: '1',
+        status: 'On Progress',
+      },
+      {
+        id: 3,
+        title: 'Test Task 3',
+        description: 'Test Description 3',
+        event: '1',
+        status: 'Done',
+      },
+    ],
   }
 
   it('renders without crashing', () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <EventTracker {...props} tasks={[]} />
+        <EventTracker {...props} tasks={props.tasks} />
       </Provider>
     )
     expect(getByTestId('label-1')).toBeInTheDocument()

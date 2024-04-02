@@ -4,12 +4,22 @@ import { Task } from '@/types/taskDetails'
 
 export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllTasks: builder.query<Task[], string>({
+      query: (id) => ({
+        url: `/tasks/${id}/`,
+        method: 'GET',
+      }),
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({ type: 'Task', id: id }))
+          : [{ type: 'Task' }],
+    }),
     getTaskDetail: builder.query<Task, { eventId: string; taskId: string }>({
       query: ({ eventId, taskId }) => ({
         url: `/tasks/${eventId}/${taskId}/`,
         method: 'GET',
       }),
-      providesTags: (result) => [{ type: 'Step', id: result?.id }],
+      providesTags: (result) => [{ type: 'Task', id: result?.id }],
     }),
     createTask: builder.mutation<TaskObject, CreateTaskRequest>({
       query: (body) => ({
@@ -19,7 +29,19 @@ export const taskApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
+    deleteTask: builder.mutation<void, { eventId: string; taskId: string }>({
+      query: ({ eventId, taskId }) => ({
+        url: `/tasks/${eventId}/${taskId}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Task'],
+    }),
   }),
 })
 
-export const { useGetTaskDetailQuery, useCreateTaskMutation } = taskApi
+export const {
+  useGetTaskDetailQuery,
+  useCreateTaskMutation,
+  useGetAllTasksQuery,
+  useDeleteTaskMutation,
+} = taskApi
