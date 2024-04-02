@@ -17,12 +17,35 @@ export const aiSuggestionApi = baseApi.injectEndpoints({
         invalidatesTags: ['AI'],
       }
     ),
-    aiSuggestionHistoryList: builder.query<AISugesstionHistory[], void>({
-      query: () => ({
-        url: '/ai/history/',
+    aiSuggestionHistoryList: builder.query<
+      AISugesstionHistory[],
+      { event_id: string }
+    >({
+      query: ({ event_id }) => ({
+        url: `/ai/history/all/${event_id}/`,
         method: 'GET',
       }),
       providesTags: ['AI'],
+    }),
+    aiSuggestionHistoryDetail: builder.query<
+      AISugesstionHistory,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/ai/history/${id}/`,
+        method: 'GET',
+      }),
+      providesTags: ['AI'],
+    }),
+    deleteAiSuggestionHistoryDetail: builder.mutation<
+      AISugesstionHistory,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/ai/history/${id}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['AI'],
     }),
   }),
 })
