@@ -23,15 +23,24 @@ export default function EventDetail({
   >('plan')
   const { data, isLoading } = useGetEventQuery(params.eventId)
 
-  const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(
-    params.eventId
-  )
-
-  console.log(trackerData)
+  // const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(
+  //   params.eventId
+  // )
 
   const handleClick = (type: 'plan' | 'timeline' | 'tracker') => {
     setChipType(type)
   }
+
+  const tasks = [
+    {
+      "id": 48,
+      "task_steps": [],
+      "title": "wakwaw",
+      "description": "wikwok",
+      "status": "Not Started",
+      "event": "82a6c841-f7b8-48b0-bb85-8d9630b70913"
+  }
+  ]
 
   const renderComponent = () => {
     if (data) {
@@ -41,14 +50,13 @@ export default function EventDetail({
         case 'timeline':
           return <div> Timeline </div>
         case 'tracker':
-          return (
-            <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
-          )
+          // return <EventTracker {...data} tasks={[] as unknown as Task[]} />
+          return <EventTracker {...data} tasks={tasks} />
       }
     }
   }
 
-  return isLoading || trackerLoading || !trackerData || !data ? (
+  return isLoading || !data ? (
     <div className="flex flex-col justify-center items-center min-h-[90vh]">
       <div data-testid="loader" className="loader"></div>
     </div>

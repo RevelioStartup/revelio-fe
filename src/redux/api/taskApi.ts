@@ -1,4 +1,4 @@
-import { Task as TaskObject, CreateTaskRequest } from '@/types/task'
+import { Task as TaskObject, CreateTaskRequest, UpdateTaskRequest } from '@/types/task'
 import { baseApi } from './baseApi'
 import { Task } from '@/types/taskDetails'
 
@@ -9,17 +9,13 @@ export const taskApi = baseApi.injectEndpoints({
         url: `/tasks/${id}/`,
         method: 'GET',
       }),
-      providesTags: (result) =>
-        result
-          ? result.map(({ id }) => ({ type: 'Task', id: id }))
-          : [{ type: 'Task' }],
+      providesTags: ['Task'],
     }),
     getTaskDetail: builder.query<Task, { eventId: string; taskId: string }>({
       query: ({ eventId, taskId }) => ({
         url: `/tasks/${eventId}/${taskId}/`,
         method: 'GET',
       }),
-      providesTags: (result) => [{ type: 'Task', id: result?.id }],
     }),
     createTask: builder.mutation<TaskObject, CreateTaskRequest>({
       query: (body) => ({
@@ -29,12 +25,16 @@ export const taskApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
-    deleteTask: builder.mutation<void, { eventId: string; taskId: string }>({
-      query: ({ eventId, taskId }) => ({
-        url: `/tasks/${eventId}/${taskId}/`,
-        method: 'DELETE',
+    updateTask: builder.mutation<Task, UpdateTaskRequest>({
+      query: (body) => ({
+        url: `/tasks/${body.event}/${body.id}/`,
+        method: 'PATCH',
+        body,
       }),
-      invalidatesTags: ['Task'],
+      invalidatesTags: (result) => [
+        { type: 'Task', id: result?.id },
+        'Task',
+      ],
     }),
   }),
 })
@@ -43,5 +43,5 @@ export const {
   useGetTaskDetailQuery,
   useCreateTaskMutation,
   useGetAllTasksQuery,
-  useDeleteTaskMutation,
+  useUpdateTaskMutation,
 } = taskApi
