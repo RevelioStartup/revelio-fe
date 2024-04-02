@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import TaskDetailPage from '@/app/event/[eventId]/(eventId)/task/[taskId]/page'
 import { useGetEventQuery } from '@/redux/api/eventApi'
 import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
+import { useUpdateTaskStepMutation } from '@/redux/api/taskStepApi'
 import '@testing-library/jest-dom'
 import { useCreateTaskStepWithAIMutation } from '@/redux/api/taskStepApi'
 
@@ -15,6 +16,10 @@ jest.mock('@/redux/api/taskStepApi', () => ({
 
 jest.mock('@/redux/api/taskApi', () => ({
   useGetTaskDetailQuery: jest.fn(),
+}))
+
+jest.mock('@/redux/api/taskStepApi', () => ({
+  useUpdateTaskStepMutation: jest.fn(),
 }))
 
 describe('TaskDetailPage with no step', () => {
@@ -60,6 +65,13 @@ describe('TaskDetailPage with no step', () => {
   })
 
   test('renders task details when not loading and data is available but no step', () => {
+    const mockUseUpdateTaskStepMutation = jest
+      .fn()
+      .mockResolvedValue({ data: {} })
+    ;(useUpdateTaskStepMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateTaskStepMutation,
+    ])
+
     render(<TaskDetailPage params={{ eventId: '3', taskId: '3' }} />)
 
     expect(screen.getByText('event name')).toBeInTheDocument()

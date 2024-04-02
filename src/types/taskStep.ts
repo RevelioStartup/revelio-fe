@@ -18,3 +18,11 @@ export type CreateTaskAIStepResponse = {
 }
 
 export type CreateTaskStepResponse = StepsDetail[]
+
+export type EditTaskStepRequest = {
+  name: string
+  description: string
+  status: string
+  step_order: number
+  task: string
+}

@@ -1,9 +1,8 @@
-import {
-  CreateTaskAIStepResponse,
+import {  EditTaskStepRequest,  CreateTaskAIStepResponse,
   CreateTaskStepRequest,
-  CreateTaskStepResponse,
-} from '@/types/taskStep'
+  CreateTaskStepResponse, } from '@/types/taskStep'
 import { baseApi } from './baseApi'
+import { Task } from '@/types/taskDetails'
 
 export const taskStepApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -32,10 +31,41 @@ export const taskStepApi = baseApi.injectEndpoints({
         { type: 'Task', id: result?.task_id ?? '' },
       ],
     }),
+
+    updateTaskStep: builder.mutation<
+      Task,
+      { id: string; changes: EditTaskStepRequest }
+    >({
+      query: ({ id, changes }) => ({
+        url: `/task-steps/${id}/edit/`,
+        method: 'PUT',
+        body: changes,
+      }),
+      invalidatesTags: ['Step'],
+    }),
+
+    deleteTaskStep: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/task-steps/${id}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Task'],
+    }),
+
+    deleteAllTaskSteps: builder.mutation<void, { taskId: number }>({
+      query: ({ taskId }) => ({
+        url: `/task-steps/tasks/${taskId}/delete-all-steps/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Task'],
+    }),
   }),
 })
 
 export const {
   useCreateTaskStepManuallyMutation,
   useCreateTaskStepWithAIMutation,
+  useUpdateTaskStepMutation,
+  useDeleteTaskStepMutation,
+  useDeleteAllTaskStepsMutation,
 } = taskStepApi
