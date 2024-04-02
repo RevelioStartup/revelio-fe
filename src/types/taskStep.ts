@@ -26,11 +26,3 @@ export type EditTaskStepRequest = {
   step_order: number
   task: string
 }
-
-export type EditTaskStepRequest = {
-  name: string,
-  description: string,
-  status: string,
-  step_order: number,
-  task: string
-}
