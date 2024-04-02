@@ -1,17 +1,17 @@
 'use client'
 import { useState } from 'react'
 import { Input } from '@/components/elements/Forms/input'
-import {
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material'
+import { Box } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useSendRecoverPasswordEmailMutation } from '@/redux/api/authApi'
 import Link from 'next/link'
 import { Button } from '@/components/elements/Button'
+import { FormDialog, FormDialogActions } from '@/components/elements/Dialog'
+import {
+  MessageDialog,
+  MessageDialogActions,
+  MessageDialogContent,
+} from '@/components/elements/Dialog/messageDialog'
 
 type RecPassFormType = {
   email: string
@@ -71,13 +71,13 @@ export default function AccountRecoveryRequestForm({
 
   return (
     <Box>
-      <Dialog
+      <FormDialog
         open={openForm}
         onClose={onClose}
         data-testid="login-dialog-recover"
+        title="Account Recovery"
       >
-        <DialogTitle>Account Recovery</DialogTitle>
-        <DialogActions>
+        <FormDialogActions style={{ padding: '20px', margin: '20px' }}>
           <div className="flex flex-col gap-3" style={{ flex: 1 }}>
             <form
               className="flex flex-col gap-3"
@@ -103,29 +103,39 @@ export default function AccountRecoveryRequestForm({
               Close
             </Button>
           </div>
-        </DialogActions>
-      </Dialog>
+        </FormDialogActions>
+      </FormDialog>
 
-      <Dialog open={openPrompt} data-testid="login-dialog-email-send-msg">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+      <MessageDialog
+        open={openPrompt}
+        data-testid="login-dialog-email-send-msg"
+        title={title}
+      >
+        <MessageDialogContent>
           <p>{message}</p>
-        </DialogContent>
-        <DialogActions>
-          <Link href={'/login/recover-account'}>Continue</Link>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogContent>
+        <MessageDialogActions>
+          <Button>
+            <Link
+              style={{ textAlign: 'center' }}
+              href={'/login/recover-account'}
+            >
+              Continue
+            </Link>
+          </Button>
+        </MessageDialogActions>
+      </MessageDialog>
 
-      <Dialog
+      <MessageDialog
         open={openPopup}
         onClose={handleClosePopup}
         data-testid="recover-dialog-error-msg"
+        title={title}
       >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+        <MessageDialogContent>
           <p>{errorMessage}</p>
-        </DialogContent>
-        <DialogActions>
+        </MessageDialogContent>
+        <MessageDialogActions>
           <Button
             variant={'ghost'}
             size={'small'}
@@ -134,8 +144,8 @@ export default function AccountRecoveryRequestForm({
           >
             Close
           </Button>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogActions>
+      </MessageDialog>
     </Box>
   )
 }

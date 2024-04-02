@@ -19,6 +19,7 @@ export default function TaskDetailPage({
 }: Readonly<{
   params: Readonly<{ eventId: string; taskId: string }>
 }>) {
+
   const { data: taskData, isLoading } = useGetTaskDetailQuery(params)
   const { data: eventData } = useGetEventQuery(params.eventId)
   const [deleteTask, { isLoading: deleteLoading }] = useDeleteTaskMutation()
