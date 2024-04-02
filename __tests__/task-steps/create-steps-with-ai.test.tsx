@@ -6,9 +6,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import { useGetTaskDetailQuery } from '@/redux/api/taskApi'
+import {
+  useDeleteTaskMutation,
+  useGetTaskDetailQuery,
+} from '@/redux/api/taskApi'
 import { TaskContextProvider } from '@/components/contexts/TaskContext'
-import toast from 'react-hot-toast'
 
 jest.mock('@/redux/api/taskStepApi', () => ({
   useCreateTaskStepWithAIMutation: jest.fn(),
@@ -22,6 +24,7 @@ jest.mock('next/navigation', () => ({
 
 jest.mock('@/redux/api/taskApi', () => ({
   useGetTaskDetailQuery: jest.fn(),
+  useDeleteTaskMutation: jest.fn(),
 }))
 
 describe('AddTaskStepsButton', () => {
@@ -51,7 +54,10 @@ describe('AddTaskStepsButton', () => {
       taskId: '3',
     })
     ;(usePathname as jest.Mock).mockReturnValue('/event/3/task/3')
-
+    ;(useDeleteTaskMutation as jest.Mock).mockReturnValue([
+      jest.fn(),
+      { isLoading: false },
+    ])
     jest.clearAllMocks()
   })
 
