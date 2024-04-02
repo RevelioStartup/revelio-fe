@@ -9,19 +9,6 @@ import { Button } from '@/components/elements/Button'
 import StepStepper from './StepStepper'
 import { AddTaskStepsButton } from './step/AddTaskStepsButton'
 
-type StepUpdateRequest = {
-  name: string
-  description: string
-  status: string
-  step_order: number
-  task: string
-}
-
-type UpdateStepFormType = {
-  name: string
-  description: string
-}
-
 export default function TaskDetailPage({
   params,
 }: Readonly<{
