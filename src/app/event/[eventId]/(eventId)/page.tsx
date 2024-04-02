@@ -23,9 +23,11 @@ export default function EventDetail({
   >('plan')
   const { data, isLoading } = useGetEventQuery(params.eventId)
 
-  // const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(
-  //   params.eventId
-  // )
+  const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(
+    params.eventId
+  )
+
+  console.log(trackerData)
 
   const handleClick = (type: 'plan' | 'timeline' | 'tracker') => {
     setChipType(type)
@@ -56,7 +58,7 @@ export default function EventDetail({
     }
   }
 
-  return isLoading || !data ? (
+  return isLoading || trackerLoading || !trackerData || !data ? (
     <div className="flex flex-col justify-center items-center min-h-[90vh]">
       <div data-testid="loader" className="loader"></div>
     </div>
