@@ -3,6 +3,7 @@ import {
   CreateTaskAIStepResponse,
   CreateTaskStepRequest,
   CreateTaskStepResponse,
+  StepsDetail,
 } from '@/types/taskStep'
 import { baseApi } from './baseApi'
 import { Task } from '@/types/taskDetails'
@@ -36,7 +37,7 @@ export const taskStepApi = baseApi.injectEndpoints({
     }),
 
     updateTaskStep: builder.mutation<
-      Task,
+      StepsDetail,
       { id: string; changes: EditTaskStepRequest }
     >({
       query: ({ id, changes }) => ({
@@ -44,7 +45,7 @@ export const taskStepApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: changes,
       }),
-      invalidatesTags: (result) => [{ type: 'Task', id: result?.id }],
+      invalidatesTags: (result) => [{ type: 'Task', id: result?.task }],
     }),
 
     deleteTaskStep: builder.mutation<void, { id: string }>({
