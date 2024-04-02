@@ -15,6 +15,7 @@ import {
 import Link from 'next/link'
 import { Input } from '@/components/elements/Forms/input'
 import { Button } from '@/components/elements/Button'
+import { Typography } from '@mui/material'
 
 type RegisterFormType = {
   username: string
@@ -109,16 +110,27 @@ export default function RegisterForm() {
           required
           data-testid="password-input"
         />
+        <Typography align="right">
+          If you already have an account, you can{' '}
+          <Link style={{ color: 'teal' }} href="/login">
+            Log In Here
+          </Link>
+        </Typography>
         <Button type="submit">Register</Button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="register-verify-email-msg">
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+      <Dialog open={openPrompt} data-testid="register-verify-email-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{message}</p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+          <Button>
           <Link href={'/register/verify'}>Continue</Link>
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -126,15 +138,18 @@ export default function RegisterForm() {
         open={openPopup}
         onClose={handleClosePopUP}
         data-testid="register-dialog-error-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
       >
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{errorMessage}</p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
           <Button
             size={'small'}
-            variant={'danger'}
+            variant={'ghost'}
             data-testid="button-error"
             onClick={handleClosePopUP}
           >

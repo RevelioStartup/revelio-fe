@@ -116,6 +116,12 @@ export default function LoginForm() {
         >
           Recover Account
         </Typography>
+        <Typography align="right" >
+          If you do not have an account, you can{' '}
+          <Link style={{ color: 'teal' }} href="/register">
+            Register Here
+          </Link>
+        </Typography>
         <Button type="submit">Log In</Button>
       </form>
 
@@ -127,13 +133,18 @@ export default function LoginForm() {
       <Dialog
         open={openPromptLogin}
         data-testid="login-dialog-success-login-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
       >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop:'10px' }}>{title}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{message}</p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+          <Button>
           <Link href={'/'}>Continue</Link>
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -141,12 +152,15 @@ export default function LoginForm() {
         open={openPopup}
         onClose={handleClosePopup}
         data-testid="recover-dialog-error-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
       >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop:'10px' }}>{title}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{errorMessage}</p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
           <Button
             variant="ghost"
             size="small"

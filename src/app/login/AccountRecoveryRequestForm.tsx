@@ -75,9 +75,12 @@ export default function AccountRecoveryRequestForm({
         open={openForm}
         onClose={onClose}
         data-testid="login-dialog-recover"
+        fullWidth={true}
+        maxWidth='md'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
       >
-        <DialogTitle>Account Recovery</DialogTitle>
-        <DialogActions>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop:'20px' }}>Account Recovery</DialogTitle>
+        <DialogActions style={{ padding: '20px', margin: '20px'}}>
           <div className="flex flex-col gap-3" style={{ flex: 1 }}>
             <form
               className="flex flex-col gap-3"
@@ -106,13 +109,20 @@ export default function AccountRecoveryRequestForm({
         </DialogActions>
       </Dialog>
 
-      <Dialog open={openPrompt} data-testid="login-dialog-email-send-msg">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+      <Dialog 
+        open={openPrompt} 
+        data-testid="login-dialog-email-send-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '100px', borderRadius: '20px 20px 0 0' }}>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px'  }}>{title}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{message}</p>
         </DialogContent>
-        <DialogActions>
-          <Link href={'/login/recover-account'}>Continue</Link>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+          <Button>
+            <Link style={{ textAlign: 'center' }} href={'/login/recover-account'}>Continue</Link>
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -120,12 +130,15 @@ export default function AccountRecoveryRequestForm({
         open={openPopup}
         onClose={handleClosePopup}
         data-testid="recover-dialog-error-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '100px', borderRadius: '20px 20px 0 0' }}
       >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{title}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{errorMessage}</p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
           <Button
             variant={'ghost'}
             size={'small'}

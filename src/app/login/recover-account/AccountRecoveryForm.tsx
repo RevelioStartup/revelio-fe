@@ -115,13 +115,21 @@ export default function AccountRecoveryForm() {
         <Button type="submit">Recover Account</Button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="recover-login-redirect-msg">
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+      <Dialog 
+        open={openPrompt} 
+        data-testid="recover-login-redirect-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{message}</p>
         </DialogContent>
-        <DialogActions>
-          <Link href={'/login'}>Continue</Link>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+          <Button>
+            <Link href={'/login'}>Continue</Link>
+          </Button>
+          
         </DialogActions>
       </Dialog>
 
@@ -129,12 +137,15 @@ export default function AccountRecoveryForm() {
         open={openPopup}
         onClose={handleClosePopUP}
         data-testid="recover-dialog-error-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
       >
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{errorMessage}</p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
           <Button
             variant={'ghost'}
             size={'small'}

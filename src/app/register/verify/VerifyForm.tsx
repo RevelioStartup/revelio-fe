@@ -83,13 +83,19 @@ export default function VerifyEmailForm() {
         <Button type="submit">Verify</Button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="verify-redirect-success-msg">
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+      <Dialog open={openPrompt} data-testid="verify-redirect-success-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{message}</p>
         </DialogContent>
-        <DialogActions>
-          <Link href={'/'}>Continue</Link>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
+          <Button>
+            <Link href={'/'}>Continue</Link>
+          </Button>
+          
         </DialogActions>
       </Dialog>
 
@@ -97,12 +103,15 @@ export default function VerifyEmailForm() {
         open={openPopup}
         onClose={handleClosePopUP}
         data-testid="verify-dialog-error-msg"
+        fullWidth={true}
+        maxWidth='sm'
+        style={{  padding: '20px', borderRadius: '20px 20px 0 0' }}
       >
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+        <DialogTitle style={{ textAlign: 'center', fontSize: '24px', marginTop: '10px' }}>{dialogTitle}</DialogTitle>
+        <DialogContent style={{ padding: '20px', margin: '10px', fontSize: '20px'}}>
           <p>{errorMessage}</p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ justifyContent: 'center', margin: '10px' }}>
           <Button
             size="small"
             variant={'ghost'}

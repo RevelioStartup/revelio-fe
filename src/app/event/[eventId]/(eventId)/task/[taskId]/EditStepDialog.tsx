@@ -66,9 +66,12 @@ export default function EditStepDialog({
             open={openForm}
             onClose={onClose}
             data-testid="login-dialog-recover"
+            fullWidth={true}
+            maxWidth='md'
+            style={{  padding: '50px', borderRadius: '20px 20px 0 0', minHeight: '50px' }}
             >
-            <DialogTitle>Edit Step</DialogTitle>
-            <DialogActions>
+            <DialogTitle style={{ textAlign: 'center', fontSize: '24px' , marginTop: '20px'}}>Edit Step</DialogTitle>
+            <DialogActions style={{ padding: '20px', borderRadius: 'inherit', margin: '20px'}}>
                 <div className="flex flex-col gap-3" style={{ flex: 1 }}>
                 <form
                     className="flex flex-col gap-3"
