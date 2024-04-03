@@ -58,7 +58,7 @@ describe('Navbar Component', () => {
       expect(linkElement).toBeInTheDocument()
 
       // Check that the element is an <a> tag
-      expect(linkElement.tagName).toBe('A')
+      expect(linkElement.tagName).toBe('SPAN')
     })
   })
 

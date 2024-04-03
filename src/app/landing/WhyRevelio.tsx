@@ -5,6 +5,7 @@ import React from 'react'
 export const WhyRevelio = () => {
   return (
     <Box
+      id="why"
       data-testid="why-revelio"
       sx={{
         display: 'flex',
@@ -14,13 +15,18 @@ export const WhyRevelio = () => {
       alignItems={'center'}
       justifyContent={'center'}
       gap={'2em'}
+      my="2em"
       padding={{ xs: '4em 2em', lg: '4em 12em' }}
     >
       <Box className="flex flex-row items-center bg-teal-50 gap-3 text-teal-600 px-3 py-1 rounded-2xl ">
-        <i className="i-fa6-regular-eye rounded-full size-5 text-6xl" />
+        <i className="i-fa6-regular-eye rounded-full size-8 text-6xl" />
         <p>Why Revelio</p>
       </Box>
-      <Typography variant={'h3'} textAlign={'center'}>
+      <Typography
+        variant={'h3'}
+        textAlign={'center'}
+        sx={{ fontWeight: 'bold' }}
+      >
         We are committed to revolutionizing and solving problems in event
         planning
       </Typography>
