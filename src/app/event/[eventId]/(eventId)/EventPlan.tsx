@@ -4,12 +4,6 @@ import VenueList from '@/app/venue/VenueList'
 import CheckIcon from '@mui/icons-material/Check'
 import {
   Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
 } from '@mui/material'
 import React from 'react'
 import VendorList from '../../../vendor/VendorList'
