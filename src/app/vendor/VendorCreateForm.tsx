@@ -9,6 +9,7 @@ import {
   useCreateVendorMutation,
 } from '@/redux/api/vendorApi'
 import { CreateVendorRequest } from '@/types/vendor'
+import { Button } from '@/components/elements/Button'
 
 interface VendorCreateFormProps {
   eventId: string
@@ -131,12 +132,7 @@ export const VendorCreateForm = ({ eventId }: VendorCreateFormProps) => {
               placeholder="Status"
             />
             <Box className="flex justify-end w-full">
-              <button
-                type="submit"
-                className="text-sm bg-teal-200 text-gray-900 rounded-2xl mt-8 p-3"
-              >
-                Add Vendor
-              </button>
+              <Button type="submit">Add Vendor</Button>
             </Box>
           </Box>
         </Box>

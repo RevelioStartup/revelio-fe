@@ -1,6 +1,7 @@
 'use client'
 import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
+import { Button } from '@/components/elements/Button'
 import { MENU, MENU_LOGGED_IN } from './constant'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
@@ -62,22 +63,41 @@ export const Navbar: React.FC = () => {
           </Box>
         </a>
 
-        <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={'40px'}>
-          {MENU_LOGGED_IN.map(({ href, label }) => (
-            <Link
-              key={label}
-              href={href}
-              style={{
-                cursor: 'pointer',
-                color: '#000',
-                fontSize: '14px',
-                fontWeight: 500,
-                textDecoration: 'none',
-              }}
-            >
-              {label}
-            </Link>
-          ))}
+        <Box
+          className="items-center"
+          sx={{ display: { xs: 'none', sm: 'flex' } }}
+          gap={'40px'}
+        >
+          {MENU_LOGGED_IN.map(({ href, label }) =>
+            label === 'Start Planning' ? (
+              <Link
+                key={label}
+                href={href}
+                style={{
+                  cursor: 'pointer',
+                  fontWeight: 500,
+                }}
+              >
+                <Button variant="ghost" size="small">
+                  {label}
+                </Button>
+              </Link>
+            ) : (
+              <Link
+                key={label}
+                href={href}
+                style={{
+                  cursor: 'pointer',
+                  color: '#000',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  textDecoration: 'none',
+                }}
+              >
+                <span>{label}</span>
+              </Link>
+            )
+          )}
         </Box>
       </Box>
     )
@@ -87,39 +107,50 @@ export const Navbar: React.FC = () => {
         data-testid="navbar"
         height={'80px'}
         width={'100%'}
-        bgcolor={'transparent'}
+        bgcolor={'white'}
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
-        padding={'0em 2em'}
+        gap={'2em'}
+        padding={'2em'}
+        paddingX={'6em'}
         className={twMerge(
           'fixed top-0 inset-x-0 z-50',
           atTop ? '' : 'backdrop-blur-md'
         )}
       >
-        <Image
-          data-testid="nav-logo"
-          src="/assets/images/Logo.svg"
-          alt="logo"
-          width={75}
-          height={75}
-        />
+        <a href="/">
+          <Box className="flex gap-2 justify-center items-center flex-row">
+            <Image
+              data-testid="nav-logo"
+              src="/assets/images/Logo.svg"
+              alt="logo"
+              width={45}
+              height={45}
+            />
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ marginLeft: '10px' }}
+            >
+              Revelio
+            </Typography>
+          </Box>
+        </a>
+
         <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={'40px'}>
-          {MENU.map(({ href, label }, index) => (
+          {MENU.map(({ href, label }) => (
             <Link
-              key={index}
+              key={label}
               href={href}
               style={{
                 cursor: 'pointer',
-                color: '#000',
-                fontSize: '14px',
                 fontWeight: 500,
-                textDecoration: 'none',
               }}
             >
-              {label}
+              <span>{label}</span>
             </Link>
           ))}
         </Box>

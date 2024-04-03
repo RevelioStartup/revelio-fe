@@ -1,12 +1,6 @@
 'use client'
 import { useState } from 'react'
-import {
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import {
   useRegisterMutation,
@@ -14,6 +8,12 @@ import {
 } from '@/redux/api/authApi'
 import Link from 'next/link'
 import { Input } from '@/components/elements/Forms/input'
+import { Button } from '@/components/elements/Button'
+import {
+  MessageDialog,
+  MessageDialogActions,
+  MessageDialogContent,
+} from '@/components/elements/Dialog/messageDialog'
 
 type RegisterFormType = {
   username: string
@@ -108,36 +108,50 @@ export default function RegisterForm() {
           required
           data-testid="password-input"
         />
-        <button type="submit" className="bg-teal-50">
-          Register
-        </button>
+        <Typography align="right">
+          If you already have an account, you can{' '}
+          <Link style={{ color: 'teal' }} href="/login">
+            Log In Here
+          </Link>
+        </Typography>
+        <Button type="submit">Register</Button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="register-verify-email-msg">
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+      <MessageDialog
+        open={openPrompt}
+        data-testid="register-verify-email-msg"
+        title={dialogTitle}
+      >
+        <MessageDialogContent>
           <p>{message}</p>
-        </DialogContent>
-        <DialogActions>
-          <Link href={'/register/verify'}>Continue</Link>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogContent>
+        <MessageDialogActions>
+          <Button>
+            <Link href={'/register/verify'}>Continue</Link>
+          </Button>
+        </MessageDialogActions>
+      </MessageDialog>
 
-      <Dialog
+      <MessageDialog
         open={openPopup}
         onClose={handleClosePopUP}
         data-testid="register-dialog-error-msg"
+        title={dialogTitle}
       >
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+        <MessageDialogContent>
           <p>{errorMessage}</p>
-        </DialogContent>
-        <DialogActions>
-          <button data-testid="button-error" onClick={handleClosePopUP}>
+        </MessageDialogContent>
+        <MessageDialogActions>
+          <Button
+            size={'small'}
+            variant={'ghost'}
+            data-testid="button-error"
+            onClick={handleClosePopUP}
+          >
             Close
-          </button>
-        </DialogActions>
-      </Dialog>
+          </Button>
+        </MessageDialogActions>
+      </MessageDialog>
     </Box>
   )
 }

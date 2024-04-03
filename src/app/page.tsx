@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <Box>
       <Hero />
-      <WithoutRevelio />
       <WhyRevelio />
+      <WithoutRevelio />
       <Pricing />
       <Faq />
     </Box>

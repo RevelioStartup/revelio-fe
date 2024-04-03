@@ -1,17 +1,16 @@
 'use client'
 import { useState } from 'react'
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useSendChangePasswordMutation } from '@/redux/api/authApi'
 import { Input } from '@/components/elements/Forms/input'
 import Link from 'next/link'
+import { Button } from '@/components/elements/Button'
+import {
+  MessageDialog,
+  MessageDialogActions,
+  MessageDialogContent,
+} from '@/components/elements/Dialog/messageDialog'
 
 type ChangePassFormType = {
   token: string
@@ -111,36 +110,44 @@ export default function AccountRecoveryForm() {
           required
           data-testid="password-input"
         />
-        <button type="submit" className="bg-teal-50">
-          Recover Account
-        </button>
+        <Button type="submit">Recover Account</Button>
       </form>
 
-      <Dialog open={openPrompt} data-testid="recover-login-redirect-msg">
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+      <MessageDialog
+        open={openPrompt}
+        data-testid="recover-login-redirect-msg"
+        title={dialogTitle}
+      >
+        <MessageDialogContent>
           <p>{message}</p>
-        </DialogContent>
-        <DialogActions>
-          <Link href={'/login'}>Continue</Link>
-        </DialogActions>
-      </Dialog>
+        </MessageDialogContent>
+        <MessageDialogActions>
+          <Button>
+            <Link href={'/login'}>Continue</Link>
+          </Button>
+        </MessageDialogActions>
+      </MessageDialog>
 
-      <Dialog
+      <MessageDialog
         open={openPopup}
         onClose={handleClosePopUP}
         data-testid="recover-dialog-error-msg"
+        title={dialogTitle}
       >
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
+        <MessageDialogContent>
           <p>{errorMessage}</p>
-        </DialogContent>
-        <DialogActions>
-          <button data-testid="button-error" onClick={handleClosePopUP}>
+        </MessageDialogContent>
+        <MessageDialogActions>
+          <Button
+            variant={'ghost'}
+            size={'small'}
+            data-testid="button-error"
+            onClick={handleClosePopUP}
+          >
             Close
-          </button>
-        </DialogActions>
-      </Dialog>
+          </Button>
+        </MessageDialogActions>
+      </MessageDialog>
     </Box>
   )
 }

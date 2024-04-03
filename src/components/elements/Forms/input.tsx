@@ -33,9 +33,9 @@ export const Input: FC<CustomInputProps> = ({
       rules={{ ...rules, required: required }}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
-          <div className="w-full">
+          <div className="w-full flex flex-col gap-2">
             {label && (
-              <p className="text-lg text-slate-900 mb-3 flex flex-col">
+              <p className="text-lg text-slate-950 font-medium mb-3 flex flex-col">
                 <span>{label}</span>
                 {caption && (
                   <span className="text-slate-800 text-base">{caption}</span>

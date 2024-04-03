@@ -49,7 +49,7 @@ describe('Navbar Component after User Log In', () => {
 
       expect(linkElement).toBeInTheDocument()
 
-      expect(linkElement.tagName).toBe('A')
+      expect(linkElement.tagName).toBe('SPAN')
     })
   })
 })

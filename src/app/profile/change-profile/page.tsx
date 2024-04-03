@@ -23,24 +23,13 @@ const ChangeProfile = () => {
   })
 
   const profilePictureRef = useRef<HTMLInputElement>(null)
-  // const [profilePicPreview, setProfilePicPreview] = useState('')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    // Set bio value if profile data is available
     if (profileData && profileData.profile.bio) {
       setValue('bio', profileData.profile.bio)
     }
   }, [profileData, setValue])
-
-  // const onProfilePictureChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const file = event.target.files[0]
-  //     setProfilePicPreview(URL.createObjectURL(file))
-  //   }
-  // }
 
   const onSubmit = async (data: { bio: string | Blob }) => {
     const formData = new FormData()
@@ -59,7 +48,6 @@ const ChangeProfile = () => {
     try {
       const updatedProfileResponse = await updateProfile(formData).unwrap()
 
-      // Update profile data in Redux state
       if (profileData) {
         dispatch(
           setProfile({
@@ -102,7 +90,6 @@ const ChangeProfile = () => {
       <h1 className="text-3xl md:text-5xl font-bold mb-5 text-center">
         Change Profile
       </h1>
-      {/* <Avatar src={profilePicPreview} sx={{ width: 181, height: 181 }} /> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-3"

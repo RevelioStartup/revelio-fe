@@ -7,14 +7,21 @@ import {
   useAiSuggestionHistoryListQuery,
 } from '@/redux/api/aiSuggestionApi'
 import { store } from '@/redux/store'
+import { useParams } from 'next/navigation'
 
 jest.mock('@/redux/api/aiSuggestionApi', () => ({
   useAskSuggestionMutation: jest.fn(),
   useAiSuggestionHistoryListQuery: jest.fn(),
 }))
+jest.mock('next/navigation', () => ({
+  useParams: jest.fn(),
+}))
 
 describe('Sugesti AI Component', () => {
   beforeEach(() => {
+    ;(useParams as jest.Mock).mockReturnValue({
+      eventId: '123-abc',
+    })
     const mockAskAI = jest
       .fn()
       .mockResolvedValue({ data: { msg: 'Mocked AI Response' } })
@@ -88,6 +95,7 @@ describe('Sugesti AI Component', () => {
           name: '',
           theme: '',
         },
+        event_id: '123-abc',
       })
     })
   })
