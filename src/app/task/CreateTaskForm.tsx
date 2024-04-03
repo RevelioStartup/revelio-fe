@@ -42,6 +42,7 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
             className={`relative my-3 transition-all duration-200 ${title && 'pt-3'}`}
           >
             <Input
+              required
               data-testid="title-input"
               name="title"
               type="text"
@@ -59,6 +60,7 @@ export const CreateTaskForm = ({ eventId }: CreateTaskFormProps) => {
             className={`relative mb-4 transition-all duration-200 ${description && 'py-3'}`}
           >
             <Input
+              required
               data-testid="description-input"
               name="description"
               type="text"

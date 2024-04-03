@@ -41,7 +41,9 @@ export default function EventDetail({
         case 'timeline':
           return <div> Timeline </div>
         case 'tracker':
-          return <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
+          return (
+            <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
+          )
       }
     }
   }
