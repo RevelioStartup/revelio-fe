@@ -9,7 +9,6 @@ import {
 import { UpdateVenueRequest, Venue } from '@/types/venue'
 import {
   Box,
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -22,6 +21,7 @@ import { Input } from '@/components/elements/Forms/input'
 import { Select } from '@/components/elements/Forms/select'
 import GalleryPage from './GalleryPage'
 import GalleryPageDelete from './GalleryPageDelete'
+import { Button } from '@/components/elements/Button'
 
 interface VenueCardProps {
   venue: Venue
@@ -140,14 +140,15 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
             </DialogContent>
             <DialogActions>
               <Button
+                variant={'ghost'}
                 data-testid="cancel-delete-button"
                 onClick={() => setOpen(false)}
               >
                 Cancel
               </Button>
               <Button
+                variant={'danger'}
                 data-testid="confirm-delete-button"
-                color="primary"
                 onClick={() => handleDeleteClick(id)}
               >
                 Delete
@@ -286,12 +287,7 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
               </Box>
             </Box>
             <Box className="flex justify-end">
-              <button
-                type="submit"
-                className="text-sm bg-teal-200 text-gray-900 rounded-2xl mt-4 py-3 px-8"
-              >
-                Save
-              </button>
+              <Button type="submit">Save</Button>
             </Box>
           </Box>
         )}

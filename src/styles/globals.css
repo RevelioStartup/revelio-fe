@@ -268,3 +268,10 @@
       auto;
   }
 }
+
+.mui-tkoso-MuiInputBase-root-MuiOutlinedInput-root {
+  border: 1px solid #ccfbf1;
+  border-radius: 20px !important;
+  font-weight: 500 !important;
+  color: #475569 !important;
+}

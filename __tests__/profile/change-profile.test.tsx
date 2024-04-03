@@ -140,7 +140,7 @@ describe('Test for ChangeProfile component', () => {
     )
 
     // Simulate file upload
-    const fileInput = getByLabelText('Upload Profile Picture')
+    const fileInput = getByText('Upload Profile Picture')
     const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })
     fireEvent.change(fileInput, { target: { files: [file] } })
 
@@ -160,7 +160,7 @@ describe('Test for ChangeProfile component', () => {
       </Provider>
     )
 
-    const fileInput = getByLabelText('Upload Profile Picture')
+    const fileInput = getByText('Upload Profile Picture')
     const file = new File(['dummy content'], 'profile-picture.png', {
       type: 'image/png',
     })

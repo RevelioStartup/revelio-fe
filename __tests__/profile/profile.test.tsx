@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store' // Update the import path according to your file structure
@@ -26,6 +26,10 @@ jest.mock('@/redux/api/profileApi', () => ({
   useGetProfileQuery: jest.fn(),
   useGetEventsQuery: jest.fn(),
 }))
+
+Object.defineProperty(window, 'location', {
+  value: { pathname: '/mock-path' },
+})
 
 describe('Profile Component', () => {
   beforeEach(() => {
@@ -87,25 +91,43 @@ describe('Profile Component', () => {
       expect(screen.getByText(event.name)).toBeInTheDocument()
       expect(screen.getByText(event.date)).toBeInTheDocument()
       expect(screen.getByText(event.objective)).toBeInTheDocument()
-      // ... assert other event details
     })
   })
 
   it('has correct buttons and links', () => {
-    render(
+    const { getByTestId } = render(
       <Provider store={store}>
         <Profile />
       </Provider>
     )
-
-    expect(screen.getByText('Change Profile')).toHaveAttribute(
+    const changeProfileButton = screen
+      .getByRole('button', { name: 'Change Profile' })
+      .closest('a')
+    expect(changeProfileButton).toHaveAttribute(
       'href',
       '/profile/change-profile'
     )
-    expect(screen.getByText('Change Password')).toHaveAttribute(
+
+    const changePasswordButton = screen
+      .getByRole('button', { name: 'Change Password' })
+      .closest('a')
+    expect(changePasswordButton).toHaveAttribute(
       'href',
       '/profile/change-password'
     )
-    expect(screen.getByText('Logout')).toHaveAttribute('href', '#logout')
+
+    expect(getByTestId('logout-button')).toBeInTheDocument()
+  })
+  it('has correct logout functionality', () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
+    fireEvent.click(getByTestId('logout-button'))
+    expect(getByTestId('logout-dialog')).toBeInTheDocument()
+    fireEvent.click(getByTestId('button-close'))
+    fireEvent.click(getByTestId('logout-button'))
+    fireEvent.click(getByTestId('button-yes'))
   })
 })

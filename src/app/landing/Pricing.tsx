@@ -1,4 +1,6 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Button } from '@/components/elements/Button'
+import { Box, Typography } from '@mui/material'
+import Link from 'next/link'
 import React from 'react'
 
 export const Pricing = () => {
@@ -9,8 +11,7 @@ export const Pricing = () => {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        background:
-          'linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(242, 253, 250, 0.9) 1%, rgba(242, 253, 250, 0.9) 99%, rgba(255, 255, 255, 0.9) 100%)',
+        background: 'white',
       }}
       alignItems={'center'}
       justifyContent={'center'}
@@ -25,10 +26,16 @@ export const Pricing = () => {
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           width: '100%',
+          '& > div:first-of-type': {
+            width: '40%',
+          },
+          '& > div:last-of-type': {
+            width: '60%',
+          },
         }}
         alignItems={{ xs: 'center', md: 'stretch' }}
         justifyContent={'center'}
-        gap={'4em'}
+        gap={'2em'}
         padding={'2em'}
       >
         <Box
@@ -37,11 +44,8 @@ export const Pricing = () => {
             flexDirection: 'column',
             width: '40%',
             background: 'white',
-            borderRadius: 2,
-            transition: 'all 0.4s ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.02)',
-            },
+            borderRadius: 8,
+            border: '1px solid #439288',
           }}
           alignItems={'center'}
           justifyContent={'between'}
@@ -105,33 +109,22 @@ export const Pricing = () => {
               <p style={{ fontSize: '20px' }}>Limited Event Creation</p>
             </div>
           </Box>
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: 'white',
-              color: '#357876',
-              borderRadius: 2,
-              textTransform: 'none',
-              my: 1,
-              fontSize: '20px',
-              ':hover': { bgcolor: 'white' },
-            }}
-            href="/register"
-          >
-            Choose Plan
-          </Button>
+          <Link href="/profile">
+            <Button variant={'ghost'}>Choose Plan</Button>
+          </Link>
         </Box>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             width: '40%',
-            background: 'rgb(45, 212, 191, 0.4)',
-            borderRadius: 2,
+            background: '#439288',
+            borderRadius: 8,
             transition: 'all 0.4s ease-in-out',
             '&:hover': {
               transform: 'scale(1.05)',
             },
+            color: 'white',
           }}
           alignItems={'center'}
           justifyContent={'between'}
@@ -195,20 +188,14 @@ export const Pricing = () => {
               <p style={{ fontSize: '20px' }}>Unlimited Event Creation</p>
             </div>
           </Box>
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: '#357876',
-              borderRadius: 2,
-              textTransform: 'none',
-              my: 1,
-              fontSize: '20px',
-              ':hover': { bgcolor: 'rgb(53, 120, 118, 0.75)' },
-            }}
-            href="/register"
-          >
-            Choose Plan
-          </Button>
+          <Link href="/profile">
+            <Button
+              variant={'ghost'}
+              style={{ background: 'white', fontWeight: 'bold' }}
+            >
+              Choose Plan
+            </Button>
+          </Link>
         </Box>
       </Box>
     </Box>

@@ -20,7 +20,6 @@ export const rtkQueryErrorLogger: Middleware =
           action.payload.data?.error?.message ||
           action.payload.data?.message ||
           action.error.message
-        console.log(errorData)
       }
     }
     return next(action)
