@@ -7,6 +7,7 @@ import { Button } from '@/components/elements/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { StepUpdateRequest } from './StepStepper'
 import { FormDialog, FormDialogActions } from '@/components/elements/Dialog'
+import { useEffect } from 'react'
 
 type UpdateStepFormType = {
   name: string
@@ -42,7 +43,12 @@ export default function EditStepDialog({
   const [updateTaskStep] = useUpdateTaskStepMutation()
 
   const methods = useForm<UpdateStepFormType>({ defaultValues: defaultValues })
-  const { control, handleSubmit, reset } = methods
+  const { control, handleSubmit, reset, setValue } = methods
+
+  useEffect(() => {
+    setValue('name', prevName)
+    setValue('description', prevDesc)
+  }, [setValue, prevName, prevDesc])
 
   const editTaskStep = async (id: string, changes: StepUpdateRequest) => {
     await updateTaskStep({ id, changes }).then((res) => {})
