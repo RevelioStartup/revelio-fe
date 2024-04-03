@@ -33,6 +33,18 @@ const eventSlice = createSlice({
     setEventBudget: (state, action: PayloadAction<number>) => {
       state.budget = action.payload
     },
+    setEventPlanner: (
+      state,
+      action: PayloadAction<{
+        name: string
+        date: string
+        budget: number
+      }>
+    ) => {
+      state.name = action.payload.name
+      state.date = action.payload.date
+      state.budget = action.payload.budget
+    },
     setEventPurpose: (
       state,
       action: PayloadAction<{
@@ -59,6 +71,7 @@ export const {
   setEventBudget,
   setEventPurpose,
   resetEvent,
+  setEventPlanner,
 } = eventSlice.actions
 
 export default eventSlice.reducer

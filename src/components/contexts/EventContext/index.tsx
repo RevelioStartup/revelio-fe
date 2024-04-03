@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react'
 type EventPageProps = {
   open: boolean
   setOpen: (open: boolean) => void
-  page: 'name' | 'date' | 'budget' | 'purpose'
+  page: 'planner' | 'purpose'
   setEventPage: (page: EventPageProps['page']) => void
   handleClose: (event?: React.SyntheticEvent | Event, reason?: string) => void
 }
@@ -15,7 +15,7 @@ export const useEventContext = () => useContext(EventContext)
 export const EventContextProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
-  const [page, setPage] = useState<EventPageProps['page']>('name')
+  const [page, setPage] = useState<EventPageProps['page']>('planner')
 
   const setEventPage = (page: EventPageProps['page']) => {
     setPage(page)

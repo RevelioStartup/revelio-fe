@@ -8,9 +8,10 @@ import { Button } from '@/components/elements/Button'
 import { Task } from '@/types/task'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 // import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import { Chip } from '@mui/material'
+import { Box, Chip } from '@mui/material'
 import CircleIcon from '@mui/icons-material/Circle'
 import Link from 'next/link'
+import UpdateTaskForm from '@/app/task/UpdateTaskForm'
 
 interface EventTrackerProps {
   id: string
@@ -41,6 +42,12 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
 
   const getTasksDone = () => {
     return tasks.filter((task) => task.status === 'Done').length
+  }
+
+  const [isEditing, setIsEditing] = React.useState(false)
+
+  const handleEditToggle = (isVisible: boolean) => {
+    setIsEditing(isVisible)
   }
 
   return (
@@ -115,12 +122,40 @@ export const EventTracker: React.FC<EventTrackerProps> = ({
       </div>
 
       {tasks.map((task) => (
-        <div
-          className="flex flex-col bg-gray-50 p-5 gap-5 rounded-[20px]"
-          key={task.id}
-        >
-          <h2 className="text-teal-800 font-semibold"> {task.title} </h2>
-          <p className="text-gray-900"> {task.description} </p>
+        <div className="bg-gray-50 p-5 rounded-[20px]" key={task.id}>
+          <div className="flex flex-col gap-5">
+            {!isEditing ? (
+              <Box>
+                <div className="flex flex-row justify-between items-center gap-5">
+                  <div>
+                    <h2 className="text-teal-800 font-semibold">
+                      {' '}
+                      {task.title}{' '}
+                    </h2>
+                    <p className="text-gray-900"> {task.description} </p>
+                  </div>
+                  <button
+                    data-testid="edit-button"
+                    onClick={() => {
+                      handleEditToggle(!isEditing)
+                    }}
+                    className="ml-auto"
+                  >
+                    <i className="i-ph-pencil-bold text-blue-500 size-5" />
+                  </button>
+                </div>
+              </Box>
+            ) : (
+              <UpdateTaskForm
+                id={task.id}
+                title={task.title}
+                description={task.description}
+                event={task.event}
+                setIsEditing={handleEditToggle}
+              />
+            )}
+          </div>
+
           <div className="flex items-center gap-x-4">
             <p> Status </p>
             <Chip

@@ -1,12 +1,10 @@
 'use client'
 
-import { EventName } from './EventName'
-import { EventDate } from './EventDate'
 import { useEventContext } from '@/components/contexts/EventContext'
-import { EventBudget } from './EventBudget'
 import { EventPurpose } from './EventPurpose'
 import { RootState, useAppSelector } from '@/redux/store'
 import { useEffect } from 'react'
+import { EventPlanner } from './EventPlanner'
 
 export default function EventPage() {
   const { page } = useEventContext()
@@ -20,15 +18,11 @@ export default function EventPage() {
   })
 
   switch (page) {
-    case 'name':
-      return <EventName />
-    case 'date':
-      return <EventDate />
-    case 'budget':
-      return <EventBudget />
+    case 'planner':
+      return <EventPlanner />
     case 'purpose':
       return <EventPurpose />
     default:
-      return <EventName />
+      return <EventPlanner />
   }
 }
