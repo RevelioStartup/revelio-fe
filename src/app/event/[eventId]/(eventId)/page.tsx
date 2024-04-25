@@ -2,12 +2,14 @@
 
 import { useGetEventQuery } from '@/redux/api/eventApi'
 import { AppRegistration, EditCalendar, PlaylistAdd } from '@mui/icons-material'
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Chip } from '@mui/material'
 import React from 'react'
 import { EventPlan } from './EventPlan'
 import { EventTracker } from './EventTracker'
 import { useGetAllTasksQuery } from '@/redux/api/taskApi'
 import { Task } from '@/types/task'
+import { Rundown } from './rundown/EventRundown'
 
 const CHIP_STYLE = '!font-bold !p-5 !border-none'
 const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
@@ -19,7 +21,7 @@ export default function EventDetail({
   params: { eventId: string }
 }) {
   const [chipType, setChipType] = React.useState<
-    'plan' | 'timeline' | 'tracker'
+    'plan' | 'timeline' | 'tracker' | 'rundown'
   >('plan')
   const { data, isLoading } = useGetEventQuery(params.eventId)
 
@@ -29,7 +31,7 @@ export default function EventDetail({
 
   console.log(trackerData)
 
-  const handleClick = (type: 'plan' | 'timeline' | 'tracker') => {
+  const handleClick = (type: 'plan' | 'timeline' | 'tracker' | 'rundown') => {
     setChipType(type)
   }
 
@@ -44,6 +46,8 @@ export default function EventDetail({
           return (
             <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
           )
+        case 'rundown':
+          return <Rundown />
       }
     }
   }
@@ -99,6 +103,20 @@ export default function EventDetail({
           onClick={() => handleClick('tracker')}
           className={
             chipType === 'tracker' ? CHIP_STYLE_ACTIVE : CHIP_STYLE_INACTIVE
+          }
+        />
+        <Chip
+          label="Rundown"
+          variant="outlined"
+          data-testid="rundown"
+          avatar={
+            <AssignmentIcon
+              className={`${chipType === 'rundown' ? '!text-teal-50' : '!text-black'}`}
+            />
+          }
+          onClick={() => handleClick('rundown')}
+          className={
+            chipType === 'rundown' ? CHIP_STYLE_ACTIVE : CHIP_STYLE_INACTIVE
           }
         />
       </div>
