@@ -16,6 +16,39 @@ import { IEvent } from '@/types/event'
 const CHIP_STYLE = '!font-bold !p-5 !border-none'
 const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
 const CHIP_STYLE_INACTIVE = CHIP_STYLE + ' ' + '!bg-teal-50 !text-teal-400'
+type ChipType = 'plan' | 'timeline' | 'tracker' | 'rundown';
+
+function getAvatarComponent(type: string, chipType: ChipType): JSX.Element {
+  let avatarComponent;
+
+  if (type === 'plan') {
+    avatarComponent = (
+      <AppRegistration
+        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
+      />
+    );
+  } else if (type === 'timeline') {
+    avatarComponent = (
+      <EditCalendar
+        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
+      />
+    );
+  } else if (type === 'tracker') {
+    avatarComponent = (
+      <PlaylistAdd
+        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
+      />
+    );
+  } else {
+    avatarComponent = (
+      <AssignmentIcon
+        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
+      />
+    );
+  }
+
+  return avatarComponent;
+}
 
 function renderContent(
   chipType: string,
@@ -47,9 +80,7 @@ export default function EventDetail({
 }: {
   params: { eventId: string }
 }) {
-  const [chipType, setChipType] = React.useState<
-    'plan' | 'timeline' | 'tracker' | 'rundown'
-  >('plan')
+  const [chipType, setChipType] = React.useState<ChipType>('plan');
   const { data, isLoading } = useGetEventQuery(params.eventId)
   const { data: trackerData, isLoading: trackerLoading } = useGetAllTasksQuery(
     params.eventId
@@ -77,25 +108,7 @@ export default function EventDetail({
                 : type.charAt(0).toUpperCase() + type.slice(1)
             }
             data-testid={type}
-            avatar={
-              type === 'plan' ? (
-                <AppRegistration
-                  className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-                />
-              ) : type === 'timeline' ? (
-                <EditCalendar
-                  className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-                />
-              ) : type === 'tracker' ? (
-                <PlaylistAdd
-                  className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-                />
-              ) : (
-                <AssignmentIcon
-                  className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-                />
-              )
-            }
+            avatar={getAvatarComponent(type, chipType)}
             className={
               chipType === type ? CHIP_STYLE_ACTIVE : CHIP_STYLE_INACTIVE
             }
