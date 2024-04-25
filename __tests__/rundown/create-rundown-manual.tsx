@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast'
 
 import { redirect, useParams, usePathname } from 'next/navigation'
 import { CreateRundownManualForm } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownManualForm'
-
+import CreateRundownPage from '@/app/event/[eventId]/(eventId)/create-rundown/page'
 
 jest.mock('next/navigation', () => ({
   redirect: jest.fn(),
@@ -19,10 +19,9 @@ jest.mock('next/navigation', () => ({
 }))
 
 jest.mock('@/redux/api/rundownApi', () => ({
-    useCreateRundownManuallyMutation: jest.fn(),
+  useCreateRundownManuallyMutation: jest.fn(),
 }))
 describe('Testing create rundown manual form', () => {
-
   beforeEach(() => {
     jest.spyOn(toast, 'error').mockImplementation(jest.fn())
 
@@ -30,7 +29,7 @@ describe('Testing create rundown manual form', () => {
       data: {},
     })
     ;(useCreateRundownManuallyMutation as jest.Mock).mockReturnValue([
-        mockCreateRundownManually,
+      mockCreateRundownManually,
       {
         isLoading: false,
         isSuccess: false,
@@ -43,9 +42,7 @@ describe('Testing create rundown manual form', () => {
     ;(useParams as jest.Mock).mockReturnValue({
       eventId: '123',
     })
-    ;(usePathname as jest.Mock).mockReturnValue(
-      '/event/1/create-rundown'
-    )
+    ;(usePathname as jest.Mock).mockReturnValue('/event/1/create-rundown')
   })
   afterEach(() => {
     jest.clearAllMocks()
@@ -63,8 +60,8 @@ describe('Testing create rundown manual form', () => {
         rundown_data: [
           {
             description: 'New Activity',
-            start_time:'00:00',
-            end_time:'01:00'
+            start_time: '00:00',
+            end_time: '01:00',
           },
         ],
       },
@@ -89,8 +86,8 @@ describe('Testing create rundown manual form', () => {
     fireEvent.click(saveButton)
 
     await waitFor(() =>
-        expect(mockCreateRundownManually).toHaveBeenCalledTimes(0)
-      )
+      expect(mockCreateRundownManually).toHaveBeenCalledTimes(0)
+    )
   })
 
   it('should have a back button that redirects to the event detail page', async () => {
@@ -119,7 +116,6 @@ describe('Testing create rundown manual form', () => {
         'There must be at least one rundown.'
       )
     })
-    
   })
   it('displays an error toast when there is an error', async () => {
     const mockCreateTaskStepManually = jest.fn().mockResolvedValue({
@@ -172,3 +168,13 @@ describe('Testing create rundown manual form', () => {
   })
 })
 
+describe('Testing create rundown page component', () =>{
+    it('render create rundown page', async () => {
+        const { getByTestId } = render(
+          <Provider store={store}>
+            <CreateRundownPage />
+          </Provider>
+        )
+        expect(getByTestId('back-create-rundown')).toBeInTheDocument()
+      })
+})
