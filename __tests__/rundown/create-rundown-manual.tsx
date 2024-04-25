@@ -11,6 +11,7 @@ import { toast } from 'react-hot-toast'
 import { redirect, useParams, usePathname } from 'next/navigation'
 import { CreateRundownManualForm } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownManualForm'
 import CreateRundownPage from '@/app/event/[eventId]/(eventId)/create-rundown/page'
+import { CreateRundownButton } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownButton'
 
 jest.mock('next/navigation', () => ({
   redirect: jest.fn(),
@@ -168,13 +169,24 @@ describe('Testing create rundown manual form', () => {
   })
 })
 
-describe('Testing create rundown page component', () =>{
+describe('Testing create rundown page component', () => {
+  it('render create rundown page', async () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <CreateRundownPage />
+      </Provider>
+    )
+    expect(getByTestId('back-create-rundown')).toBeInTheDocument()
+  })
+})
+
+describe('Testing event rundown component', () =>{
     it('render create rundown page', async () => {
         const { getByTestId } = render(
           <Provider store={store}>
-            <CreateRundownPage />
+            <CreateRundownButton />
           </Provider>
         )
-        expect(getByTestId('back-create-rundown')).toBeInTheDocument()
+        expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
       })
 })
