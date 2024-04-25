@@ -66,7 +66,7 @@ describe('Event Detail', () => {
       </Provider>
     )
 
-    const myPlan = getByText('My Plan')
+    const myPlan = getByText('Plan')
 
     expect(myPlan).toBeInTheDocument()
   })
@@ -146,7 +146,7 @@ describe('Event Detail', () => {
       </Provider>
     )
 
-    const myPlan = getByTestId('myplan')
+    const myPlan = getByTestId('plan')
 
     myPlan.click()
 
