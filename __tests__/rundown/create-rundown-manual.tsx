@@ -12,6 +12,7 @@ import { redirect, useParams, usePathname } from 'next/navigation'
 import { CreateRundownManualForm } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownManualForm'
 import CreateRundownPage from '@/app/event/[eventId]/(eventId)/create-rundown/page'
 import { CreateRundownButton } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownButton'
+import { Rundown } from '@/app/event/[eventId]/(eventId)/rundown/EventRundown'
 
 jest.mock('next/navigation', () => ({
   redirect: jest.fn(),
@@ -180,11 +181,22 @@ describe('Testing create rundown page component', () => {
   })
 })
 
-describe('Testing event rundown component', () =>{
+describe('Testing event rundown component', () => {
+  it('render create rundown page', async () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <CreateRundownButton />
+      </Provider>
+    )
+    expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
+  })
+})
+
+describe('Testing create rundown button component', () =>{
     it('render create rundown page', async () => {
         const { getByTestId } = render(
           <Provider store={store}>
-            <CreateRundownButton />
+            <Rundown />
           </Provider>
         )
         expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
