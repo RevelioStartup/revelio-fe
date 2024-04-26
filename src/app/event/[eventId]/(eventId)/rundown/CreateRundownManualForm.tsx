@@ -29,7 +29,6 @@ export const CreateRundownManualForm = () => {
     useCreateRundownManuallyMutation()
 
   const onSubmit: SubmitHandler<CreateRundownsRequest> = async (data) => {
-    data.event_id = params.eventId as string
     if (data.rundown_data.length == 0) {
       toast.error('There must be at least one rundown.')
     } else {
