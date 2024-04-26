@@ -29,6 +29,7 @@ export const AddableInputRundownField: FC<AddableInputRundownFieldProps> = ({
             {index + 1}
           </p>
           <div className="flex flex-col gap-2 w-full">
+            <p>Activity Description</p>
             <Input
               control={control!}
               name={`${name}[${index}].description`}
@@ -37,22 +38,24 @@ export const AddableInputRundownField: FC<AddableInputRundownFieldProps> = ({
               placeholder={'Enter activity description'}
               required
             />
+            <p>Start Time</p>
             <Input
               control={control!}
               name={`${name}[${index}].start_time`}
               className={twMerge(InputVariants())}
               data-testid={`${name}.${index}.start_time`}
               placeholder={'Enter activity start time'}
-              type='time'
+              type="time"
               required
             />
+            <p>End Time</p>
             <Input
               control={control!}
               name={`${name}[${index}].end_time`}
               className={twMerge(InputVariants())}
               data-testid={`${name}.${index}.end_time`}
               placeholder={'Enter activity end time'}
-              type='time'
+              type="time"
               required
             />
           </div>
@@ -71,7 +74,7 @@ export const AddableInputRundownField: FC<AddableInputRundownFieldProps> = ({
         variant={'ghost'}
         data-testid="addable-input-add-button"
         onClick={() => {
-          append({ description: '', start_time:'00:00', end_time:'00:00' })
+          append({ description: '', start_time: '00:00', end_time: '00:00' })
         }}
         rightIcon={<i className="i-ph-plus size-6" />}
         className="justify-between"
