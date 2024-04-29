@@ -192,13 +192,13 @@ describe('Testing event rundown component', () => {
   })
 })
 
-describe('Testing create rundown button component', () =>{
-    it('render create rundown page', async () => {
-        const { getByTestId } = render(
-          <Provider store={store}>
-            <Rundown />
-          </Provider>
-        )
-        expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
-      })
+describe('Testing create rundown button component', () => {
+  it('render create rundown page', async () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <Rundown />
+      </Provider>
+    )
+    expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
+  })
 })
