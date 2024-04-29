@@ -1,14 +1,13 @@
-import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from '@/redux/store';
-import RundownTable from '@/app/rundown/RundownTable';
+import { render, screen } from '@testing-library/react'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store'
 import '@testing-library/jest-dom'
+import RundownTable from '@/app/event/[eventId]/(eventId)/rundown/RundownTable'
 
 jest.mock('@/redux/api/rundownApi', () => ({
-    useGetEventRundownQuery: jest.fn().mockReturnValue({
-      data: [],
-    }),
+  useGetEventRundownQuery: jest.fn().mockReturnValue({
+    data: [],
+  }),
 }))
 
 describe('RundownTable', () => {
@@ -17,8 +16,8 @@ describe('RundownTable', () => {
       <Provider store={store}>
         <RundownTable eventId="testEventId" />
       </Provider>
-    );
+    )
 
-    expect(screen.getByTestId('no-rundown-text')).toBeInTheDocument();
-  });
-});
+    expect(screen.getByTestId('no-rundown-text')).toBeInTheDocument()
+  })
+})

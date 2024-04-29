@@ -1,4 +1,4 @@
-import { CreateRundownsRequest, CreateRundownsResponse } from '@/types/rundown'
+import { CreateRundownsRequest, CreateRundownsResponse, RundownsDetail } from '@/types/rundown'
 import { baseApi } from './baseApi'
 
 export const rundownApi = baseApi.injectEndpoints({
@@ -16,7 +16,20 @@ export const rundownApi = baseApi.injectEndpoints({
         { type: 'Rundown', id: (result && result[0] && result[0].event) || '' },
       ],
     }),
+    getEventRundown: builder.query<RundownsDetail[], string>({
+      query: (id) => ({
+        url: `/rundowns/events/${id}/`,
+        method: 'GET',
+      }),
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({ type: 'Rundown', id: id }))
+          : [{ type: 'Rundown' }],
+    }),
   }),
 })
 
-export const { useCreateRundownManuallyMutation } = rundownApi
+export const { 
+  useCreateRundownManuallyMutation,
+  useGetEventRundownQuery,
+} = rundownApi

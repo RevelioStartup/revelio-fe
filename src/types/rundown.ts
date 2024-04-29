@@ -14,3 +14,5 @@ export type CreateRundownsRequest = {
 }
 
 export type CreateRundownsResponse = RundownsDetail[]
+
+export type RundownList = RundownsDetail[]
