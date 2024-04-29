@@ -63,7 +63,7 @@ function renderContent(
     case 'tracker':
       return <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
     case 'rundown':
-      return <Rundown eventId={data.id}/>
+      return <Rundown eventId={data.id} />
   }
 }
 

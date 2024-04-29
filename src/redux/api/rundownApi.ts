@@ -1,4 +1,8 @@
-import { CreateRundownsRequest, CreateRundownsResponse, RundownsDetail } from '@/types/rundown'
+import {
+  CreateRundownsRequest,
+  CreateRundownsResponse,
+  RundownsDetail,
+} from '@/types/rundown'
 import { baseApi } from './baseApi'
 
 export const rundownApi = baseApi.injectEndpoints({
@@ -29,7 +33,5 @@ export const rundownApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { 
-  useCreateRundownManuallyMutation,
-  useGetEventRundownQuery,
-} = rundownApi
+export const { useCreateRundownManuallyMutation, useGetEventRundownQuery } =
+  rundownApi

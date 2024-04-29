@@ -5,7 +5,10 @@ import { render, fireEvent, waitFor } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 
-import { useCreateRundownManuallyMutation, useGetEventRundownQuery } from '@/redux/api/rundownApi'
+import {
+  useCreateRundownManuallyMutation,
+  useGetEventRundownQuery,
+} from '@/redux/api/rundownApi'
 import { toast } from 'react-hot-toast'
 
 import { redirect, useParams, usePathname } from 'next/navigation'
@@ -61,7 +64,6 @@ describe('Testing create rundown manual form', () => {
     ;(useParams as jest.Mock).mockReturnValue({
       eventId: '123',
     })
-
   })
   afterEach(() => {
     jest.clearAllMocks()
@@ -213,7 +215,7 @@ describe('Testing create rundown button component', () => {
   it('render create rundown page', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <Rundown eventId='123' />
+        <Rundown eventId="123" />
       </Provider>
     )
     expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
