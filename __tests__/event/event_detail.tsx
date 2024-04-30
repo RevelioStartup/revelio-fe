@@ -66,7 +66,7 @@ describe('Event Detail', () => {
       </Provider>
     )
 
-    const myPlan = getByText('My Plan')
+    const myPlan = getByText('Plan')
 
     expect(myPlan).toBeInTheDocument()
   })
@@ -146,7 +146,7 @@ describe('Event Detail', () => {
       </Provider>
     )
 
-    const myPlan = getByTestId('myplan')
+    const myPlan = getByTestId('plan')
 
     myPlan.click()
 
@@ -197,6 +197,49 @@ describe('Event Detail', () => {
 
   it('clicks the tracker', () => {
     const myInitialState = 'tracker'
+
+    const setChipType = jest.fn()
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, setChipType])
+
+    const eventId = '1'
+
+    const mockEventData = {
+      id: '1',
+      name: 'asd',
+      budget: 'asd',
+      date: '2023-20-05',
+      objective: 'adfsf',
+      attendees: 'number',
+      theme: 'string',
+      services: 'string',
+    }
+
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+
+    mockGetEventQuery.mockReturnValue({
+      data: mockEventData,
+      isLoading: false,
+    })
+
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <EventDetail
+          params={{
+            eventId: eventId,
+          }}
+        />
+      </Provider>
+    )
+
+    const tracker = getByTestId('tracker')
+
+    tracker.click()
+
+    expect(setChipType).toHaveBeenCalledWith('tracker')
+  })
+  it('clicks the rundown', () => {
+    const myInitialState = 'rundown'
 
     const setChipType = jest.fn()
 
