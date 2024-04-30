@@ -1,9 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import {
-    useDeleteRundownMutation,
-} from '@/redux/api/rundownApi'
+import { useDeleteRundownMutation } from '@/redux/api/rundownApi'
 import RundownTable from '@/app/event/[eventId]/(eventId)/rundown/RundownTable'
 
 jest.mock('@/redux/api/rundownApi', () => ({
@@ -41,12 +39,14 @@ jest.mock('@/redux/api/rundownApi', () => ({
 const createDeleteResponse = (message: string) => ({ data: { message } })
 
 describe('RundownTable delete', () => {
-  
-
   test('deletes a single task step correctly', async () => {
-    render(<RundownTable eventId='bf8d2392-2bf5-4659-8ff4-652e46c21749' />)
+    render(<RundownTable eventId="bf8d2392-2bf5-4659-8ff4-652e46c21749" />)
 
-    fireEvent.click(screen.getByTestId('rundown-efa74992-001f-4e09-9cb9-7cee4d59746e'))
-    expect(screen.queryByTestId('rundown-efa74992-001f-4e09-9cb9-7cee4d59746e')).toBeNull();
+    fireEvent.click(
+      screen.getByTestId('rundown-efa74992-001f-4e09-9cb9-7cee4d59746e')
+    )
+    expect(
+      screen.queryByTestId('rundown-efa74992-001f-4e09-9cb9-7cee4d59746e')
+    ).toBeNull()
   })
 })
