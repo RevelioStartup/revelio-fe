@@ -17,7 +17,6 @@ import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
-import { SubscriptionHistoryResponse } from '@/types/subscription'
 
 type ChipType = 'event' | 'history'
 
@@ -57,6 +56,18 @@ export default function Profile() {
 
   const handleOpenPopup = () => {
     setOpenPopup(true)
+  }
+
+  const renderSubscriptionHistory = () => {
+    if (!subscriptionHistory) {
+      return <h2>No Records Found.</h2>
+    }
+
+    return (
+      <SubscriptionHistory
+        data={subscriptionHistory}
+      />
+    )
   }
 
   return (
@@ -224,21 +235,7 @@ export default function Profile() {
               <p>No events found.</p>
             )}
           </Box>
-        ) : subscriptionHistory ? (
-          <SubscriptionHistory
-            data={subscriptionHistory}
-          />
-        ) : (
-          subscriptionHistory ? (
-            <SubscriptionHistory
-              data={subscriptionHistory}
-            />
-          ) : (
-            <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
-              No Records Found.
-            </h2>
-          )
-        )}
+        ) : renderSubscriptionHistory()}
       </Box>
     </Box>
   )
