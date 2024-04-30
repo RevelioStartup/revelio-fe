@@ -24,7 +24,8 @@ const mockEventsData = [
 
 jest.mock('@/redux/api/subscriptionApi', () => ({
   useGetSubscriptionsQuery: jest.fn().mockReturnValue({
-    data: [] }),
+    data: [],
+  }),
 }))
 
 // Mocking the RTK Query hook used in the component
@@ -137,7 +138,7 @@ describe('Profile Component', () => {
     fireEvent.click(getByTestId('button-yes'))
   })
 
-  it("Showing Subscription History", () => {
+  it('Showing Subscription History', () => {
     const myInitialState = 'history'
 
     React.useState = jest.fn().mockReturnValue([myInitialState, {}])
@@ -148,13 +149,12 @@ describe('Profile Component', () => {
       </Provider>
     )
 
-
     const history = getByText('Subscription History')
 
     expect(history).toBeInTheDocument()
   })
 
-  it("Show subscription not found", () => {
+  it('Show subscription not found', () => {
     const myInitialState = 'history'
 
     React.useState = jest.fn().mockReturnValue([myInitialState, {}])
