@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store' // Update the import path according to your file structure
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import Profile from '@/app/profile/page'
+import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 
 // Mock data based on the IEvent type
 const mockEventsData = [
@@ -20,6 +21,11 @@ const mockEventsData = [
   },
   // ... add more mock events as needed
 ]
+
+jest.mock('@/redux/api/subscriptionApi', () => ({
+  useGetSubscriptionsQuery: jest.fn().mockReturnValue({
+    data: [] }),
+}))
 
 // Mocking the RTK Query hook used in the component
 jest.mock('@/redux/api/profileApi', () => ({
@@ -129,5 +135,40 @@ describe('Profile Component', () => {
     fireEvent.click(getByTestId('button-close'))
     fireEvent.click(getByTestId('logout-button'))
     fireEvent.click(getByTestId('button-yes'))
+  })
+
+  it("Showing Subscription History", () => {
+    const myInitialState = 'history'
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+
+    const { getByText } = render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
+
+
+    const history = getByText('Subscription History')
+
+    expect(history).toBeInTheDocument()
+  })
+
+  it("Show subscription not found", () => {
+    const myInitialState = 'history'
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+    const mockGetEventQuery = useGetSubscriptionsQuery as jest.Mock
+
+    mockGetEventQuery.mockReturnValue({
+      data: null,
+      isLoading: true,
+    })
+
+    const { getByText } = render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
   })
 })
