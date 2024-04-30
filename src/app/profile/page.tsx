@@ -16,10 +16,6 @@ import Link from 'next/link'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
-import {
-  CHIP_STYLE_ACTIVE,
-  CHIP_STYLE_INACTIVE,
-} from '../event/[eventId]/(eventId)/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 import { SubscriptionHistoryResponse } from '@/types/subscription'
 
@@ -33,6 +29,13 @@ export default function Profile() {
   const dispatch = useDispatch()
 
   const { data: subscriptionHistory } = useGetSubscriptionsQuery()
+
+  const CHIP_STYLE = '!font-bold !p-5 !border-none'
+
+  const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
+
+  const CHIP_STYLE_INACTIVE =
+  CHIP_STYLE + ' ' + '!bg-teal-50 !text-teal-400'
 
   if (isLoading)
     return (
