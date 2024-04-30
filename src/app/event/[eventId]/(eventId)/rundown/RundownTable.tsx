@@ -6,10 +6,10 @@ interface RundownTableProps {
 }
 
 export const RundownTable = ({ eventId }: RundownTableProps) => {
-  const { data: eventRundown } = useGetEventRundownQuery(eventId)
+  const { data: eventRundown = [] } = useGetEventRundownQuery(eventId)
   return (
     <div className="overflow-x-auto mt-2 mb-4">
-      {eventRundown?.length == 0 ? (
+      {eventRundown.length == 0 ? (
         <p
           data-testid="no-rundown-text"
           className="text-lg text-md text-teal-600 font-bold"
@@ -29,7 +29,7 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {eventRundown?.map((rundown) => (
+            {eventRundown.map((rundown) => (
               <tr key={rundown.id}>
                 <td className="border px-4 py-2">{rundown.start_time}</td>
                 <td className="border px-4 py-2">{rundown.end_time}</td>
