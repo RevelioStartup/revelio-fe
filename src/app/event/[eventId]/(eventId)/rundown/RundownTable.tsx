@@ -1,4 +1,8 @@
-import { useGetEventRundownQuery } from '@/redux/api/rundownApi'
+import { Button } from '@/components/elements/Button'
+import {
+  useGetEventRundownQuery,
+  useDeleteRundownMutation,
+} from '@/redux/api/rundownApi'
 import React from 'react'
 
 interface RundownTableProps {
@@ -7,6 +11,16 @@ interface RundownTableProps {
 
 export const RundownTable = ({ eventId }: RundownTableProps) => {
   const { data: eventRundown = [] } = useGetEventRundownQuery(eventId)
+  const [deleteRundown] = useDeleteRundownMutation()
+
+  const handleDelete = async (rundownId: string) => {
+    try {
+      await deleteRundown({ id: rundownId }).unwrap()
+    } catch (error) {
+      console.error('Failed to delete the rundown', error)
+    }
+  }
+
   return (
     <div className="overflow-x-auto mt-2 mb-4">
       {eventRundown.length == 0 ? (
@@ -26,6 +40,7 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
               <th className="border px-4 py-2">Start Time</th>
               <th className="border px-4 py-2">End Time</th>
               <th className="border px-4 py-2">Description</th>
+              <th className="border px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -34,6 +49,15 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
                 <td className="border px-4 py-2">{rundown.start_time}</td>
                 <td className="border px-4 py-2">{rundown.end_time}</td>
                 <td className="border px-4 py-2">{rundown.description}</td>
+                <td className="border px-4 py-2">
+                  <Button
+                    variant="danger"
+                    data-testid={`rundown-${rundown.id}`}
+                    onClick={() => handleDelete(rundown.id)}
+                  >
+                    Delete
+                  </Button>{' '}
+                </td>
               </tr>
             ))}
           </tbody>
