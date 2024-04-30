@@ -1,5 +1,5 @@
 import { SubscriptionHistoryResponse } from '@/types/subscription'
-import { useStringDate } from '@/utils/useStringDate'
+import { getStringDate } from '@/utils/getStringDate'
 import { Box } from '@mui/material'
 import React from 'react'
 
@@ -46,8 +46,8 @@ export const SubscriptionHistory: React.FC<{
           </Box>
           <Box sx={{ flexGrow: 0, mb: '0.5rem', color: 'white' }}>
             <p style={{ margin: 0 }}>
-              {useStringDate(history.start_date)} -{' '}
-              {useStringDate(history.end_date)}{' '}
+              {getStringDate(history.start_date)} -{' '}
+              {getStringDate(history.end_date)}{' '}
             </p>
           </Box>
         </Box>
