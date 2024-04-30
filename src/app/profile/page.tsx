@@ -16,7 +16,10 @@ import Link from 'next/link'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
-import { CHIP_STYLE_ACTIVE, CHIP_STYLE_INACTIVE } from '../event/[eventId]/(eventId)/page'
+import {
+  CHIP_STYLE_ACTIVE,
+  CHIP_STYLE_INACTIVE,
+} from '../event/[eventId]/(eventId)/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 import { SubscriptionHistoryResponse } from '@/types/subscription'
 
@@ -30,7 +33,7 @@ export default function Profile() {
   const dispatch = useDispatch()
 
   const { data: subscriptionHistory } = useGetSubscriptionsQuery()
-  
+
   if (isLoading)
     return (
       <div className="flex flex-col justify-center items-center min-h-[90vh]">
@@ -55,13 +58,15 @@ export default function Profile() {
   }
 
   return (
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    }}>
-      <Box display={"flex"} gap={"1em"}>
-        {["event", "history"].map((type) => (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Box display={'flex'} gap={'1em'}>
+        {['event', 'history'].map((type) => (
           <Chip
             key={type}
             label={type.charAt(0).toUpperCase() + type.slice(1)}
@@ -69,9 +74,7 @@ export default function Profile() {
             className={
               chipType === type ? CHIP_STYLE_ACTIVE : CHIP_STYLE_INACTIVE
             }
-            onClick={() =>
-              setChipType(type as 'event' | 'history')
-            }
+            onClick={() => setChipType(type as 'event' | 'history')}
           />
         ))}
       </Box>
@@ -202,7 +205,10 @@ export default function Profile() {
                     <p style={{ margin: 0 }}>{event.budget}</p>
                     <p style={{ margin: 0 }}>{event.objective}</p>
                   </Box>
-                  <Link href={`/event/${event.id}`} className="flex justify-end">
+                  <Link
+                    href={`/event/${event.id}`}
+                    className="flex justify-end"
+                  >
                     <Button
                       variant="ghost"
                       className="w-32 lg:w-56 bg-white h-10"
@@ -216,10 +222,14 @@ export default function Profile() {
               <p>No events found.</p>
             )}
           </Box>
+        ) : subscriptionHistory ? (
+          <SubscriptionHistory
+            data={subscriptionHistory as SubscriptionHistoryResponse[]}
+          />
         ) : (
-          subscriptionHistory ? <SubscriptionHistory data = {subscriptionHistory as SubscriptionHistoryResponse[]} /> : <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
-          No Records Found.
-        </h2>
+          <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
+            No Records Found.
+          </h2>
         )}
       </Box>
     </Box>
