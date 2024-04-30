@@ -34,8 +34,7 @@ export default function Profile() {
 
   const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
 
-  const CHIP_STYLE_INACTIVE =
-  CHIP_STYLE + ' ' + '!bg-teal-50 !text-teal-400'
+  const CHIP_STYLE_INACTIVE = CHIP_STYLE + ' ' + '!bg-teal-50 !text-teal-400'
 
   if (isLoading)
     return (
@@ -227,12 +226,18 @@ export default function Profile() {
           </Box>
         ) : subscriptionHistory ? (
           <SubscriptionHistory
-            data={subscriptionHistory as SubscriptionHistoryResponse[]}
+            data={subscriptionHistory}
           />
         ) : (
-          <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
-            No Records Found.
-          </h2>
+          subscriptionHistory ? (
+            <SubscriptionHistory
+              data={subscriptionHistory}
+            />
+          ) : (
+            <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
+              No Records Found.
+            </h2>
+          )
         )}
       </Box>
     </Box>
