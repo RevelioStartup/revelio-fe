@@ -22,33 +22,24 @@ type ChipType = 'plan' | 'timeline' | 'tracker' | 'rundown'
 function getAvatarComponent(type: string, chipType: ChipType): JSX.Element {
   let avatarComponent
 
-  if (type === 'plan') {
-    avatarComponent = (
-      <AppRegistration
-        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-      />
-    )
-  } else if (type === 'timeline') {
-    avatarComponent = (
-      <EditCalendar
-        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-      />
-    )
-  } else if (type === 'tracker') {
-    avatarComponent = (
-      <PlaylistAdd
-        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-      />
-    )
-  } else {
-    avatarComponent = (
-      <AssignmentIcon
-        className={`${chipType === type ? '!text-teal-50' : '!text-black'}`}
-      />
-    )
+  switch (type) {
+    case 'plan':
+      avatarComponent = <AppRegistration />
+      break
+    case 'timeline':
+      avatarComponent = <EditCalendar />
+      break
+    case 'tracker':
+      avatarComponent = <PlaylistAdd />
+      break
+    default:
+      avatarComponent = <AssignmentIcon />
+      break
   }
 
-  return avatarComponent
+  const className = chipType === type ? '!text-teal-50' : '!text-black'
+
+  return React.cloneElement(avatarComponent, { className })
 }
 
 function renderContent(
@@ -64,7 +55,7 @@ function renderContent(
     case 'tracker':
       return <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
     case 'rundown':
-      return <Rundown />
+      return <Rundown eventId={data.id} />
   }
 }
 
