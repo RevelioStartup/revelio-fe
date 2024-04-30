@@ -21,6 +21,8 @@ export const RundownContextProvider = ({
   }
 
   return (
-    <RundownContext.Provider value={contextValue}>{children}</RundownContext.Provider>
+    <RundownContext.Provider value={contextValue}>
+      {children}
+    </RundownContext.Provider>
   )
 }
