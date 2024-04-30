@@ -17,6 +17,7 @@ import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
+import { CHIP_STYLE_ACTIVE, CHIP_STYLE_INACTIVE } from './constant'
 
 type ChipType = 'event' | 'history'
 
@@ -28,12 +29,6 @@ export default function Profile() {
   const dispatch = useDispatch()
 
   const { data: subscriptionHistory } = useGetSubscriptionsQuery()
-
-  const CHIP_STYLE = '!font-bold !p-5 !border-none'
-
-  const CHIP_STYLE_ACTIVE = CHIP_STYLE + ' ' + '!bg-teal-600 !text-teal-50'
-
-  const CHIP_STYLE_INACTIVE = CHIP_STYLE + ' ' + '!bg-teal-50 !text-teal-400'
 
   if (isLoading)
     return (
@@ -63,11 +58,7 @@ export default function Profile() {
       return <h2>No Records Found.</h2>
     }
 
-    return (
-      <SubscriptionHistory
-        data={subscriptionHistory}
-      />
-    )
+    return <SubscriptionHistory data={subscriptionHistory} />
   }
 
   return (
@@ -87,7 +78,7 @@ export default function Profile() {
             className={
               chipType === type ? CHIP_STYLE_ACTIVE : CHIP_STYLE_INACTIVE
             }
-            onClick={() => setChipType(type as 'event' | 'history')}
+            onClick={() => setChipType(type as ChipType)}
           />
         ))}
       </Box>
@@ -235,7 +226,9 @@ export default function Profile() {
               <p>No events found.</p>
             )}
           </Box>
-        ) : renderSubscriptionHistory()}
+        ) : (
+          renderSubscriptionHistory()
+        )}
       </Box>
     </Box>
   )
