@@ -30,8 +30,18 @@ export const rundownApi = baseApi.injectEndpoints({
           ? result.map(({ id }) => ({ type: 'Rundown', id: id }))
           : [{ type: 'Rundown' }],
     }),
+    deleteRundown: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/rundowns/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Rundown'],
+    }),
   }),
 })
 
-export const { useCreateRundownManuallyMutation, useGetEventRundownQuery } =
-  rundownApi
+export const {
+  useCreateRundownManuallyMutation,
+  useGetEventRundownQuery,
+  useDeleteRundownMutation,
+} = rundownApi
