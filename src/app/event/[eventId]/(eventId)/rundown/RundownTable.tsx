@@ -1,4 +1,5 @@
 import { useGetEventRundownQuery } from '@/redux/api/rundownApi'
+import { CreateRundownButton } from './CreateRundownButton'
 import React from 'react'
 
 interface RundownTableProps {
@@ -10,12 +11,7 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
   return (
     <div className="overflow-x-auto mt-2 mb-4">
       {eventRundown.length == 0 ? (
-        <p
-          data-testid="no-rundown-text"
-          className="text-lg text-md text-teal-600 font-bold"
-        >
-          Your event does not have a schedule yet! Create one now!
-        </p>
+        <CreateRundownButton data-testid="create-rundown-button" />
       ) : (
         <table
           data-testid="rundown-table"
