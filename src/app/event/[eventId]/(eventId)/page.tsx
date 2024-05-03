@@ -6,6 +6,7 @@ import { Chip } from '@mui/material'
 import React from 'react'
 import { EventPlan } from './EventPlan'
 import { EventTracker } from './EventTracker'
+import { EventTimeline } from './EventTimeline'
 import { useGetAllTasksQuery } from '@/redux/api/taskApi'
 import { Task } from '@/types/task'
 
@@ -39,7 +40,7 @@ export default function EventDetail({
         case 'plan':
           return <EventPlan {...data} />
         case 'timeline':
-          return <div> Timeline </div>
+          return <EventTimeline {...data} />
         case 'tracker':
           return (
             <EventTracker {...data} tasks={trackerData as unknown as Task[]} />

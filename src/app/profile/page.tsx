@@ -21,9 +21,12 @@ export default function Profile() {
   const { data: events } = useGetEventsQuery()
   const dispatch = useDispatch()
 
-  if (isLoading) return <div className="flex flex-col justify-center items-center min-h-[90vh]">
-  <div data-testid="loader" className="loader"></div>
-</div>
+  if (isLoading)
+    return (
+      <div className="flex flex-col justify-center items-center min-h-[90vh]">
+        <div data-testid="loader" className="loader"></div>
+      </div>
+    )
   if (isError || !data) return <div>Error loading profile</div>
   const { user, profile } = data
 

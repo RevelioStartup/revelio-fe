@@ -2,9 +2,7 @@ import { AIButton } from '@/app/plans/AISuggestion/AIButton'
 import VenueCreateForm from '@/app/venue/VenueCreateForm'
 import VenueList from '@/app/venue/VenueList'
 import CheckIcon from '@mui/icons-material/Check'
-import {
-  Box,
-} from '@mui/material'
+import { Box } from '@mui/material'
 import React from 'react'
 import VendorList from '../../../vendor/VendorList'
 import VendorCreateForm from '../../../vendor/VendorCreateForm'
