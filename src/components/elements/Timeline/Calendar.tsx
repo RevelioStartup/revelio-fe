@@ -30,7 +30,6 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
     setClickedEvent(null)
   }
 
-  // Convert timeline data to FullCalendar events
   const events = timelines?.map((timeline) => ({
     id: timeline.id,
     title: timeline.task_step.name,
@@ -52,8 +51,6 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
     p: 4,
   }
 
-  
-
   if (isLoading) return <div>Loading...</div>
 
   return (
@@ -70,7 +67,7 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
           events={events}
           eventClick={handleEventClick}
           eventColor="#14b8a6"
-          displayEventTime = {false}
+          displayEventTime={false}
         />
         <Modal
           open={showModal}

@@ -51,7 +51,7 @@ function renderContent(
     case 'plan':
       return <EventPlan {...data} />
     case 'timeline':
-      return <EventTimeline {...data}/>
+      return <EventTimeline {...data} />
     case 'tracker':
       return <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
     case 'rundown':
