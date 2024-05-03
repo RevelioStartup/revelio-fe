@@ -1,43 +1,45 @@
-import React from 'react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { useGetTimelinesByEventQuery } from '@/redux/api/timelineApi';
-import { EventApi } from '@fullcalendar/core/index.js';
-import FullCalendar from '@fullcalendar/react';
+import React from 'react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import { useGetTimelinesByEventQuery } from '@/redux/api/timelineApi'
+import { EventApi } from '@fullcalendar/core/index.js'
+import FullCalendar from '@fullcalendar/react'
 
 interface DemoAppProps {
-  eventId: string;  
+  eventId: string
 }
 
-const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {  
-  const { data: timelines, isLoading } = useGetTimelinesByEventQuery({ event_id: eventId });
-  const [showModal, setShowModal] = React.useState(false);
-  const [clickedEvent, setClickedEvent] = React.useState<EventApi | null>(null); 
+const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
+  const { data: timelines, isLoading } = useGetTimelinesByEventQuery({
+    event_id: eventId,
+  })
+  const [showModal, setShowModal] = React.useState(false)
+  const [clickedEvent, setClickedEvent] = React.useState<EventApi | null>(null)
 
-  const handleEventClick = (clickInfo: any) => { 
-    setShowModal(true);
-    setClickedEvent(clickInfo.event);
-  };
+  const handleEventClick = (clickInfo: any) => {
+    setShowModal(true)
+    setClickedEvent(clickInfo.event)
+  }
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    setClickedEvent(null);
-  };
+    setShowModal(false)
+    setClickedEvent(null)
+  }
 
   // Convert timeline data to FullCalendar events
-  const events = timelines?.map(timeline => ({
+  const events = timelines?.map((timeline) => ({
     id: timeline.id,
     title: timeline.task_step.name,
     start: timeline.start_datetime,
     end: timeline.end_datetime,
     extendedProps: {
-      task_step: timeline.task_step
-    }
-  }));
+      task_step: timeline.task_step,
+    },
+  }))
 
   const style = {
     position: 'absolute',
@@ -48,9 +50,11 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-  };
+  }
 
-  if (isLoading) return <div>Loading...</div>;
+  
+
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <div className="demo-app">
@@ -60,12 +64,13 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
           headerToolbar={{
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
           }}
           initialView="dayGridMonth"
           events={events}
           eventClick={handleEventClick}
           eventColor="#14b8a6"
+          displayEventTime = {false}
         />
         <Modal
           open={showModal}
@@ -90,7 +95,7 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
         </Modal>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DemoApp;
+export default DemoApp

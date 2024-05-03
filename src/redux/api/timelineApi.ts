@@ -5,7 +5,7 @@ export const timelineApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTimelinesByEvent: builder.query<Timeline[], { event_id: string }>({
       query: ({ event_id }) => ({
-        url: `/timelines/${event_id}/`,
+        url: `/timelines/${event_id}/view`,
         method: 'GET',
       }),
       providesTags: ['Timeline'],
