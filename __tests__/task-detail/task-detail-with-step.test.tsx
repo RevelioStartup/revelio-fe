@@ -173,7 +173,11 @@ describe('TaskDetailPage with step', () => {
       mockUseUpdateTaskStepMutation,
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     expect(screen.getByText('event name')).toBeInTheDocument()
     expect(screen.getByText('task status')).toBeInTheDocument()
@@ -201,7 +205,11 @@ describe('TaskDetailPage with step', () => {
       mockUseUpdateTaskStepMutation,
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     act(() => {
       const buttonEdit = screen.getByTestId('button-edit-form')
@@ -234,7 +242,11 @@ describe('TaskDetailPage with step', () => {
       mockUseUpdateTaskStepMutation,
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     expect(screen.getByText('step name')).toBeInTheDocument()
     expect(screen.getByText('step name 2')).toBeInTheDocument()
@@ -249,7 +261,11 @@ describe('TaskDetailPage with step', () => {
   })
 
   test('delete task correctly', async () => {
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     const buttonDelete = screen.getByTestId('delete-task')
     fireEvent.click(buttonDelete)
@@ -263,7 +279,11 @@ describe('TaskDetailPage with step', () => {
       { isLoading: false },
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     const buttonDelete = screen.getByTestId('delete-task')
     fireEvent.click(buttonDelete)
