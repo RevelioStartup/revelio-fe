@@ -11,6 +11,9 @@ import {
   useUpdateTaskStepMutation,
 } from '@/redux/api/taskStepApi'
 import '@testing-library/jest-dom'
+import { Step } from '@/types/taskDetails'
+import { store } from '@/redux/store'
+import { Provider } from 'react-redux'
 
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
@@ -28,15 +31,6 @@ jest.mock('@/redux/api/taskStepApi', () => ({
 }))
 
 describe('TaskDetailPage with step', () => {
-  interface Step {
-    id: string
-    name: string
-    description: string
-    status: string
-    step_order: number
-    task: string
-  }
-
   const mockEventData = {
     id: '1',
     name: 'event name',
@@ -55,6 +49,8 @@ describe('TaskDetailPage with step', () => {
     status: 'NOT_STARTED',
     step_order: 1,
     task: '1',
+    start_datetime: '2024-04-19T12:40:19.827000Z',
+    end_datetime: '2024-04-19T12:40:19.827000Z',
   }
 
   const mockStepData2: Step = {
@@ -64,6 +60,8 @@ describe('TaskDetailPage with step', () => {
     status: 'NOT_STARTED',
     step_order: 2,
     task: '1',
+    start_datetime: null,
+    end_datetime: null,
   }
 
   const mockUpdatedStepData1: Step = {
@@ -73,6 +71,8 @@ describe('TaskDetailPage with step', () => {
     status: 'DONE',
     step_order: 1,
     task: '1',
+    start_datetime: null,
+    end_datetime: null,
   }
 
   const mockUpdatedStepData12: Step = {
@@ -82,6 +82,8 @@ describe('TaskDetailPage with step', () => {
     status: 'NOT_STARTED',
     step_order: 1,
     task: '1',
+    start_datetime: null,
+    end_datetime: null,
   }
 
   const mockTaskData = {
@@ -266,5 +268,28 @@ describe('TaskDetailPage with step', () => {
     const buttonDelete = screen.getByTestId('delete-task')
     fireEvent.click(buttonDelete)
     await waitFor(() => expect(mockDeleteTaskMutation).toHaveBeenCalledTimes(1))
+  })
+
+  test('renders task details with correct date format', () => {
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+    mockGetEventQuery.mockReturnValue({
+      data: mockEventData,
+      isLoading: false,
+    })
+
+    const mockGetTaskDetailQuery = useGetTaskDetailQuery as jest.Mock
+    mockGetTaskDetailQuery.mockReturnValue({
+      data: mockTaskData,
+      isLoading: false,
+    })
+
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
+
+    expect(screen.getByText('Fri, 19 Apr 24 19:04')).toBeInTheDocument()
+    expect(screen.getByText('19:40')).toBeInTheDocument()
   })
 })
