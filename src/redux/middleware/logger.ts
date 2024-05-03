@@ -17,9 +17,12 @@ export const rtkQueryErrorLogger: Middleware =
         api.dispatch(logout())
       } else {
         const errorData =
-          action.payload.data?.error?.message ||
+          action.payload.data?.error ||
           action.payload.data?.message ||
           action.error.message
+        if (action.meta.arg.endpointName == 'createTimeline') {
+          toast.error(errorData)
+        }
       }
     }
     return next(action)

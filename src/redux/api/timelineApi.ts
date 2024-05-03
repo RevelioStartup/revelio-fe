@@ -1,16 +1,17 @@
+import { CreateTimelineRequest, Timeline } from '@/types/timeline'
 import { baseApi } from './baseApi'
 
 export const timelineApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createTimeline: builder.mutation<
-      { task_step: string; start_datetime: string; end_datetime: string },
-      void
-    >({
+    createTimeline: builder.mutation<Timeline, CreateTimelineRequest>({
       query: (body) => ({
-        url: '/task-steps/',
+        url: '/timelines/',
         method: 'POST',
         body,
       }),
+      invalidatesTags: (result) => [
+        { type: 'Task', id: result?.task_step.task },
+      ],
     }),
   }),
 })

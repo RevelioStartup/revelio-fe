@@ -5,6 +5,8 @@ export type Step = {
   status: string
   step_order: number
   task: string
+  start_datetime: string | null
+  end_datetime: string | null
 }
 
 export type Task = {
