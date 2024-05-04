@@ -29,6 +29,20 @@ jest.mock('@/redux/api/taskApi', () => ({
     .fn()
     .mockReturnValue([jest.fn().mockResolvedValue({ data: { id: 1 } })]),
 }))
+jest.mock('@/redux/api/timelineApi', () => ({
+  useGetTimelinesByEventQuery: jest.fn().mockReturnValue({
+    data: [],
+    isLoading: false,
+  }),
+  
+}))
+
+jest.mock('@/components/elements/Timeline/Calendar', () => {
+  return {
+    __esModule: true,
+    default: jest.fn(() => <div>Mocked DemoApp</div>),
+  }
+})
 
 describe('Event Detail', () => {
   it('renders the myplan', () => {
