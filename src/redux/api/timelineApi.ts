@@ -1,4 +1,8 @@
-import { CreateTimelineRequest, Timeline } from '@/types/timeline'
+import {
+  CreateTimelineRequest,
+  Timeline,
+  ModifyDetailTimelineRequest,
+} from '@/types/timeline'
 import { baseApi } from './baseApi'
 
 export const timelineApi = baseApi.injectEndpoints({
@@ -13,7 +17,23 @@ export const timelineApi = baseApi.injectEndpoints({
         { type: 'Task', id: result?.task_step.task },
       ],
     }),
+
+    modifyDetailTimeline: builder.mutation<void, ModifyDetailTimelineRequest>({
+      query: ({ id, start_datetime, end_datetime }) => ({
+        url: `/timelines/${id}/`,
+        method: 'PATCH',
+        body: {
+          start_datetime,
+          end_datetime,
+        },
+      }),
+      invalidatesTags: (_, __, arg) => [
+        { type: 'Timeline', id: arg.id },
+        'Timeline',
+      ],
+    }),
   }),
 })
 
-export const { useCreateTimelineMutation } = timelineApi
+export const { useCreateTimelineMutation, useModifyDetailTimelineMutation } =
+  timelineApi
