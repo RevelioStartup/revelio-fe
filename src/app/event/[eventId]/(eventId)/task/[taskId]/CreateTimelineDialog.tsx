@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
 } from '@mui/material'
 import { useCreateTimelineMutation } from '@/redux/api/timelineApi'
 import { CreateTimelineRequest } from '@/types/timeline'
@@ -15,6 +14,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import toast from 'react-hot-toast'
+import { Button } from '@/components/elements/Button'
 
 interface CreateTimelineDialogProps {
   open: boolean
@@ -38,9 +38,35 @@ export const CreateTimelineDialog: React.FC<CreateTimelineDialogProps> = ({
   const methods = useForm<CreateTimelineRequest>({
     defaultValues: defaultValues,
   })
-  const { handleSubmit } = methods
+  const {
+    handleSubmit,
+    formState: { errors },
+    setError,
+    setValue,
+  } = methods
 
   const onSubmit: SubmitHandler<CreateTimelineRequest> = async (data) => {
+    if (!startDate) {
+      setError('start_datetime', {
+        type: 'required',
+        message: 'Start date is required.',
+      })
+      return
+    }
+    if (!endDate) {
+      setError('end_datetime', {
+        type: 'required',
+        message: 'End date is required.',
+      })
+      return
+    }
+    if (endDate.isBefore(startDate)) {
+      setError('end_datetime', {
+        type: 'invalid',
+        message: 'End date must be after start date.',
+      })
+      return
+    }
     data.task_step = taskStepId
     data.start_datetime = startDate!.format('YYYY-MM-DD HH:MM')
     data.end_datetime = endDate!.format('YYYY-MM-DD HH:MM')
@@ -51,7 +77,11 @@ export const CreateTimelineDialog: React.FC<CreateTimelineDialogProps> = ({
       toast.success('Task step added to timeline ')
       onClose()
     }
-  }, [isSuccess])
+    if (startDate)
+      setValue('start_datetime', startDate!.format('YYYY-MM-DD HH:MM'))
+
+    if (endDate) setValue('end_datetime', endDate!.format('YYYY-MM-DD HH:MM'))
+  }, [isSuccess, startDate, endDate])
 
   return (
     <Dialog
@@ -76,6 +106,11 @@ export const CreateTimelineDialog: React.FC<CreateTimelineDialogProps> = ({
               slotProps={{ textField: { required: true } }}
               className="!border-teal-100"
             />
+            {errors['start_datetime'] && (
+              <p className="text-red-500 text-sm -mt-2">
+                Start date is required.
+              </p>
+            )}
 
             <p>End date</p>
             <DateTimePicker
@@ -87,12 +122,19 @@ export const CreateTimelineDialog: React.FC<CreateTimelineDialogProps> = ({
               slotProps={{ textField: { required: true } }}
               className="!border-teal-100"
             />
+            {errors['end_datetime'] && (
+              <p className="text-red-500 text-sm -mt-2">
+                {errors['end_datetime'].message}
+              </p>
+            )}
           </div>
         </LocalizationProvider>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit(onSubmit)} autoFocus>
+        <Button variant={'danger'} onClick={onClose} disabled={isLoading}>
+          Cancel
+        </Button>
+        <Button onClick={handleSubmit(onSubmit)} loading={isLoading} autoFocus>
           Create
         </Button>
       </DialogActions>

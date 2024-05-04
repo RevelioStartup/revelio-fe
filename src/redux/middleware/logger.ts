@@ -11,7 +11,6 @@ export const rtkQueryErrorLogger: Middleware =
         return
       } else if (
         action?.payload.status == 401 &&
-        action.meta.arg.endpointName != 'login' &&
         action.meta.arg.endpointName != 'forgotPassword'
       ) {
         api.dispatch(logout())
