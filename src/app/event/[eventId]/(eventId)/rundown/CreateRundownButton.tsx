@@ -10,11 +10,11 @@ export const CreateRundownButton = () => {
   return (
     <div className="flex flex-col gap-8 px-5 py-3 lg:px-10 lg:py-6">
       <p
-          data-testid="no-rundown-text"
-          className="text-lg text-md text-teal-600 font-bold"
-        >
-          Your event does not have a schedule yet! Create one now!
-        </p>
+        data-testid="no-rundown-text"
+        className="text-lg text-md text-teal-600 font-bold"
+      >
+        Your event does not have a schedule yet! Create one now!
+      </p>
       <Link href={`${pathname}/create-rundown`} className="w-full">
         <Button
           variant={'ghost'}
