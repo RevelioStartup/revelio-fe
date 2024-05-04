@@ -48,12 +48,6 @@ describe('EventTimeline', () => {
       <Provider store={store}>
         <EventTimeline
           id="123"
-          budget={0}
-          date={''}
-          objective={''}
-          attendees={0}
-          theme={''}
-          services={''}
         />
       </Provider>
     )
@@ -64,12 +58,6 @@ describe('EventTimeline', () => {
       <Provider store={store}>
         <EventTimeline
           id="123"
-          budget={0}
-          date={''}
-          objective={''}
-          attendees={0}
-          theme={''}
-          services={''}
         />
       </Provider>
     )

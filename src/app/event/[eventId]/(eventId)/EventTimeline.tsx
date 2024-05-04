@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 
 export const EventTimeline: React.FC<{
   id: string
-}> = ({ id}) => {
+}> = ({ id }) => {
   return (
     <Box
       alignItems={'center'}
