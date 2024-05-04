@@ -43,8 +43,6 @@ const userSlice = createSlice({
       builder.addMatcher(
         authApi.endpoints.register.matchFulfilled,
         (state, { payload }: PayloadAction<LoginResponse>) => {
-          console.log('Dari useSlice')
-          console.log(payload)
           state.token = payload.access
         }
       )
