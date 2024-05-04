@@ -42,6 +42,8 @@ export const timelineApi = baseApi.injectEndpoints({
   }),
 })
 
-
-export const { useGetTimelinesByEventQuery, useCreateTimelineMutation, useModifyDetailTimelineMutation } =
-  timelineApi
+export const {
+  useGetTimelinesByEventQuery,
+  useCreateTimelineMutation,
+  useModifyDetailTimelineMutation,
+} = timelineApi
