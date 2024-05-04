@@ -198,7 +198,7 @@ const config: Config = {
   // transform: {
   //   '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   // },
-  
+
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   'node_modules/(?!(fullcalendar|@fullcalendar|other-lib)/)',

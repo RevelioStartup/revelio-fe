@@ -34,7 +34,6 @@ jest.mock('@/redux/api/timelineApi', () => ({
     data: [],
     isLoading: false,
   }),
-  
 }))
 
 jest.mock('@/components/elements/Timeline/Calendar', () => {

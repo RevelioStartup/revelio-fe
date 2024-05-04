@@ -10,8 +10,9 @@ export const baseApi = createApi({
     'Vendor',
     'Task',
     'Step',
-    'Timeline',
     'Rundown',
+    'SubscriptionHistory',
+    'Timeline',
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.baseUrl,

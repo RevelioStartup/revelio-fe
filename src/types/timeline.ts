@@ -6,3 +6,8 @@ export type Timeline = {
   end_datetime: string
   task_step: Steps
 }
+export type ModifyDetailTimelineRequest = {
+  id: string
+  start_datetime: string
+  end_datetime: string
+}

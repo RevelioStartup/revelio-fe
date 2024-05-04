@@ -9,7 +9,6 @@ import { useGetTimelinesByEventQuery } from '@/redux/api/timelineApi'
 import { EventApi } from '@fullcalendar/core/index.js'
 import FullCalendar from '@fullcalendar/react'
 
-
 interface DemoAppProps {
   eventId: string
 }
