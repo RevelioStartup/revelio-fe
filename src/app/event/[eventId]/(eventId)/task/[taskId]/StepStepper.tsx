@@ -203,68 +203,60 @@ export default function StepStepper({ taskId, task }: Props) {
               </div>
               <Typography>{step.description}</Typography>
               <Box sx={{ mb: 2 }}>
-                <table className="table border-separate border-spacing-y-1">
-                  <tbody>
-                    <tr className="table-row">
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          variant="primary"
-                          data-testid="button-edit-form"
-                          onClick={() => {
-                            setId(step.id)
-                            setName(step.name)
-                            setDescription(step.description)
-                            setStatus(step.status)
-                            setStepOrder(step.step_order)
-                            handleOpenPopup()
-                          }}
-                        >
-                          Edit Step
-                        </Button>{' '}
-                      </td>
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          variant="primary"
-                          onClick={() =>
-                            handleNext(
-                              step.id,
-                              step.name,
-                              step.description,
-                              'DONE',
-                              step.step_order
-                            )
-                          }
-                        >
-                          {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                        </Button>{' '}
-                      </td>
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          variant="primary"
-                          data-testid="button-delete"
-                          style={{ backgroundColor: 'red', color: 'white' }}
-                          onClick={() => handleDelete(step.id)}
-                        >
-                          Delete
-                        </Button>{' '}
-                      </td>
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          disabled={index === 0}
-                          onClick={handleBack}
-                          variant="ghost"
-                          data-testid={step.id + '-back'}
-                        >
-                          Back
-                        </Button>{' '}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="flex flex-row items-center gap-1">
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      variant="primary"
+                      data-testid="button-edit-form"
+                      onClick={() => {
+                        setId(step.id)
+                        setName(step.name)
+                        setDescription(step.description)
+                        setStatus(step.status)
+                        setStepOrder(step.step_order)
+                        handleOpenPopup()
+                      }}
+                    >
+                      Edit Step
+                    </Button>
+                  </div>
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      variant="primary"
+                      onClick={() =>
+                        handleNext(
+                          step.id,
+                          step.name,
+                          step.description,
+                          'DONE',
+                          step.step_order
+                        )
+                      }
+                    >
+                      {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                    </Button>
+                  </div>
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      variant="primary"
+                      data-testid="button-delete"
+                      style={{ backgroundColor: 'red', color: 'white' }}
+                      onClick={() => handleDelete(step.id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      disabled={index === 0}
+                      onClick={handleBack}
+                      variant="ghost"
+                      data-testid={step.id + '-back'}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </div>
               </Box>
             </StepContent>
           </Step>
