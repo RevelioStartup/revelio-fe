@@ -37,6 +37,7 @@ const config: Config = {
     '!**/styles/**',
     '!**/utils/**',
     '!**/elements/Forms/**',
+    '!**/elements/Timeline/**',
     '!**/app/test/**',
     '!**/app/layout.tsx',
     '!**/components/contexts/**',

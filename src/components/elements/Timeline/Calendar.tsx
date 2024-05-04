@@ -51,7 +51,15 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
     p: 4,
   }
 
-  if (isLoading) return <div>Loading...</div>
+  
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-[90vh]">
+        <div data-testid="loader" className="loader"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="demo-app">

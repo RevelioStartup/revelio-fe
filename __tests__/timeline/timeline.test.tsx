@@ -46,9 +46,7 @@ describe('EventTimeline', () => {
   it('fetches and displays timeline events', async () => {
     render(
       <Provider store={store}>
-        <EventTimeline
-          id="123"
-        />
+        <EventTimeline id="123" />
       </Provider>
     )
   })
@@ -56,9 +54,7 @@ describe('EventTimeline', () => {
   it('handles event clicks to show details in a modal', async () => {
     render(
       <Provider store={store}>
-        <EventTimeline
-          id="123"
-        />
+        <EventTimeline id="123" />
       </Provider>
     )
 
