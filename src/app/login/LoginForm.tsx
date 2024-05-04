@@ -66,7 +66,6 @@ export default function LoginForm() {
   }
 
   const handleRecoverPasswordClick = () => {
-    console.log(openForm)
     setOpenForm(true)
   }
 

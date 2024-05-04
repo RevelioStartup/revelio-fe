@@ -2,7 +2,7 @@ import {
   CreateRundownsRequest,
   CreateRundownsResponse,
   RundownsDetail,
-  EditRundownRequest
+  EditRundownRequest,
 } from '@/types/rundown'
 import { baseApi } from './baseApi'
 
@@ -32,7 +32,7 @@ export const rundownApi = baseApi.injectEndpoints({
           : [{ type: 'Rundown' }],
     }),
     updateRundown: builder.mutation<
-    RundownsDetail,
+      RundownsDetail,
       { id: string; changes: EditRundownRequest }
     >({
       query: ({ id, changes }) => ({
@@ -45,7 +45,8 @@ export const rundownApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { 
-  useCreateRundownManuallyMutation, 
+export const {
+  useCreateRundownManuallyMutation,
   useGetEventRundownQuery,
-  useUpdateRundownMutation } = rundownApi
+  useUpdateRundownMutation,
+} = rundownApi

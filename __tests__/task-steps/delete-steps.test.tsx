@@ -7,6 +7,8 @@ import {
   useUpdateTaskStepMutation,
 } from '@/redux/api/taskStepApi'
 import StepStepper from '@/app/event/[eventId]/(eventId)/task/[taskId]/StepStepper'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store'
 
 jest.mock('@/redux/api/taskStepApi', () => ({
   useDeleteTaskStepMutation: jest.fn(),
@@ -24,6 +26,8 @@ const mockTask = {
       status: 'NOT_STARTED',
       step_order: 1,
       task: '1',
+      start_datetime: '2024-04-19T12:40:19.827000Z',
+      end_datetime: '2024-04-19T12:40:19.827000Z',
     },
     {
       id: 'step2',
@@ -32,6 +36,8 @@ const mockTask = {
       status: 'NOT_STARTED',
       step_order: 2,
       task: '1',
+      start_datetime: null,
+      end_datetime: null,
     },
   ],
   title: 'Task Title',
@@ -77,13 +83,21 @@ describe('StepStepper', () => {
   })
 
   test('deletes a single task step correctly', async () => {
-    render(<StepStepper taskId={mockTask.id} task={mockTask} />)
+    render(
+      <Provider store={store}>
+        <StepStepper taskId={mockTask.id} task={mockTask} />
+      </Provider>
+    )
 
     fireEvent.click(screen.getAllByText('Delete')[0])
   })
 
   test('deletes all task steps correctly', async () => {
-    render(<StepStepper taskId={mockTask.id} task={mockTask} />)
+    render(
+      <Provider store={store}>
+        <StepStepper taskId={mockTask.id} task={mockTask} />
+      </Provider>
+    )
 
     fireEvent.click(screen.getByText('Delete All'))
   })

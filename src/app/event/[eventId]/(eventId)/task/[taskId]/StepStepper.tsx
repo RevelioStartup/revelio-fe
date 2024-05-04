@@ -11,12 +11,16 @@ import {
   StepLabel,
   StepContent,
   Paper,
+  Tooltip,
 } from '@mui/material'
 import { Button } from '@/components/elements/Button'
 import { useState, useEffect } from 'react'
 import { Task } from '@/types/taskDetails'
 import EditStepDialog from './EditStepDialog'
 import ConfirmDeleteDialog from './ConfirmDeleteDialog'
+import { CreateTimelineDialog } from './CreateTimelineDialog'
+import dayjs from '@/configs/dayjs.config'
+import { twMerge } from 'tailwind-merge'
 
 export type StepUpdateRequest = {
   name: string
@@ -33,6 +37,8 @@ interface Props {
 
 export default function StepStepper({ taskId, task }: Props) {
   const [openPrompt, setOpenPrompt] = useState(false)
+  const [openTimelineModal, setOpenTimelineModal] = useState(false)
+  const [currentTaskStep, setCurrentTaskStep] = useState('')
   const [id, setId] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -156,72 +162,101 @@ export default function StepStepper({ taskId, task }: Props) {
               },
             }}
           >
-            <StepLabel>{step.name}</StepLabel>
+            <StepLabel>
+              <div
+                className={twMerge(
+                  'flex',
+                  step.start_datetime
+                    ? 'flex-col items-start justify-start'
+                    : 'flex-row items-center gap-1'
+                )}
+              >
+                <p>{step.name}</p>
+                {!step.start_datetime && (
+                  <Tooltip title="Add to timeline" placement="top">
+                    <button
+                      className="rounded-full p-1 flex items-start justify-center hover:bg-gray-100"
+                      onClick={() => {
+                        setOpenTimelineModal(true)
+                        setCurrentTaskStep(step.id)
+                      }}
+                    >
+                      <i className="i-ph-calendar-blank size-4 text-blue-800" />
+                      <i className="i-ph-plus-bold size-3 -ml-0.5 text-blue-800" />
+                    </button>
+                  </Tooltip>
+                )}
+              </div>
+            </StepLabel>
             <StepContent>
+              <div className="text-sm font-bold flex flex-row items-center gap-2 text-gray-700">
+                <i className="i-ph-calendar-blank size-4 text-gray-700" />
+                <p>
+                  {dayjs(step.start_datetime).format('ddd, D MMM YY HH:mm')}
+                </p>
+                <p>-</p>
+                <p>
+                  {dayjs(step.start_datetime).isSame(step.end_datetime, 'day')
+                    ? dayjs(step.end_datetime).format('HH:mm')
+                    : dayjs(step.end_datetime).format('ddd, D MMM YY HH:mm')}
+                </p>
+              </div>
               <Typography>{step.description}</Typography>
               <Box sx={{ mb: 2 }}>
-                <table className="table border-separate border-spacing-y-1">
-                  <tbody>
-                    <tr className="table-row">
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          variant="primary"
-                          data-testid="button-edit-form"
-                          onClick={() => {
-                            setId(step.id)
-                            setName(step.name)
-                            setDescription(step.description)
-                            setStatus(step.status)
-                            setStepOrder(step.step_order)
-                            handleOpenPopup()
-                          }}
-                        >
-                          Edit Step
-                        </Button>{' '}
-                      </td>
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          variant="primary"
-                          onClick={() =>
-                            handleNext(
-                              step.id,
-                              step.name,
-                              step.description,
-                              'DONE',
-                              step.step_order
-                            )
-                          }
-                        >
-                          {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                        </Button>{' '}
-                      </td>
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          variant="primary"
-                          data-testid="button-delete"
-                          style={{ backgroundColor: 'red', color: 'white' }}
-                          onClick={() => handleDelete(step.id)}
-                        >
-                          Delete
-                        </Button>{' '}
-                      </td>
-                      <td style={{ paddingRight: '10px' }}>
-                        {' '}
-                        <Button
-                          disabled={index === 0}
-                          onClick={handleBack}
-                          variant="ghost"
-                          data-testid={step.id + '-back'}
-                        >
-                          Back
-                        </Button>{' '}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="flex flex-row items-center gap-1">
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      variant="primary"
+                      data-testid="button-edit-form"
+                      onClick={() => {
+                        setId(step.id)
+                        setName(step.name)
+                        setDescription(step.description)
+                        setStatus(step.status)
+                        setStepOrder(step.step_order)
+                        handleOpenPopup()
+                      }}
+                    >
+                      Edit Step
+                    </Button>
+                  </div>
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      variant="primary"
+                      onClick={() =>
+                        handleNext(
+                          step.id,
+                          step.name,
+                          step.description,
+                          'DONE',
+                          step.step_order
+                        )
+                      }
+                    >
+                      {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                    </Button>
+                  </div>
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      variant="primary"
+                      data-testid="button-delete"
+                      style={{ backgroundColor: 'red', color: 'white' }}
+                      onClick={() => handleDelete(step.id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                  <div style={{ paddingRight: '10px' }}>
+                    <Button
+                      disabled={index === 0}
+                      onClick={handleBack}
+                      variant="ghost"
+                      data-testid={step.id + '-back'}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </div>
               </Box>
             </StepContent>
           </Step>
@@ -248,6 +283,13 @@ export default function StepStepper({ taskId, task }: Props) {
         open={openDeleteAllDialog}
         onClose={handleCloseDeleteAllDialog}
         onConfirm={handleConfirmDeleteAll}
+      />
+      <CreateTimelineDialog
+        open={openTimelineModal}
+        taskStepId={currentTaskStep}
+        onClose={() => {
+          setOpenTimelineModal(false)
+        }}
       />
     </div>
   )

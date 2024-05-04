@@ -7,7 +7,6 @@ import { useUpdateRundownMutation } from '@/redux/api/rundownApi'
 import { RundownsDetail } from '@/types/rundown'
 import { toast } from 'react-hot-toast'
 
-
 jest.mock('@/redux/api/rundownApi', () => ({
   useGetEventRundownQuery: jest.fn().mockReturnValue({
     data: [
@@ -40,7 +39,7 @@ jest.mock('@/redux/api/rundownApi', () => ({
   useUpdateRundownMutation: jest.fn(),
 }))
 
-const mockUpdateRundownData:RundownsDetail = {
+const mockUpdateRundownData: RundownsDetail = {
   id: '89f5ded5-3267-4c34-ac6b-a5f345621682',
   start_time: '14:05:00',
   end_time: '15:50:00',
@@ -130,9 +129,9 @@ describe('Rundown Edit', () => {
   test('display update rundown error correctly', async () => {
     jest.spyOn(toast, 'error').mockImplementation(jest.fn())
 
-    const mockUseUpdateRundownMutation = jest
-      .fn()
-      .mockResolvedValue({ error: {data: {"message":"Invalid rundown data"}} })
+    const mockUseUpdateRundownMutation = jest.fn().mockResolvedValue({
+      error: { data: { message: 'Invalid rundown data' } },
+    })
     ;(useUpdateRundownMutation as jest.Mock).mockReturnValue([
       mockUseUpdateRundownMutation,
     ])
