@@ -70,7 +70,7 @@ export const EventPlanner: React.FC = () => {
               <DatePicker
                 name="date"
                 data-testid="date"
-                label="DD/MM/YYYY"
+                label="MM/DD/YYYY"
                 value={value}
                 onChange={(newValue) => setValue(newValue)}
                 slotProps={{ textField: { required: true } }}

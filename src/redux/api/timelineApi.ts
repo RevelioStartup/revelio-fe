@@ -32,8 +32,18 @@ export const timelineApi = baseApi.injectEndpoints({
         'Timeline',
       ],
     }),
+    getTimelinesByEvent: builder.query<Timeline[], { event_id: string }>({
+      query: ({ event_id }) => ({
+        url: `/timelines/${event_id}/view`,
+        method: 'GET',
+      }),
+      providesTags: ['Timeline'],
+    }),
   }),
 })
 
-export const { useCreateTimelineMutation, useModifyDetailTimelineMutation } =
-  timelineApi
+export const {
+  useGetTimelinesByEventQuery,
+  useCreateTimelineMutation,
+  useModifyDetailTimelineMutation,
+} = timelineApi

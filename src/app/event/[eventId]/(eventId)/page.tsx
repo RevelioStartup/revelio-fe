@@ -6,6 +6,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import React from 'react'
 import { EventPlan } from './EventPlan'
 import { EventTracker } from './EventTracker'
+import { EventTimeline } from './EventTimeline'
 import { useGetAllTasksQuery } from '@/redux/api/taskApi'
 import { useGetEventQuery } from '@/redux/api/eventApi'
 import { Task as TaskDetails } from '@/types/taskDetails'
@@ -50,7 +51,7 @@ function renderContent(
     case 'plan':
       return <EventPlan {...data} />
     case 'timeline':
-      return <div> Timeline </div>
+      return <EventTimeline {...data} />
     case 'tracker':
       return <EventTracker {...data} tasks={trackerData as unknown as Task[]} />
     case 'rundown':
