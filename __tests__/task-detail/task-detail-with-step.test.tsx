@@ -11,6 +11,7 @@ import {
   useUpdateTaskStepMutation,
 } from '@/redux/api/taskStepApi'
 import '@testing-library/jest-dom'
+import dayjs from '@/configs/dayjs.config'
 import { Step } from '@/types/taskDetails'
 import { store } from '@/redux/store'
 import { Provider } from 'react-redux'
@@ -28,6 +29,7 @@ jest.mock('@/redux/api/taskStepApi', () => ({
   useUpdateTaskStepMutation: jest.fn(),
   useDeleteTaskStepMutation: jest.fn(),
   useDeleteAllTaskStepsMutation: jest.fn(),
+  useCreateTimelineMutation: jest.fn(),
 }))
 
 describe('TaskDetailPage with step', () => {
@@ -309,7 +311,13 @@ describe('TaskDetailPage with step', () => {
       </Provider>
     )
 
-    expect(screen.getByText('Fri, 19 Apr 24 19:04')).toBeInTheDocument()
-    expect(screen.getByText('19:40')).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        dayjs(mockStepData.start_datetime).format('ddd, D MMM YY HH:mm')
+      )
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(dayjs(mockStepData.end_datetime).format('HH:mm'))
+    ).toBeInTheDocument()
   })
 })

@@ -19,7 +19,7 @@ import { Task } from '@/types/taskDetails'
 import EditStepDialog from './EditStepDialog'
 import ConfirmDeleteDialog from './ConfirmDeleteDialog'
 import { CreateTimelineDialog } from './CreateTimelineDialog'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from '@/configs/dayjs.config'
 import { twMerge } from 'tailwind-merge'
 
 export type StepUpdateRequest = {
@@ -192,7 +192,7 @@ export default function StepStepper({ taskId, task }: Props) {
               <div className="text-sm font-bold flex flex-row items-center gap-2 text-gray-700">
                 <i className="i-ph-calendar-blank size-4 text-gray-700" />
                 <p>
-                  {dayjs(step.start_datetime).format('ddd, D MMM YY HH:MM')}
+                  {dayjs(step.start_datetime).format('ddd, D MMM YY HH:mm')}
                 </p>
                 <p>-</p>
                 <p>
