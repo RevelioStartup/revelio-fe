@@ -7,6 +7,8 @@ import { store } from '@/redux/store'
 
 import {
   useCreateRundownManuallyMutation,
+  useDeleteAllRundownMutation,
+  useDeleteRundownMutation,
   useGetEventRundownQuery,
 } from '@/redux/api/rundownApi'
 import { toast } from 'react-hot-toast'
@@ -26,7 +28,12 @@ jest.mock('next/navigation', () => ({
 jest.mock('@/redux/api/rundownApi', () => ({
   useCreateRundownManuallyMutation: jest.fn(),
   useGetEventRundownQuery: jest.fn(),
+  useDeleteRundownMutation: jest.fn(),
+  useDeleteAllRundownMutation: jest.fn(),
 }))
+
+const createDeleteResponse = (message: string) => ({ data: { message } })
+
 describe('Testing create rundown manual form', () => {
   beforeEach(() => {
     jest.spyOn(toast, 'error').mockImplementation(jest.fn())
@@ -64,6 +71,29 @@ describe('Testing create rundown manual form', () => {
     ;(useParams as jest.Mock).mockReturnValue({
       eventId: '123',
     })
+    ;(useDeleteRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(({ id }) =>
+          Promise.resolve(
+            createDeleteResponse(`Rundown successfully deleted.`)
+          )
+        ),
+      { isLoading: false },
+    ])
+    ;(useDeleteAllRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.resolve(
+            createDeleteResponse(
+              `Successfully deleted 3 task step(s).`
+            )
+          )
+        ),
+      { isLoading: false },
+    ])
+    
   })
   afterEach(() => {
     jest.clearAllMocks()
