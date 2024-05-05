@@ -9,7 +9,7 @@ export const ButtonVariants = cva(
         secondary: 'bg-teal-400 text-white hover:bg-teal-300',
         ghost:
           'text-teal-400 hover:text-teal-600 border border-teal-400 hover:border-teal-400',
-        danger: 'bg-rose-600 text-white hover:bg-rose-400 bg-rose-500',
+        danger: 'bg-rose-600 text-white hover:bg-rose-400',
       },
       intent: {
         active: '',
