@@ -42,6 +42,32 @@ export const rundownApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: (result) => [{ type: 'Rundown', id: result?.id }],
     }),
+    deleteRundown: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/rundowns/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Rundown'],
+    }),
+    deleteAllRundown: builder.mutation<void, { eventId: string }>({
+      query: ({ eventId }) => ({
+        url: `/rundowns/events/${eventId}/delete/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Rundown'],
+    }),
+    // createRundownWithAI: builder.mutation<
+    //   CreateRundownsRequest,
+    //   { event_id: string }
+    // >({
+    //   query: ({ event_id }) => ({
+    //     url: `/ai/rundown/${event_id}/`,
+    //     method: 'GET',
+    //   }),
+    //   invalidatesTags: (result) => [
+    //     { type: 'Rundown', id: result?.event_id ?? '' },
+    //   ],
+    // }),
   }),
 })
 
@@ -49,4 +75,6 @@ export const {
   useCreateRundownManuallyMutation,
   useGetEventRundownQuery,
   useUpdateRundownMutation,
+  useDeleteRundownMutation,
+  useDeleteAllRundownMutation,
 } = rundownApi
