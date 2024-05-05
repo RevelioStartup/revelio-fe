@@ -1,8 +1,8 @@
-import { 
-  useGetEventRundownQuery, 
-  useDeleteRundownMutation, 
-  useDeleteAllRundownMutation} 
-from '@/redux/api/rundownApi'
+import {
+  useGetEventRundownQuery,
+  useDeleteRundownMutation,
+  useDeleteAllRundownMutation,
+} from '@/redux/api/rundownApi'
 import { CreateRundownButton } from './CreateRundownButton'
 import { Button } from '@/components/elements/Button'
 import React, { useState } from 'react'
@@ -68,7 +68,9 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
           <Button
             variant="danger"
             data-testid={`rundown-${eventId}-delete-all`}
-            onClick={() => {handleOpenDeleteAllPopup()}}
+            onClick={() => {
+              handleOpenDeleteAllPopup()
+            }}
           >
             Delete All
           </Button>
