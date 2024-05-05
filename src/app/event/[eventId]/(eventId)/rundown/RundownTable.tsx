@@ -1,13 +1,14 @@
-import {
-  useGetEventRundownQuery,
-  useDeleteRundownMutation,
-  useDeleteAllRundownMutation,
-} from '@/redux/api/rundownApi'
+import { 
+  useGetEventRundownQuery, 
+  useDeleteRundownMutation, 
+  useDeleteAllRundownMutation} 
+from '@/redux/api/rundownApi'
 import { CreateRundownButton } from './CreateRundownButton'
 import { Button } from '@/components/elements/Button'
 import React, { useState } from 'react'
 import EditRundownDialog from './EditRundownDialog'
 import DeleteAllRundownDialog from './DeleteAllRundownDialog'
+import toast from 'react-hot-toast'
 
 interface RundownTableProps {
   eventId: string
@@ -37,7 +38,7 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
     try {
       await deleteRundown({ id: rundownId }).unwrap()
     } catch (error) {
-      console.error('Failed to delete the rundown', error)
+      toast.error('Failed to delete the rundown')
     }
   }
 
@@ -46,7 +47,7 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
     try {
       await deleteAllRundown({ eventId: eventId }).unwrap()
     } catch (error) {
-      console.error('Failed to delete all task steps', error)
+      toast.error('Failed to delete all task steps')
     }
   }
 
@@ -67,9 +68,7 @@ export const RundownTable = ({ eventId }: RundownTableProps) => {
           <Button
             variant="danger"
             data-testid={`rundown-${eventId}-delete-all`}
-            onClick={() => {
-              handleOpenDeleteAllPopup()
-            }}
+            onClick={() => {handleOpenDeleteAllPopup()}}
           >
             Delete All
           </Button>
