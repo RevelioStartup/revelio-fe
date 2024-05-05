@@ -3,11 +3,17 @@ import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import RundownTable from '@/app/event/[eventId]/(eventId)/rundown/RundownTable'
-import { useUpdateRundownMutation } from '@/redux/api/rundownApi'
+import {
+  useDeleteAllRundownMutation,
+  useDeleteRundownMutation,
+  useUpdateRundownMutation,
+} from '@/redux/api/rundownApi'
 import { RundownsDetail } from '@/types/rundown'
 import { toast } from 'react-hot-toast'
 
 jest.mock('@/redux/api/rundownApi', () => ({
+  useDeleteRundownMutation: jest.fn(),
+  useDeleteAllRundownMutation: jest.fn(),
   useGetEventRundownQuery: jest.fn().mockReturnValue({
     data: [
       {
@@ -48,7 +54,34 @@ const mockUpdateRundownData: RundownsDetail = {
   event: 'bf8d2392-2bf5-4659-8ff4-652e46c21749',
 }
 
+const mockData = jest
+  .requireMock('@/redux/api/rundownApi')
+  .useGetEventRundownQuery().data
+const createDeleteResponse = (message: string) => ({ data: { message } })
+
 describe('RundownTable', () => {
+  beforeEach(() => {
+    ;(useDeleteRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(({ id }) =>
+          Promise.resolve(createDeleteResponse(`Rundown successfully deleted.`))
+        ),
+      { isLoading: false },
+    ])
+    ;(useDeleteAllRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.resolve(
+            createDeleteResponse(
+              `Successfully deleted ${mockData.length} task step(s).`
+            )
+          )
+        ),
+      { isLoading: false },
+    ])
+  })
   test('renders RundownTable component', () => {
     const mockUseUpdateRundownMutation = jest
       .fn()
@@ -178,5 +211,42 @@ describe('Rundown Edit', () => {
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith('Unknown error!')
     })
+  })
+})
+describe('RundownDelete', () => {
+  beforeEach(() => {
+    ;(useDeleteRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(({ id }) =>
+          Promise.resolve(createDeleteResponse(`Rundown successfully deleted.`))
+        ),
+      { isLoading: false },
+    ])
+    ;(useDeleteAllRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.resolve(
+            createDeleteResponse(
+              `Successfully deleted ${mockData.length} task step(s).`
+            )
+          )
+        ),
+      { isLoading: false },
+    ])
+    render(
+      <Provider store={store}>
+        <RundownTable eventId="bf8d2392-2bf5-4659-8ff4-652e46c21749" />
+      </Provider>
+    )
+  })
+
+  test('deletes a single rundown correctly', async () => {
+    fireEvent.click(screen.getAllByText('Delete')[0])
+  })
+
+  test('deletes all task steps correctly', async () => {
+    fireEvent.click(screen.getByText('Delete All'))
   })
 })
