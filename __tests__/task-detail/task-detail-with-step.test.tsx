@@ -11,6 +11,10 @@ import {
   useUpdateTaskStepMutation,
 } from '@/redux/api/taskStepApi'
 import '@testing-library/jest-dom'
+import dayjs from '@/configs/dayjs.config'
+import { Step } from '@/types/taskDetails'
+import { store } from '@/redux/store'
+import { Provider } from 'react-redux'
 
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
@@ -25,18 +29,10 @@ jest.mock('@/redux/api/taskStepApi', () => ({
   useUpdateTaskStepMutation: jest.fn(),
   useDeleteTaskStepMutation: jest.fn(),
   useDeleteAllTaskStepsMutation: jest.fn(),
+  useCreateTimelineMutation: jest.fn(),
 }))
 
 describe('TaskDetailPage with step', () => {
-  interface Step {
-    id: string
-    name: string
-    description: string
-    status: string
-    step_order: number
-    task: string
-  }
-
   const mockEventData = {
     id: '1',
     name: 'event name',
@@ -55,6 +51,8 @@ describe('TaskDetailPage with step', () => {
     status: 'NOT_STARTED',
     step_order: 1,
     task: '1',
+    start_datetime: '2024-04-19T12:40:19.827000Z',
+    end_datetime: '2024-04-19T12:40:19.827000Z',
   }
 
   const mockStepData2: Step = {
@@ -64,6 +62,8 @@ describe('TaskDetailPage with step', () => {
     status: 'NOT_STARTED',
     step_order: 2,
     task: '1',
+    start_datetime: null,
+    end_datetime: null,
   }
 
   const mockUpdatedStepData1: Step = {
@@ -73,6 +73,8 @@ describe('TaskDetailPage with step', () => {
     status: 'DONE',
     step_order: 1,
     task: '1',
+    start_datetime: null,
+    end_datetime: null,
   }
 
   const mockUpdatedStepData12: Step = {
@@ -82,6 +84,8 @@ describe('TaskDetailPage with step', () => {
     status: 'NOT_STARTED',
     step_order: 1,
     task: '1',
+    start_datetime: null,
+    end_datetime: null,
   }
 
   const mockTaskData = {
@@ -171,7 +175,11 @@ describe('TaskDetailPage with step', () => {
       mockUseUpdateTaskStepMutation,
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     expect(screen.getByText('event name')).toBeInTheDocument()
     expect(screen.getByText('task status')).toBeInTheDocument()
@@ -199,7 +207,11 @@ describe('TaskDetailPage with step', () => {
       mockUseUpdateTaskStepMutation,
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     act(() => {
       const buttonEdit = screen.getByTestId('button-edit-form')
@@ -232,7 +244,11 @@ describe('TaskDetailPage with step', () => {
       mockUseUpdateTaskStepMutation,
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     expect(screen.getByText('step name')).toBeInTheDocument()
     expect(screen.getByText('step name 2')).toBeInTheDocument()
@@ -247,7 +263,11 @@ describe('TaskDetailPage with step', () => {
   })
 
   test('delete task correctly', async () => {
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     const buttonDelete = screen.getByTestId('delete-task')
     fireEvent.click(buttonDelete)
@@ -261,10 +281,43 @@ describe('TaskDetailPage with step', () => {
       { isLoading: false },
     ])
 
-    render(<TaskDetailPage params={{ eventId: '1', taskId: '1' }} />)
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
 
     const buttonDelete = screen.getByTestId('delete-task')
     fireEvent.click(buttonDelete)
     await waitFor(() => expect(mockDeleteTaskMutation).toHaveBeenCalledTimes(1))
+  })
+
+  test('renders task details with correct date format', () => {
+    const mockGetEventQuery = useGetEventQuery as jest.Mock
+    mockGetEventQuery.mockReturnValue({
+      data: mockEventData,
+      isLoading: false,
+    })
+
+    const mockGetTaskDetailQuery = useGetTaskDetailQuery as jest.Mock
+    mockGetTaskDetailQuery.mockReturnValue({
+      data: mockTaskData,
+      isLoading: false,
+    })
+
+    render(
+      <Provider store={store}>
+        <TaskDetailPage params={{ eventId: '1', taskId: '1' }} />
+      </Provider>
+    )
+
+    expect(
+      screen.getByText(
+        dayjs(mockStepData.start_datetime).format('ddd, D MMM YY HH:mm')
+      )
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(dayjs(mockStepData.end_datetime).format('HH:mm'))
+    ).toBeInTheDocument()
   })
 })

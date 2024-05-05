@@ -4,6 +4,7 @@ import { WhyRevelio } from './landing/WhyRevelio'
 import { WithoutRevelio } from './landing/WithoutRevelio'
 import { Pricing } from './landing/Pricing'
 import { Faq } from './landing/Faq'
+import React from 'react'
 
 export default function Home() {
   return (

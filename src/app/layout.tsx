@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import theme from '@/styles/theme'
 import { MainLayout } from '@/components/elements/Layout'
 import Metrics from './metrics'
+import React from 'react'
 
 export const metadata: Metadata = { ...METADATA, ...VIEWPORT }
 

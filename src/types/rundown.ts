@@ -14,3 +14,9 @@ export type CreateRundownsRequest = {
 }
 
 export type CreateRundownsResponse = RundownsDetail[]
+
+export type EditRundownRequest = {
+  description: string
+  start_time: string
+  end_time: string
+}

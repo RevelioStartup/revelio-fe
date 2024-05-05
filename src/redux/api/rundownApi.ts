@@ -2,6 +2,7 @@ import {
   CreateRundownsRequest,
   CreateRundownsResponse,
   RundownsDetail,
+  EditRundownRequest,
 } from '@/types/rundown'
 import { baseApi } from './baseApi'
 
@@ -30,12 +31,16 @@ export const rundownApi = baseApi.injectEndpoints({
           ? result.map(({ id }) => ({ type: 'Rundown', id: id }))
           : [{ type: 'Rundown' }],
     }),
-    deleteRundown: builder.mutation<void, { id: string }>({
-      query: ({ id }) => ({
+    updateRundown: builder.mutation<
+      RundownsDetail,
+      { id: string; changes: EditRundownRequest }
+    >({
+      query: ({ id, changes }) => ({
         url: `/rundowns/${id}`,
-        method: 'DELETE',
+        method: 'PATCH',
+        body: changes,
       }),
-      invalidatesTags: ['Rundown'],
+      invalidatesTags: (result) => [{ type: 'Rundown', id: result?.id }],
     }),
   }),
 })
@@ -43,5 +48,5 @@ export const rundownApi = baseApi.injectEndpoints({
 export const {
   useCreateRundownManuallyMutation,
   useGetEventRundownQuery,
-  useDeleteRundownMutation,
+  useUpdateRundownMutation,
 } = rundownApi
