@@ -24,7 +24,7 @@ jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
   useParams: jest.fn(),
   redirect: jest.fn(),
-}));
+}))
 
 describe('RundownTable', () => {
   const mockGenerateRundownWithAI = jest.fn().mockResolvedValue({
@@ -49,7 +49,7 @@ describe('RundownTable', () => {
       { isLoading: false },
     ])
     ;(usePathname as jest.Mock).mockReturnValue('/event/3/create-rundown')
-    ;(useParams as jest.Mock).mockReturnValue({ eventId: 'testEventId' });
+    ;(useParams as jest.Mock).mockReturnValue({ eventId: 'testEventId' })
     ;(useCreateRundownWithAIMutation as jest.Mock).mockReturnValue([
       mockGenerateRundownWithAI,
       { data: { event_id: 3, rundown_data: [] }, isSuccess: true },
@@ -59,7 +59,7 @@ describe('RundownTable', () => {
     render(
       <Provider store={store}>
         <RundownContextProvider>
-        <RundownTable eventId="testEventId" />
+          <RundownTable eventId="testEventId" />
         </RundownContextProvider>
       </Provider>
     )

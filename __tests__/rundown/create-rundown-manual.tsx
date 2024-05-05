@@ -229,7 +229,7 @@ describe('Testing create rundown page component', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <RundownContextProvider>
-        <CreateRundownPage />
+          <CreateRundownPage />
         </RundownContextProvider>
       </Provider>
     )
@@ -242,7 +242,7 @@ describe('Testing event rundown component', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <RundownContextProvider>
-        <CreateRundownButton />
+          <CreateRundownButton />
         </RundownContextProvider>
       </Provider>
     )
@@ -255,7 +255,7 @@ describe('Testing create rundown button component', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <RundownContextProvider>
-        <Rundown eventId="123" />
+          <Rundown eventId="123" />
         </RundownContextProvider>
       </Provider>
     )
@@ -266,7 +266,7 @@ describe('Testing create rundown button component', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <RundownContextProvider>
-        <Rundown eventId="123" />
+          <Rundown eventId="123" />
         </RundownContextProvider>
       </Provider>
     )
@@ -277,7 +277,7 @@ describe('Testing create rundown button component', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <RundownContextProvider>
-        <CreateRundownButton />
+          <CreateRundownButton />
         </RundownContextProvider>
       </Provider>
     )
@@ -307,7 +307,7 @@ describe('Testing create rundown button component', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <RundownContextProvider>
-        <CreateRundownButton />
+          <CreateRundownButton />
         </RundownContextProvider>
       </Provider>
     )
@@ -319,5 +319,4 @@ describe('Testing create rundown button component', () => {
       expect(mockGenerateRundownsWithAI).toHaveBeenCalled()
     })
   })
-
 })
