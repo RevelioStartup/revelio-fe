@@ -3,7 +3,10 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import '@testing-library/jest-dom'
 import RundownTable from '@/app/event/[eventId]/(eventId)/rundown/RundownTable'
-import { useDeleteAllRundownMutation, useDeleteRundownMutation } from '@/redux/api/rundownApi'
+import {
+  useDeleteAllRundownMutation,
+  useDeleteRundownMutation,
+} from '@/redux/api/rundownApi'
 
 jest.mock('@/redux/api/rundownApi', () => ({
   useDeleteRundownMutation: jest.fn(),

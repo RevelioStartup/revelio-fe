@@ -75,9 +75,7 @@ describe('Testing create rundown manual form', () => {
       jest
         .fn()
         .mockImplementation(({ id }) =>
-          Promise.resolve(
-            createDeleteResponse(`Rundown successfully deleted.`)
-          )
+          Promise.resolve(createDeleteResponse(`Rundown successfully deleted.`))
         ),
       { isLoading: false },
     ])
@@ -86,14 +84,11 @@ describe('Testing create rundown manual form', () => {
         .fn()
         .mockImplementation(() =>
           Promise.resolve(
-            createDeleteResponse(
-              `Successfully deleted 3 task step(s).`
-            )
+            createDeleteResponse(`Successfully deleted 3 task step(s).`)
           )
         ),
       { isLoading: false },
     ])
-    
   })
   afterEach(() => {
     jest.clearAllMocks()

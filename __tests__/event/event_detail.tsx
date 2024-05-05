@@ -36,24 +36,18 @@ jest.mock('@/redux/api/timelineApi', () => ({
   }),
 }))
 jest.mock('@/redux/api/rundownApi', () => ({
-  useDeleteAllRundownMutation: jest.fn().mockReturnValue([
-    jest
-      .fn()
-      .mockImplementation(({ id }) =>
-        Promise.resolve({data : ''}
-        )
-      ),
-    { isLoading: false },
-  ]),
-  useDeleteRundownMutation: jest.fn().mockReturnValue([
-    jest
-      .fn()
-      .mockImplementation(({ id }) =>
-        Promise.resolve({data : ''}
-        )
-      ),
-    { isLoading: false },
-  ]),
+  useDeleteAllRundownMutation: jest
+    .fn()
+    .mockReturnValue([
+      jest.fn().mockImplementation(({ id }) => Promise.resolve({ data: '' })),
+      { isLoading: false },
+    ]),
+  useDeleteRundownMutation: jest
+    .fn()
+    .mockReturnValue([
+      jest.fn().mockImplementation(({ id }) => Promise.resolve({ data: '' })),
+      { isLoading: false },
+    ]),
   useGetEventRundownQuery: jest.fn().mockReturnValue({
     data: [
       {
