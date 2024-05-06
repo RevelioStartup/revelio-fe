@@ -62,6 +62,7 @@
     "@iconify-json/logos": "^1.1.42",
     "@iconify-json/ph": "^1.1.10",
     "@iconify/react": "4.1.1",
+    "@iconify/tailwind": "^1.0.1",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.3.1",
     "@testing-library/user-event": "^14.5.2",
