@@ -41,7 +41,7 @@ export const SubscriptionHistory: React.FC<{
                 color: 'white',
               }}
             >
-              {history.plan}
+              {history.plan.name}
             </h3>
           </Box>
           <Box sx={{ flexGrow: 0, mb: '0.5rem', color: 'white' }}>
