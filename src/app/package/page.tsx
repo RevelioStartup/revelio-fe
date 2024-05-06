@@ -1,5 +1,4 @@
 'use client'
-
 import { Box, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
 import { useGetPackageDetailQuery } from '@/redux/api/packageApi'
 import PackageCard from './PackageCard'
@@ -11,7 +10,7 @@ import { formatRupiah } from '@/utils/formatRupiah'
 import { formatDate } from '@/utils/formatDate'
 
 
-export const PackageList = () => {
+export default function PackageList() {
     const { data: free_package = {} as PackageDetailResponse } = useGetPackageDetailQuery(1);
     const { data: premium_package = {} as PackageDetailResponse } = useGetPackageDetailQuery(2);
     const { data: latest_subscription = {} as LatestSubscriptionResponse } = useGetLatestSubscriptionQuery();
@@ -77,5 +76,3 @@ export const PackageList = () => {
         </Box>
     );
 };
-
-export default PackageList;
