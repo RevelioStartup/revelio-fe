@@ -15,12 +15,13 @@ import { useGetLatestSubscriptionQuery } from '@/redux/api/subscriptionApi'
 import { LatestSubscriptionResponse } from '@/types/subscription'
 import { formatRupiah } from '@/utils/formatRupiah'
 import { formatDate } from '@/utils/formatDate'
+import { PACKAGE } from './constant'
 
 export default function PackageList() {
   const { data: free_package = {} as PackageDetailResponse } =
-    useGetPackageDetailQuery(1)
+    useGetPackageDetailQuery(PACKAGE["free"])
   const { data: premium_package = {} as PackageDetailResponse } =
-    useGetPackageDetailQuery(2)
+    useGetPackageDetailQuery(PACKAGE["premium"])
   const { data: latest_subscription = {} as LatestSubscriptionResponse } =
     useGetLatestSubscriptionQuery()
 

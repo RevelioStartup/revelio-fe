@@ -27,10 +27,8 @@ export const subscriptionApi = baseApi.injectEndpoints({
         url: '/subscriptions/latest/',
         method: 'GET',
       }),
-      providesTags: (result) => [
-        { type: 'LatestSubscription', id: result?.id },
-        'LatestSubscription',
-      ],
+      providesTags: (result) => result ? [
+        { type: 'LatestSubscription', id: result.id }, 'LatestSubscription' ] : ['LatestSubscription'],
     }),
   }),
 })
