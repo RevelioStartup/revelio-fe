@@ -35,6 +35,33 @@ jest.mock('@/redux/api/timelineApi', () => ({
     isLoading: false,
   }),
 }))
+jest.mock('@/redux/api/rundownApi', () => ({
+  useDeleteAllRundownMutation: jest
+    .fn()
+    .mockReturnValue([
+      jest.fn().mockImplementation(({ id }) => Promise.resolve({ data: '' })),
+      { isLoading: false },
+    ]),
+  useDeleteRundownMutation: jest
+    .fn()
+    .mockReturnValue([
+      jest.fn().mockImplementation(({ id }) => Promise.resolve({ data: '' })),
+      { isLoading: false },
+    ]),
+  useGetEventRundownQuery: jest.fn().mockReturnValue({
+    data: [
+      {
+        id: 'efa74992-001f-4e09-9cb9-7cee4d59746e',
+        start_time: '12:00:00',
+        end_time: '13:50:00',
+        description: 'pembukaan',
+        rundown_order: 1,
+        event: 'bf8d2392-2bf5-4659-8ff4-652e46c21749',
+      },
+    ],
+  }),
+  useUpdateRundownMutation: jest.fn().mockReturnValue([]),
+}))
 
 jest.mock('@/components/elements/Timeline/Calendar', () => {
   return {

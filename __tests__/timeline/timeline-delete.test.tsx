@@ -4,11 +4,14 @@ import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import TimelineDetailsModal from '@/components/elements/Timeline/TimelineDetailsModal'
-import { useDeleteTimelineMutation, useModifyDetailTimelineMutation } from '@/redux/api/timelineApi'
+import {
+  useDeleteTimelineMutation,
+  useModifyDetailTimelineMutation,
+} from '@/redux/api/timelineApi'
 
 jest.mock('@/redux/api/timelineApi', () => ({
   useDeleteTimelineMutation: jest.fn(),
-  useModifyDetailTimelineMutation: jest.fn()
+  useModifyDetailTimelineMutation: jest.fn(),
 }))
 
 describe('TimelineDetailsModal', () => {
@@ -22,7 +25,8 @@ describe('TimelineDetailsModal', () => {
       { isLoading: false, isSuccess: true },
     ])
 
-    const mockModifyDetailTimelineMutation = useModifyDetailTimelineMutation as jest.Mock
+    const mockModifyDetailTimelineMutation =
+      useModifyDetailTimelineMutation as jest.Mock
     mockModifyDetailTimelineMutation.mockReturnValue([
       jest.fn(),
       { isLoading: false, isSuccess: true },
@@ -54,7 +58,8 @@ describe('TimelineDetailsModal', () => {
       { isLoading: false, isSuccess: true },
     ])
 
-    const mockModifyDetailTimelineMutation = useModifyDetailTimelineMutation as jest.Mock
+    const mockModifyDetailTimelineMutation =
+      useModifyDetailTimelineMutation as jest.Mock
     mockModifyDetailTimelineMutation.mockReturnValue([
       jest.fn(),
       { isLoading: false, isSuccess: true },

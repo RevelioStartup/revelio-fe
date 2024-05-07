@@ -53,10 +53,8 @@ const TimelineDetailsModal: React.FC<TimelineDetailsModalProps> = ({
     dayjs(clickedEvent?.end?.toLocaleString())
   )
 
-  const [
-    editDetailTimeline,
-    { isLoading: modifyDetailTimelineLoading },
-  ] = useModifyDetailTimelineMutation()
+  const [editDetailTimeline, { isLoading: modifyDetailTimelineLoading }] =
+    useModifyDetailTimelineMutation()
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this timeline?')) {
