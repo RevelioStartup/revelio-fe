@@ -54,7 +54,7 @@ export const rundownApi = baseApi.injectEndpoints({
         url: `/rundowns/events/${eventId}/delete/`,
         method: 'DELETE',
       }),
-      invalidatesTags: (_, __, arg) => [{ type: 'Rundown', id: arg.eventId }],
+      invalidatesTags: (_, __, arg) => [{ type: 'Rundown', event: arg.eventId }],
     }),
     createRundownWithAI: builder.mutation<
       CreateRundownsRequest,
