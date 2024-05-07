@@ -17,6 +17,13 @@ jest.mock('@/components/elements/Timeline/Calendar', () => {
   }
 })
 
+jest.mock('@/components/elements/Timeline/TimelineDetailsModal', () => {
+  return {
+    __esModule: true,
+    default: jest.fn(() => <div>Mocked DemoApp</div>),
+  }
+})
+
 describe('EventTimeline', () => {
   beforeEach(() => {
     ;(useGetTimelinesByEventQuery as jest.Mock).mockReturnValue({

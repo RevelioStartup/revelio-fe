@@ -2,12 +2,10 @@ import React from 'react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import Modal from '@mui/material/Modal'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { useGetTimelinesByEventQuery } from '@/redux/api/timelineApi'
 import { EventApi } from '@fullcalendar/core/index.js'
 import FullCalendar from '@fullcalendar/react'
+import TimelineDetailsModal from './TimelineDetailsModal'
 
 interface DemoAppProps {
   eventId: string
@@ -18,11 +16,13 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
     event_id: eventId,
   })
   const [showModal, setShowModal] = React.useState(false)
+
   const [clickedEvent, setClickedEvent] = React.useState<EventApi | null>(null)
 
   const handleEventClick = (clickInfo: any) => {
     setShowModal(true)
-    setClickedEvent(clickInfo.event)
+    const clickInfoEvent = clickInfo.event
+    setClickedEvent(clickInfoEvent)
   }
 
   const handleCloseModal = () => {
@@ -75,27 +75,18 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
           eventColor="#14b8a6"
           displayEventTime={false}
         />
-        <Modal
-          open={showModal}
-          onClose={handleCloseModal}
-          aria-labelledby="event-modal-title"
-          aria-describedby="event-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Task Details
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Task title: {clickedEvent?.title}
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Start date: {clickedEvent?.start?.toLocaleTimeString()}
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              End date: {clickedEvent?.end?.toLocaleTimeString()}
-            </Typography>
-          </Box>
-        </Modal>
+        {clickedEvent && (
+          <TimelineDetailsModal
+            timelineId={clickedEvent.id}
+            onClose={handleCloseModal}
+            showModal={showModal}
+            clickedEvent={{
+              title: clickedEvent.title,
+              start: new Date(clickedEvent.startStr),
+              end: new Date(clickedEvent.endStr),
+            }}
+          />
+        )}
       </div>
     </div>
   )

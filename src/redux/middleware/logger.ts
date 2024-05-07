@@ -21,6 +21,8 @@ export const rtkQueryErrorLogger: Middleware =
           action.error.message
         if (action.meta.arg.endpointName == 'createTimeline') {
           toast.error(errorData)
+        } else if (action.meta.arg.endpointName === 'modifyDetailTimeline') {
+          toast.error(errorData)
         }
       }
     }
