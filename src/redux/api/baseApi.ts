@@ -12,7 +12,9 @@ export const baseApi = createApi({
     'Step',
     'Rundown',
     'SubscriptionHistory',
+    'LatestSubscription',
     'Timeline',
+    'Package',
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.baseUrl,
