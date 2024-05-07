@@ -19,9 +19,9 @@ import { PACKAGE } from './constant'
 
 export default function PackageList() {
   const { data: free_package = {} as PackageDetailResponse } =
-    useGetPackageDetailQuery(PACKAGE["free"])
+    useGetPackageDetailQuery(PACKAGE['free'])
   const { data: premium_package = {} as PackageDetailResponse } =
-    useGetPackageDetailQuery(PACKAGE["premium"])
+    useGetPackageDetailQuery(PACKAGE['premium'])
   const { data: latest_subscription = {} as LatestSubscriptionResponse } =
     useGetLatestSubscriptionQuery()
 
