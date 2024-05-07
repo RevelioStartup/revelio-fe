@@ -55,7 +55,7 @@ const TimelineDetailsModal: React.FC<TimelineDetailsModalProps> = ({
 
   const [
     editDetailTimeline,
-    { isLoading: modifyDetailTimelineLoading, isError, error },
+    { isLoading: modifyDetailTimelineLoading },
   ] = useModifyDetailTimelineMutation()
 
   const handleDelete = async () => {
