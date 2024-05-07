@@ -47,14 +47,18 @@ export const rundownApi = baseApi.injectEndpoints({
         url: `/rundowns/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Rundown'],
+      invalidatesTags: (_, __, arg) => [
+        { type: 'Rundown', id: arg.id },
+      ],
     }),
     deleteAllRundown: builder.mutation<void, { eventId: string }>({
       query: ({ eventId }) => ({
         url: `/rundowns/events/${eventId}/delete/`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Rundown'],
+      invalidatesTags: (_, __, arg) => [
+        { type: 'Rundown', id: arg.eventId },
+      ],
     }),
     createRundownWithAI: builder.mutation<
       CreateRundownsRequest,
