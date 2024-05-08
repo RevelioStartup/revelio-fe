@@ -11,15 +11,19 @@ export const rtkQueryErrorLogger: Middleware =
         return
       } else if (
         action?.payload.status == 401 &&
-        action.meta.arg.endpointName != 'login' &&
         action.meta.arg.endpointName != 'forgotPassword'
       ) {
         api.dispatch(logout())
       } else {
         const errorData =
-          action.payload.data?.error?.message ||
+          action.payload.data?.error ||
           action.payload.data?.message ||
           action.error.message
+        if (action.meta.arg.endpointName == 'createTimeline') {
+          toast.error(errorData)
+        } else if (action.meta.arg.endpointName === 'modifyDetailTimeline') {
+          toast.error(errorData)
+        }
       }
     }
     return next(action)

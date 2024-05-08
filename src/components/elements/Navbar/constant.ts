@@ -11,6 +11,10 @@ export const MENU_LOGGED_IN = [
     href: '/profile',
   },
   {
+    label: 'Package',
+    href: '/package',
+  },
+  {
     label: 'Start Planning',
     href: '/event',
   },

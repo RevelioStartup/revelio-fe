@@ -7,6 +7,9 @@ import { store } from '@/redux/store'
 
 import {
   useCreateRundownManuallyMutation,
+  useCreateRundownWithAIMutation,
+  useDeleteAllRundownMutation,
+  useDeleteRundownMutation,
   useGetEventRundownQuery,
 } from '@/redux/api/rundownApi'
 import { toast } from 'react-hot-toast'
@@ -16,6 +19,7 @@ import { CreateRundownManualForm } from '@/app/event/[eventId]/(eventId)/rundown
 import CreateRundownPage from '@/app/event/[eventId]/(eventId)/create-rundown/page'
 import { CreateRundownButton } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownButton'
 import { Rundown } from '@/app/event/[eventId]/(eventId)/rundown/EventRundown'
+import { RundownContextProvider } from '@/components/contexts/RundownContext'
 
 jest.mock('next/navigation', () => ({
   redirect: jest.fn(),
@@ -26,11 +30,20 @@ jest.mock('next/navigation', () => ({
 jest.mock('@/redux/api/rundownApi', () => ({
   useCreateRundownManuallyMutation: jest.fn(),
   useGetEventRundownQuery: jest.fn(),
+  useDeleteRundownMutation: jest.fn(),
+  useDeleteAllRundownMutation: jest.fn(),
+  useCreateRundownWithAIMutation: jest.fn(),
 }))
+
+const createDeleteResponse = (message: string) => ({ data: { message } })
+
 describe('Testing create rundown manual form', () => {
   beforeEach(() => {
     jest.spyOn(toast, 'error').mockImplementation(jest.fn())
-
+    const mockGenerateRundownWithAI = jest.fn().mockResolvedValue({
+      data: { event_id: 3, rundown_data: [] },
+      isSuccess: true,
+    })
     const mockCreateRundownManually = jest.fn().mockResolvedValue({
       data: {},
     })
@@ -64,6 +77,28 @@ describe('Testing create rundown manual form', () => {
     ;(useParams as jest.Mock).mockReturnValue({
       eventId: '123',
     })
+    ;(useDeleteRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(({ id }) =>
+          Promise.resolve(createDeleteResponse(`Rundown successfully deleted.`))
+        ),
+      { isLoading: false },
+    ])
+    ;(useDeleteAllRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.resolve(
+            createDeleteResponse(`Successfully deleted 3 task step(s).`)
+          )
+        ),
+      { isLoading: false },
+    ])
+    ;(useCreateRundownWithAIMutation as jest.Mock).mockReturnValue([
+      mockGenerateRundownWithAI,
+      { data: { event_id: 3, steps: [] }, isSuccess: true },
+    ])
   })
   afterEach(() => {
     jest.clearAllMocks()
@@ -193,7 +228,9 @@ describe('Testing create rundown page component', () => {
   it('render create rundown page', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <CreateRundownPage />
+        <RundownContextProvider>
+          <CreateRundownPage />
+        </RundownContextProvider>
       </Provider>
     )
     expect(getByTestId('back-create-rundown')).toBeInTheDocument()
@@ -204,7 +241,9 @@ describe('Testing event rundown component', () => {
   it('render create rundown page', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <CreateRundownButton />
+        <RundownContextProvider>
+          <CreateRundownButton />
+        </RundownContextProvider>
       </Provider>
     )
     expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
@@ -215,9 +254,69 @@ describe('Testing create rundown button component', () => {
   it('render create rundown page', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <Rundown eventId="123" />
+        <RundownContextProvider>
+          <Rundown eventId="123" />
+        </RundownContextProvider>
       </Provider>
     )
     expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
+  })
+
+  it('render create ai rundown page', async () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <RundownContextProvider>
+          <Rundown eventId="123" />
+        </RundownContextProvider>
+      </Provider>
+    )
+    expect(getByTestId('button-add-rundown-ai')).toBeInTheDocument()
+  })
+
+  it('renders create rundown button with AI', async () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <RundownContextProvider>
+          <CreateRundownButton />
+        </RundownContextProvider>
+      </Provider>
+    )
+    expect(getByTestId('button-add-rundown-manual')).toBeInTheDocument()
+    expect(getByTestId('button-add-rundown-ai')).toBeInTheDocument()
+  })
+
+  it('calls generateRundownsWithAI mutation on clicking "Generate with AI" button', async () => {
+    const mockGenerateRundownsWithAI = jest.fn().mockResolvedValue({
+      data: {
+        event_id: 1,
+        rundown_data: [
+          {
+            description: 'AI Generated Activity',
+            start_time: '09:00',
+            end_time: '10:00',
+          },
+        ],
+      },
+    })
+
+    ;(useCreateRundownWithAIMutation as jest.Mock).mockReturnValue([
+      mockGenerateRundownsWithAI,
+      { isSuccess: false, data: null },
+    ])
+
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <RundownContextProvider>
+          <CreateRundownButton />
+        </RundownContextProvider>
+      </Provider>
+    )
+
+    const generateWithAIButton = getByTestId('button-add-rundown-ai')
+    fireEvent.click(generateWithAIButton)
+
+    await waitFor(() => {
+      expect(mockGenerateRundownsWithAI).toHaveBeenCalled()
+    })
   })
 })

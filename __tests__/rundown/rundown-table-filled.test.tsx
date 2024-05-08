@@ -1,11 +1,19 @@
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import '@testing-library/jest-dom'
 import RundownTable from '@/app/event/[eventId]/(eventId)/rundown/RundownTable'
+import {
+  useDeleteAllRundownMutation,
+  useDeleteRundownMutation,
+  useUpdateRundownMutation,
+} from '@/redux/api/rundownApi'
+import { RundownsDetail } from '@/types/rundown'
+import { toast } from 'react-hot-toast'
 
 jest.mock('@/redux/api/rundownApi', () => ({
+  useDeleteRundownMutation: jest.fn(),
+  useDeleteAllRundownMutation: jest.fn(),
   useGetEventRundownQuery: jest.fn().mockReturnValue({
     data: [
       {
@@ -34,10 +42,54 @@ jest.mock('@/redux/api/rundownApi', () => ({
       },
     ],
   }),
+  useUpdateRundownMutation: jest.fn(),
 }))
 
+const mockUpdateRundownData: RundownsDetail = {
+  id: '89f5ded5-3267-4c34-ac6b-a5f345621682',
+  start_time: '14:05:00',
+  end_time: '15:50:00',
+  description: 'isi updated data bener',
+  rundown_order: 2,
+  event: 'bf8d2392-2bf5-4659-8ff4-652e46c21749',
+}
+
+const mockData = jest
+  .requireMock('@/redux/api/rundownApi')
+  .useGetEventRundownQuery().data
+const createDeleteResponse = (message: string) => ({ data: { message } })
+
 describe('RundownTable', () => {
+  beforeEach(() => {
+    ;(useDeleteRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(({ id }) =>
+          Promise.resolve(createDeleteResponse(`Rundown successfully deleted.`))
+        ),
+      { isLoading: false },
+    ])
+    ;(useDeleteAllRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.resolve(
+            createDeleteResponse(
+              `Successfully deleted ${mockData.length} task step(s).`
+            )
+          )
+        ),
+      { isLoading: false },
+    ])
+  })
   test('renders RundownTable component', () => {
+    const mockUseUpdateRundownMutation = jest
+      .fn()
+      .mockResolvedValue({ data: mockUpdateRundownData })
+    ;(useUpdateRundownMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateRundownMutation,
+    ])
+
     render(
       <Provider store={store}>
         <RundownTable eventId="testEventId" />
@@ -45,5 +97,156 @@ describe('RundownTable', () => {
     )
 
     expect(screen.getByTestId('rundown-table')).toBeInTheDocument()
+  })
+})
+
+describe('Rundown Edit', () => {
+  test('renders rundown edit dialog component', () => {
+    const mockUseUpdateRundownMutation = jest
+      .fn()
+      .mockResolvedValue({ data: mockUpdateRundownData })
+    ;(useUpdateRundownMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateRundownMutation,
+    ])
+
+    render(
+      <Provider store={store}>
+        <RundownTable eventId="testEventId" />
+      </Provider>
+    )
+
+    act(() => {
+      const buttonEdit = screen.getByTestId('rundown-2-edit')
+      fireEvent.click(buttonEdit)
+    })
+    expect(screen.getByTestId('edit-rundown-dialog')).toBeInTheDocument()
+
+    const buttonClose = screen.getByTestId('close-form')
+    fireEvent.click(buttonClose)
+  })
+
+  test('update rundown correctly', async () => {
+    const mockUseUpdateRundownMutation = jest
+      .fn()
+      .mockResolvedValue({ data: mockUpdateRundownData })
+    ;(useUpdateRundownMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateRundownMutation,
+    ])
+
+    render(
+      <Provider store={store}>
+        <RundownTable eventId="testEventId" />
+      </Provider>
+    )
+
+    act(() => {
+      const buttonEdit = screen.getByTestId('rundown-2-edit')
+      fireEvent.click(buttonEdit)
+    })
+    fireEvent.change(screen.getByTestId('description-input'), {
+      target: { value: 'isi updated data bener' },
+    })
+    fireEvent.change(screen.getByTestId('start-time-input'), {
+      target: { value: '14:05:00' },
+    })
+    fireEvent.change(screen.getByTestId('end-time-input'), {
+      target: { value: '15:50:00' },
+    })
+    const buttonSubmit = screen.getByTestId('button-submit')
+    fireEvent.click(buttonSubmit)
+    await waitFor(() =>
+      expect(mockUseUpdateRundownMutation).toHaveBeenCalledTimes(1)
+    )
+  })
+
+  test('display update rundown error correctly', async () => {
+    jest.spyOn(toast, 'error').mockImplementation(jest.fn())
+
+    const mockUseUpdateRundownMutation = jest.fn().mockResolvedValue({
+      error: { data: { message: 'Invalid rundown data' } },
+    })
+    ;(useUpdateRundownMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateRundownMutation,
+    ])
+
+    render(
+      <Provider store={store}>
+        <RundownTable eventId="testEventId" />
+      </Provider>
+    )
+
+    act(() => {
+      const buttonEdit = screen.getByTestId('rundown-2-edit')
+      fireEvent.click(buttonEdit)
+    })
+    const buttonSubmit = screen.getByTestId('button-submit')
+    fireEvent.click(buttonSubmit)
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('Invalid rundown data')
+    })
+  })
+
+  test('display unknown error correctly', async () => {
+    jest.spyOn(toast, 'error').mockImplementation(jest.fn())
+
+    const mockUseUpdateRundownMutation = jest
+      .fn()
+      .mockResolvedValue({ error: {} })
+    ;(useUpdateRundownMutation as jest.Mock).mockReturnValue([
+      mockUseUpdateRundownMutation,
+    ])
+
+    render(
+      <Provider store={store}>
+        <RundownTable eventId="testEventId" />
+      </Provider>
+    )
+
+    act(() => {
+      const buttonEdit = screen.getByTestId('rundown-2-edit')
+      fireEvent.click(buttonEdit)
+    })
+    const buttonSubmit = screen.getByTestId('button-submit')
+    fireEvent.click(buttonSubmit)
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('Unknown error!')
+    })
+  })
+})
+describe('RundownDelete', () => {
+  beforeEach(() => {
+    ;(useDeleteRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(({ id }) =>
+          Promise.resolve(createDeleteResponse(`Rundown successfully deleted.`))
+        ),
+      { isLoading: false },
+    ])
+    ;(useDeleteAllRundownMutation as jest.Mock).mockReturnValue([
+      jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.resolve(
+            createDeleteResponse(
+              `Successfully deleted ${mockData.length} task step(s).`
+            )
+          )
+        ),
+      { isLoading: false },
+    ])
+    render(
+      <Provider store={store}>
+        <RundownTable eventId="bf8d2392-2bf5-4659-8ff4-652e46c21749" />
+      </Provider>
+    )
+  })
+
+  test('deletes a single rundown correctly', async () => {
+    fireEvent.click(screen.getAllByText('Delete')[0])
+  })
+
+  test('deletes all task steps correctly', async () => {
+    fireEvent.click(screen.getByText('Delete All'))
   })
 })
