@@ -1,13 +1,7 @@
 import { EventTracker } from '@/app/event/[eventId]/(eventId)/EventTracker'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import {
-  render,
-  fireEvent,
-  waitFor,
-  getByTestId,
-  queryByTestId,
-} from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 jest.mock('@/redux/api/eventApi', () => ({
