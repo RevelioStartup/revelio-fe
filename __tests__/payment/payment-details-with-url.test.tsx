@@ -13,10 +13,12 @@ jest.mock('@/redux/api/paymentApi', () => ({
     jest.fn(),
     {
       data: {
-        package: { name: 'Test Package' },
-        payment_type: 'Test Payment Type',
-        payment_merchant: 'Test Payment Merchant',
-        midtrans_url: 'https://example.com/midtrans',
+        transaction_detail: {
+          package: { name: 'Test Package' },
+          payment_type: 'Test Payment Type',
+          payment_merchant: 'Test Payment Merchant',
+          midtrans_url: 'https://example.com/midtrans',
+        },
       },
       isLoading: false,
     },
