@@ -1,3 +1,4 @@
+import { PaymentSuccess } from './PaymentSuccess'
 export default function PaymentSuccessPage() {
-  return <div></div>
+  return <PaymentSuccess />
 }
