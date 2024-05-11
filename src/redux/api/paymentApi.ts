@@ -28,7 +28,7 @@ export const paymentApi = baseApi.injectEndpoints({
         { type: 'Transaction', id: result?.transaction_detail.id },
       ],
     }),
-    getTransactionList: builder.query<Transaction, void>({
+    getTransactionList: builder.query<Transaction[], void>({
       query: () => ({
         url: '/payments/transactions/',
         method: 'GET',

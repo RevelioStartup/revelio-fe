@@ -119,24 +119,27 @@ export default function PackageList() {
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell align="center">
-                  {!latest_subscription.is_active ? (
-                    <Button
-                      data-testid="choose-plan-button"
-                      onClick={handleCreateTransaction}
-                      loading={isLoading}
-                      className="bg-white text-teal-600 border border-teal-600 rounded-2xl py-4 px-6 text-sm"
-                    >
-                      Choose Plan ({formatRupiah(premium_package.price)})
-                    </Button>
-                  ) : (
-                    <p data-testid="subscribed-plan" className="text-teal-600">
-                      Subscribed until{' '}
-                      {formatDate(latest_subscription.end_date)}
-                    </p>
-                  )}
+                <TableCell colSpan={3}>
+                  <div className="w-full flex flex-row items-end justify-end pr-12">
+                    {!latest_subscription.is_active ? (
+                      <Button
+                        data-testid="choose-plan-button"
+                        onClick={handleCreateTransaction}
+                        loading={isLoading}
+                        className="bg-white text-teal-600 border border-teal-600 rounded-2xl py-4 px-6 text-sm"
+                      >
+                        Choose Plan ({formatRupiah(premium_package.price)})
+                      </Button>
+                    ) : (
+                      <p
+                        data-testid="subscribed-plan"
+                        className="text-teal-600"
+                      >
+                        Subscribed until{' '}
+                        {formatDate(latest_subscription.end_date)}
+                      </p>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             </TableBody>

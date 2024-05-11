@@ -72,14 +72,11 @@ export const EventPlan: React.FC<{
       <Box
         className={`flex justify-center items-start ${
           showForm
-            ? 'border border-teal-200 text-teal-300 hover:border-teal-400 hover:bg-gray-50 hover:text-teal-400'
+            ? 'text-teal-300 hover:border-teal-400 hover:bg-gray-50 hover:text-teal-400'
             : 'bg-teal-300 text-gray-500 hover:text-gray-800'
         } rounded-md p-1 w-36`}
       >
-        <Button
-          onClick={() => handleToggle('venue')}
-          className="mr-1 p-1 items-center"
-        >
+        <Button onClick={() => handleToggle('venue')}>
           {showForm.venue ? 'Hide Form' : 'Add Venue'}
         </Button>
       </Box>
@@ -93,14 +90,11 @@ export const EventPlan: React.FC<{
       <Box
         className={`flex justify-center items-start ${
           showForm
-            ? 'border border-teal-200 text-teal-300 hover:border-teal-400 hover:bg-gray-50 hover:text-teal-400'
+            ? 'text-teal-300 hover:border-teal-400 hover:bg-gray-50 hover:text-teal-400'
             : 'bg-teal-300 text-gray-500 hover:text-gray-800'
         } rounded-md p-1 w-36`}
       >
-        <Button
-          onClick={() => handleToggle('vendor')}
-          className="mr-1 p-1 items-center"
-        >
+        <Button onClick={() => handleToggle('vendor')}>
           {showForm.vendor ? 'Hide Form' : 'Add Vendor'}
         </Button>
       </Box>
