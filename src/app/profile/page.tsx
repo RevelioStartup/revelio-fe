@@ -16,7 +16,10 @@ import Link from 'next/link'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
-import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
+import {
+  useGetLatestSubscriptionQuery,
+  useGetSubscriptionsQuery,
+} from '@/redux/api/subscriptionApi'
 import { CHIP_STYLE_ACTIVE, CHIP_STYLE_INACTIVE } from './constant'
 
 type ChipType = 'event' | 'history'
@@ -28,6 +31,7 @@ export default function Profile() {
   const { data: events } = useGetEventsQuery()
   const dispatch = useDispatch()
 
+  const { data: latestSubscription } = useGetLatestSubscriptionQuery()
   const { data: subscriptionHistory } = useGetSubscriptionsQuery()
 
   if (isLoading)
@@ -101,12 +105,14 @@ export default function Profile() {
           />
           <p className="font-bold text-3xl mt-5">{user.username}</p>
           <p className="font-bold text-xl mt-3 md:mt-6">{user.email}</p>
-          <p className="font-bold text-xl mt-3 md:mt-6">
+          <p className={'font-bold text-lg mt-3 md:mt-6'}>
             {profile.bio || 'No bio provided'}
           </p>
-          <p className="font-bold text-3xl mt-8 md:mt-14 text-teal-400">
-            PREMIUM
-          </p>
+          {latestSubscription && (
+            <p className="font-bold text-3xl mt-8 md:mt-14 text-teal-400">
+              {latestSubscription?.plan.name}
+            </p>
+          )}
           <Box
             sx={{
               display: 'flex',
@@ -130,7 +136,7 @@ export default function Profile() {
             </Link>
             <Button
               variant="ghost"
-              className="w-32"
+              className="w-72"
               data-testid="logout-button"
               onClick={handleOpenPopup}
             >

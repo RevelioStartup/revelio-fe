@@ -18,7 +18,7 @@ export const CreateRundownButton = () => {
     })
   }
   useEffect(() => {
-    if (isSuccess && !!data) {
+    if (isSuccess && data) {
       setContextRundowns(data.rundown_data)
       redirect(`${params.eventId}/create-rundown`)
     }

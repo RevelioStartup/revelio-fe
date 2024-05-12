@@ -15,6 +15,7 @@ export const baseApi = createApi({
     'LatestSubscription',
     'Timeline',
     'Package',
+    'Transaction',
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.baseUrl,

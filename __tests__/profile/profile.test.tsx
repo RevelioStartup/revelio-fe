@@ -1,13 +1,12 @@
+import '@testing-library/jest-dom'
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
-import { store } from '@/redux/store' // Update the import path according to your file structure
+import { store } from '@/redux/store'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import Profile from '@/app/profile/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 
-// Mock data based on the IEvent type
 const mockEventsData = [
   {
     id: '1',
@@ -19,16 +18,36 @@ const mockEventsData = [
     theme: 'Summer Vibes',
     services: 'Live Music, Food Stalls, Security',
   },
-  // ... add more mock events as needed
 ]
 
 jest.mock('@/redux/api/subscriptionApi', () => ({
   useGetSubscriptionsQuery: jest.fn().mockReturnValue({
     data: [],
   }),
+  useGetLatestSubscriptionQuery: jest.fn().mockReturnValue({
+    data: {
+      id: '63be0832-ece7-4e98-8f4f-65e1143c0d48',
+      plan: {
+        id: 2,
+        name: 'Premium Package',
+        duration: 30,
+        event_planner: true,
+        event_tracker: true,
+        event_timeline: true,
+        event_rundown: true,
+        ai_assistant: true,
+      },
+      midtrans_url: null,
+      midtrans_transaction_id: 'midtrans_id',
+      order_id: 'order_id',
+      price: 10000,
+      checkout_time: '2024-05-06T14:49:19Z',
+      expiry_time: '2024-05-06T15:04:19Z',
+      status: 'settlement',
+    },
+  }),
 }))
 
-// Mocking the RTK Query hook used in the component
 jest.mock('@/redux/api/profileApi', () => ({
   useGetProfileQuery: jest.fn(),
   useGetEventsQuery: jest.fn(),

@@ -37,7 +37,7 @@ export const CreateStepManualForm = () => {
   }
 
   useEffect(() => {
-    if (!!error && 'data' in error) {
+    if (error && 'data' in error) {
       toast.error((error?.data as any).error as string)
     }
     if (isSuccess) {
