@@ -9,7 +9,7 @@ export const PaymentDetail = () => {
   const orderId = searchParams.get('order_id')
   const [getTransaction, { data, isLoading }] = useLazyGetTransactionQuery()
   useEffect(() => {
-    if (!!orderId) {
+    if (orderId) {
       getTransaction({ order_id: orderId })
     }
   }, [orderId])
@@ -20,7 +20,7 @@ export const PaymentDetail = () => {
           <div data-testid="loader" className="loader" />
         </div>
       ) : (
-        !!data && (
+        data && (
           <div className="flex flex-col items-center justify-center gap-3">
             <p>Transaction Detail</p>
             <p>{data.transaction_detail.package.name}</p>
@@ -28,7 +28,7 @@ export const PaymentDetail = () => {
             <p>{data.transaction_detail.payment_merchant}</p>
             <Button
               onClick={() => {
-                if (!!data.transaction_detail.midtrans_url)
+                if (data?.transaction_detail.midtrans_url)
                   window.open(data.transaction_detail.midtrans_url)
               }}
               disabled={!data.transaction_detail.midtrans_url}

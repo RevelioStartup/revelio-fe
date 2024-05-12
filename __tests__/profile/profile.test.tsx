@@ -27,7 +27,7 @@ jest.mock('@/redux/api/subscriptionApi', () => ({
   useGetLatestSubscriptionQuery: jest.fn().mockReturnValue({
     data: {
       id: '63be0832-ece7-4e98-8f4f-65e1143c0d48',
-      package: {
+      plan: {
         id: 2,
         name: 'Premium Package',
         duration: 30,

@@ -41,7 +41,7 @@ export default function PackageList() {
     'ai_assistant',
   ]
   useEffect(() => {
-    if (!!data) {
+    if (data) {
       window.open(data.redirect_url)
     }
   }, [data])

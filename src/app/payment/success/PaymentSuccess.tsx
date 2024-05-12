@@ -11,7 +11,7 @@ export const PaymentSuccess = () => {
   const orderId = searchParams.get('order_id')
   const [getTransaction, { data, isLoading }] = useLazyGetTransactionQuery()
   useEffect(() => {
-    if (!!orderId) {
+    if (orderId) {
       getTransaction({ order_id: orderId })
     }
   }, [orderId])

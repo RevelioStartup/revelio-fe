@@ -114,7 +114,7 @@ export const AIAside = ({ isOpen, setIsOpen }: AIAsideProps) => {
                     {prompt}
                   </div>
                   <div className="bg-emerald-100 p-2 rounded-2xl">
-                    {!!output && (
+                    {output && (
                       <div
                         dangerouslySetInnerHTML={{
                           __html: output.replace(/\n/g, '<br>') ?? '',

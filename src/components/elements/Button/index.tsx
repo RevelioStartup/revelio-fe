@@ -38,9 +38,9 @@ export const Button = ({
         <CircularProgress />
       ) : (
         <>
-          {!!leftIcon && <span>{leftIcon}</span>}
+          {leftIcon && <span>{leftIcon}</span>}
           <span>{children}</span>
-          {!!rightIcon && <span>{rightIcon}</span>}
+          {rightIcon && <span>{rightIcon}</span>}
         </>
       )}
     </button>

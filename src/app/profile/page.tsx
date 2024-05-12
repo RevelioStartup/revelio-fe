@@ -105,13 +105,12 @@ export default function Profile() {
           />
           <p className="font-bold text-3xl mt-5">{user.username}</p>
           <p className="font-bold text-xl mt-3 md:mt-6">{user.email}</p>
-          <p className="font-bold text-xl mt-3 md:mt-6">
+          <p className={'font-bold text-lg mt-3 md:mt-6'}>
             {profile.bio || 'No bio provided'}
           </p>
-          {!!latestSubscription && (
+          {latestSubscription && (
             <p className="font-bold text-3xl mt-8 md:mt-14 text-teal-400">
-              {latestSubscription?.is_active &&
-                `${latestSubscription?.plan.name}`}
+              {latestSubscription?.plan.name}
             </p>
           )}
           <Box

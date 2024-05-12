@@ -142,7 +142,7 @@ export const EventPurpose: React.FC = () => {
                 </MenuItem>
               ))}
             </Select>
-            {!!error && <p className="text-red-500"> {error} </p>}
+            {Boolean(error) && <p className="text-red-500"> {error} </p>}
           </div>
         </div>
       </div>
