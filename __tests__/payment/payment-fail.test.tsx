@@ -67,6 +67,4 @@ describe('PaymentSuccess Component', () => {
       )
     })
   })
-
-
 })
