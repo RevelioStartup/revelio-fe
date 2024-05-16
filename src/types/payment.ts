@@ -15,3 +15,25 @@ export type Transaction = {
 }
 
 export type GetTransactionResponse = { transaction_detail: Transaction }
+
+export type TransactionSuccess = 'authorize' | 'capture' | 'settlement'
+export type TransactionPending = 'pending' | 'chargeback' | 'partial_chargeback'
+export type TransactionError =
+  | 'deny'
+  | 'cancel'
+  | 'refund'
+  | 'partial_refund'
+  | 'expire'
+  | 'failure'
+export const transactionErrorStatuses = [
+  'deny',
+  'cancel',
+  'refund',
+  'partial_refund',
+  'expire',
+  'failure',
+]
+
+export type TransactionStatus = TransactionSuccess &
+  TransactionPending &
+  TransactionError
