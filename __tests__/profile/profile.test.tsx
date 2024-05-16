@@ -13,6 +13,7 @@ import Profile from '@/app/profile/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 import { useGetTransactionListQuery } from '@/redux/api/paymentApi'
 import dayjs from 'dayjs'
+import { formatRupiah } from '@/utils/formatRupiah'
 
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(() => ({
@@ -57,8 +58,8 @@ const mockTransactionData = [
     midtrans_transaction_id: 'mid-2',
     order_id: 'ord-2',
     price: 10000,
-    checkout_time: '2024-05-06T14:49:19Z',
-    expiry_time: '2024-05-06T15:04:19Z',
+    checkout_time: '2024-05-04T14:49:19Z',
+    expiry_time: '2024-05-04T15:04:19Z',
     payment_type: 'qris',
     payment_merchant: 'gopay',
     status: 'failed',
@@ -72,8 +73,8 @@ const mockTransactionData = [
     midtrans_transaction_id: 'mid-3',
     order_id: 'ord-3',
     price: 10000,
-    checkout_time: '2024-05-06T14:49:19Z',
-    expiry_time: '2024-05-06T15:04:19Z',
+    checkout_time: '2024-05-03T14:49:19Z',
+    expiry_time: '2024-05-03T15:04:19Z',
     payment_type: 'qris',
     payment_merchant: 'gopay',
     status: 'pending',
@@ -274,8 +275,12 @@ describe('Profile Component', () => {
     expect(getByText('Price')).toBeInTheDocument()
     expect(getByText('Expiry Time')).toBeInTheDocument()
     expect(getByText('Status')).toBeInTheDocument()
-    expect(getByText(mockTransactionData[0].status)).toBeInTheDocument()
-    expect(getByText(mockTransactionData[0].price)).toBeInTheDocument()
+    expect(
+      getByText(mockTransactionData[0].status.toUpperCase())
+    ).toBeInTheDocument()
+    expect(
+      getAllByText(formatRupiah(mockTransactionData[0].price))[0]
+    ).toBeInTheDocument()
     expect(
       getByText(
         dayjs(mockTransactionData[0].checkout_time).format(
