@@ -18,7 +18,7 @@ jest.mock('next/navigation', () => ({
         case 'order_id':
           return 'test_order_id'
         case 'transaction_status':
-          return 'settlement'
+          return 'deny'
         default:
           return null
       }
@@ -41,7 +41,7 @@ describe('PaymentSuccess Component', () => {
               id: 2,
               name: 'Premium',
             },
-            midtrans_url: null,
+            midtrans_url: 'http:example.com',
             midtrans_transaction_id: 'midtrans_id',
             order_id: 'order_id',
             price: 10000,
@@ -49,7 +49,7 @@ describe('PaymentSuccess Component', () => {
             expiry_time: '2024-05-06T15:04:19Z',
             payment_type: 'qris',
             payment_merchant: 'gopay',
-            status: 'settlement',
+            status: 'deny',
           },
         },
         isLoading: false,
@@ -59,8 +59,7 @@ describe('PaymentSuccess Component', () => {
     const { getByText, getByRole } = render(<PaymentPage />)
 
     await waitFor(() => {
-      expect(getByText('Payment Success')).toBeInTheDocument()
-      expect(getByText('Premium')).toBeInTheDocument()
+      expect(getByText('Payment Failed')).toBeInTheDocument()
       const button = getByRole('button', { name: 'See Transaction History' })
       expect(button.closest('a')).toHaveAttribute(
         'href',
@@ -68,4 +67,6 @@ describe('PaymentSuccess Component', () => {
       )
     })
   })
+
+
 })
