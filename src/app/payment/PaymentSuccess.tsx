@@ -1,18 +1,13 @@
 'use client'
 
 import { Button } from '@/components/elements/Button'
-import { useLazyGetTransactionQuery } from '@/redux/api/paymentApi'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
 import { PaymentDetailI } from './PaymentError'
 
 interface PaymentSuccessI extends PaymentDetailI {
   packageName: string
 }
-export const PaymentSuccess = ({ status, packageName }: PaymentSuccessI) => {
-  const searchParams = useSearchParams()
-
+export const PaymentSuccess = ({ packageName }: PaymentSuccessI) => {
   return (
     <div className="h-[90vh]">
       <div className="flex flex-col gap-3 items-center justify-center h-full">

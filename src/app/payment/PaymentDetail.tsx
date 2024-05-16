@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/elements/Button'
 import { useLazyGetTransactionQuery } from '@/redux/api/paymentApi'
-import { transactionErrorStatuses, TransactionStatus } from '@/types/payment'
+import { transactionErrorStatuses } from '@/types/payment'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { PaymentSuccess } from './PaymentSuccess'
