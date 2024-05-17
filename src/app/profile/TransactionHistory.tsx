@@ -4,9 +4,9 @@ import { useGetTransactionListQuery } from '@/redux/api/paymentApi'
 import { formatRupiah } from '@/utils/formatRupiah'
 import { twMerge } from 'tailwind-merge'
 import { HoverRowVariants, StatusVariants } from './constant'
-import dayjs from 'dayjs'
 import { TransactionStatus } from '@/types/payment'
 import { getTransactionStatus } from '@/utils/getTransactionStatus'
+import { formatDateTime } from '@/utils/formatDateTime'
 
 interface TransactionHistoryI {
   status?: string
@@ -71,7 +71,7 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
                         )}
                       >
                         <td className="p-2 border-2 border-emerald-500">
-                          {dayjs(checkout_time).format('ddd, D MMM YY HH:mm')}
+                          {formatDateTime(checkout_time)}
                         </td>
 
                         <td className="p-2 border-2 border-emerald-500">
@@ -81,7 +81,7 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
                           {formatRupiah(price)}
                         </td>
                         <td className="p-2 border-2 border-emerald-500">
-                          {dayjs(expiry_time).format('ddd, D MMM YY HH:mm')}
+                          {formatDateTime(expiry_time)}
                         </td>
                         <td
                           className={twMerge(

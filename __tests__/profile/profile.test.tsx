@@ -12,8 +12,8 @@ import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import Profile from '@/app/profile/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 import { useGetTransactionListQuery } from '@/redux/api/paymentApi'
-import dayjs from 'dayjs'
 import { formatRupiah } from '@/utils/formatRupiah'
+import { formatDateTime } from '@/utils/formatDateTime'
 
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(() => ({
@@ -282,16 +282,10 @@ describe('Profile Component', () => {
       getAllByText(formatRupiah(mockTransactionData[0].price))[0]
     ).toBeInTheDocument()
     expect(
-      getByText(
-        dayjs(mockTransactionData[0].checkout_time).format(
-          'ddd, D MMM YY HH:mm'
-        )
-      )
+      getByText(formatDateTime(mockTransactionData[0].checkout_time))
     ).toBeInTheDocument()
     expect(
-      getByText(
-        dayjs(mockTransactionData[0].expiry_time).format('ddd, D MMM YY HH:mm')
-      )
+      getByText(formatDateTime(mockTransactionData[0].expiry_time))
     ).toBeInTheDocument()
   })
 
