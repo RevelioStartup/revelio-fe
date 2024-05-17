@@ -28,7 +28,7 @@ export const PaymentDetail = () => {
       />
     )
   if (transactionErrorStatuses.includes(status ?? ''))
-    return <PaymentError status={status ?? ''} />
+    return <PaymentError status={status} />
   return (
     <div>
       {isLoading ? (

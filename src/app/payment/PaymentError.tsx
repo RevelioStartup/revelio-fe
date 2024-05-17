@@ -2,7 +2,7 @@
 import { Button } from '@/components/elements/Button'
 import Link from 'next/link'
 export interface PaymentDetailI {
-  status: string
+  status: string | null
 }
 export const PaymentError = ({ status }: PaymentDetailI) => {
   return (
@@ -11,12 +11,14 @@ export const PaymentError = ({ status }: PaymentDetailI) => {
         <p className="text-3xl lg:text-5xl font-bold text-rose-600">
           Payment Failed
         </p>
-        <p className="">
-          Transaction status:{' '}
-          <span className="font-bold text-rose-700">
-            {status.toUpperCase()}
-          </span>
-        </p>
+        {!!status && (
+          <p>
+            Transaction status:{' '}
+            <span className="font-bold text-rose-700">
+              {status.toUpperCase()}
+            </span>
+          </p>
+        )}
         <i className="i-ph-x-circle-duotone size-20 text-rose-400 aspect-square" />
         <Link href={'/profile?tab=history'}>
           <Button variant={'ghost'}>See Transaction History</Button>
