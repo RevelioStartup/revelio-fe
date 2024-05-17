@@ -18,11 +18,13 @@ export const rtkQueryErrorLogger: Middleware =
         const errorData =
           action.payload.data?.error ||
           action.payload.data?.message ||
+          action.payload.data?.detail ||
           action.error.message
-        if (action.meta.arg.endpointName == 'createTimeline') {
-          toast.error(errorData)
-        } else if (action.meta.arg.endpointName === 'modifyDetailTimeline') {
-          toast.error(errorData)
+        if (
+          action?.payload.status == 403 &&
+          action.meta.arg.endpointName != 'aiSuggestionHistoryList'
+        ) {
+          toast.error('Upgrade to Premium to enjoy this feature.')
         }
       }
     }

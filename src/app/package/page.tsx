@@ -16,6 +16,9 @@ import { LatestSubscriptionResponse } from '@/types/subscription'
 import { formatRupiah } from '@/utils/formatRupiah'
 import { formatDate } from '@/utils/formatDate'
 import { PACKAGE } from './constant'
+import { useCreateTransactionMutation } from '@/redux/api/paymentApi'
+import { Button } from '@/components/elements/Button'
+import { useEffect } from 'react'
 
 export default function PackageList() {
   const { data: free_package = {} as PackageDetailResponse } =
@@ -24,7 +27,12 @@ export default function PackageList() {
     useGetPackageDetailQuery(PACKAGE['premium'])
   const { data: latest_subscription = {} as LatestSubscriptionResponse } =
     useGetLatestSubscriptionQuery()
+  const [createTransaction, { data, isLoading }] =
+    useCreateTransactionMutation()
 
+  const handleCreateTransaction = async () => {
+    createTransaction({ package_id: premium_package.id })
+  }
   const features: (keyof PackageDetailResponse)[] = [
     'event_planner',
     'event_tracker',
@@ -32,6 +40,11 @@ export default function PackageList() {
     'event_rundown',
     'ai_assistant',
   ]
+  useEffect(() => {
+    if (data) {
+      window.open(data.redirect_url)
+    }
+  }, [data])
 
   return (
     <Box data-testid="package-detail" className="m-2 flex flex-col">
@@ -106,19 +119,27 @@ export default function PackageList() {
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell align="center">
-                  {!latest_subscription.is_active ? (
-                    <button className="bg-white text-teal-600 border border-teal-600 rounded-2xl py-4 px-6 text-sm">
-                      Choose Plan <br /> ({formatRupiah(premium_package.price)})
-                    </button>
-                  ) : (
-                    <p className="text-teal-600">
-                      Subscribed until{' '}
-                      {formatDate(latest_subscription.end_date)}
-                    </p>
-                  )}
+                <TableCell colSpan={3}>
+                  <div className="w-full flex flex-row items-end justify-end pr-12">
+                    {!latest_subscription.is_active ? (
+                      <Button
+                        data-testid="choose-plan-button"
+                        onClick={handleCreateTransaction}
+                        loading={isLoading}
+                        className="bg-white text-teal-600 border border-teal-600 rounded-2xl py-4 px-6 text-sm"
+                      >
+                        Choose Plan ({formatRupiah(premium_package.price)})
+                      </Button>
+                    ) : (
+                      <p
+                        data-testid="subscribed-plan"
+                        className="text-teal-600"
+                      >
+                        Subscribed until{' '}
+                        {formatDate(latest_subscription.end_date)}
+                      </p>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             </TableBody>

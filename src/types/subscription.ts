@@ -1,24 +1,17 @@
+import { PackageDetailResponse } from './package'
+
 export type SubscriptionHistoryResponse = {
   id: number
-  plan: {
-    id: number
-    name: string
-    price: number
-    duration: number
-    event_planner: boolean
-    event_tracker: boolean
-    event_timeline: boolean
-    event_rundown: boolean
-    ai_assistant: boolean
-  }
+  plan: PackageDetailResponse
   start_date: string
   end_date: string
   user: number
+  is_active: boolean
 }
 
 export type LatestSubscriptionResponse = {
   id: number
-  plan: 'PREMIUM' | 'FREE'
+  plan: PackageDetailResponse
   start_date: string
   end_date: string
   user: number

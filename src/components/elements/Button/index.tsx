@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { ButtonCVAProps, ButtonVariants } from './style'
 import { twMerge } from 'tailwind-merge'
+import { CircularProgress } from '@mui/material'
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -21,19 +22,32 @@ export const Button = ({
   width,
   className,
   size,
+  disabled,
   ...props
 }: ButtonProps) => {
   return (
     <button
       {...props}
       className={twMerge(
-        ButtonVariants({ variant, intent, width, size }),
+        ButtonVariants({
+          variant,
+          width,
+          size,
+          intent: disabled ? 'disabled' : 'active',
+        }),
         className
       )}
+      disabled={disabled || loading}
     >
-      {!!leftIcon && <span>{leftIcon}</span>}
-      <span>{children}</span>
-      {!!rightIcon && <span>{rightIcon}</span>}
+      {loading ? (
+        <CircularProgress size={20} color="secondary" />
+      ) : (
+        <>
+          {leftIcon && <span>{leftIcon}</span>}
+          <span>{children}</span>
+          {rightIcon && <span>{rightIcon}</span>}
+        </>
+      )}
     </button>
   )
 }

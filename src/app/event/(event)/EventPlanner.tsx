@@ -76,7 +76,7 @@ export const EventPlanner: React.FC = () => {
                 slotProps={{ textField: { required: true } }}
                 className="!border-teal-100"
               />
-              {!!error && <p className="text-red-500"> {error} </p>}
+              {Boolean(error) && <p className="text-red-500"> {error} </p>}
             </div>
           </LocalizationProvider>
         </div>
