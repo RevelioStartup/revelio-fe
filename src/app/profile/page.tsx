@@ -21,12 +21,17 @@ import {
   useGetSubscriptionsQuery,
 } from '@/redux/api/subscriptionApi'
 import { CHIP_STYLE_ACTIVE, CHIP_STYLE_INACTIVE } from './constant'
+import { TransactionHistory } from './TransactionHistory'
+import { useSearchParams } from 'next/navigation'
 
 type ChipType = 'event' | 'history'
 
 export default function Profile() {
+  const searchParams = useSearchParams()
   const [openPopup, setOpenPopup] = useState(false)
-  const [chipType, setChipType] = React.useState<ChipType>('event')
+  const [chipType, setChipType] = React.useState<ChipType>(
+    (searchParams.get('tab') as ChipType) ?? 'event'
+  )
   const { data, isLoading, isError } = useGetProfileQuery()
   const { data: events } = useGetEventsQuery()
   const dispatch = useDispatch()
@@ -86,12 +91,15 @@ export default function Profile() {
           />
         ))}
       </Box>
-      <Box component="section" className="flex flex-wrap lg:flex-nowrap w-full">
+      <Box
+        component="section"
+        className="flex flex-wrap justify-center lg:flex-nowrap w-full"
+      >
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: '100%',
+            width: '50%',
           }}
           alignItems={'center'}
           justifyContent={'center'}
@@ -233,7 +241,10 @@ export default function Profile() {
             )}
           </Box>
         ) : (
-          renderSubscriptionHistory()
+          <div className="flex flex-col justify-start gap-2 px-4 md:px-0">
+            {renderSubscriptionHistory()}
+            <TransactionHistory />
+          </div>
         )}
       </Box>
     </Box>

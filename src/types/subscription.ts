@@ -6,6 +6,7 @@ export type SubscriptionHistoryResponse = {
   start_date: string
   end_date: string
   user: number
+  is_active: boolean
 }
 
 export type LatestSubscriptionResponse = {

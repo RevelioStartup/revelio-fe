@@ -29,13 +29,18 @@ export const Button = ({
     <button
       {...props}
       className={twMerge(
-        ButtonVariants({ variant, intent, width, size }),
+        ButtonVariants({
+          variant,
+          width,
+          size,
+          intent: disabled ? 'disabled' : 'active',
+        }),
         className
       )}
       disabled={disabled || loading}
     >
       {loading ? (
-        <CircularProgress />
+        <CircularProgress size={20} color="secondary" />
       ) : (
         <>
           {leftIcon && <span>{leftIcon}</span>}

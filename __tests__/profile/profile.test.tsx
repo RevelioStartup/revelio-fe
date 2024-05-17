@@ -1,11 +1,25 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import {
+  render,
+  screen,
+  fireEvent,
+  getAllByAltText,
+} from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import Profile from '@/app/profile/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
+import { useGetTransactionListQuery } from '@/redux/api/paymentApi'
+import { formatRupiah } from '@/utils/formatRupiah'
+import { formatDateTime } from '@/utils/formatDateTime'
+
+jest.mock('next/navigation', () => ({
+  useSearchParams: jest.fn(() => ({
+    get: jest.fn(() => undefined),
+  })),
+}))
 
 const mockEventsData = [
   {
@@ -17,6 +31,53 @@ const mockEventsData = [
     attendees: 500,
     theme: 'Summer Vibes',
     services: 'Live Music, Food Stalls, Security',
+  },
+]
+const mockTransactionData = [
+  {
+    id: 'mock-id-1',
+    package: {
+      name: 'Premium',
+    },
+    midtrans_url: null,
+    midtrans_transaction_id: 'mid-1',
+    order_id: 'ord-1',
+    price: 10000,
+    checkout_time: '2024-05-06T14:49:19Z',
+    expiry_time: '2024-05-06T15:04:19Z',
+    payment_type: 'qris',
+    payment_merchant: 'gopay',
+    status: 'settlement',
+  },
+  {
+    id: 'mock-id-2',
+    package: {
+      name: 'Premium',
+    },
+    midtrans_url: null,
+    midtrans_transaction_id: 'mid-2',
+    order_id: 'ord-2',
+    price: 10000,
+    checkout_time: '2024-05-04T14:49:19Z',
+    expiry_time: '2024-05-04T15:04:19Z',
+    payment_type: 'qris',
+    payment_merchant: 'gopay',
+    status: 'failed',
+  },
+  {
+    id: 'mock-id-3',
+    package: {
+      name: 'Premium',
+    },
+    midtrans_url: null,
+    midtrans_transaction_id: 'mid-3',
+    order_id: 'ord-3',
+    price: 10000,
+    checkout_time: '2024-05-03T14:49:19Z',
+    expiry_time: '2024-05-03T15:04:19Z',
+    payment_type: 'qris',
+    payment_merchant: 'gopay',
+    status: 'pending',
   },
 ]
 
@@ -53,6 +114,10 @@ jest.mock('@/redux/api/profileApi', () => ({
   useGetEventsQuery: jest.fn(),
 }))
 
+jest.mock('@/redux/api/paymentApi', () => ({
+  useGetTransactionListQuery: jest.fn(),
+}))
+
 Object.defineProperty(window, 'location', {
   value: { pathname: '/mock-path' },
 })
@@ -74,6 +139,10 @@ describe('Profile Component', () => {
       data: mockEventsData,
       isLoading: false,
       isError: false,
+    })
+    ;(useGetTransactionListQuery as jest.Mock).mockReturnValue({
+      data: mockTransactionData,
+      isLoading: false,
     })
   })
 
@@ -189,5 +258,55 @@ describe('Profile Component', () => {
         <Profile />
       </Provider>
     )
+  })
+
+  it('displays transaction information when there is at least one transaction', () => {
+    const myInitialState = 'history'
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+
+    const { getByText, getAllByText } = render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
+
+    expect(getByText('Checkout Time')).toBeInTheDocument()
+    expect(getByText('Package Plan')).toBeInTheDocument()
+    expect(getByText('Price')).toBeInTheDocument()
+    expect(getByText('Expiry Time')).toBeInTheDocument()
+    expect(getByText('Status')).toBeInTheDocument()
+    expect(
+      getByText(mockTransactionData[0].status.toUpperCase())
+    ).toBeInTheDocument()
+    expect(
+      getAllByText(formatRupiah(mockTransactionData[0].price))[0]
+    ).toBeInTheDocument()
+    expect(
+      getByText(formatDateTime(mockTransactionData[0].checkout_time))
+    ).toBeInTheDocument()
+    expect(
+      getByText(formatDateTime(mockTransactionData[0].expiry_time))
+    ).toBeInTheDocument()
+  })
+
+  it('displays no transaction information', () => {
+    const myInitialState = 'history'
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+    ;(useGetTransactionListQuery as jest.Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+    })
+    const { getByText } = render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
+
+    expect(getByText('Checkout Time')).toBeInTheDocument()
+    expect(getByText('Package Plan')).toBeInTheDocument()
+    expect(getByText('Price')).toBeInTheDocument()
+    expect(getByText('Expiry Time')).toBeInTheDocument()
+    expect(getByText('Status')).toBeInTheDocument()
+    expect(getByText('No transactions recorded')).toBeInTheDocument()
   })
 })
