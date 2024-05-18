@@ -154,14 +154,23 @@ export const EventPurpose: React.FC = () => {
           width={50}
           className="w-full"
         />
-        <LoadingButton
+        {isLoading ? <LoadingButton
           type="submit"
           className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-teal-600 !text-white !w-full max-w-sm !px-6 !py-3"
           loading={isLoading}
           loadingIndicator={'Creating...'}
         >
           Plan{' '}
-        </LoadingButton>
+        </LoadingButton> : 
+        <LoadingButton
+        type="submit"
+        className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-teal-600 !text-white !w-full max-w-sm !px-6 !py-3"
+        loading={isLoading}
+        loadingIndicator={'Creating...'}
+      >
+        Plan{' '}
+      </LoadingButton>
+        }
       </div>
       <Snackbar
         open={open}
