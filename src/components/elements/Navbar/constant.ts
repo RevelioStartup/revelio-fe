@@ -8,7 +8,11 @@ export const MENU = [
 export const MENU_LOGGED_IN = [
   {
     label: 'Dashboard',
-    href: '/profile',
+    href: '/dashboard',
+  },
+  {
+    label: 'Package',
+    href: '/package',
   },
   {
     label: 'Start Planning',

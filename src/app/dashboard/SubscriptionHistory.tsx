@@ -9,12 +9,9 @@ export const SubscriptionHistory: React.FC<{
   return (
     <Box
       component="section"
-      className="flex flex-wrap gap-3 w-full overflow-y-auto h-[calc(100vh-80px)]"
-      padding={{ xs: '2em 2em', lg: '4em 6em' }}
+      className="flex flex-col justify-start gap-3 w-full overflow-y-auto pt-16 pb-6 px-4"
     >
-      <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
-        Subscription History
-      </h2>
+      <h2 className="text-3xl font-bold">Subscription History</h2>
       {data.map((history) => (
         <Box
           key={history.id}
@@ -22,15 +19,14 @@ export const SubscriptionHistory: React.FC<{
             display: 'flex',
             flexDirection: 'column',
             height: 'fit-content',
-            width: '100%',
             maxWidth: '600px',
             padding: '1rem',
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
             borderRadius: '4px',
             mb: '1rem',
-            bgcolor: '#0D9488',
+            bgcolor: history.is_active ? '#0D9488' : '#FFFFFF',
           }}
-          className="mx-auto"
+          className="mx-auto w-11/12"
         >
           <Box sx={{ mb: '0.5rem' }}>
             <h3
@@ -41,7 +37,7 @@ export const SubscriptionHistory: React.FC<{
                 color: 'white',
               }}
             >
-              {history.plan}
+              {history.plan.name}
             </h3>
           </Box>
           <Box sx={{ flexGrow: 0, mb: '0.5rem', color: 'white' }}>

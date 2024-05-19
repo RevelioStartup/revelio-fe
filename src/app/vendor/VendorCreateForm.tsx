@@ -111,12 +111,12 @@ export const VendorCreateForm = ({ eventId }: VendorCreateFormProps) => {
               required
               name="contact_phone_number"
               data-testid="input-contact-phone-number"
-              className="text-sm bg-white text-gray-500 rounded-2xl mt-2 mb-20 p-3 w-full"
+              className="text-sm bg-white text-gray-500 rounded-2xl mt-2 p-3 w-full"
               control={control}
               placeholder="Contact Phone Number"
               type="tel"
             />
-            <h1 className="text-xl font-bold m-2">Status</h1>
+            <h1 className="text-xl font-bold m-2 mt-20">Status</h1>
             <Select
               name="status"
               data-testid="input-status"

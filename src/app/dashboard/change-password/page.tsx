@@ -109,7 +109,7 @@ const ChangePassword = () => {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                error={!!fieldState.error}
+                error={Boolean(fieldState.error)}
                 helperText={fieldState.error?.message}
               />
             )}
@@ -128,7 +128,7 @@ const ChangePassword = () => {
               variant="outlined"
               margin="normal"
               fullWidth
-              error={!!fieldState.error}
+              error={Boolean(fieldState.error)}
               helperText={fieldState.error?.message}
               className="w-[250px] md:w-[400px] h-[50px]"
             />

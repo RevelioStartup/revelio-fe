@@ -16,18 +16,27 @@ import Link from 'next/link'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
-import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
+import {
+  useGetLatestSubscriptionQuery,
+  useGetSubscriptionsQuery,
+} from '@/redux/api/subscriptionApi'
 import { CHIP_STYLE_ACTIVE, CHIP_STYLE_INACTIVE } from './constant'
+import { TransactionHistory } from './TransactionHistory'
+import { useSearchParams } from 'next/navigation'
 
 type ChipType = 'event' | 'history'
 
 export default function Profile() {
+  const searchParams = useSearchParams()
   const [openPopup, setOpenPopup] = useState(false)
-  const [chipType, setChipType] = React.useState<ChipType>('event')
+  const [chipType, setChipType] = React.useState<ChipType>(
+    (searchParams.get('tab') as ChipType) ?? 'event'
+  )
   const { data, isLoading, isError } = useGetProfileQuery()
   const { data: events } = useGetEventsQuery()
   const dispatch = useDispatch()
 
+  const { data: latestSubscription } = useGetLatestSubscriptionQuery()
   const { data: subscriptionHistory } = useGetSubscriptionsQuery()
 
   if (isLoading)
@@ -82,12 +91,15 @@ export default function Profile() {
           />
         ))}
       </Box>
-      <Box component="section" className="flex flex-wrap lg:flex-nowrap w-full">
+      <Box
+        component="section"
+        className="flex flex-wrap justify-center lg:flex-nowrap w-full"
+      >
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: '100%',
+            width: '50%',
           }}
           alignItems={'center'}
           justifyContent={'center'}
@@ -101,12 +113,14 @@ export default function Profile() {
           />
           <p className="font-bold text-3xl mt-5">{user.username}</p>
           <p className="font-bold text-xl mt-3 md:mt-6">{user.email}</p>
-          <p className="font-bold text-xl mt-3 md:mt-6">
+          <p className={'font-bold text-lg mt-3 md:mt-6'}>
             {profile.bio || 'No bio provided'}
           </p>
-          <p className="font-bold text-3xl mt-8 md:mt-14 text-teal-400">
-            PREMIUM
-          </p>
+          {latestSubscription && (
+            <p className="font-bold text-3xl mt-8 md:mt-14 text-teal-400">
+              {latestSubscription?.plan.name}
+            </p>
+          )}
           <Box
             sx={{
               display: 'flex',
@@ -118,19 +132,19 @@ export default function Profile() {
             justifyContent={'center'}
             padding={{ xs: '2em 2em', lg: '4em 6em' }}
           >
-            <Link href="/profile/change-profile">
+            <Link href="/dashboard/change-profile">
               <Button variant="primary" className="w-72">
                 Change Profile
               </Button>
             </Link>
-            <Link href="/profile/change-password">
+            <Link href="/dashboard/change-password">
               <Button variant="primary" className="w-72">
                 Change Password
               </Button>
             </Link>
             <Button
               variant="ghost"
-              className="w-32"
+              className="w-72 border-red-500 text-red-500"
               data-testid="logout-button"
               onClick={handleOpenPopup}
             >
@@ -223,11 +237,14 @@ export default function Profile() {
                 </Box>
               ))
             ) : (
-              <p>No events found.</p>
+              <p className='text-center w-full'>No events found.</p>
             )}
           </Box>
         ) : (
-          renderSubscriptionHistory()
+          <div className="flex flex-col justify-start gap-2 px-4 md:px-0">
+            {renderSubscriptionHistory()}
+            <TransactionHistory />
+          </div>
         )}
       </Box>
     </Box>

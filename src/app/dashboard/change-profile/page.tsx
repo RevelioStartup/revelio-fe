@@ -119,7 +119,7 @@ const ChangeProfile = () => {
           Update Profile
         </ButtonVariants>
       </form>
-      {error && <div data-testid="errorMessage">{error}</div>}
+      {Boolean(error) && <div data-testid="errorMessage">{error}</div>}
     </Box>
   )
 }

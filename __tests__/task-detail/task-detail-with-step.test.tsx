@@ -11,10 +11,10 @@ import {
   useUpdateTaskStepMutation,
 } from '@/redux/api/taskStepApi'
 import '@testing-library/jest-dom'
-import dayjs from '@/configs/dayjs.config'
 import { Step } from '@/types/taskDetails'
 import { store } from '@/redux/store'
 import { Provider } from 'react-redux'
+import { formatDateTime } from '@/utils/formatDateTime'
 
 jest.mock('@/redux/api/eventApi', () => ({
   useGetEventQuery: jest.fn(),
@@ -312,12 +312,10 @@ describe('TaskDetailPage with step', () => {
     )
 
     expect(
-      screen.getByText(
-        dayjs(mockStepData.start_datetime).format('ddd, D MMM YY HH:mm')
-      )
+      screen.getByText(formatDateTime(mockStepData.start_datetime))
     ).toBeInTheDocument()
     expect(
-      screen.getByText(dayjs(mockStepData.end_datetime).format('HH:mm'))
+      screen.getByText(formatDateTime(mockStepData.end_datetime, 'HH:mm'))
     ).toBeInTheDocument()
   })
 })

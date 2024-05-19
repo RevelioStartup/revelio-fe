@@ -1,13 +1,26 @@
-import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import React from 'react'
+import {
+  render,
+  screen,
+  fireEvent,
+  getAllByAltText,
+} from '@testing-library/react'
 import { Provider } from 'react-redux'
-import { store } from '@/redux/store' // Update the import path according to your file structure
+import { store } from '@/redux/store'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
-import Profile from '@/app/profile/page'
+import Profile from '@/app/dashboard/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
+import { useGetTransactionListQuery } from '@/redux/api/paymentApi'
+import { formatRupiah } from '@/utils/formatRupiah'
+import { formatDateTime } from '@/utils/formatDateTime'
 
-// Mock data based on the IEvent type
+jest.mock('next/navigation', () => ({
+  useSearchParams: jest.fn(() => ({
+    get: jest.fn(() => undefined),
+  })),
+}))
+
 const mockEventsData = [
   {
     id: '1',
@@ -19,19 +32,90 @@ const mockEventsData = [
     theme: 'Summer Vibes',
     services: 'Live Music, Food Stalls, Security',
   },
-  // ... add more mock events as needed
+]
+const mockTransactionData = [
+  {
+    id: 'mock-id-1',
+    package: {
+      name: 'Premium',
+    },
+    midtrans_url: null,
+    midtrans_transaction_id: 'mid-1',
+    order_id: 'ord-1',
+    price: 10000,
+    checkout_time: '2024-05-06T14:49:19Z',
+    expiry_time: '2024-05-06T15:04:19Z',
+    payment_type: 'qris',
+    payment_merchant: 'gopay',
+    status: 'settlement',
+  },
+  {
+    id: 'mock-id-2',
+    package: {
+      name: 'Premium',
+    },
+    midtrans_url: null,
+    midtrans_transaction_id: 'mid-2',
+    order_id: 'ord-2',
+    price: 10000,
+    checkout_time: '2024-05-04T14:49:19Z',
+    expiry_time: '2024-05-04T15:04:19Z',
+    payment_type: 'qris',
+    payment_merchant: 'gopay',
+    status: 'failed',
+  },
+  {
+    id: 'mock-id-3',
+    package: {
+      name: 'Premium',
+    },
+    midtrans_url: null,
+    midtrans_transaction_id: 'mid-3',
+    order_id: 'ord-3',
+    price: 10000,
+    checkout_time: '2024-05-03T14:49:19Z',
+    expiry_time: '2024-05-03T15:04:19Z',
+    payment_type: 'qris',
+    payment_merchant: 'gopay',
+    status: 'pending',
+  },
 ]
 
 jest.mock('@/redux/api/subscriptionApi', () => ({
   useGetSubscriptionsQuery: jest.fn().mockReturnValue({
     data: [],
   }),
+  useGetLatestSubscriptionQuery: jest.fn().mockReturnValue({
+    data: {
+      id: '63be0832-ece7-4e98-8f4f-65e1143c0d48',
+      plan: {
+        id: 2,
+        name: 'Premium Package',
+        duration: 30,
+        event_planner: true,
+        event_tracker: true,
+        event_timeline: true,
+        event_rundown: true,
+        ai_assistant: true,
+      },
+      midtrans_url: null,
+      midtrans_transaction_id: 'midtrans_id',
+      order_id: 'order_id',
+      price: 10000,
+      checkout_time: '2024-05-06T14:49:19Z',
+      expiry_time: '2024-05-06T15:04:19Z',
+      status: 'settlement',
+    },
+  }),
 }))
 
-// Mocking the RTK Query hook used in the component
 jest.mock('@/redux/api/profileApi', () => ({
   useGetProfileQuery: jest.fn(),
   useGetEventsQuery: jest.fn(),
+}))
+
+jest.mock('@/redux/api/paymentApi', () => ({
+  useGetTransactionListQuery: jest.fn(),
 }))
 
 Object.defineProperty(window, 'location', {
@@ -55,6 +139,10 @@ describe('Profile Component', () => {
       data: mockEventsData,
       isLoading: false,
       isError: false,
+    })
+    ;(useGetTransactionListQuery as jest.Mock).mockReturnValue({
+      data: mockTransactionData,
+      isLoading: false,
     })
   })
 
@@ -112,7 +200,7 @@ describe('Profile Component', () => {
       .closest('a')
     expect(changeProfileButton).toHaveAttribute(
       'href',
-      '/profile/change-profile'
+      '/dashboard/change-profile'
     )
 
     const changePasswordButton = screen
@@ -120,7 +208,7 @@ describe('Profile Component', () => {
       .closest('a')
     expect(changePasswordButton).toHaveAttribute(
       'href',
-      '/profile/change-password'
+      '/dashboard/change-password'
     )
 
     expect(getByTestId('logout-button')).toBeInTheDocument()
@@ -170,5 +258,55 @@ describe('Profile Component', () => {
         <Profile />
       </Provider>
     )
+  })
+
+  it('displays transaction information when there is at least one transaction', () => {
+    const myInitialState = 'history'
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+
+    const { getByText, getAllByText } = render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
+
+    expect(getByText('Checkout Time')).toBeInTheDocument()
+    expect(getByText('Package Plan')).toBeInTheDocument()
+    expect(getByText('Price')).toBeInTheDocument()
+    expect(getByText('Expiry Time')).toBeInTheDocument()
+    expect(getByText('Status')).toBeInTheDocument()
+    expect(
+      getByText(mockTransactionData[0].status.toUpperCase())
+    ).toBeInTheDocument()
+    expect(
+      getAllByText(formatRupiah(mockTransactionData[0].price))[0]
+    ).toBeInTheDocument()
+    expect(
+      getByText(formatDateTime(mockTransactionData[0].checkout_time))
+    ).toBeInTheDocument()
+    expect(
+      getByText(formatDateTime(mockTransactionData[0].expiry_time))
+    ).toBeInTheDocument()
+  })
+
+  it('displays no transaction information', () => {
+    const myInitialState = 'history'
+    React.useState = jest.fn().mockReturnValue([myInitialState, {}])
+    ;(useGetTransactionListQuery as jest.Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+    })
+    const { getByText } = render(
+      <Provider store={store}>
+        <Profile />
+      </Provider>
+    )
+
+    expect(getByText('Checkout Time')).toBeInTheDocument()
+    expect(getByText('Package Plan')).toBeInTheDocument()
+    expect(getByText('Price')).toBeInTheDocument()
+    expect(getByText('Expiry Time')).toBeInTheDocument()
+    expect(getByText('Status')).toBeInTheDocument()
+    expect(getByText('No transactions recorded')).toBeInTheDocument()
   })
 })

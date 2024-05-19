@@ -16,11 +16,13 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
     event_id: eventId,
   })
   const [showModal, setShowModal] = React.useState(false)
+
   const [clickedEvent, setClickedEvent] = React.useState<EventApi | null>(null)
 
   const handleEventClick = (clickInfo: any) => {
     setShowModal(true)
-    setClickedEvent(clickInfo.event)
+    const clickInfoEvent = clickInfo.event
+    setClickedEvent(clickInfoEvent)
   }
 
   const handleCloseModal = () => {

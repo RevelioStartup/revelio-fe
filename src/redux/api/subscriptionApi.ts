@@ -1,5 +1,8 @@
 import { baseApi } from './baseApi'
-import { SubscriptionHistoryResponse } from '@/types/subscription'
+import {
+  LatestSubscriptionResponse,
+  SubscriptionHistoryResponse,
+} from '@/types/subscription'
 
 export const subscriptionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,7 +22,21 @@ export const subscriptionApi = baseApi.injectEndpoints({
             ]
           : ['SubscriptionHistory'],
     }),
+    getLatestSubscription: builder.query<LatestSubscriptionResponse, void>({
+      query: () => ({
+        url: '/subscriptions/latest/',
+        method: 'GET',
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              { type: 'LatestSubscription', id: result.id },
+              'LatestSubscription',
+            ]
+          : ['LatestSubscription'],
+    }),
   }),
 })
 
-export const { useGetSubscriptionsQuery } = subscriptionApi
+export const { useGetSubscriptionsQuery, useGetLatestSubscriptionQuery } =
+  subscriptionApi

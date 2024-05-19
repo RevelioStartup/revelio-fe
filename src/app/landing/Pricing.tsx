@@ -109,9 +109,6 @@ export const Pricing = () => {
               <p style={{ fontSize: '20px' }}>Limited Event Creation</p>
             </div>
           </Box>
-          <Link href="/profile">
-            <Button variant={'ghost'}>Choose Plan</Button>
-          </Link>
         </Box>
         <Box
           sx={{
@@ -188,7 +185,7 @@ export const Pricing = () => {
               <p style={{ fontSize: '20px' }}>Unlimited Event Creation</p>
             </div>
           </Box>
-          <Link href="/profile">
+          <Link href="/package">
             <Button
               variant={'ghost'}
               style={{ background: 'white', fontWeight: 'bold' }}
