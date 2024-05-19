@@ -9,7 +9,7 @@ import {
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
-import Profile from '@/app/profile/page'
+import Profile from '@/app/dashboard/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 import { useGetTransactionListQuery } from '@/redux/api/paymentApi'
 import { formatRupiah } from '@/utils/formatRupiah'
@@ -200,7 +200,7 @@ describe('Profile Component', () => {
       .closest('a')
     expect(changeProfileButton).toHaveAttribute(
       'href',
-      '/profile/change-profile'
+      '/dashboard/change-profile'
     )
 
     const changePasswordButton = screen
@@ -208,7 +208,7 @@ describe('Profile Component', () => {
       .closest('a')
     expect(changePasswordButton).toHaveAttribute(
       'href',
-      '/profile/change-password'
+      '/dashboard/change-password'
     )
 
     expect(getByTestId('logout-button')).toBeInTheDocument()
