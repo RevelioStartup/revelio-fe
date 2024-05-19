@@ -81,7 +81,7 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
             clickedEvent={{
               title: clickedEvent.title,
               start: new Date(clickedEvent.startStr),
-              end: new Date(clickedEvent.endStr)
+              end: new Date(clickedEvent.endStr),
             }}
           />
         )}

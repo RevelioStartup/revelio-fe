@@ -1,19 +1,19 @@
-import React from 'react';
-import { useDeleteTimelineMutation } from '@/redux/api/timelineApi';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import React from 'react'
+import { useDeleteTimelineMutation } from '@/redux/api/timelineApi'
+import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 
 interface TimelineDetailsModalProps {
-  timelineId: string;
-  onClose: () => void;
-  showModal: boolean;
+  timelineId: string
+  onClose: () => void
+  showModal: boolean
   clickedEvent: {
-    title: string;
-    start: Date;
-    end: Date;
-  };
+    title: string
+    start: Date
+    end: Date
+  }
 }
 
 const style = {
@@ -26,29 +26,33 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-};
+}
 
-const TimelineDetailsModal: React.FC<TimelineDetailsModalProps> = ({ timelineId, onClose, showModal, clickedEvent }) => {
-  const [deleteTimeline, { isLoading, isSuccess}] = useDeleteTimelineMutation();
+const TimelineDetailsModal: React.FC<TimelineDetailsModalProps> = ({
+  timelineId,
+  onClose,
+  showModal,
+  clickedEvent,
+}) => {
+  const [deleteTimeline, { isLoading, isSuccess }] = useDeleteTimelineMutation()
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this timeline?')) {
       try {
-        await deleteTimeline({ id: timelineId });
-        onClose();  
+        await deleteTimeline({ id: timelineId })
+        onClose()
       } catch (error) {
-        console.error('Failed to delete the timeline:', error);
-        alert('There was a problem deleting the timeline.');
+        console.error('Failed to delete the timeline:', error)
+        alert('There was a problem deleting the timeline.')
       }
     }
-  };
+  }
 
   React.useEffect(() => {
     if (isSuccess) {
-      onClose(); 
+      onClose()
     }
-  }, [isSuccess, onClose]);
-
+  }, [isSuccess, onClose])
 
   return (
     <Modal
@@ -71,16 +75,25 @@ const TimelineDetailsModal: React.FC<TimelineDetailsModalProps> = ({ timelineId,
           End date: {clickedEvent?.end.toLocaleTimeString()}
         </Typography>
         <div style={{ marginTop: 20 }}>
-          <Button variant="outlined" color="error" onClick={handleDelete} disabled={isLoading}>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={handleDelete}
+            disabled={isLoading}
+          >
             Delete Timeline
           </Button>
-          <Button variant="outlined" style={{ marginLeft: 10 }} onClick={onClose}>
+          <Button
+            variant="outlined"
+            style={{ marginLeft: 10 }}
+            onClick={onClose}
+          >
             Close
           </Button>
         </div>
       </Box>
     </Modal>
-  );
-};
+  )
+}
 
-export default TimelineDetailsModal;
+export default TimelineDetailsModal

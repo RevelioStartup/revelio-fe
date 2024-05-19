@@ -31,12 +31,12 @@ describe('TimelineDetailsModal', () => {
       </Provider>
     )
 
-    global.confirm = jest.fn().mockReturnValue(true) 
+    global.confirm = jest.fn().mockReturnValue(true)
 
-    fireEvent.click(getByText('Delete Timeline')) 
+    fireEvent.click(getByText('Delete Timeline'))
 
     await waitFor(() => {
-      expect(mockOnClose).toHaveBeenCalled() 
+      expect(mockOnClose).toHaveBeenCalled()
     })
   })
 
@@ -56,11 +56,11 @@ describe('TimelineDetailsModal', () => {
       </Provider>
     )
 
-    global.confirm = jest.fn().mockReturnValue(false) 
+    global.confirm = jest.fn().mockReturnValue(false)
 
     fireEvent.click(getByText('Delete Timeline'))
     await waitFor(() => {
-      expect(mockOnClose).not.toHaveBeenCalled() 
+      expect(mockOnClose).not.toHaveBeenCalled()
     })
   })
 })
