@@ -156,12 +156,9 @@ export const EventPurpose: React.FC = () => {
           className="w-full"
         />
         {isLoading ? (
-          <LoadingButton
-            type="submit"
-            className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-teal-600 !text-white !w-full max-w-sm !px-6 !py-3"
-            loading={isLoading}
-            loadingIndicator={'Creating...'}
-          ></LoadingButton>
+          <div className="flex flex-col justify-center items-center min-h-[90vh]">
+           <div data-testid="loader" className="loader"></div>
+         </div>
         ) : (
           <Button
             type="submit"

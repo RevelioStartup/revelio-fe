@@ -25,7 +25,7 @@ export const Pricing = () => {
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
-          width: '100%',
+          width: '70%',
           '& > div:first-of-type': {
             width: '40%',
           },
@@ -35,8 +35,6 @@ export const Pricing = () => {
         }}
         alignItems={{ xs: 'center', md: 'stretch' }}
         justifyContent={'center'}
-        gap={'2em'}
-        padding={'2em'}
       >
         <Box
           sx={{
@@ -45,13 +43,11 @@ export const Pricing = () => {
             width: '40%',
             background: 'white',
             borderRadius: 8,
-            border: '1px solid #439288',
           }}
           alignItems={'center'}
           justifyContent={'between'}
-          gap={'1em'}
-          padding={'2em'}
           textAlign={'center'}
+          className = "my-8 border-teal-400 border-t-2 border-l-2 border-b-2 p-4 rounded-tl-3xl rounded-bl-3xl overflow-hidden w-72"
         >
           <Typography variant={'h5'} fontWeight={'bold'} mb={1}>
             Free
