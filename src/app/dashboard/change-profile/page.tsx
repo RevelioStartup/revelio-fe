@@ -15,7 +15,7 @@ import { Input } from '@/components/elements/Forms/input'
 const ChangeProfile = () => {
   const dispatch = useDispatch()
   const { data: profileData } = useGetProfileQuery()
-  const [updateProfile] = useUpdateProfileMutation()
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation()
   const { control, handleSubmit, reset, setValue } = useForm({
     defaultValues: {
       bio: '',
@@ -63,7 +63,7 @@ const ChangeProfile = () => {
           })
         )
         reset()
-        window.location.href = '/profile'
+        window.location.href = '/dashboard'
       }
     } catch (error) {
       setError('Failed to update profile. Please try again.')
@@ -115,6 +115,7 @@ const ChangeProfile = () => {
           variant="primary"
           type="submit"
           className="w-72 h-14 md:w-[400px] text-xl font-bold mx-auto mt-12"
+          loading={isLoading}
         >
           Update Profile
         </ButtonVariants>

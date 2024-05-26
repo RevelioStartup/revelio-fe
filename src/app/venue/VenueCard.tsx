@@ -52,11 +52,13 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
     contact_phone_number,
   } = venue
 
-  const [deleteVenue] = useDeleteVenueMutation()
+  const [deleteVenue, { isLoading: isDeleteVenueLoading }] =
+    useDeleteVenueMutation()
 
-  const [updateVenue] = useUpdateVenueMutation()
+  const [updateVenue, { isLoading: isUpdateVenueLoading }] =
+    useUpdateVenueMutation()
 
-  const [addPhoto] = useAddPhotoMutation()
+  const [addPhoto, { isLoading: isAddPhotoLoading }] = useAddPhotoMutation()
 
   const [images, setImages] = React.useState<File[]>([])
 
@@ -287,7 +289,16 @@ export const VenueCard = ({ venue, isDetail }: VenueCardProps) => {
               </Box>
             </Box>
             <Box className="flex justify-end">
-              <Button type="submit">Save</Button>
+              <Button
+                type="submit"
+                loading={
+                  isUpdateVenueLoading ||
+                  isAddPhotoLoading ||
+                  isDeleteVenueLoading
+                }
+              >
+                Save
+              </Button>
             </Box>
           </Box>
         )}

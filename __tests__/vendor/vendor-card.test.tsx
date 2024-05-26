@@ -29,13 +29,22 @@ jest.mock('@/redux/api/vendorApi', () => ({
 describe('VendorCard Component', () => {
   beforeEach(() => {
     const mockDeleteVendor = jest.fn().mockResolvedValue({ data: {} })
-    ;(useDeleteVendorMutation as jest.Mock).mockReturnValue([mockDeleteVendor])
+    ;(useDeleteVendorMutation as jest.Mock).mockReturnValue([
+      mockDeleteVendor,
+      { isLoading: false },
+    ])
 
     const mockUpdateVendor = jest.fn().mockResolvedValue({ data: {} })
-    ;(useUpdateVendorMutation as jest.Mock).mockReturnValue([mockUpdateVendor])
+    ;(useUpdateVendorMutation as jest.Mock).mockReturnValue([
+      mockUpdateVendor,
+      { isLoading: false },
+    ])
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([mockAddPhoto])
+    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([
+      mockAddPhoto,
+      { isLoading: false },
+    ])
   })
 
   it('renders vendor details', () => {
@@ -67,6 +76,18 @@ describe('VendorCard Component', () => {
   })
 
   it('calls updateVendor and addPhoto when form is submitted', async () => {
+    const mockUpdateVendor = jest.fn().mockResolvedValue({ data: {} })
+    ;(useUpdateVendorMutation as jest.Mock).mockReturnValue([
+      mockUpdateVendor,
+      { isLoading: false },
+    ])
+
+    const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
+    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([
+      mockAddPhoto,
+      { isLoading: false },
+    ])
+
     const { getByTestId } = render(<VendorCard vendor={mockVendor} />)
 
     fireEvent.click(getByTestId('edit-button'))
@@ -99,6 +120,12 @@ describe('VendorCard Component', () => {
   })
 
   it('shows a warning when a field is empty', async () => {
+    const mockUpdateVendor = jest.fn().mockResolvedValue({ data: {} })
+    ;(useUpdateVendorMutation as jest.Mock).mockReturnValue([
+      mockUpdateVendor,
+      { isLoading: false },
+    ])
+
     const { getByTestId, findByText } = render(
       <VendorCard vendor={mockVendor} />
     )

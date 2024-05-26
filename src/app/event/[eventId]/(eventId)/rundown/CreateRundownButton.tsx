@@ -14,7 +14,7 @@ export const CreateRundownButton = () => {
     useGetLatestSubscriptionQuery()
   const params = useParams()
   const { setRundowns: setContextRundowns } = useRundownContext()
-  const [generateRundownsWithAI, { data, isSuccess }] =
+  const [generateRundownsWithAI, { data, isLoading, isSuccess }] =
     useCreateRundownWithAIMutation()
   const handleGenerateAI = async () => {
     await generateRundownsWithAI({
@@ -27,6 +27,13 @@ export const CreateRundownButton = () => {
       redirect(`${params.eventId}/create-rundown`)
     }
   }, [isSuccess, data])
+
+  if (isLoading)
+    return (
+      <div className="flex flex-col justify-center items-center min-h-[30vh]">
+        <div data-testid="loader" className="loader"></div>
+      </div>
+    )
 
   return (
     <div className="flex flex-col gap-8 px-5 py-3 lg:px-10 lg:py-6">

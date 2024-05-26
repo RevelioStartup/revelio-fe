@@ -38,13 +38,7 @@ export const vendorApi = baseApi.injectEndpoints({
         url: `/vendors/event/${event}/`,
         method: 'GET',
       }),
-      providesTags: (result) =>
-        result
-          ? result.map((vendor) => ({
-              type: 'Vendor',
-              id: vendor.id.toString(),
-            }))
-          : ['Vendor'],
+      providesTags: ['Vendor'],
     }),
     getVendorDetail: builder.query<VendorDetailResponse, VendorDetailRequest>({
       query: ({ id }) => ({
