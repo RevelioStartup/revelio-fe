@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
@@ -13,7 +13,7 @@ jest.mock('@/redux/api/timelineApi', () => ({
 jest.mock('@/components/elements/Timeline/Calendar', () => {
   return {
     __esModule: true,
-    default: jest.fn(() => <div>Mocked DemoApp</div>),
+    default: jest.fn(() => <div data-testId = "loader">Loader</div>),
   }
 })
 
@@ -72,5 +72,17 @@ describe('EventTimeline', () => {
         end: new Date('2022-05-01T10:00:00Z'),
       },
     }
+  })
+
+  it("displays a loader when fetching data", async () => {
+    ;(useGetTimelinesByEventQuery as jest.Mock).mockReturnValue({
+      isLoading: false,
+      isError: false,
+      isFetching: true,
+    })
+
+    const { getByTestId } = render(<EventTimeline id='123' />)
+
+    expect(getByTestId('loader')).toBeInTheDocument()
   })
 })

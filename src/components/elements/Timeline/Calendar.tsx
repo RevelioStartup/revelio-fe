@@ -12,7 +12,11 @@ interface DemoAppProps {
 }
 
 const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
-  const { data: timelines, isLoading, isFetching } = useGetTimelinesByEventQuery({
+  const {
+    data: timelines,
+    isLoading,
+    isFetching,
+  } = useGetTimelinesByEventQuery({
     event_id: eventId,
   })
   const [showModal, setShowModal] = React.useState(false)
