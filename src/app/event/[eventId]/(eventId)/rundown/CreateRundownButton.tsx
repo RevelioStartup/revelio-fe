@@ -5,9 +5,13 @@ import { useCreateRundownWithAIMutation } from '@/redux/api/rundownApi'
 import Link from 'next/link'
 import { redirect, useParams, usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { LatestSubscriptionResponse } from '@/types/subscription'
+import { useGetLatestSubscriptionQuery } from '@/redux/api/subscriptionApi'
 
 export const CreateRundownButton = () => {
   const pathname = usePathname()
+  const { data: latest_subscription = {} as LatestSubscriptionResponse } =
+    useGetLatestSubscriptionQuery()
   const params = useParams()
   const { setRundowns: setContextRundowns } = useRundownContext()
   const [generateRundownsWithAI, { data, isSuccess }] =
@@ -42,9 +46,22 @@ export const CreateRundownButton = () => {
         </Button>
       </Link>
       <p className="font-bold text-teal-400 text-center">or</p>
-      <Button data-testid="button-add-rundown-ai" onClick={handleGenerateAI}>
-        Generate with AI
-      </Button>
+      {latest_subscription.is_active ? (
+        <Button data-testid="button-add-rundown-ai" onClick={handleGenerateAI}>
+          Generate with AI
+        </Button>
+      ) : (
+        <Button
+          disabled
+          data-testid="free-rundown-ai-button"
+          style={{ backgroundColor: 'gray', color: 'white' }}
+        >
+          <p className="whitespace-nowrap w-full flex items-center">
+            <i className="i-ph-lock-key-light text-white size-6 mr-2" />
+            <span>Generate with AI</span>
+          </p>
+        </Button>
+      )}
     </div>
   )
 }
