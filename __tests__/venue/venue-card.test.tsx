@@ -30,13 +30,22 @@ jest.mock('@/redux/api/venueApi', () => ({
 describe('VenueCard Component', () => {
   beforeEach(() => {
     const mockDeleteVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useDeleteVenueMutation as jest.Mock).mockReturnValue([mockDeleteVenue, { isLoading: false }])
+    ;(useDeleteVenueMutation as jest.Mock).mockReturnValue([
+      mockDeleteVenue,
+      { isLoading: false },
+    ])
 
     const mockUpdateVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useUpdateVenueMutation as jest.Mock).mockReturnValue([mockUpdateVenue, { isLoading: false }])
+    ;(useUpdateVenueMutation as jest.Mock).mockReturnValue([
+      mockUpdateVenue,
+      { isLoading: false },
+    ])
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto, { isLoading: false }])
+    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([
+      mockAddPhoto,
+      { isLoading: false },
+    ])
   })
 
   it('renders venue details', () => {

@@ -20,15 +20,24 @@ describe('Test for VendorCreateForm', () => {
     const mockCreateVendor = jest
       .fn()
       .mockResolvedValue({ data: {}, unwrap: jest.fn() })
-    ;(useCreateVendorMutation as jest.Mock).mockReturnValue([mockCreateVendor, { isLoading: false }])
+    ;(useCreateVendorMutation as jest.Mock).mockReturnValue([
+      mockCreateVendor,
+      { isLoading: false },
+    ])
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([mockAddPhoto, { isLoading: false }])
+    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([
+      mockAddPhoto,
+      { isLoading: false },
+    ])
   })
 
   it('renders VendorCreateForm', () => {
     const createVendor = jest.fn().mockResolvedValue({ data: {} })
-    ;(useCreateVendorMutation as jest.Mock).mockReturnValue([createVendor, {isLoading: false }])
+    ;(useCreateVendorMutation as jest.Mock).mockReturnValue([
+      createVendor,
+      { isLoading: false },
+    ])
 
     const { getByTestId } = render(
       <Provider store={store}>
@@ -46,11 +55,14 @@ describe('Test for VendorCreateForm', () => {
     })
     ;(useCreateVendorMutation as jest.Mock).mockReturnValue([
       mockCreateVendor,
-      {isLoading: false },
+      { isLoading: false },
     ])
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([mockAddPhoto, {isLoading: false }])
+    ;(useAddPhotoVendorMutation as jest.Mock).mockReturnValue([
+      mockAddPhoto,
+      { isLoading: false },
+    ])
     const { getByTestId } = render(
       <Provider store={store}>
         <VendorCreateForm eventId={'cfa26386-c1ed-465e-a035-36478db57d4b'} />
