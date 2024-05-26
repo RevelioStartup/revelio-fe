@@ -1,8 +1,10 @@
 'use client'
+import { useRundownContext } from '@/components/contexts/RundownContext'
 import { Button } from '@/components/elements/Button'
+import { useCreateRundownWithAIMutation } from '@/redux/api/rundownApi'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React from 'react'
+import { redirect, useParams, usePathname } from 'next/navigation'
+import React, { useEffect } from 'react'
 import { LatestSubscriptionResponse } from '@/types/subscription'
 import { useGetLatestSubscriptionQuery } from '@/redux/api/subscriptionApi'
 
@@ -10,6 +12,21 @@ export const CreateRundownButton = () => {
   const pathname = usePathname()
   const { data: latest_subscription = {} as LatestSubscriptionResponse } =
     useGetLatestSubscriptionQuery()
+  const params = useParams()
+  const { setRundowns: setContextRundowns } = useRundownContext()
+  const [generateRundownsWithAI, { data, isSuccess }] =
+    useCreateRundownWithAIMutation()
+  const handleGenerateAI = async () => {
+    await generateRundownsWithAI({
+      event_id: params.eventId as string,
+    })
+  }
+  useEffect(() => {
+    if (isSuccess && data) {
+      setContextRundowns(data.rundown_data)
+      redirect(`${params.eventId}/create-rundown`)
+    }
+  }, [isSuccess, data])
 
   return (
     <div className="flex flex-col gap-8 px-5 py-3 lg:px-10 lg:py-6">
@@ -30,7 +47,7 @@ export const CreateRundownButton = () => {
       </Link>
       <p className="font-bold text-teal-400 text-center">or</p>
       {latest_subscription.is_active ? (
-        <Button data-testid="premium-rundown-ai-button">
+        <Button data-testid="button-add-rundown-ai" onClick={handleGenerateAI}>
           Generate with AI
         </Button>
       ) : (

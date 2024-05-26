@@ -32,6 +32,6 @@ describe('Create Rundown Button Component', () => {
       </ReduxProvider>
     )
 
-    expect(screen.getByTestId('premium-rundown-ai-button')).toBeInTheDocument()
+    expect(screen.getByTestId('button-add-rundown-ai')).toBeInTheDocument()
   })
 })

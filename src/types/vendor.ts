@@ -20,7 +20,16 @@ export type VendorListResponse = Vendor[]
 export type VendorListRequest = string
 export type CreateVendorRequest = Omit<Vendor, 'id'>
 export type CreateVendorResponse = Vendor
-export type UpdateVendorRequest = Vendor
+export type UpdateVendorRequest = {
+  id: number
+  name: string
+  address: string
+  price: number
+  status: string
+  contact_name: string
+  contact_phone_number: string
+  event: string
+}
 export type VendorDetailRequest = {
   id: number
 }

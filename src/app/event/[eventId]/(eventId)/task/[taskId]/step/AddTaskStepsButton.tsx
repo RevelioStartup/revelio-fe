@@ -22,7 +22,7 @@ export const AddTaskStepsButton = () => {
   const { data: latest_subscription = {} as LatestSubscriptionResponse } =
     useGetLatestSubscriptionQuery()
   useEffect(() => {
-    if (isSuccess && !!data) {
+    if (isSuccess && data) {
       setContextSteps(data.steps)
       redirect(`${params.taskId}/create-step`)
     }

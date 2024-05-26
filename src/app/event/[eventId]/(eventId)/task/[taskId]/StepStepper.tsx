@@ -21,6 +21,7 @@ import ConfirmDeleteDialog from './ConfirmDeleteDialog'
 import { CreateTimelineDialog } from './CreateTimelineDialog'
 import dayjs from '@/configs/dayjs.config'
 import { twMerge } from 'tailwind-merge'
+import { formatDateTime } from '@/utils/formatDateTime'
 
 export type StepUpdateRequest = {
   name: string
@@ -191,14 +192,12 @@ export default function StepStepper({ taskId, task }: Props) {
             <StepContent>
               <div className="text-sm font-bold flex flex-row items-center gap-2 text-gray-700">
                 <i className="i-ph-calendar-blank size-4 text-gray-700" />
-                <p>
-                  {dayjs(step.start_datetime).format('ddd, D MMM YY HH:mm')}
-                </p>
+                <p>{formatDateTime(step.start_datetime)}</p>
                 <p>-</p>
                 <p>
                   {dayjs(step.start_datetime).isSame(step.end_datetime, 'day')
-                    ? dayjs(step.end_datetime).format('HH:mm')
-                    : dayjs(step.end_datetime).format('ddd, D MMM YY HH:mm')}
+                    ? formatDateTime(step.end_datetime, 'HH:mm')
+                    : formatDateTime(step.end_datetime)}
                 </p>
               </div>
               <Typography>{step.description}</Typography>

@@ -56,7 +56,7 @@ export const TextArea: FC<TextAreaType> = ({
                 {...props}
               />
             </div>
-            {!!error && (
+            {Boolean(error) && (
               <p
                 className={twMerge(
                   'flex flex-row items-center gap-x-1 font-normal text-red-400 text-xs pl-2 mb-1'

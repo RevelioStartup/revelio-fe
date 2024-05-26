@@ -68,8 +68,8 @@ export const CreateTimelineDialog: React.FC<CreateTimelineDialogProps> = ({
       return
     }
     data.task_step = taskStepId
-    data.start_datetime = startDate.format('YYYY-MM-DD HH:MM')
-    data.end_datetime = endDate.format('YYYY-MM-DD HH:MM')
+    data.start_datetime = startDate.format('YYYY-MM-DD HH:mmZ')
+    data.end_datetime = endDate.format('YYYY-MM-DD HH:mmZ')
     createTimeline(data)
   }
   useEffect(() => {
@@ -78,9 +78,9 @@ export const CreateTimelineDialog: React.FC<CreateTimelineDialogProps> = ({
       onClose()
     }
     if (startDate)
-      setValue('start_datetime', startDate.format('YYYY-MM-DD HH:MM'))
+      setValue('start_datetime', startDate.format('YYYY-MM-DD HH:mmZ'))
 
-    if (endDate) setValue('end_datetime', endDate.format('YYYY-MM-DD HH:MM'))
+    if (endDate) setValue('end_datetime', endDate.format('YYYY-MM-DD HH:mmZ'))
   }, [isSuccess, startDate, endDate])
 
   return (

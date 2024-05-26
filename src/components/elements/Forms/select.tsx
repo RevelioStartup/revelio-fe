@@ -52,7 +52,7 @@ export const Select: FC<SelectType> = ({
               ))}
             </select>
           </div>
-          {!!errors[name] && (
+          {Boolean(errors[name]) && (
             <p className="flex flex-row items-center gap-x-2 font-normal text-red-400 text-sm pt-1">
               <i className="i-ph-info size-4 text-red-400" />
               {errors[name]!['type'] == 'required'
