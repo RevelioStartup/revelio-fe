@@ -9,14 +9,16 @@ import { CreateVenueRequest } from '@/types/venue'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Input } from '@/components/elements/Forms/input'
 import { Select } from '@/components/elements/Forms/select'
+import { Button } from '@/components/elements/Button'
 
 interface VenueCreateFormProps {
   eventId: string
 }
 
 export const VenueCreateForm = ({ eventId }: VenueCreateFormProps) => {
-  const [createVenue] = useCreateVenueMutation()
-  const [addPhoto] = useAddPhotoMutation()
+  const [createVenue, { isLoading: isCreateVenueLoading }] =
+    useCreateVenueMutation()
+  const [addPhoto, { isLoading: isAddPhotoLoading }] = useAddPhotoMutation()
 
   const [images, setImages] = React.useState<File[]>([])
 
@@ -119,6 +121,7 @@ export const VenueCreateForm = ({ eventId }: VenueCreateFormProps) => {
             />
             <h1 className="text-xl font-bold m-2 mt-20">Status</h1>
             <Select
+              required
               name="status"
               data-testid="input-status"
               className="text-sm bg-white text-gray-900 rounded-2xl my-2 p-3.5 w-full"
@@ -133,12 +136,13 @@ export const VenueCreateForm = ({ eventId }: VenueCreateFormProps) => {
               placeholder="Status"
             />
             <Box className="flex justify-end w-full">
-              <button
+              <Button
                 type="submit"
                 className="text-sm bg-teal-200 text-gray-900 rounded-2xl mt-8 p-3"
+                loading={isAddPhotoLoading || isCreateVenueLoading}
               >
                 Add Venue
-              </button>
+              </Button>
             </Box>
           </Box>
         </Box>
