@@ -74,9 +74,7 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
                           {formatDateTime(checkout_time)}
                         </td>
 
-                        <td className="p-2 border-2 border-teal-600">
-                          {name}
-                        </td>
+                        <td className="p-2 border-2 border-teal-600">{name}</td>
                         <td className="p-2 border-2 border-teal-600">
                           {formatRupiah(price)}
                         </td>

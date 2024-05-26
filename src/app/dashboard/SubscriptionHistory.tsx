@@ -24,7 +24,7 @@ export const SubscriptionHistory: React.FC<{
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
             borderRadius: '4px',
             mb: '1rem',
-            bgcolor: history.is_active ? '#0D9488' : '#FFFFFF',
+            bgcolor: history.is_active ? '#0D9488' : '#d3d3d3',
           }}
           className="mx-auto w-11/12"
         >

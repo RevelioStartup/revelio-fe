@@ -13,7 +13,7 @@ jest.mock('@/redux/api/timelineApi', () => ({
 jest.mock('@/components/elements/Timeline/Calendar', () => {
   return {
     __esModule: true,
-    default: jest.fn(() => <div data-testId = "loader">Loader</div>),
+    default: jest.fn(() => <div data-testId="loader">Loader</div>),
   }
 })
 
@@ -74,14 +74,14 @@ describe('EventTimeline', () => {
     }
   })
 
-  it("displays a loader when fetching data", async () => {
+  it('displays a loader when fetching data', async () => {
     ;(useGetTimelinesByEventQuery as jest.Mock).mockReturnValue({
       isLoading: false,
       isError: false,
       isFetching: true,
     })
 
-    const { getByTestId } = render(<EventTimeline id='123' />)
+    const { getByTestId } = render(<EventTimeline id="123" />)
 
     expect(getByTestId('loader')).toBeInTheDocument()
   })
