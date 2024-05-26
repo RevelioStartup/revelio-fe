@@ -15,17 +15,15 @@ jest.mock('@/redux/api/venueApi', () => ({
 
 describe('Test for VenueCreateForm', () => {
   beforeEach(() => {
-    const mockCreateVenue = jest
-      .fn()
-      .mockResolvedValue({ data: {}, unwrap: jest.fn() })
-    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([mockCreateVenue])
+    const mockCreateVenue = jest.fn().mockResolvedValue({ data: {}, unwrap: jest.fn() })
+    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([mockCreateVenue, { isLoading: false }])
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto])
+    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto, { isLoading: false }])
   })
 
   it('renders VenueCreateForm', () => {
     const createVenue = jest.fn().mockResolvedValue({ data: {} })
-    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([createVenue])
+    ;(useCreateVenueMutation as jest.Mock).mockReturnValue([createVenue, { isLoading: false }])
 
     const { getByTestId } = render(
       <VenueCreateForm eventId={'cfa26386-c1ed-465e-a035-36478db57d4b'} />
@@ -35,17 +33,19 @@ describe('Test for VenueCreateForm', () => {
 
   it('submits form and adds venue with photos', async () => {
     const mockCreateVenue = jest.fn().mockResolvedValue({
-      data: {
-        id: 1,
-      },
+      data: { id: 1 },
     })
     ;(useCreateVenueMutation as jest.Mock).mockReturnValue([
       mockCreateVenue,
-      {},
+      { isLoading: false },
     ])
 
     const mockAddPhoto = jest.fn().mockResolvedValue({ data: {} })
-    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([mockAddPhoto])
+    ;(useAddPhotoMutation as jest.Mock).mockReturnValue([
+      mockAddPhoto,
+      { isLoading: false },
+    ])
+
     const { getByTestId } = render(
       <VenueCreateForm eventId={'cfa26386-c1ed-465e-a035-36478db57d4b'} />
     )
@@ -101,13 +101,11 @@ describe('Test for VenueCreateForm', () => {
 
   it('shows a warning when a field is empty', async () => {
     const mockCreateVenue = jest.fn().mockResolvedValue({
-      data: {
-        id: 1,
-      },
+      data: { id: 1 },
     })
     ;(useCreateVenueMutation as jest.Mock).mockReturnValue([
       mockCreateVenue,
-      {},
+      { isLoading: false },
     ])
 
     const { getByTestId, findByText } = render(
