@@ -10,7 +10,7 @@ export const AddTaskStepsButton = () => {
   const pathname = usePathname()
   const params = useParams()
   const { setSteps: setContextSteps } = useTaskContext()
-  const [generateStepsWithAI, { data, isSuccess }] =
+  const [generateStepsWithAI, { data, isLoading, isSuccess }] =
     useCreateTaskStepWithAIMutation()
   const handleGenerateAI = async () => {
     await generateStepsWithAI({
@@ -23,6 +23,13 @@ export const AddTaskStepsButton = () => {
       redirect(`${params.taskId}/create-step`)
     }
   }, [isSuccess, data])
+
+  if (isLoading)
+    return (
+      <div className="flex flex-col justify-center items-center min-h-[30vh]">
+        <div data-testid="loader" className="loader"></div>
+      </div>
+    )
 
   return (
     <div className="flex flex-col gap-8 px-5 py-3 lg:px-10 lg:py-6 border border-teal-600 rounded-xl">
