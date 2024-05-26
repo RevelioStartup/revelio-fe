@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: 'Upgrade your plan to access more features',
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <>{children}</>
 }
