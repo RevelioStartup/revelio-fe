@@ -41,11 +41,11 @@ export const timelineApi = baseApi.injectEndpoints({
     }),
     deleteTimeline: builder.mutation<void, { id: string }>({
       query: ({ id }) => ({
-        url: `/timelines/${id}/delete/`,  
+        url: `/timelines/${id}/delete/`,
         method: 'DELETE',
       }),
       invalidatesTags: (_, __, arg) => [{ type: 'Timeline', id: arg.id }],
-    }),    
+    }),
   }),
 })
 

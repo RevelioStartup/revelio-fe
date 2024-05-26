@@ -1,7 +1,9 @@
 'use client'
 import { useTaskContext } from '@/components/contexts/TaskContext'
 import { Button } from '@/components/elements/Button'
+import { useGetLatestSubscriptionQuery } from '@/redux/api/subscriptionApi'
 import { useCreateTaskStepWithAIMutation } from '@/redux/api/taskStepApi'
+import { LatestSubscriptionResponse } from '@/types/subscription'
 import Link from 'next/link'
 import { redirect, useParams, usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
@@ -17,6 +19,8 @@ export const AddTaskStepsButton = () => {
       task_id: parseInt(params.taskId as string),
     })
   }
+  const { data: latest_subscription = {} as LatestSubscriptionResponse } =
+    useGetLatestSubscriptionQuery()
   useEffect(() => {
     if (isSuccess && !!data) {
       setContextSteps(data.steps)
@@ -36,7 +40,22 @@ export const AddTaskStepsButton = () => {
         </Button>
       </Link>
       <p className="font-bold text-teal-400 text-center">or</p>
-      <Button onClick={handleGenerateAI}>Generate with AI</Button>
+      {latest_subscription.is_active ? (
+        <Button onClick={handleGenerateAI} data-testid="premium-task-ai-button">
+          Generate with AI
+        </Button>
+      ) : (
+        <Button
+          disabled
+          data-testid="free-task-ai-button"
+          style={{ backgroundColor: 'gray', color: 'white' }}
+        >
+          <p className="whitespace-nowrap w-full flex">
+            <i className="i-ph-lock-key-light text-white size-6 mr-2" />
+            Generate with AI
+          </p>
+        </Button>
+      )}
     </div>
   )
 }

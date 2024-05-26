@@ -7,9 +7,9 @@ import { redirect, useParams, usePathname } from 'next/navigation'
 import { CreateRundownButton } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownButton'
 
 jest.mock('next/navigation', () => ({
-    redirect: jest.fn(),
-    useParams: jest.fn(),
-    usePathname: jest.fn(),
+  redirect: jest.fn(),
+  useParams: jest.fn(),
+  usePathname: jest.fn(),
 }))
 jest.mock('@/redux/api/subscriptionApi', () => ({
   useGetLatestSubscriptionQuery: jest.fn((id) => ({
@@ -33,6 +33,5 @@ describe('Create Rundown Button Component', () => {
     )
 
     expect(screen.getByTestId('free-rundown-ai-button')).toBeInTheDocument()
-
   })
 })

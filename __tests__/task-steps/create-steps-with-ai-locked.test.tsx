@@ -69,7 +69,6 @@ describe('AddTaskStepsButton', () => {
   })
 
   test('does not redirect and handles error when generateStepsWithAI fails', async () => {
-
     render(
       <Provider store={store}>
         <TaskContextProvider>
