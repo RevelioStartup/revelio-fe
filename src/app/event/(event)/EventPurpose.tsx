@@ -157,8 +157,8 @@ export const EventPurpose: React.FC = () => {
         />
         {isLoading ? (
           <div className="flex flex-col justify-center items-center min-h-[90vh]">
-           <div data-testid="loader" className="loader"></div>
-         </div>
+            <div data-testid="loader" className="loader"></div>
+          </div>
         ) : (
           <Button
             type="submit"

@@ -16,7 +16,7 @@ export default function LoginPageTitle() {
       justifyContent={'center'}
       padding={{ xs: '4em 4em', lg: '4em 4em' }}
     >
-      <Box sx={{ flex: 1, textAlign: 'left' }} data-testid="login-title" >
+      <Box sx={{ flex: 1, textAlign: 'left' }} data-testid="login-title">
         <Typography variant="h3" fontWeight={'bold'}>
           Log In to Plan Your Event
         </Typography>

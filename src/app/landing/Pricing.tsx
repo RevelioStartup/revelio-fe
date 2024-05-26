@@ -42,12 +42,11 @@ export const Pricing = () => {
             flexDirection: 'column',
             width: '40%',
             background: 'white',
-            borderRadius: 8,
           }}
           alignItems={'center'}
           justifyContent={'between'}
           textAlign={'center'}
-          className = "my-8 border-teal-400 border-t-2 border-l-2 border-b-2 p-4 rounded-tl-3xl rounded-bl-3xl overflow-hidden w-72"
+          className="my-8 border-teal-400 border-t-2 border-l-2 border-b-2 p-4 rounded-tl-3xl rounded-bl-3xl  overflow-hidden w-72"
         >
           <Typography variant={'h5'} fontWeight={'bold'} mb={1}>
             Free

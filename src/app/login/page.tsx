@@ -18,7 +18,7 @@ export default function LoginPage() {
       justifyContent={'center'}
       padding={{ xs: '4em 4em', lg: '4em 4em' }}
     >
-      <LoginPageTitle data-testid="login-title"  />
+      <LoginPageTitle data-testid="login-title" />
       <LoginForm data-testid="login-form" />
     </Box>
   )
