@@ -237,7 +237,7 @@ export default function Profile() {
                 </Box>
               ))
             ) : (
-              <p className='text-center w-full'>No events found.</p>
+              <p className="text-center w-full">No events found.</p>
             )}
           </Box>
         ) : (

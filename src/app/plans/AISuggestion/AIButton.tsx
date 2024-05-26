@@ -32,7 +32,7 @@ export const AIButton = () => {
           >
             <p className="whitespace-nowrap w-full flex">
               <i className="i-ph-lock-key-light text-white size-6 mr-2" />
-              Ask AI
+              <span>Ask AI</span>
             </p>
           </Button>
         )}

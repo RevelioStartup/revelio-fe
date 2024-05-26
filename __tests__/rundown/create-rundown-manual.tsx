@@ -1,10 +1,8 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
-
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-
 import {
   useCreateRundownManuallyMutation,
   useCreateRundownWithAIMutation,
@@ -13,7 +11,6 @@ import {
   useGetEventRundownQuery,
 } from '@/redux/api/rundownApi'
 import { toast } from 'react-hot-toast'
-
 import { redirect, useParams, usePathname } from 'next/navigation'
 import { CreateRundownManualForm } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownManualForm'
 import CreateRundownPage from '@/app/event/[eventId]/(eventId)/create-rundown/page'

@@ -355,7 +355,7 @@ describe('Test for event page', () => {
 
     fireEvent.submit(getByTestId('purpose-form'))
   })
-  
+
   it('test if createEvetData is null', async () => {
     const myInitialState = dayjs('2022-12-12')
 

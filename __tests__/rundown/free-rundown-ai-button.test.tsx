@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from '@/redux/store'
-import { redirect, useParams, usePathname } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { CreateRundownButton } from '@/app/event/[eventId]/(eventId)/rundown/CreateRundownButton'
 
 jest.mock('next/navigation', () => ({

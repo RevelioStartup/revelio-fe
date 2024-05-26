@@ -56,9 +56,9 @@ export const CreateRundownButton = () => {
           data-testid="free-rundown-ai-button"
           style={{ backgroundColor: 'gray', color: 'white' }}
         >
-          <p className="whitespace-nowrap w-full flex">
+          <p className="whitespace-nowrap w-full flex items-center">
             <i className="i-ph-lock-key-light text-white size-6 mr-2" />
-            Generate with AI
+            <span>Generate with AI</span>
           </p>
         </Button>
       )}
