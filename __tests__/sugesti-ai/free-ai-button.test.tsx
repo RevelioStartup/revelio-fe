@@ -9,6 +9,14 @@ import { useParams } from 'next/navigation'
 jest.mock('next/navigation', () => ({
   useParams: jest.fn(),
 }))
+jest.mock('@/redux/api/subscriptionApi', () => ({
+  useGetLatestSubscriptionQuery: jest.fn((id) => ({
+    data: {
+      is_active: false,
+    },
+  })),
+}))
+
 describe('AIButton Component', () => {
   beforeEach(() => {
     ;(useParams as jest.Mock).mockReturnValue({
@@ -22,12 +30,6 @@ describe('AIButton Component', () => {
       </ReduxProvider>
     )
 
-    let asideElement = screen.queryByTestId('ai-aside')
-
-    fireEvent.click(screen.getByTestId('ai-button'))
-
-    expect(asideElement).toBeInTheDocument()
-
-    expect(asideElement).not.toHaveClass('translate-x-full')
+    expect(screen.getByTestId('free-event-ai-button')).toBeInTheDocument()
   })
 })

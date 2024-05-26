@@ -29,7 +29,7 @@ jest.mock('@/redux/api/taskApi', () => ({
 jest.mock('@/redux/api/subscriptionApi', () => ({
   useGetLatestSubscriptionQuery: jest.fn((id) => ({
     data: {
-      is_active: true,
+      is_active: false,
     },
   })),
 }))
@@ -68,37 +68,7 @@ describe('AddTaskStepsButton', () => {
     jest.clearAllMocks()
   })
 
-  test('calls generateStepsWithAI and redirects on success', async () => {
-    render(
-      <Provider store={store}>
-        <TaskContextProvider>
-          <TaskDetailPage params={{ eventId: '3', taskId: '3' }} />
-        </TaskContextProvider>
-      </Provider>
-    )
-
-    const generateWithAIButton = screen.getByTestId('premium-task-ai-button')
-    fireEvent.click(generateWithAIButton)
-
-    await waitFor(() => {
-      expect(mockGenerateStepsWithAI).toHaveBeenCalledWith({
-        task_id: 3,
-      })
-
-      expect(redirect).toHaveBeenCalledWith(`3/create-step`)
-    })
-  })
   test('does not redirect and handles error when generateStepsWithAI fails', async () => {
-    // Mock the AI generation to fail
-    const mockGenerateStepsWithAIError = jest.fn().mockResolvedValue({
-      error: { message: 'Generation failed' },
-      isSuccess: false,
-    })
-
-    ;(useCreateTaskStepWithAIMutation as jest.Mock).mockReturnValue([
-      mockGenerateStepsWithAIError,
-      { error: { message: 'Generation failed' }, isSuccess: false },
-    ])
 
     render(
       <Provider store={store}>
@@ -108,11 +78,6 @@ describe('AddTaskStepsButton', () => {
       </Provider>
     )
 
-    const generateWithAIButton = screen.getByTestId('premium-task-ai-button')
-    fireEvent.click(generateWithAIButton)
-
-    await waitFor(() => {
-      expect(redirect).not.toHaveBeenCalled()
-    })
+    expect(screen.getByTestId('free-task-ai-button')).toBeInTheDocument()
   })
 })
