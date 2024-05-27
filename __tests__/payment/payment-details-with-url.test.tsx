@@ -23,6 +23,7 @@ jest.mock('@/redux/api/paymentApi', () => ({
         transaction_detail: mockTransaction,
       },
       isLoading: false,
+      error: null,
     },
   ]),
 }))
@@ -51,6 +52,6 @@ describe('Payment Detail Page With Midtrans Url', () => {
 
     fireEvent.click(getByText('Continue Transaction'))
 
-    expect(window.open).toHaveBeenCalledWith('https://example.com/midtrans')
+    expect(window.open).toHaveBeenCalledWith(mockTransaction.midtrans_url)
   })
 })

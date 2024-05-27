@@ -15,12 +15,12 @@ export const PaymentError = ({ status }: PaymentDetailI) => {
           <p>
             Transaction status:{' '}
             <span className="font-bold text-rose-700">
-              {status.toUpperCase()}
+              {(status ?? '').toUpperCase()}
             </span>
           </p>
         )}
         <i className="i-ph-x-circle-duotone size-20 text-rose-400 aspect-square" />
-        <Link href={'/profile?tab=history'}>
+        <Link href={'/dashboard?tab=history'}>
           <Button variant={'ghost'}>See Transaction History</Button>
         </Link>
       </div>
