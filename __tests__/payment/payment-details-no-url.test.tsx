@@ -22,6 +22,7 @@ jest.mock('@/redux/api/paymentApi', () => ({
         },
       },
       isLoading: false,
+      error: null,
     },
   ]),
 }))

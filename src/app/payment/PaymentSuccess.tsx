@@ -18,7 +18,7 @@ export const PaymentSuccess = ({ packageName }: PaymentSuccessI) => {
           Enjoy the <span className="font-bold">{packageName}</span> Package
         </p>
         <i className="i-ph-check-circle-duotone size-20 text-emerald-400 aspect-square" />
-        <Link href={'/profile?tab=history'}>
+        <Link href={'/dashboard?tab=history'}>
           <Button>See Transaction History</Button>
         </Link>
       </div>
