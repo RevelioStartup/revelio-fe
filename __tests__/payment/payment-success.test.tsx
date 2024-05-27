@@ -53,6 +53,7 @@ describe('PaymentSuccess Component', () => {
           },
         },
         isLoading: false,
+        error: null,
       },
     ])
 
@@ -64,7 +65,7 @@ describe('PaymentSuccess Component', () => {
       const button = getByRole('button', { name: 'See Transaction History' })
       expect(button.closest('a')).toHaveAttribute(
         'href',
-        '/profile?tab=history'
+        '/dashboard?tab=history'
       )
     })
   })

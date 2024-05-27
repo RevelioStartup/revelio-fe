@@ -35,13 +35,7 @@ export const venueApi = baseApi.injectEndpoints({
         url: `/venues/event/${event}/`,
         method: 'GET',
       }),
-      providesTags: (result) =>
-        result
-          ? result.map((venue) => ({
-              type: 'Venue',
-              id: venue.id.toString(),
-            }))
-          : ['Venue'],
+      providesTags: ['Venue'],
     }),
     getVenueDetail: builder.query<VenueDetailResponse, VenueDetailRequest>({
       query: ({ id }) => ({

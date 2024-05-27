@@ -16,8 +16,10 @@ interface VendorCreateFormProps {
 }
 
 export const VendorCreateForm = ({ eventId }: VendorCreateFormProps) => {
-  const [createVendor] = useCreateVendorMutation()
-  const [addPhoto] = useAddPhotoVendorMutation()
+  const [createVendor, { isLoading: isCreateVendorLoading }] =
+    useCreateVendorMutation()
+  const [addPhoto, { isLoading: isAddPhotoLoading }] =
+    useAddPhotoVendorMutation()
 
   const [images, setImages] = React.useState<File[]>([])
 
@@ -118,6 +120,7 @@ export const VendorCreateForm = ({ eventId }: VendorCreateFormProps) => {
             />
             <h1 className="text-xl font-bold m-2 mt-20">Status</h1>
             <Select
+              required
               name="status"
               data-testid="input-status"
               className="text-sm bg-white text-gray-900 rounded-2xl my-2 p-3.5 w-full"
@@ -132,7 +135,12 @@ export const VendorCreateForm = ({ eventId }: VendorCreateFormProps) => {
               placeholder="Status"
             />
             <Box className="flex justify-end w-full">
-              <Button type="submit">Add Vendor</Button>
+              <Button
+                type="submit"
+                loading={isCreateVendorLoading || isAddPhotoLoading}
+              >
+                Add Vendor
+              </Button>
             </Box>
           </Box>
         </Box>

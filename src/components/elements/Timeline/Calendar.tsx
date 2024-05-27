@@ -12,7 +12,11 @@ interface DemoAppProps {
 }
 
 const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
-  const { data: timelines, isLoading } = useGetTimelinesByEventQuery({
+  const {
+    data: timelines,
+    isLoading,
+    isFetching,
+  } = useGetTimelinesByEventQuery({
     event_id: eventId,
   })
   const [showModal, setShowModal] = React.useState(false)
@@ -40,18 +44,7 @@ const DemoApp: React.FC<DemoAppProps> = ({ eventId }) => {
     },
   }))
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-  }
-
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <div className="flex flex-col justify-center items-center min-h-[90vh]">
         <div data-testid="loader" className="loader"></div>

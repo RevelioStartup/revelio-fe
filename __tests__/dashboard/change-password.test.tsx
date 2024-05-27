@@ -7,7 +7,7 @@ import {
   within,
 } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import ChangePassword from '@/app/profile/change-password/page'
+import ChangePassword from '@/app/dashboard/change-password/page'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import {

@@ -315,6 +315,47 @@ describe('Test for event page', () => {
     fireEvent.submit(getByTestId('purpose-form'))
   })
 
+  it('test loading', async () => {
+    const mockUseCreateEventMutation = useCreateEventMutation as jest.Mock
+
+    const mockCreateEvent = jest.fn()
+    const mockData = null
+    const mockIsLoading = true
+
+    const unwrapMock = jest.fn()
+    const resolvedValue = { result: 'success', unwrap: unwrapMock }
+    mockCreateEvent.mockResolvedValue(resolvedValue)
+
+    mockUseCreateEventMutation.mockReturnValue([
+      mockCreateEvent,
+      { isLoading: mockIsLoading, data: mockData },
+    ])
+
+    const mockUseAppSelector = useAppSelector as jest.Mock
+    mockUseAppSelector.mockReturnValue({
+      name: 'Event Name',
+      date: '2025-12-12',
+      budget: 123000,
+    })
+
+    const myInitialState: string[] = []
+
+    React.useState = jest.fn().mockReturnValue([myInitialState, jest.fn()])
+
+    const mockUseEventContext = useEventContext as jest.Mock
+    mockUseEventContext.mockReturnValue({
+      page: 'purpose',
+      open: false,
+      setOpen: jest.fn(),
+      handleClose: jest.fn(),
+      setEventPage: jest.fn(),
+    })
+
+    const { getByTestId } = render(<EventPage />)
+
+    fireEvent.submit(getByTestId('purpose-form'))
+  })
+
   it('test if createEvetData is null', async () => {
     const myInitialState = dayjs('2022-12-12')
 

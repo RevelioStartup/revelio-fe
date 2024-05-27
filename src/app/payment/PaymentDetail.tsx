@@ -1,9 +1,12 @@
 'use client'
 import { Button } from '@/components/elements/Button'
 import { useLazyGetTransactionQuery } from '@/redux/api/paymentApi'
-import { transactionErrorStatuses } from '@/types/payment'
+import {
+  MidtransErrorResponse,
+  transactionErrorStatuses,
+} from '@/types/payment'
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PaymentSuccess } from './PaymentSuccess'
 import { PaymentError } from './PaymentError'
 import Link from 'next/link'
@@ -12,32 +15,60 @@ export const PaymentDetail = () => {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order_id')
   const status = searchParams.get('transaction_status')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
-  const [getTransaction, { data, isLoading }] = useLazyGetTransactionQuery()
+  const [getTransaction, { data, isLoading, error }] =
+    useLazyGetTransactionQuery()
   useEffect(() => {
     if (orderId) {
       getTransaction({ order_id: orderId })
     }
   }, [orderId])
+  const test_stat = null
 
-  if (status == 'settlement' || status == 'capture')
+  useEffect(() => {
+    if (!!error && 'data' in error) {
+      // Adjusted regex to correctly extract JSON surrounded by backticks
+      const regex = /API response: `({.*})`/
+      const match = (error.data as MidtransErrorResponse).error.match(regex)
+      if (match && match[1]) {
+        const jsonPart = match[1]
+        try {
+          const apiResponse = JSON.parse(jsonPart)
+          const statusMessage = apiResponse.status_message
+          setErrorMessage(statusMessage)
+        } catch (parseError) {
+          console.error('Error parsing JSON from error message:', parseError)
+        }
+      } else {
+        console.log('No match found or JSON part missing in the error message.')
+      }
+    }
+  }, [error])
+
+  if ((Boolean(data) && status == 'settlement') || status == 'capture')
     return (
       <PaymentSuccess
         status={status ?? ''}
         packageName={data?.transaction_detail.package.name ?? ''}
       />
     )
-  if (transactionErrorStatuses.includes(status ?? ''))
+  if (Boolean(data) && transactionErrorStatuses.includes(status ?? ''))
     return <PaymentError status={status} />
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center gap-3 h-[90vh]">
       {isLoading ? (
-        <div className="flex flex-col justify-center items-center min-h-[90vh]">
-          <div data-testid="loader" className="loader" />
-        </div>
+        <div data-testid="loader" className="loader" />
+      ) : Boolean(error) ? (
+        <>
+          <p className="text-3xl lg:text-5xl font-bold text-rose-600">
+            Oops... something went wrong
+          </p>
+          <p className="">{errorMessage}</p>
+        </>
       ) : (
         data && (
-          <div className="flex flex-col items-center justify-center gap-3 h-[90vh]">
+          <>
             <p className="text-3xl lg:text-5xl font-bold text-gray-600">
               Transaction in Progress
             </p>
@@ -46,11 +77,17 @@ export const PaymentDetail = () => {
               <p className="font-bold">Package Name</p>
               <p>{data?.transaction_detail.package.name}</p>
               <p className="font-bold">Payment Type</p>
-              <p>{data?.transaction_detail.payment_type?.toUpperCase()}</p>
+              <p>
+                {(data?.transaction_detail.payment_type ?? '').toUpperCase()}
+              </p>
               <p className="font-bold">Merchant</p>
-              <p>{data?.transaction_detail.payment_merchant?.toUpperCase()}</p>
+              <p>
+                {(
+                  data?.transaction_detail.payment_merchant ?? ''
+                ).toUpperCase()}
+              </p>
               <p className="font-bold">Status</p>
-              <p>{data?.transaction_detail.status?.toUpperCase()}</p>
+              <p>{(data?.transaction_detail.status ?? '')?.toUpperCase()}</p>
             </div>
             <Button
               onClick={() => {
@@ -61,12 +98,12 @@ export const PaymentDetail = () => {
             >
               Continue Transaction
             </Button>
-            <Link href={'/payment?tab=history'}>
-              <Button>See Transaction History</Button>
-            </Link>
-          </div>
+          </>
         )
       )}
+      <Link href={'/dashboard?tab=history'}>
+        <Button>See Transaction History</Button>
+      </Link>
     </div>
   )
 }

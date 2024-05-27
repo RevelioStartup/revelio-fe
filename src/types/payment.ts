@@ -37,3 +37,7 @@ export const transactionErrorStatuses = [
 export type TransactionStatus = TransactionSuccess &
   TransactionPending &
   TransactionError
+
+export type MidtransErrorResponse = {
+  error: string
+}

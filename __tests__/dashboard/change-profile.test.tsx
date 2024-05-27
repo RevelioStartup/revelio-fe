@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import ChangeProfile from '@/app/profile/change-profile/page'
+import ChangeProfile from '@/app/dashboard/change-profile/page'
 import {
   useUpdateProfileMutation,
   useGetProfileQuery,

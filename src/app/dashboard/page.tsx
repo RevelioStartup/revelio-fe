@@ -132,19 +132,19 @@ export default function Profile() {
             justifyContent={'center'}
             padding={{ xs: '2em 2em', lg: '4em 6em' }}
           >
-            <Link href="/profile/change-profile">
+            <Link href="/dashboard/change-profile">
               <Button variant="primary" className="w-72">
                 Change Profile
               </Button>
             </Link>
-            <Link href="/profile/change-password">
+            <Link href="/dashboard/change-password">
               <Button variant="primary" className="w-72">
                 Change Password
               </Button>
             </Link>
             <Button
               variant="ghost"
-              className="w-72"
+              className="w-72 border-red-500 text-red-500"
               data-testid="logout-button"
               onClick={handleOpenPopup}
             >
@@ -237,7 +237,7 @@ export default function Profile() {
                 </Box>
               ))
             ) : (
-              <p>No events found.</p>
+              <p className="text-center w-full">No events found.</p>
             )}
           </Box>
         ) : (

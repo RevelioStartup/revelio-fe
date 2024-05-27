@@ -22,22 +22,22 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
         <div data-testid="loader" className="loader"></div>
       ) : (
         <div className="overflow-x-scroll w-screen md:w-11/12 px-4 lg:px-0">
-          <table className="w-full border-collapse table rounded-lg overflow-hidden border-emerald-500">
+          <table className="w-full border-collapse table rounded-lg overflow-hidden border-teal-600">
             <thead className="table-header-group sticky top-0">
               <tr className="border table-row text-xl">
-                <th className="p-2 border-2 border-emerald-500 text-left table-cell">
+                <th className="p-2 border-2 border-teal-600 text-left table-cell">
                   Checkout Time
                 </th>
-                <th className="p-2 border-2 border-emerald-500 text-left table-cell">
+                <th className="p-2 border-2 border-teal-600 text-left table-cell">
                   Package Plan
                 </th>
-                <th className="p-2 border-2 border-emerald-500 text-left table-cell">
+                <th className="p-2 border-2 border-teal-600 text-left table-cell">
                   Price
                 </th>
-                <th className="p-2 border-2 border-emerald-500 text-left table-cell">
+                <th className="p-2 border-2 border-teal-600 text-left table-cell">
                   Expiry Time
                 </th>
-                <th className="p-2 border-2 border-emerald-500 text-left table-cell">
+                <th className="p-2 border-2 border-teal-600 text-left table-cell">
                   Status
                 </th>
               </tr>
@@ -70,22 +70,20 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
                           })
                         )}
                       >
-                        <td className="p-2 border-2 border-emerald-500">
+                        <td className="p-2 border-2 border-teal-600">
                           {formatDateTime(checkout_time)}
                         </td>
 
-                        <td className="p-2 border-2 border-emerald-500">
-                          {name}
-                        </td>
-                        <td className="p-2 border-2 border-emerald-500">
+                        <td className="p-2 border-2 border-teal-600">{name}</td>
+                        <td className="p-2 border-2 border-teal-600">
                           {formatRupiah(price)}
                         </td>
-                        <td className="p-2 border-2 border-emerald-500">
+                        <td className="p-2 border-2 border-teal-600">
                           {formatDateTime(expiry_time)}
                         </td>
                         <td
                           className={twMerge(
-                            'p-2 border-2 border-emerald-500',
+                            'p-2 border-2 border-teal-600',
                             StatusVariants({
                               variant: getTransactionStatus(
                                 status as TransactionStatus
@@ -105,7 +103,7 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
                                 'hover:underline hover:underline-offset-1'
                             )}
                           >
-                            <p>{status.toUpperCase()}</p>
+                            <p>{(status ?? '').toUpperCase()}</p>
                             {!!midtrans_url && (
                               <i className="i-ph-arrow-square-up-right-light size-5" />
                             )}
@@ -117,7 +115,7 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
               ) : (
                 <td
                   colSpan={5}
-                  className="border-2 border-emerald-500 p-2 w-full text-gray-600 text-center"
+                  className="border-2 border-teal-600 p-2 w-full text-gray-600 text-center"
                 >
                   No transactions recorded
                 </td>

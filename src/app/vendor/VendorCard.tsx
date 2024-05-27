@@ -6,6 +6,7 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Input } from '@/components/elements/Forms/input'
+import { Button } from '@/components/elements/Button'
 import { Select } from '@/components/elements/Forms/select'
 import GalleryPage from './GalleryPage'
 import GalleryPageDelete from './GalleryPageDelete'
@@ -38,11 +39,14 @@ export const VendorCard = ({ vendor, isDetail }: VendorCardProps) => {
     contact_phone_number,
   } = vendor
 
-  const [deleteVendor] = useDeleteVendorMutation()
+  const [deleteVendor, { isLoading: isDeleteVendorLoading }] =
+    useDeleteVendorMutation()
 
-  const [updateVendor] = useUpdateVendorMutation()
+  const [updateVendor, { isLoading: isUpdateVedorLoading }] =
+    useUpdateVendorMutation()
 
-  const [addPhoto] = useAddPhotoVendorMutation()
+  const [addPhoto, { isLoading: isAddPhotoLoading }] =
+    useAddPhotoVendorMutation()
 
   const [images, setImages] = React.useState<File[]>([])
 
@@ -247,12 +251,17 @@ export const VendorCard = ({ vendor, isDetail }: VendorCardProps) => {
               </Box>
             </Box>
             <Box className="flex justify-end">
-              <button
+              <Button
                 type="submit"
                 className="text-sm bg-teal-200 text-gray-900 rounded-2xl mt-4 py-3 px-8"
+                loading={
+                  isAddPhotoLoading ||
+                  isDeleteVendorLoading ||
+                  isUpdateVedorLoading
+                }
               >
                 Save
-              </button>
+              </Button>
             </Box>
           </Box>
         )}
