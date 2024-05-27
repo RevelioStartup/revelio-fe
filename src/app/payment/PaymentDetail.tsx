@@ -24,13 +24,13 @@ export const PaymentDetail = () => {
       getTransaction({ order_id: orderId })
     }
   }, [orderId])
+  const test_stat = null
 
   useEffect(() => {
     if (!!error && 'data' in error) {
       // Adjusted regex to correctly extract JSON surrounded by backticks
       const regex = /API response: `({.*})`/
       const match = (error.data as MidtransErrorResponse).error.match(regex)
-      console.log(match)
       if (match && match[1]) {
         const jsonPart = match[1]
         try {
@@ -77,11 +77,17 @@ export const PaymentDetail = () => {
               <p className="font-bold">Package Name</p>
               <p>{data?.transaction_detail.package.name}</p>
               <p className="font-bold">Payment Type</p>
-              <p>{data?.transaction_detail.payment_type?.toUpperCase()}</p>
+              <p>
+                {(data?.transaction_detail.payment_type ?? '').toUpperCase()}
+              </p>
               <p className="font-bold">Merchant</p>
-              <p>{data?.transaction_detail.payment_merchant?.toUpperCase()}</p>
+              <p>
+                {(
+                  data?.transaction_detail.payment_merchant ?? ''
+                ).toUpperCase()}
+              </p>
               <p className="font-bold">Status</p>
-              <p>{data?.transaction_detail.status?.toUpperCase()}</p>
+              <p>{(data?.transaction_detail.status ?? '')?.toUpperCase()}</p>
             </div>
             <Button
               onClick={() => {
@@ -95,7 +101,7 @@ export const PaymentDetail = () => {
           </>
         )
       )}
-      <Link href={'/payment?tab=history'}>
+      <Link href={'/dashboard?tab=history'}>
         <Button>See Transaction History</Button>
       </Link>
     </div>

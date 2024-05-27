@@ -103,7 +103,7 @@ export const TransactionHistory = ({ status }: TransactionHistoryI) => {
                                 'hover:underline hover:underline-offset-1'
                             )}
                           >
-                            <p>{status?.toUpperCase()}</p>
+                            <p>{(status ?? '').toUpperCase()}</p>
                             {!!midtrans_url && (
                               <i className="i-ph-arrow-square-up-right-light size-5" />
                             )}

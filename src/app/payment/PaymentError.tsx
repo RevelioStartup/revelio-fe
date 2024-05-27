@@ -15,7 +15,7 @@ export const PaymentError = ({ status }: PaymentDetailI) => {
           <p>
             Transaction status:{' '}
             <span className="font-bold text-rose-700">
-              {status?.toUpperCase()}
+              {(status ?? '').toUpperCase()}
             </span>
           </p>
         )}
