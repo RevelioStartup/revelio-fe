@@ -158,10 +158,18 @@ export const EventPurpose: React.FC = () => {
         {isLoading ? (
           <LoadingButton
             type="submit"
-            className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-teal-600 !text-white !w-full max-w-sm !px-6 !py-3"
+            className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-teal-600 !text-white !w-full max-w-sm !h-10 !p-0 !my-auto"
             loading={isLoading}
             loadingIndicator={'Creating...'}
-            sx = {{ paddingRight: 24, paddingLeft: 24, paddingTop: 12, paddingBottom: 12}}
+            sx={{
+              paddingRight: 24,
+              paddingLeft: 24,
+              paddingTop: 12,
+              paddingBottom: 12,
+              minHeight: 0,
+              minWidth: 0,
+              height: "fit-content",
+            }}
           ></LoadingButton>
         ) : (
           <Button
