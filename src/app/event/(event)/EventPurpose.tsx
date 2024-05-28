@@ -161,6 +161,7 @@ export const EventPurpose: React.FC = () => {
             className="!text-center !font-bold rounded-lg flex justify-center m-auto !bg-teal-600 !text-white !w-full max-w-sm !px-6 !py-3"
             loading={isLoading}
             loadingIndicator={'Creating...'}
+            sx = {{ paddingRight: 24, paddingLeft: 24, paddingTop: 12, paddingBottom: 12}}
           ></LoadingButton>
         ) : (
           <Button
