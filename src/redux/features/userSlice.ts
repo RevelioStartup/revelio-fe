@@ -19,6 +19,8 @@ const initialState: UserSliceState = {
   verified: false,
 }
 
+const verifiedMessage = "Email verified successfully!"
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -60,7 +62,7 @@ const userSlice = createSlice({
           state,
           { payload }: PayloadAction<EmailVerificationResponseMessage>
         ) => {
-          if (payload.message === 'Email verified successfully!') {
+          if (payload.message === verifiedMessage) {
             state.verified = true
           }
         }
