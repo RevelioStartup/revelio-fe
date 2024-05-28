@@ -57,7 +57,11 @@ export const Navbar: React.FC = () => {
             <Typography
               variant="h5"
               component="div"
-              sx={{ marginLeft: '10px' }}
+              sx={{
+                fontFamily: 'Metropolis, Arial, sans-serif',
+                fontWeight: 'bold', 
+                marginLeft: '10px'
+              }}
             >
               Revelio
             </Typography>
@@ -134,7 +138,11 @@ export const Navbar: React.FC = () => {
             <Typography
               variant="h5"
               component="div"
-              sx={{ marginLeft: '10px' }}
+              sx={{
+                fontFamily: 'Metropolis, Arial, sans-serif',
+                fontWeight: 'bold', 
+                marginLeft: '10px'
+              }}
             >
               Revelio
             </Typography>
