@@ -21,6 +21,12 @@ function Questions() {
       title: `How can I get help if I'm stuck when using this app?`,
       text: `You can ask us any questions regarding Revelio through our Instagram or email account.`,
     },
+    {
+      id: 4,
+      isVisible: false,
+      title: `What makes Revelio different from other event planning tools?`,
+      text: `Revelio stands out due to its comprehensive feature set, user-friendly interface, and focus on simplifying the event planning process. Developed with input from experienced event planners, Revelio offers everything you need in one place, from task management to detailed rundowns, all designed to reduce stress and enhance efficiency.`,
+    },
   ])
 
   const handleToggle = (id: number) => {
