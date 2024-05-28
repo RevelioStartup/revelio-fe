@@ -39,4 +39,3 @@ export type EmailVerificationResponseMessage = {
   message: string
   is_verified_user: boolean
 }
-

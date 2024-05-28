@@ -168,7 +168,7 @@ export const EventPurpose: React.FC = () => {
               paddingBottom: 12,
               minHeight: 0,
               minWidth: 0,
-              height: "fit-content",
+              height: 'fit-content',
             }}
           ></LoadingButton>
         ) : (
