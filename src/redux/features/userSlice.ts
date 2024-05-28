@@ -19,8 +19,6 @@ const initialState: UserSliceState = {
   verified: false,
 }
 
-const verifiedMessage = "Email verified successfully!"
-
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -46,14 +44,14 @@ const userSlice = createSlice({
       (state, { payload }: PayloadAction<LoginResponse>) => {
         const token = payload.access
         state.token = token
-        state.verified = true
+        state.verified = payload.is_verified_user
       }
     ),
       builder.addMatcher(
         authApi.endpoints.register.matchFulfilled,
         (state, { payload }: PayloadAction<LoginResponse>) => {
           state.token = payload.access
-          state.verified = false
+          state.verified = payload.is_verified_user
         }
       ),
       builder.addMatcher(
@@ -62,9 +60,7 @@ const userSlice = createSlice({
           state,
           { payload }: PayloadAction<EmailVerificationResponseMessage>
         ) => {
-          if (payload.message === verifiedMessage) {
-            state.verified = true
-          }
+          state.verified = payload.is_verified_user
         }
       )
   },
