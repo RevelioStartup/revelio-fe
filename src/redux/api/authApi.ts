@@ -8,6 +8,7 @@ import {
   SendEmailVerificationRequest,
   SendRecoverPasswordRequest,
   SendChangePasswordRequest,
+  EmailVerificationResponseMessage,
 } from '@/types/authentication'
 
 export const authApi = baseApi.injectEndpoints({
@@ -33,7 +34,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
     verifyEmail: builder.mutation<
-      ResponseMessage,
+      EmailVerificationResponseMessage,
       SendEmailVerificationRequest
     >({
       query: (body) => ({

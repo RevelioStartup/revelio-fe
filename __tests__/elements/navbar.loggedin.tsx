@@ -23,6 +23,7 @@ const mockUser = {
   id: 1,
   name: 'John Doe',
   token: 'token',
+  verified: true,
 }
 
 jest.mock('@/redux/store', () => ({

@@ -33,3 +33,8 @@ export type SendChangePasswordRequest = {
 export type ResponseMessage = {
   msg: string
 }
+
+export type EmailVerificationResponseMessage = {
+  message: string
+}
+
