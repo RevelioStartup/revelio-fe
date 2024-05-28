@@ -1,7 +1,10 @@
 import { User } from '@/types/user'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import storage from 'redux-persist/lib/storage'
-import { LoginResponse, EmailVerificationResponseMessage } from '@/types/authentication'
+import {
+  LoginResponse,
+  EmailVerificationResponseMessage,
+} from '@/types/authentication'
 import { authApi } from '../api/authApi'
 
 interface UserSliceState {
@@ -44,23 +47,24 @@ const userSlice = createSlice({
         state.verified = true
       }
     ),
-    builder.addMatcher(
-      authApi.endpoints.register.matchFulfilled,
-      (state, { payload }: PayloadAction<LoginResponse>) => {
-        state.token = payload.access
-        state.verified = false
-      }
-    ),
-    builder.addMatcher(
-      authApi.endpoints.verifyEmail.matchFulfilled,
-      (state, { payload }: PayloadAction<EmailVerificationResponseMessage>) => {
-        console.log("masuk sini")
-        console.log(payload)
-        if(payload.message === 'Email verified successfully!'){
-          state.verified = true
+      builder.addMatcher(
+        authApi.endpoints.register.matchFulfilled,
+        (state, { payload }: PayloadAction<LoginResponse>) => {
+          state.token = payload.access
+          state.verified = false
         }
-      }
-    )
+      ),
+      builder.addMatcher(
+        authApi.endpoints.verifyEmail.matchFulfilled,
+        (
+          state,
+          { payload }: PayloadAction<EmailVerificationResponseMessage>
+        ) => {
+          if (payload.message === 'Email verified successfully!') {
+            state.verified = true
+          }
+        }
+      )
   },
 })
 
