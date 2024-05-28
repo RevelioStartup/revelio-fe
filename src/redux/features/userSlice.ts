@@ -1,17 +1,22 @@
 import { User } from '@/types/user'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import storage from 'redux-persist/lib/storage'
-import { LoginResponse } from '@/types/authentication'
+import {
+  LoginResponse,
+  EmailVerificationResponseMessage,
+} from '@/types/authentication'
 import { authApi } from '../api/authApi'
 
 interface UserSliceState {
   token: string | null
   profile: User | null
+  verified: boolean
 }
 
 const initialState: UserSliceState = {
   token: null,
   profile: null,
+  verified: false,
 }
 
 const userSlice = createSlice({
@@ -23,6 +28,7 @@ const userSlice = createSlice({
       window.localStorage.removeItem('token')
       state.profile = null
       state.token = null
+      state.verified = false
       window.location.pathname = '/login'
     },
     updateProfile: (state, { payload }: PayloadAction<User>) => {
@@ -38,12 +44,23 @@ const userSlice = createSlice({
       (state, { payload }: PayloadAction<LoginResponse>) => {
         const token = payload.access
         state.token = token
+        state.verified = payload.is_verified_user
       }
     ),
       builder.addMatcher(
         authApi.endpoints.register.matchFulfilled,
         (state, { payload }: PayloadAction<LoginResponse>) => {
           state.token = payload.access
+          state.verified = payload.is_verified_user
+        }
+      ),
+      builder.addMatcher(
+        authApi.endpoints.verifyEmail.matchFulfilled,
+        (
+          state,
+          { payload }: PayloadAction<EmailVerificationResponseMessage>
+        ) => {
+          state.verified = payload.is_verified_user
         }
       )
   },
