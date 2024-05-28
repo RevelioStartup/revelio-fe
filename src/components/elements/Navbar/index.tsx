@@ -24,7 +24,8 @@ export const Navbar: React.FC = () => {
   }, [])
 
   const user_token = useAppSelector((state: RootState) => state.user).token
-  if (user_token) {
+  const is_verified = useAppSelector((state: RootState) => state.user).verified
+  if (user_token && is_verified) {
     return (
       <Box
         data-testid="navbar"

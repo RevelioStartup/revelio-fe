@@ -26,6 +26,9 @@ jest.mock('@/redux/api/authApi', () => ({
       register: {
         matchFulfilled: jest.fn(),
       },
+      verifyEmail: {
+        matchFulfilled: jest.fn(),
+      },
     },
   },
   useSendChangePasswordMutation: jest.fn(() => [

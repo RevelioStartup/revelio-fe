@@ -6,6 +6,7 @@ export type LoginRequest = {
 export type LoginResponse = {
   refresh: string
   access: string
+  is_verified_user: boolean
 }
 
 export type RegisterRequest = {
@@ -33,3 +34,9 @@ export type SendChangePasswordRequest = {
 export type ResponseMessage = {
   msg: string
 }
+
+export type EmailVerificationResponseMessage = {
+  message: string
+  is_verified_user: boolean
+}
+
