@@ -13,7 +13,11 @@ import { useDispatch } from 'react-redux'
 import React, { useState } from 'react'
 import { Button } from '@/components/elements/Button'
 import Link from 'next/link'
-import { useGetProfileQuery, useGetEventsQuery } from '@/redux/api/profileApi'
+import {
+  useGetProfileQuery,
+  useGetEventsQuery,
+  useDeleteEventMutation,
+} from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
 import {
@@ -23,6 +27,7 @@ import {
 import { CHIP_STYLE_ACTIVE, CHIP_STYLE_INACTIVE } from './constant'
 import { TransactionHistory } from './TransactionHistory'
 import { useSearchParams } from 'next/navigation'
+import { LoadingButton } from '@mui/lab'
 
 type ChipType = 'event' | 'history'
 
@@ -33,13 +38,19 @@ export default function Profile() {
     (searchParams.get('tab') as ChipType) ?? 'event'
   )
   const { data, isLoading, isError } = useGetProfileQuery()
-  const { data: events } = useGetEventsQuery()
+  const {
+    data: events,
+    isLoading: isLoadingGetEvent,
+    isFetching: isRefetchingGetEvent,
+  } = useGetEventsQuery()
   const dispatch = useDispatch()
 
   const { data: latestSubscription } = useGetLatestSubscriptionQuery()
   const { data: subscriptionHistory } = useGetSubscriptionsQuery()
 
-  if (isLoading)
+  const [deleteEvent, { isLoading: isDeleting }] = useDeleteEventMutation()
+
+  if (isLoading || isLoadingGetEvent || isRefetchingGetEvent)
     return (
       <div className="flex flex-col justify-center items-center min-h-[90vh]">
         <div data-testid="loader" className="loader"></div>
@@ -105,7 +116,7 @@ export default function Profile() {
           justifyContent={'center'}
           padding={{ xs: '2em 2em', lg: '4em 6em' }}
         >
-          <h1 className="text-5xl font-bold mb-5">Your Profile</h1>
+          <h1 className="text-5xl font-bold mb-5 text-center">Your Profile</h1>
           <Avatar
             alt="Profile Picture"
             src={profile.profile_picture || '/path/to/default/image'} // Fallback to a default image if null
@@ -182,7 +193,7 @@ export default function Profile() {
         {chipType === 'event' ? (
           <Box
             component="section"
-            className="flex flex-wrap gap-3 w-full overflow-y-auto h-[calc(100vh-80px)]"
+            className="flex flex-wrap gap-3 w-full overflow-y-auto md:max-h-[calc(100vh-80px)] h-fit"
             padding={{ xs: '2em 2em', lg: '4em 6em' }}
           >
             <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
@@ -203,37 +214,71 @@ export default function Profile() {
                     borderRadius: '4px',
                     mb: '1rem',
                     bgcolor: '#0D9488',
+                    justifyContent: 'space-between',
                   }}
                   className="mx-auto"
                 >
-                  <Box sx={{ mb: '0.5rem' }}>
-                    <h3
-                      style={{
-                        margin: 0,
-                        fontWeight: 'bold',
-                        fontSize: '1.25rem',
-                        color: 'white',
-                      }}
-                    >
-                      {event.name}
-                    </h3>
-                  </Box>
-                  <Box sx={{ flexGrow: 0, mb: '0.5rem', color: 'white' }}>
-                    <p style={{ margin: 0 }}>{event.date}</p>
-                    <p style={{ margin: 0 }}>{event.budget}</p>
-                    <p style={{ margin: 0 }}>{event.objective}</p>
-                  </Box>
-                  <Link
-                    href={`/event/${event.id}`}
-                    className="flex justify-end"
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
                   >
-                    <Button
-                      variant="ghost"
-                      className="w-32 lg:w-56 bg-white h-10"
+                    <Box sx={{ mb: '0.5rem' }}>
+                      <h3
+                        style={{
+                          margin: 0,
+                          fontWeight: 'bold',
+                          fontSize: '1.25rem',
+                          color: 'white',
+                        }}
+                      >
+                        {event.name}
+                      </h3>
+                    </Box>
+                    <Box sx={{ flexGrow: 0, mb: '0.5rem', color: 'white' }}>
+                      <p style={{ margin: 0 }}>{event.date}</p>
+                      <p style={{ margin: 0 }}>{event.budget}</p>
+                      <p style={{ margin: 0 }}>{event.objective}</p>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: {
+                        xs: 'column',
+                        sm: 'row-reverse',
+                      },
+                      alignItems: 'center',
+                      gap: '1rem',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <Link
+                      href={`/event/${event.id}`}
+                      className="flex justify-end"
                     >
-                      See Details
-                    </Button>
-                  </Link>
+                      <Button
+                        variant="ghost"
+                        className="w-32 lg:w-56 bg-white h-10"
+                      >
+                        See Details
+                      </Button>
+                    </Link>
+                    <LoadingButton
+                      loading={isDeleting}
+                      loadingIndicator="Deleting..."
+                      className="w-32 lg:w-56 h-10 !bg-red-500 !text-white !rounded-xl"
+                      onClick={() => {
+                        deleteEvent({
+                          eventId: event.id,
+                        })
+                      }}
+                      data-testid="delete-event"
+                    >
+                      Delete Event
+                    </LoadingButton>
+                  </Box>
                 </Box>
               ))
             ) : (

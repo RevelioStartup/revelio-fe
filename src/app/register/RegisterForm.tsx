@@ -14,6 +14,7 @@ import {
   MessageDialogActions,
   MessageDialogContent,
 } from '@/components/elements/Dialog/messageDialog'
+import { LoadingButton } from '@mui/lab'
 
 type RegisterFormType = {
   username: string
@@ -28,7 +29,7 @@ export default function RegisterForm() {
     email: '',
   }
 
-  const [register] = useRegisterMutation()
+  const [register, { isLoading }] = useRegisterMutation()
   const [sendEmail] = useLazySendEmailVerficationQuery()
 
   const [openPrompt, setOpenPrompt] = useState(false)
@@ -78,7 +79,7 @@ export default function RegisterForm() {
       borderRadius={'0 0 80% 0'}
       alignItems={'center'}
       justifyContent={'center'}
-      padding={{ xs: '4em 4em', lg: '4em 4em' }}
+      padding={{ xs: '4em 0em', lg: '4em 4em' }}
     >
       <form
         className="flex flex-col gap-3"
@@ -114,7 +115,15 @@ export default function RegisterForm() {
             Log In Here
           </Link>
         </Typography>
-        <Button type="submit">Register</Button>
+        <LoadingButton
+          type="submit"
+          loading={isLoading}
+          loadingIndicator={'Logging in...'}
+          className="!bg-teal-600 !hover:bg-teal-500 !rounded-xl !px-5 !py-3"
+          sx={{ color: 'white' }}
+        >
+          Register
+        </LoadingButton>
       </form>
 
       <MessageDialog
