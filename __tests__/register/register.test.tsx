@@ -16,9 +16,12 @@ jest.mock('@/redux/api/authApi', () => ({
 describe('Test for register page', () => {
   beforeEach(() => {
     const mockRegister = jest.fn().mockResolvedValue({ data: {} })
-    ;(useRegisterMutation as jest.Mock).mockReturnValue([mockRegister, {
-      isLoading: false,
-    }])
+    ;(useRegisterMutation as jest.Mock).mockReturnValue([
+      mockRegister,
+      {
+        isLoading: false,
+      },
+    ])
     const mockSendEmailVerification = jest.fn().mockResolvedValue({ data: {} })
     ;(useLazySendEmailVerficationQuery as jest.Mock).mockReturnValue([
       mockSendEmailVerification,
@@ -42,9 +45,12 @@ describe('Test for register page title', () => {
 describe('Test for register form', () => {
   beforeEach(() => {
     const mockRegister = jest.fn().mockResolvedValue({ data: {} })
-    ;(useRegisterMutation as jest.Mock).mockReturnValue([mockRegister, {
-      isLoading: false,
-    }])
+    ;(useRegisterMutation as jest.Mock).mockReturnValue([
+      mockRegister,
+      {
+        isLoading: false,
+      },
+    ])
     const mockSendEmailVerification = jest.fn().mockResolvedValue({ data: {} })
     ;(useLazySendEmailVerficationQuery as jest.Mock).mockReturnValue([
       mockSendEmailVerification,
@@ -58,9 +64,12 @@ describe('Test for register form', () => {
 
   it('submits register form successfully and calls send email verification API', async () => {
     const mockRegister = jest.fn().mockResolvedValue({ data: {} })
-    ;(useRegisterMutation as jest.Mock).mockReturnValue([mockRegister, {
-      isLoading: false,
-    }])
+    ;(useRegisterMutation as jest.Mock).mockReturnValue([
+      mockRegister,
+      {
+        isLoading: false,
+      },
+    ])
     const mockSendEmailVerification = jest.fn().mockResolvedValue({ data: {} })
     ;(useLazySendEmailVerficationQuery as jest.Mock).mockReturnValue([
       mockSendEmailVerification,
@@ -87,9 +96,12 @@ describe('Test for register form', () => {
     const mockRegister = jest
       .fn()
       .mockResolvedValue({ error: { data: { msg: errorMessage } } })
-    ;(useRegisterMutation as jest.Mock).mockReturnValue([mockRegister, {
-      isLoading: false,
-    }])
+    ;(useRegisterMutation as jest.Mock).mockReturnValue([
+      mockRegister,
+      {
+        isLoading: false,
+      },
+    ])
     const { getByTestId, getByText } = render(<RegisterForm />)
     fireEvent.change(getByTestId('email-input'), {
       target: { value: 'email@email.com' },
@@ -108,9 +120,12 @@ describe('Test for register form', () => {
   it('shows unknown error message when register account fails', async () => {
     const errorMessage = 'Unknown Error!'
     const mockRegister = jest.fn().mockResolvedValue({ error: {} })
-    ;(useRegisterMutation as jest.Mock).mockReturnValue([mockRegister, {
-      isLoading: false,
-    }])
+    ;(useRegisterMutation as jest.Mock).mockReturnValue([
+      mockRegister,
+      {
+        isLoading: false,
+      },
+    ])
     const { getByTestId, getByText } = render(<RegisterForm />)
     fireEvent.change(getByTestId('email-input'), {
       target: { value: 'email@email.com' },

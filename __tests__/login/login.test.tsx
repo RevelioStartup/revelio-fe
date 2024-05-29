@@ -17,9 +17,12 @@ jest.mock('@/redux/api/authApi', () => ({
 describe('Test for LoginPage', () => {
   it('renders login page title form', () => {
     const mockLogin = jest.fn().mockResolvedValue({ data: {} })
-    ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin, {
-      isLoading: false,
-    }])
+    ;(useLoginMutation as jest.Mock).mockReturnValue([
+      mockLogin,
+      {
+        isLoading: false,
+      },
+    ])
 
     const mockSendEmail = jest.fn().mockResolvedValue({ data: {} })
     ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
@@ -41,9 +44,12 @@ describe('Test for LoginTextBox', () => {
 describe('Test for login form', () => {
   beforeEach(() => {
     const mockLogin = jest.fn().mockResolvedValue({ data: {} })
-    ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin, {
-      isLoading: false,
-    }])
+    ;(useLoginMutation as jest.Mock).mockReturnValue([
+      mockLogin,
+      {
+        isLoading: false,
+      },
+    ])
 
     const mockSendEmail = jest.fn().mockResolvedValue({ data: {} })
     ;(useSendRecoverPasswordEmailMutation as jest.Mock).mockReturnValue([
@@ -58,9 +64,12 @@ describe('Test for login form', () => {
 
   it('submits login form successfully', async () => {
     const mockLogin = jest.fn().mockResolvedValue({ data: {} })
-    ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin, {
-      isLoading: false,
-    }])
+    ;(useLoginMutation as jest.Mock).mockReturnValue([
+      mockLogin,
+      {
+        isLoading: false,
+      },
+    ])
     const { getByTestId } = render(<LoginForm />)
     fireEvent.change(getByTestId('username-input'), {
       target: { value: 'username' },
@@ -77,9 +86,12 @@ describe('Test for login form', () => {
     const mockLogin = jest
       .fn()
       .mockResolvedValue({ error: { data: { msg: errorMessage } } })
-    ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin, {
-      isLoading: false,
-    }])
+    ;(useLoginMutation as jest.Mock).mockReturnValue([
+      mockLogin,
+      {
+        isLoading: false,
+      },
+    ])
     const { getByTestId, getByText } = render(<LoginForm />)
     fireEvent.change(getByTestId('username-input'), {
       target: { value: 'invalid_username' },
@@ -95,9 +107,12 @@ describe('Test for login form', () => {
   it('shows unkown error message when login fails due to unkown reason', async () => {
     const errorMessage = 'Unknown Error!'
     const mockLogin = jest.fn().mockResolvedValue({ error: {} })
-    ;(useLoginMutation as jest.Mock).mockReturnValue([mockLogin, {
-      isLoading: false,
-    }])
+    ;(useLoginMutation as jest.Mock).mockReturnValue([
+      mockLogin,
+      {
+        isLoading: false,
+      },
+    ])
     const { getByTestId, getByText } = render(<LoginForm />)
     fireEvent.change(getByTestId('username-input'), {
       target: { value: 'invalid_username' },
