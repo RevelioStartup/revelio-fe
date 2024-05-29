@@ -85,20 +85,30 @@ describe('PackageList component', () => {
   })
 
   it('displays Loader when data is loading', () => {
-    const useGetPackageDetailQuery = require('@/redux/api/packageApi').useGetPackageDetailQuery
-    const useGetLatestSubscriptionQuery = require('@/redux/api/subscriptionApi').useGetLatestSubscriptionQuery
+    const useGetPackageDetailQuery =
+      require('@/redux/api/packageApi').useGetPackageDetailQuery
+    const useGetLatestSubscriptionQuery =
+      require('@/redux/api/subscriptionApi').useGetLatestSubscriptionQuery
 
     useGetPackageDetailQuery.mockReturnValue({ data: null, isLoading: true })
-    useGetLatestSubscriptionQuery.mockReturnValue({ data: null, isLoading: true })
-    ;(useCreateTransactionMutation as jest.Mock).mockReturnValue([jest.fn(), { data: null, isLoading: false }])
+    useGetLatestSubscriptionQuery.mockReturnValue({
+      data: null,
+      isLoading: true,
+    })
+    ;(useCreateTransactionMutation as jest.Mock).mockReturnValue([
+      jest.fn(),
+      { data: null, isLoading: false },
+    ])
 
     render(<PackageList />)
     expect(screen.getByTestId('loader')).toBeInTheDocument()
   })
 
   it('does not display Loader when data is loaded', () => {
-    const useGetPackageDetailQuery = require('@/redux/api/packageApi').useGetPackageDetailQuery
-    const useGetLatestSubscriptionQuery = require('@/redux/api/subscriptionApi').useGetLatestSubscriptionQuery
+    const useGetPackageDetailQuery =
+      require('@/redux/api/packageApi').useGetPackageDetailQuery
+    const useGetLatestSubscriptionQuery =
+      require('@/redux/api/subscriptionApi').useGetLatestSubscriptionQuery
 
     useGetPackageDetailQuery.mockReturnValue({
       data: { id: 'free', event_planner: true } as any,
@@ -108,7 +118,10 @@ describe('PackageList component', () => {
       data: { is_active: false, end_date: '2023-12-31' } as any,
       isLoading: false,
     })
-    ;(useCreateTransactionMutation as jest.Mock).mockReturnValue([jest.fn(), { data: null, isLoading: false }])
+    ;(useCreateTransactionMutation as jest.Mock).mockReturnValue([
+      jest.fn(),
+      { data: null, isLoading: false },
+    ])
 
     render(<PackageList />)
     expect(screen.queryByTestId('loader')).not.toBeInTheDocument()
