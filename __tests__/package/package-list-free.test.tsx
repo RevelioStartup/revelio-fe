@@ -4,7 +4,6 @@ import '@testing-library/jest-dom'
 import PackageList from '@/app/package/page'
 import { useCreateTransactionMutation } from '@/redux/api/paymentApi'
 
-// Mock data
 const premium_package = {
   name: 'Premium Package',
   price: 5000,
@@ -15,7 +14,6 @@ const premium_package = {
   ai_assistant: true,
 }
 
-// Mock hooks
 jest.mock('@/redux/api/packageApi', () => ({
   useGetPackageDetailQuery: jest.fn((id) => {
     if (id === 1) {
