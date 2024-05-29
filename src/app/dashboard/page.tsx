@@ -116,7 +116,7 @@ export default function Profile() {
           justifyContent={'center'}
           padding={{ xs: '2em 2em', lg: '4em 6em' }}
         >
-          <h1 className="text-5xl font-bold mb-5">Your Profile</h1>
+          <h1 className="text-5xl font-bold mb-5 text-center">Your Profile</h1>
           <Avatar
             alt="Profile Picture"
             src={profile.profile_picture || '/path/to/default/image'} // Fallback to a default image if null
@@ -193,7 +193,7 @@ export default function Profile() {
         {chipType === 'event' ? (
           <Box
             component="section"
-            className="flex flex-wrap gap-3 w-full overflow-y-auto h-[calc(100vh-80px)]"
+            className="flex flex-wrap gap-3 w-full overflow-y-auto md:max-h-[calc(100vh-80px)] h-fit"
             padding={{ xs: '2em 2em', lg: '4em 6em' }}
           >
             <h2 className="text-3xl md:text-5xl text-center w-full font-bold">
@@ -245,7 +245,12 @@ export default function Profile() {
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: 'row-reverse',
+                      flexDirection: {
+                        xs: 'column',
+                        sm: 'row-reverse',
+                      },
+                      alignItems: 'center',
+                      gap: '1rem',
                       justifyContent: 'space-between',
                     }}
                   >

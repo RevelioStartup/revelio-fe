@@ -78,7 +78,7 @@ export default function RegisterForm() {
       borderRadius={'0 0 80% 0'}
       alignItems={'center'}
       justifyContent={'center'}
-      padding={{ xs: '4em 4em', lg: '4em 4em' }}
+      padding={{ xs: '4em 0em', lg: '4em 4em' }}
     >
       <form
         className="flex flex-col gap-3"

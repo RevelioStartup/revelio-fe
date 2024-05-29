@@ -8,7 +8,11 @@ import {
 } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import { useGetProfileQuery, useGetEventsQuery, useDeleteEventMutation } from '@/redux/api/profileApi'
+import {
+  useGetProfileQuery,
+  useGetEventsQuery,
+  useDeleteEventMutation,
+} from '@/redux/api/profileApi'
 import Profile from '@/app/dashboard/page'
 import { useGetSubscriptionsQuery } from '@/redux/api/subscriptionApi'
 import { useGetTransactionListQuery } from '@/redux/api/paymentApi'
@@ -146,7 +150,7 @@ describe('Profile Component', () => {
       isLoading: false,
     })
 
-    // Mock delete event mutation 
+    // Mock delete event mutation
     ;(useDeleteEventMutation as jest.Mock).mockReturnValue([
       jest.fn(),
       { isLoading: false },
@@ -317,7 +321,7 @@ describe('Profile Component', () => {
     expect(getByText('No transactions recorded')).toBeInTheDocument()
   })
 
-  it("deletes an event if the user clicks on the delete button", () => {
+  it('deletes an event if the user clicks on the delete button', () => {
     const myInitialState = 'event'
     React.useState = jest.fn().mockReturnValue([myInitialState, {}])
 
