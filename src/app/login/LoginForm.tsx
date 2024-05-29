@@ -120,8 +120,15 @@ export default function LoginForm() {
             Register Here
           </Link>
         </Typography>
-        <LoadingButton  type="submit" loading = {isLoading} loadingIndicator = {"Logging in..."} 
-        className='!bg-teal-600 !hover:bg-teal-500 !rounded-xl !px-5 !py-3' sx={{color: "white"}}>Log In</LoadingButton>
+        <LoadingButton
+          type="submit"
+          loading={isLoading}
+          loadingIndicator={'Logging in...'}
+          className="!bg-teal-600 !hover:bg-teal-500 !rounded-xl !px-5 !py-3"
+          sx={{ color: 'white' }}
+        >
+          Log In
+        </LoadingButton>
       </form>
 
       <AccountRecoveryRequestForm

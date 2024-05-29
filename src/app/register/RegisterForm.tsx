@@ -29,9 +29,7 @@ export default function RegisterForm() {
     email: '',
   }
 
-  const [register, {
-    isLoading,
-  }] = useRegisterMutation()
+  const [register, { isLoading }] = useRegisterMutation()
   const [sendEmail] = useLazySendEmailVerficationQuery()
 
   const [openPrompt, setOpenPrompt] = useState(false)
@@ -117,8 +115,15 @@ export default function RegisterForm() {
             Log In Here
           </Link>
         </Typography>
-        <LoadingButton  type="submit" loading = {isLoading} loadingIndicator = {"Logging in..."} 
-        className='!bg-teal-600 !hover:bg-teal-500 !rounded-xl !px-5 !py-3' sx={{color: "white"}}>Register</LoadingButton>
+        <LoadingButton
+          type="submit"
+          loading={isLoading}
+          loadingIndicator={'Logging in...'}
+          className="!bg-teal-600 !hover:bg-teal-500 !rounded-xl !px-5 !py-3"
+          sx={{ color: 'white' }}
+        >
+          Register
+        </LoadingButton>
       </form>
 
       <MessageDialog
