@@ -21,13 +21,22 @@ import { Button } from '@/components/elements/Button'
 import { useEffect } from 'react'
 
 export default function PackageList() {
-  const { data: free_package = {} as PackageDetailResponse } =
-    useGetPackageDetailQuery(PACKAGE['free'])
-  const { data: premium_package = {} as PackageDetailResponse } =
-    useGetPackageDetailQuery(PACKAGE['premium'])
-  const { data: latest_subscription = {} as LatestSubscriptionResponse } =
-    useGetLatestSubscriptionQuery()
-  const [createTransaction, { data, isLoading }] =
+  const {
+    data: free_package = {} as PackageDetailResponse,
+    isLoading: isLoadingFreePackage,
+  } = useGetPackageDetailQuery(PACKAGE['free'])
+
+  const {
+    data: premium_package = {} as PackageDetailResponse,
+    isLoading: isLoadingPremiumPackage,
+  } = useGetPackageDetailQuery(PACKAGE['premium'])
+
+  const {
+    data: latest_subscription = {} as LatestSubscriptionResponse,
+    isLoading: isLoadingLatestSubscription,
+  } = useGetLatestSubscriptionQuery()
+
+  const [createTransaction, { data, isLoading: isLoadingCreateTransaction }] =
     useCreateTransactionMutation()
 
   const handleCreateTransaction = async () => {
@@ -46,7 +55,14 @@ export default function PackageList() {
     }
   }, [data])
 
-  return (
+  return isLoadingFreePackage ||
+    isLoadingPremiumPackage ||
+    isLoadingLatestSubscription ||
+    !free_package ||
+    !premium_package ||
+    !latest_subscription ? (
+    <Loader />
+  ) : (
     <Box data-testid="package-detail" className="m-2 flex flex-col">
       <Box className="flex flex-col items-center justify-center">
         <p className="text-4xl font-bold mt-4">Revelio</p>
@@ -125,7 +141,7 @@ export default function PackageList() {
                       <Button
                         data-testid="choose-plan-button"
                         onClick={handleCreateTransaction}
-                        loading={isLoading}
+                        loading={isLoadingCreateTransaction}
                         className="bg-white text-teal-600 border border-teal-600 rounded-2xl py-4 px-6 text-sm"
                       >
                         Choose Plan ({formatRupiah(premium_package.price)})
@@ -147,5 +163,13 @@ export default function PackageList() {
         </TableContainer>
       </Box>
     </Box>
+  )
+}
+
+function Loader() {
+  return (
+    <div className="flex flex-col justify-center items-center min-h-[90vh]">
+      <div data-testid="loader" className="loader"></div>
+    </div>
   )
 }
