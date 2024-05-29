@@ -12,6 +12,7 @@ import {
   MessageDialogActions,
   MessageDialogContent,
 } from '@/components/elements/Dialog/messageDialog'
+import { LoadingButton } from '@mui/lab'
 
 type LoginFormType = {
   username: string
@@ -31,7 +32,7 @@ export default function LoginForm() {
   const [title, setTitle] = useState('')
   const [openForm, setOpenForm] = useState(false)
 
-  const [login] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
 
   const methods = useForm<LoginFormType>({ defaultValues: defaultValues })
   const { control, handleSubmit } = methods
@@ -119,7 +120,8 @@ export default function LoginForm() {
             Register Here
           </Link>
         </Typography>
-        <Button type="submit">Log In</Button>
+        <LoadingButton  type="submit" loading = {isLoading} loadingIndicator = {"Logging in..."} 
+        className='!bg-teal-600 !hover:bg-teal-500 !rounded-xl !px-5 !py-3' sx={{color: "white"}}>Log In</LoadingButton>
       </form>
 
       <AccountRecoveryRequestForm

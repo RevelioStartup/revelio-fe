@@ -16,11 +16,14 @@ export default function LoginPageTitle() {
       padding={{ lg: '4em 4em' }}
     >
       <Box sx={{ flex: 1, textAlign: 'left' }} data-testid="login-title">
-        <Typography variant="h3" fontWeight={'bold'} textAlign={{
-          md: 'left',
-          xs: 'center',
-
-        }}>
+        <Typography
+          variant="h3"
+          fontWeight={'bold'}
+          textAlign={{
+            md: 'left',
+            xs: 'center',
+          }}
+        >
           Log In to Plan Your Event
         </Typography>
       </Box>
