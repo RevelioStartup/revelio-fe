@@ -269,6 +269,7 @@ export default function Profile() {
                           eventId: event.id,
                         })
                       }}
+                      data-testid="delete-event"
                     >
                       Delete Event
                     </LoadingButton>
