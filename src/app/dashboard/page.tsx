@@ -13,7 +13,11 @@ import { useDispatch } from 'react-redux'
 import React, { useState } from 'react'
 import { Button } from '@/components/elements/Button'
 import Link from 'next/link'
-import { useGetProfileQuery, useGetEventsQuery, useDeleteEventMutation } from '@/redux/api/profileApi'
+import {
+  useGetProfileQuery,
+  useGetEventsQuery,
+  useDeleteEventMutation,
+} from '@/redux/api/profileApi'
 import { logout } from '@/redux/features/userSlice'
 import { SubscriptionHistory } from './SubscriptionHistory'
 import {
@@ -34,15 +38,17 @@ export default function Profile() {
     (searchParams.get('tab') as ChipType) ?? 'event'
   )
   const { data, isLoading, isError } = useGetProfileQuery()
-  const { data: events, isLoading: isLoadingGetEvent, isFetching: isRefetchingGetEvent } = useGetEventsQuery()
+  const {
+    data: events,
+    isLoading: isLoadingGetEvent,
+    isFetching: isRefetchingGetEvent,
+  } = useGetEventsQuery()
   const dispatch = useDispatch()
 
   const { data: latestSubscription } = useGetLatestSubscriptionQuery()
   const { data: subscriptionHistory } = useGetSubscriptionsQuery()
 
-  const [ deleteEvent, {
-    isLoading: isDeleting,  
-  } ] = useDeleteEventMutation()
+  const [deleteEvent, { isLoading: isDeleting }] = useDeleteEventMutation()
 
   if (isLoading || isLoadingGetEvent || isRefetchingGetEvent)
     return (
@@ -208,14 +214,16 @@ export default function Profile() {
                     borderRadius: '4px',
                     mb: '1rem',
                     bgcolor: '#0D9488',
-                    justifyContent: "space-between"
+                    justifyContent: 'space-between',
                   }}
                   className="mx-auto"
                 >
-                  <Box sx = {{
-                    display: "flex",
-                    flexDirection: "column",
-                  }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
                     <Box sx={{ mb: '0.5rem' }}>
                       <h3
                         style={{
@@ -234,11 +242,13 @@ export default function Profile() {
                       <p style={{ margin: 0 }}>{event.objective}</p>
                     </Box>
                   </Box>
-                  <Box sx={{
-                    display: "flex",
-                    flexDirection: "row-reverse",
-                    justifyContent: "space-between",
-                  }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row-reverse',
+                      justifyContent: 'space-between',
+                    }}
+                  >
                     <Link
                       href={`/event/${event.id}`}
                       className="flex justify-end"
@@ -251,16 +261,16 @@ export default function Profile() {
                       </Button>
                     </Link>
                     <LoadingButton
-                        loading={isDeleting}
-                        loadingIndicator="Deleting..."
-                        className="w-32 lg:w-56 h-10 !bg-red-500 !text-white !rounded-xl"
-                        onClick={() => {
-                          deleteEvent({
-                            eventId: event.id
-                          })
-                        }}
-                      >
-                        Delete Event
+                      loading={isDeleting}
+                      loadingIndicator="Deleting..."
+                      className="w-32 lg:w-56 h-10 !bg-red-500 !text-white !rounded-xl"
+                      onClick={() => {
+                        deleteEvent({
+                          eventId: event.id,
+                        })
+                      }}
+                    >
+                      Delete Event
                     </LoadingButton>
                   </Box>
                 </Box>

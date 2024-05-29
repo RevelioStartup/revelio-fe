@@ -16,7 +16,7 @@ export const baseApi = createApi({
     'Timeline',
     'Package',
     'Transaction',
-    "Event",
+    'Event',
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: apiConfig.baseUrl,
