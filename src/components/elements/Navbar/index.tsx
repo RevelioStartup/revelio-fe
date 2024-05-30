@@ -59,8 +59,8 @@ export const Navbar: React.FC = () => {
               component="div"
               sx={{
                 fontFamily: 'Metropolis, Arial, sans-serif',
-                fontWeight: 'bold', 
-                marginLeft: '10px'
+                fontWeight: 'bold',
+                marginLeft: '10px',
               }}
             >
               Revelio
@@ -140,8 +140,8 @@ export const Navbar: React.FC = () => {
               component="div"
               sx={{
                 fontFamily: 'Metropolis, Arial, sans-serif',
-                fontWeight: 'bold', 
-                marginLeft: '10px'
+                fontWeight: 'bold',
+                marginLeft: '10px',
               }}
             >
               Revelio

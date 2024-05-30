@@ -44,6 +44,5 @@ export const {
   useGetEventsQuery,
   useLazyGetEventsQuery,
   useCreateEventMutation,
-  useDeleteEventMutation,
   useUpdateEventMutation,
 } = eventApi
